@@ -7,10 +7,11 @@
         "#now:*": "./@types/servicenow/fluent/*/index.js"
     },
     "scripts": {
-        "build": "now-sdk build",
-        "deploy": "now-sdk install",
-        "transform": "now-sdk transform",
-        "types": "now-sdk dependencies"
+      "build": "now-sdk build --errorOnConflict true",
+      "deploy": "now-sdk install --auth rob-pdi",
+      "deploy:open": "now-sdk install --auth rob-pdi --open-browser true",
+      "transform": "now-sdk transform --auth rob-pdi",
+      "types": "now-sdk dependencies --auth rob-pdi"
     },
     "devDependencies": {
         "@servicenow/glide": "27.0.5",
