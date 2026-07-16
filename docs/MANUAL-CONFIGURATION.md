@@ -37,6 +37,77 @@ Groups:
 
 Do not hard-code group sys_ids in source.
 
+### Wave 1 Batch 1 Configuration
+
+- [ ] Assign the five `x_2108496_hr_acces` application roles to the appropriate synthetic users or groups.
+- [ ] Confirm `x_2108496_hr_acces.rob_admin` is reserved for ROB application administrators.
+- [ ] Open the active record on `x_2108496_hr_acces_rob_config` and populate the Staffing, Analytics, Operations Manager escalation, and Exception Review group references.
+- [ ] Confirm exactly one ROB Configuration record is active.
+- [ ] Confirm the default configuration uses form version `2024.04`, annual recertification date `2027-09-30`, grace window 90, reminders 90/60/30, and lapse notification enabled.
+- [ ] Review the six records on `x_2108496_hr_acces_rob_access` for active state, category, routing flags, external systems, and sort order.
+- [ ] Confirm Workforce Profile Charts uses ARM for provisioning and OAS as the target platform.
+
+The source intentionally leaves all assignment-group references blank. Populate them only after the synthetic PDI groups are available; do not copy group sys_ids into Fluent source.
+
+### Wave 1 Batch 2 Validation
+
+- [ ] Confirm the first ROB Authorization Form number is `ROBA0001000`.
+- [ ] Confirm the first Authorized Access Detail number is `ROBD0001000`.
+- [ ] Confirm `x_2108496_hr_acces_rob_auth` uses Number as its display value and is available to in-scope reporting.
+- [ ] Confirm `x_2108496_hr_acces_auth_detail` uses Number as its display value and is available to in-scope reporting.
+- [ ] Confirm references resolve to `sys_user`, `sn_hr_core_case`, ROB Authorization Form, and the Batch 1 ROB Access Item Reference table.
+- [ ] Confirm both authorization supersession fields resolve to ROB Authorization Form records.
+- [ ] Confirm normal ServiceNow attachments can be added only to the ROB Authorization Form during later document configuration; do not add a custom attachment field or table.
+- [ ] Confirm ROB Authorization Form history records audited field changes.
+- [ ] Confirm no automatic deletion or retention job removes Authorization Form or Authorized Access Detail history.
+
+## Known SDK Diagnostic — Simple Reference Qualifiers
+
+SDK version evaluated:
+
+- `@servicenow/sdk` 4.8.1
+
+Affected file:
+
+- `src/fluent/tables/rob-configuration.now.ts`
+
+Affected fields:
+
+- `default_staffing_assignment_group`
+- `default_analytics_assignment_group`
+- `default_operations_manager_escalation_group`
+- `default_exception_review_group`
+
+Configured syntax:
+
+```typescript
+referenceQual: 'active=true',
+useReferenceQualifier: 'simple',
+```
+
+For all four fields, `referenceQual` remains `active=true` and `useReferenceQualifier` remains `simple`. This is the documented Fluent syntax for a plain encoded-query reference qualifier. The SDK 4.8.1 build succeeds but emits TS11 because its diagnostic incorrectly infers that any populated `referenceQual` implies an advanced qualifier. The warning is a known SDK diagnostic inconsistency; the explicit `simple` value is retained and used.
+
+Reference qualifiers limit choices presented by a reference picker. They are not ACL security and do not grant or deny access to `sys_user_group` records.
+
+Required validation after an authorized installation:
+
+- [ ] Run TM-61 against all four assignment-group fields.
+- [ ] Confirm only active groups appear in each reference picker.
+- [ ] Confirm the installed dictionary qualifier is `active=true` and its qualifier mode is `simple`.
+- [ ] Re-evaluate the source, installed metadata, and diagnostic after every SDK upgrade.
+
+### Step 26 Navigation and Form Validation
+
+- [ ] Confirm the HR Access ROB Authorization menu is visible to ROB Administrators and Compliance Viewers only as intended.
+- [ ] Confirm ROB Administrators see all four list modules.
+- [ ] Confirm Compliance Viewers see only ROB Authorization Forms and Authorized Access Details.
+- [ ] Confirm Staffing, Analytics, and Operations Manager users cannot browse the administrative menu.
+- [ ] Confirm each module opens the correct custom-table list without excluding inactive or historical records.
+- [ ] Confirm all four custom tables use the approved default administrative form sections.
+- [ ] Confirm the ROB Authorization Form related list shows only details whose `rob_authorization_form` references the current authorization.
+- [ ] Revalidate compliance read-only behavior after ACLs are implemented; navigation roles do not enforce record security.
+- [ ] Create the Reports and Dashboards module during the reporting wave after a valid target exists; Step 26 omits a broken placeholder.
+
 ## 3. HR Services and Employee Center
 
 ### Request Access to HR Systems

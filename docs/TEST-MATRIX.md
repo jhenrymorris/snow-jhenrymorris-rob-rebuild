@@ -65,6 +65,18 @@ Status values: Not Run, Pass, Fail, Blocked, Manual Only.
 | TM-58 | Schema PII review | No SSN/prohibited fields | Manual | Not Run |
 | TM-59 | Audit history | Required lifecycle evidence retained | Manual | Not Run |
 | TM-60 | Retention behavior | No automatic deletion configured | Manual | Not Run |
+| TM-61 | Configuration group reference qualifiers | Each ROB Configuration assignment-group picker shows only active groups; installed `reference_qual` is `active=true` and `use_reference_qualifier` is `simple` | Manual | Not Run |
+| TM-62 | ROB Configuration seed | Configuration table and one first-install default record build with approved dates and reminder values; group references remain blank | SDK build/source review | Pass |
+| TM-63 | ROB Access Item starter data | Six unique first-install access-item records build with approved routing, system, and sort values | SDK build/source review | Pass |
+| TM-64 | Workforce Profile Charts routing reference | Starter record requires Analytics and Operations Manager tasks, provisions through ARM, and targets OAS | SDK build/source review | Pass |
+| TM-65 | ROB Authorization Form schema | Authorization table builds with ROBA auto-numbering, approved choices, native references, display number, and table auditing | SDK build/source review | Pass |
+| TM-66 | Authorization evidence fields | Employee, approval, supervisor-signature, PDF, reminder, lapse, and supersession fields build without custom signature or attachment records | SDK build/source review | Pass |
+| TM-67 | Authorized Access Detail schema | Detail table builds with ROBD auto-numbering, approved statuses, exact parent/access-item references, and routing snapshots | SDK build/source review | Pass |
+| TM-68 | Access-detail idempotency metadata | Unique source-case/access-item index and coverage/parent retrieval indexes build without test data or unrelated artifacts | SDK build/source review | Pass |
+
+| TM-69 | Step 26 administrative navigation | Application menu and four list modules build with admin/compliance visibility and no fulfiller or Operations Manager repository navigation | SDK build/source review | Pass |
+| TM-70 | Step 26 administrative forms | Four default-view forms build with approved sections and the Authorization Form includes the Authorized Access Detail related list | SDK build/source review | Pass |
+| TM-71 | Wave 1 application roles | Five scoped roles build with correct names; only ROB Admin is scoped application admin | SDK build/source review | Pass |
 
 ## Critical Release Gates
 

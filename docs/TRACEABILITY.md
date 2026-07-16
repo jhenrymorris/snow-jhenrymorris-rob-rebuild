@@ -56,6 +56,13 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 | AUD-2 | Audit-enabled fields | Native histories | TM-59 | Planned |
 | AUD-3 | Reports and ACLs | Retrieval validation | TM-44 | Planned |
 | RET-1 | No automatic deletion | Records-owner validation | TM-60 | Planned |
+| SDK-LIM-1 | Four ROB Configuration group references retain `referenceQual: 'active=true'` and `useReferenceQualifier: 'simple'`; SDK 4.8.1 emits a non-blocking diagnostic inconsistency | Validate installed dictionary mode and active-group picker behavior; qualifiers are not ACLs; re-evaluate after SDK upgrade | TM-61 | Implemented |
+
+## Step 26 Implementation
+
+| Step | SDK artifact | Test reference | Status |
+|---|---|---|---|
+| Step 26 - Administrative navigation and forms | `src/fluent/modules/rob-administration-menu.now.ts`; `src/fluent/forms/*.now.ts` | TM-69, TM-70 | Implemented |
 
 ## Wave Mapping
 
@@ -69,3 +76,18 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 | Wave 6 | Renewal, lapse, and reminder processing |
 | Wave 7 | Security, audit, and notifications |
 | Wave 8 | Reporting, ATF, manual tests, and hardening |
+
+## Wave 1 Batch 1 Implementation
+
+| Step | SDK artifact | Test reference | Status |
+|---|---|---|---|
+| Step 21 — Application roles | `src/fluent/roles/rob-roles.now.ts` | TM-71 | Implemented |
+| Step 22 — ROB Configuration | `src/fluent/tables/rob-configuration.now.ts`; `src/fluent/records/default-rob-configuration.now.ts` | TM-62 | Implemented |
+| Step 23 — ROB Access Item Reference | `src/fluent/tables/rob-access-item-reference.now.ts`; `src/fluent/records/starter-rob-access-items.now.ts` | TM-63, TM-64 | Implemented |
+
+## Wave 1 Batch 2 Implementation
+
+| Step | SDK artifact | Test reference | Status |
+|---|---|---|---|
+| Step 24 — ROB Authorization Form | `src/fluent/tables/rob-authorization-form.now.ts` | TM-65, TM-66 | Implemented |
+| Step 25 — Authorized Access Detail | `src/fluent/tables/authorized-access-detail.now.ts` | TM-67, TM-68 | Implemented |
