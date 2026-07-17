@@ -1,0 +1,102 @@
+﻿
+  src\fluent\tables\authorized-access-detail.now.ts:34:            unique: true,
+> src\fluent\tables\authorized-access-detail.now.ts:35:            element: ['source_hrsd_case', 
+'access_item'],
+  src\fluent\tables\authorized-access-detail.now.ts:36:        },
+  src\fluent\tables\authorized-access-detail.now.ts:37:        {
+  src\fluent\tables\authorized-access-detail.now.ts:38:            name: 'auth_detail_coverage',
+  src\fluent\tables\authorized-access-detail.now.ts:39:            unique: false,
+> src\fluent\tables\authorized-access-detail.now.ts:40:            element: ['subject_person', 
+'access_item', 'status', 'authorized_end_date'],
+  src\fluent\tables\authorized-access-detail.now.ts:41:        },
+  src\fluent\tables\authorized-access-detail.now.ts:42:        {
+> src\fluent\tables\authorized-access-detail.now.ts:43:            name: 'auth_detail_form_status',
+  src\fluent\tables\authorized-access-detail.now.ts:44:            unique: false,
+> src\fluent\tables\authorized-access-detail.now.ts:45:            element: ['rob_authorization_form', 
+'status'],
+  src\fluent\tables\authorized-access-detail.now.ts:46:        },
+  src\fluent\tables\authorized-access-detail.now.ts:47:    ],
+  src\fluent\tables\authorized-access-detail.now.ts:48:    schema: {
+  src\fluent\tables\authorized-access-detail.now.ts:49:        number: StringColumn({
+  src\fluent\tables\authorized-access-detail.now.ts:55:        }),
+> src\fluent\tables\authorized-access-detail.now.ts:56:        source_hrsd_case: ReferenceColumn({
+  src\fluent\tables\authorized-access-detail.now.ts:57:            label: 'Source HRSD Case',
+  src\fluent\tables\authorized-access-detail.now.ts:58:            referenceTable: 'sn_hr_core_case',
+  src\fluent\tables\authorized-access-detail.now.ts:59:            mandatory: true,
+  src\fluent\tables\authorized-access-detail.now.ts:60:            cascadeRule: 'restrict',
+  src\fluent\tables\authorized-access-detail.now.ts:63:        }),
+> src\fluent\tables\authorized-access-detail.now.ts:64:        rob_authorization_form: ReferenceColumn({
+  src\fluent\tables\authorized-access-detail.now.ts:65:            label: 'ROB Authorization Form',
+  src\fluent\tables\authorized-access-detail.now.ts:66:            referenceTable: 
+x_2108496_hr_acces_rob_auth.name,
+  src\fluent\tables\authorized-access-detail.now.ts:67:            cascadeRule: 'restrict',
+  src\fluent\tables\authorized-access-detail.now.ts:68:            readOnly: true,
+  src\fluent\tables\authorized-access-detail.now.ts:70:        }),
+> src\fluent\tables\authorized-access-detail.now.ts:71:        subject_person: ReferenceColumn({
+  src\fluent\tables\authorized-access-detail.now.ts:72:            label: 'Subject Person',
+  src\fluent\tables\authorized-access-detail.now.ts:73:            referenceTable: 'sys_user',
+  src\fluent\tables\authorized-access-detail.now.ts:74:            mandatory: true,
+  src\fluent\tables\authorized-access-detail.now.ts:75:            cascadeRule: 'none',
+  src\fluent\tables\authorized-access-detail.now.ts:78:        }),
+> src\fluent\tables\authorized-access-detail.now.ts:79:        access_item: ReferenceColumn({
+  src\fluent\tables\authorized-access-detail.now.ts:80:            label: 'Access Item',
+  src\fluent\tables\authorized-access-detail.now.ts:81:            referenceTable: 
+x_2108496_hr_acces_rob_access.name,
+  src\fluent\tables\authorized-access-detail.now.ts:82:            mandatory: true,
+  src\fluent\tables\authorized-access-detail.now.ts:83:            cascadeRule: 'restrict',
+  src\fluent\tables\authorized-access-detail.now.ts:86:        }),
+> src\fluent\tables\authorized-access-detail.now.ts:87:        business_justification_snapshot: 
+MultiLineTextColumn({
+  src\fluent\tables\authorized-access-detail.now.ts:88:            label: 'Business Justification 
+Snapshot',
+  src\fluent\tables\authorized-access-detail.now.ts:89:            readOnly: true,
+  src\fluent\tables\authorized-access-detail.now.ts:90:            maxLength: 4000,
+  src\fluent\tables\authorized-access-detail.now.ts:91:        }),
+  src\fluent\tables\authorized-access-detail.now.ts:101:        }),
+> src\fluent\tables\authorized-access-detail.now.ts:102:        status: ChoiceColumn({
+> src\fluent\tables\authorized-access-detail.now.ts:103:            label: 'Status',
+  src\fluent\tables\authorized-access-detail.now.ts:104:            mandatory: true,
+  src\fluent\tables\authorized-access-detail.now.ts:105:            readOnly: true,
+  src\fluent\tables\authorized-access-detail.now.ts:106:            audit: true,
+  src\fluent\tables\authorized-access-detail.now.ts:107:            default: 'requested',
+  src\fluent\tables\authorized-access-detail.now.ts:118:        }),
+> src\fluent\tables\authorized-access-detail.now.ts:119:        staffing_task_required_snapshot: 
+BooleanColumn({
+  src\fluent\tables\authorized-access-detail.now.ts:120:            label: 'Staffing Task Required 
+Snapshot',
+  src\fluent\tables\authorized-access-detail.now.ts:121:            default: false,
+  src\fluent\tables\authorized-access-detail.now.ts:122:            readOnly: true,
+  src\fluent\tables\authorized-access-detail.now.ts:123:            audit: true,
+  src\fluent\tables\authorized-access-detail.now.ts:124:        }),
+> src\fluent\tables\authorized-access-detail.now.ts:125:        analytics_task_required_snapshot: 
+BooleanColumn({
+  src\fluent\tables\authorized-access-detail.now.ts:126:            label: 'Analytics Task Required 
+Snapshot',
+  src\fluent\tables\authorized-access-detail.now.ts:127:            default: false,
+  src\fluent\tables\authorized-access-detail.now.ts:128:            readOnly: true,
+  src\fluent\tables\authorized-access-detail.now.ts:129:            audit: true,
+  src\fluent\tables\authorized-access-detail.now.ts:130:        }),
+> src\fluent\tables\authorized-access-detail.now.ts:131:        
+operations_manager_task_required_snapshot: BooleanColumn({
+  src\fluent\tables\authorized-access-detail.now.ts:132:            label: 'Operations Manager Task 
+Required Snapshot',
+  src\fluent\tables\authorized-access-detail.now.ts:133:            default: false,
+  src\fluent\tables\authorized-access-detail.now.ts:134:            readOnly: true,
+  src\fluent\tables\authorized-access-detail.now.ts:135:            audit: true,
+  src\fluent\tables\authorized-access-detail.now.ts:136:        }),
+> src\fluent\tables\authorized-access-detail.now.ts:137:        provisioning_system_snapshot: 
+StringColumn({
+  src\fluent\tables\authorized-access-detail.now.ts:138:            label: 'Provisioning System 
+Snapshot',
+  src\fluent\tables\authorized-access-detail.now.ts:139:            readOnly: true,
+  src\fluent\tables\authorized-access-detail.now.ts:140:            audit: true,
+  src\fluent\tables\authorized-access-detail.now.ts:141:            maxLength: 100,
+  src\fluent\tables\authorized-access-detail.now.ts:142:        }),
+> src\fluent\tables\authorized-access-detail.now.ts:143:        target_system_snapshot: StringColumn({
+  src\fluent\tables\authorized-access-detail.now.ts:144:            label: 'Target System Snapshot',
+  src\fluent\tables\authorized-access-detail.now.ts:145:            readOnly: true,
+  src\fluent\tables\authorized-access-detail.now.ts:146:            audit: true,
+  src\fluent\tables\authorized-access-detail.now.ts:147:            maxLength: 100,
+
+
+

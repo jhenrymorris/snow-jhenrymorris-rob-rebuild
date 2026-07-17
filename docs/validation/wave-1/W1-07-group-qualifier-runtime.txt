@@ -1,0 +1,19 @@
+﻿W1-07 Active Group Qualifier Runtime Test
+
+Default Staffing Assignment Group
+Active group displayed: Yes
+Inactive group excluded: Yes
+
+Default Analytics Assignment Group
+Active group displayed: Yes
+Inactive group excluded: Yes
+
+Default Operations Manager Escalation Group
+Active group displayed: Yes
+Inactive group excluded: Yes
+
+Default Exception Review Group
+Active group displayed: Yes
+Inactive group excluded: Yes
+
+Temporary groups deleted after test: Yes

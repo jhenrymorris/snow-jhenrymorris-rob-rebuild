@@ -1,0 +1,78 @@
+﻿
+  src\fluent\tables\authorized-access-detail.now.ts:23:        number: 1000,
+  src\fluent\tables\authorized-access-detail.now.ts:24:        numberOfDigits: 7,
+  src\fluent\tables\authorized-access-detail.now.ts:25:    },
+> src\fluent\tables\authorized-access-detail.now.ts:26:    index: [
+  src\fluent\tables\authorized-access-detail.now.ts:27:        {
+  src\fluent\tables\authorized-access-detail.now.ts:28:            name: 'auth_detail_number_uq',
+> src\fluent\tables\authorized-access-detail.now.ts:29:            unique: true,
+  src\fluent\tables\authorized-access-detail.now.ts:30:            element: 'number',
+  src\fluent\tables\authorized-access-detail.now.ts:31:        },
+  src\fluent\tables\authorized-access-detail.now.ts:32:        {
+  src\fluent\tables\authorized-access-detail.now.ts:33:            name: 'auth_detail_case_item_uq',
+> src\fluent\tables\authorized-access-detail.now.ts:34:            unique: true,
+> src\fluent\tables\authorized-access-detail.now.ts:35:            element: ['source_hrsd_case', 
+'access_item'],
+  src\fluent\tables\authorized-access-detail.now.ts:36:        },
+  src\fluent\tables\authorized-access-detail.now.ts:37:        {
+  src\fluent\tables\authorized-access-detail.now.ts:38:            name: 'auth_detail_coverage',
+> src\fluent\tables\authorized-access-detail.now.ts:39:            unique: false,
+> src\fluent\tables\authorized-access-detail.now.ts:40:            element: ['subject_person', 
+'access_item', 'status', 'authorized_end_date'],
+  src\fluent\tables\authorized-access-detail.now.ts:41:        },
+  src\fluent\tables\authorized-access-detail.now.ts:42:        {
+  src\fluent\tables\authorized-access-detail.now.ts:43:            name: 'auth_detail_form_status',
+> src\fluent\tables\authorized-access-detail.now.ts:44:            unique: false,
+> src\fluent\tables\authorized-access-detail.now.ts:45:            element: ['rob_authorization_form', 
+'status'],
+  src\fluent\tables\authorized-access-detail.now.ts:46:        },
+  src\fluent\tables\authorized-access-detail.now.ts:47:    ],
+  src\fluent\tables\authorized-access-detail.now.ts:48:    schema: {
+  src\fluent\tables\authorized-access-detail.now.ts:49:        number: StringColumn({
+  src\fluent\tables\authorized-access-detail.now.ts:50:            label: 'Number',
+  src\fluent\tables\authorized-access-detail.now.ts:51:            mandatory: true,
+  src\fluent\tables\authorized-access-detail.now.ts:52:            readOnly: true,
+  src\fluent\tables\authorized-access-detail.now.ts:53:            default: 
+'javascript:global.getNextObjNumberPadded();',
+  src\fluent\tables\authorized-access-detail.now.ts:54:            maxLength: 40,
+  src\fluent\tables\authorized-access-detail.now.ts:55:        }),
+> src\fluent\tables\authorized-access-detail.now.ts:56:        source_hrsd_case: ReferenceColumn({
+  src\fluent\tables\authorized-access-detail.now.ts:57:            label: 'Source HRSD Case',
+  src\fluent\tables\authorized-access-detail.now.ts:58:            referenceTable: 'sn_hr_core_case',
+  src\fluent\tables\authorized-access-detail.now.ts:59:            mandatory: true,
+  src\fluent\tables\authorized-access-detail.now.ts:60:            cascadeRule: 'restrict',
+  src\fluent\tables\authorized-access-detail.now.ts:61:            readOnly: true,
+  src\fluent\tables\authorized-access-detail.now.ts:62:            audit: true,
+  src\fluent\tables\authorized-access-detail.now.ts:63:        }),
+> src\fluent\tables\authorized-access-detail.now.ts:64:        rob_authorization_form: ReferenceColumn({
+  src\fluent\tables\authorized-access-detail.now.ts:65:            label: 'ROB Authorization Form',
+  src\fluent\tables\authorized-access-detail.now.ts:66:            referenceTable: 
+x_2108496_hr_acces_rob_auth.name,
+  src\fluent\tables\authorized-access-detail.now.ts:67:            cascadeRule: 'restrict',
+  src\fluent\tables\authorized-access-detail.now.ts:68:            readOnly: true,
+  src\fluent\tables\authorized-access-detail.now.ts:69:            audit: true,
+  src\fluent\tables\authorized-access-detail.now.ts:70:        }),
+  src\fluent\tables\authorized-access-detail.now.ts:71:        subject_person: ReferenceColumn({
+  src\fluent\tables\authorized-access-detail.now.ts:72:            label: 'Subject Person',
+  src\fluent\tables\authorized-access-detail.now.ts:73:            referenceTable: 'sys_user',
+  src\fluent\tables\authorized-access-detail.now.ts:74:            mandatory: true,
+  src\fluent\tables\authorized-access-detail.now.ts:76:            readOnly: true,
+  src\fluent\tables\authorized-access-detail.now.ts:77:            audit: true,
+  src\fluent\tables\authorized-access-detail.now.ts:78:        }),
+> src\fluent\tables\authorized-access-detail.now.ts:79:        access_item: ReferenceColumn({
+  src\fluent\tables\authorized-access-detail.now.ts:80:            label: 'Access Item',
+  src\fluent\tables\authorized-access-detail.now.ts:81:            referenceTable: 
+x_2108496_hr_acces_rob_access.name,
+  src\fluent\tables\authorized-access-detail.now.ts:82:            mandatory: true,
+  src\fluent\tables\authorized-access-detail.now.ts:83:            cascadeRule: 'restrict',
+  src\fluent\tables\authorized-access-detail.now.ts:84:            readOnly: true,
+  src\fluent\tables\authorized-access-detail.now.ts:85:            audit: true,
+  src\fluent\tables\authorized-access-detail.now.ts:86:        }),
+  src\fluent\tables\authorized-access-detail.now.ts:87:        business_justification_snapshot: 
+MultiLineTextColumn({
+  src\fluent\tables\authorized-access-detail.now.ts:88:            label: 'Business Justification 
+Snapshot',
+  src\fluent\tables\authorized-access-detail.now.ts:89:            readOnly: true,
+
+
+

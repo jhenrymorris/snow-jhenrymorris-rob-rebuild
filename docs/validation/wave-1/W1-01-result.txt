@@ -1,0 +1,4 @@
+W1-01 SDK Build
+Normal build exit code: 0
+Frozen-key build exit code: 0
+Expected result: Both exit codes are 0.

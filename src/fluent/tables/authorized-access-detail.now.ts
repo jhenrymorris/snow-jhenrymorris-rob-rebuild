@@ -1,0 +1,160 @@
+import {
+    BooleanColumn,
+    ChoiceColumn,
+    DateColumn,
+    MultiLineTextColumn,
+    ReferenceColumn,
+    StringColumn,
+    Table,
+} from '@servicenow/sdk/core'
+import { x_2108496_hr_acces_rob_access } from './rob-access-item-reference.now'
+import { x_2108496_hr_acces_rob_auth } from './rob-authorization-form.now'
+
+export const x_2108496_hr_acces_auth_detail = Table({
+    name: 'x_2108496_hr_acces_auth_detail',
+    label: 'Authorized Access Detail',
+    display: 'number',
+    extensible: false,
+    accessibleFrom: 'package_private',
+    allowWebServiceAccess: false,
+    createAccessControls: false,
+    autoNumber: {
+        prefix: 'ROBD',
+        number: 1000,
+        numberOfDigits: 7,
+    },
+    index: [
+        {
+            name: 'auth_detail_number_uq',
+            unique: true,
+            element: 'number',
+        },
+        {
+            name: 'auth_detail_case_item_uq',
+            unique: true,
+            element: ['source_hrsd_case', 'access_item'],
+        },
+        {
+            name: 'auth_detail_form_item_uq',
+            unique: true,
+            element: ['rob_authorization_form', 'access_item'],
+        },
+        {
+            name: 'auth_detail_coverage',
+            unique: false,
+            element: ['subject_person', 'access_item', 'status', 'authorized_end_date'],
+        },
+        {
+            name: 'auth_detail_form_status',
+            unique: false,
+            element: ['rob_authorization_form', 'status'],
+        },
+    ],
+    schema: {
+        number: StringColumn({
+            label: 'Number',
+            mandatory: true,
+            readOnly: true,
+            default: 'javascript:global.getNextObjNumberPadded();',
+            maxLength: 40,
+        }),
+        source_hrsd_case: ReferenceColumn({
+            label: 'Source HRSD Case',
+            referenceTable: 'sn_hr_core_case',
+            mandatory: true,
+            cascadeRule: 'restrict',
+            readOnly: true,
+            audit: true,
+        }),
+        rob_authorization_form: ReferenceColumn({
+            label: 'ROB Authorization Form',
+            referenceTable: x_2108496_hr_acces_rob_auth.name,
+            mandatory: true,
+            cascadeRule: 'restrict',
+            readOnly: true,
+            audit: true,
+        }),
+        subject_person: ReferenceColumn({
+            label: 'Subject Person',
+            referenceTable: 'sys_user',
+            mandatory: true,
+            cascadeRule: 'none',
+            readOnly: true,
+            audit: true,
+        }),
+        access_item: ReferenceColumn({
+            label: 'Access Item',
+            referenceTable: x_2108496_hr_acces_rob_access.name,
+            mandatory: true,
+            cascadeRule: 'restrict',
+            readOnly: true,
+            audit: true,
+        }),
+        business_justification_snapshot: MultiLineTextColumn({
+            label: 'Business Justification Snapshot',
+            readOnly: true,
+            maxLength: 4000,
+        }),
+        authorized_start_date: DateColumn({
+            label: 'Authorized Start Date',
+            readOnly: true,
+            audit: true,
+        }),
+        authorized_end_date: DateColumn({
+            label: 'Authorized End Date',
+            readOnly: true,
+            audit: true,
+        }),
+        status: ChoiceColumn({
+            label: 'Status',
+            mandatory: true,
+            readOnly: true,
+            audit: true,
+            default: 'requested',
+            choices: {
+                requested: 'Requested',
+                pending_authorization: 'Pending Authorization',
+                authorized: 'Authorized',
+                active: 'Active',
+                expired: 'Expired',
+                revoked: 'Revoked',
+                superseded: 'Superseded',
+                denied: 'Denied',
+            },
+        }),
+        staffing_task_required_snapshot: BooleanColumn({
+            label: 'Staffing Task Required Snapshot',
+            default: false,
+            readOnly: true,
+            audit: true,
+        }),
+        analytics_task_required_snapshot: BooleanColumn({
+            label: 'Analytics Task Required Snapshot',
+            default: false,
+            readOnly: true,
+            audit: true,
+        }),
+        operations_manager_task_required_snapshot: BooleanColumn({
+            label: 'Operations Manager Task Required Snapshot',
+            default: false,
+            readOnly: true,
+            audit: true,
+        }),
+        provisioning_system_snapshot: StringColumn({
+            label: 'Provisioning System Snapshot',
+            readOnly: true,
+            audit: true,
+            maxLength: 100,
+        }),
+        target_system_snapshot: StringColumn({
+            label: 'Target System Snapshot',
+            readOnly: true,
+            audit: true,
+            maxLength: 100,
+        }),
+        notes: MultiLineTextColumn({
+            label: 'Notes',
+            maxLength: 4000,
+        }),
+    },
+})

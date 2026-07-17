@@ -1,0 +1,48 @@
+﻿
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\records\default-rob-configuration.now.
+             ts
+LineNumber : 8
+Line       :         name: 'Default ROB Configuration',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\records\default-rob-configuration.now.
+             ts
+LineNumber : 10
+Line       :         current_accepted_form_version: '2024.04',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\records\default-rob-configuration.now.
+             ts
+LineNumber : 11
+Line       :         agency_annual_recertification_date: '2027-09-30',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-configuration.now.ts
+LineNumber : 40
+Line       :             label: 'Mid-Cycle Grace Window Days',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-configuration.now.ts
+LineNumber : 46
+Line       :             label: 'Renewal Reminder 1 Days',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-configuration.now.ts
+LineNumber : 52
+Line       :             label: 'Renewal Reminder 2 Days',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-configuration.now.ts
+LineNumber : 58
+Line       :             label: 'Renewal Reminder 3 Days',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-configuration.now.ts
+LineNumber : 64
+Line       :             label: 'Lapse Notification Enabled',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+
+
+

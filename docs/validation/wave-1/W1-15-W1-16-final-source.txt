@@ -1,0 +1,29 @@
+﻿
+> src\fluent\tables\authorized-access-detail.now.ts:33:            name: 'auth_detail_case_item_uq',
+  src\fluent\tables\authorized-access-detail.now.ts:34:            unique: true,
+  src\fluent\tables\authorized-access-detail.now.ts:35:            element: ['source_hrsd_case', 
+'access_item'],
+  src\fluent\tables\authorized-access-detail.now.ts:36:        },
+  src\fluent\tables\authorized-access-detail.now.ts:37:        {
+> src\fluent\tables\authorized-access-detail.now.ts:38:            name: 'auth_detail_form_item_uq',
+  src\fluent\tables\authorized-access-detail.now.ts:39:            unique: true,
+  src\fluent\tables\authorized-access-detail.now.ts:40:            element: ['rob_authorization_form', 
+'access_item'],
+  src\fluent\tables\authorized-access-detail.now.ts:41:        },
+  src\fluent\tables\authorized-access-detail.now.ts:42:        {
+  src\fluent\tables\authorized-access-detail.now.ts:43:            name: 'auth_detail_coverage',
+  src\fluent\tables\authorized-access-detail.now.ts:44:            unique: false,
+  src\fluent\tables\authorized-access-detail.now.ts:45:            element: ['subject_person', 
+'access_item', 'status', 'authorized_end_date'],
+> src\fluent\tables\authorized-access-detail.now.ts:69:        rob_authorization_form: ReferenceColumn({
+  src\fluent\tables\authorized-access-detail.now.ts:70:            label: 'ROB Authorization Form',
+  src\fluent\tables\authorized-access-detail.now.ts:71:            referenceTable: 
+x_2108496_hr_acces_rob_auth.name,
+  src\fluent\tables\authorized-access-detail.now.ts:72:            mandatory: true,
+  src\fluent\tables\authorized-access-detail.now.ts:73:            cascadeRule: 'restrict',
+  src\fluent\tables\authorized-access-detail.now.ts:74:            readOnly: true,
+  src\fluent\tables\authorized-access-detail.now.ts:75:            audit: true,
+  src\fluent\tables\authorized-access-detail.now.ts:76:        }),
+
+
+
