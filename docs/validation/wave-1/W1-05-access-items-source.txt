@@ -1,0 +1,113 @@
+﻿
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\records\starter-rob-access-items.now.t
+             s
+LineNumber : 8
+Line       :         name: 'FPPS / WTTS',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\records\starter-rob-access-items.now.t
+             s
+LineNumber : 23
+Line       : export const eopfAccessItem = Record({
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\records\starter-rob-access-items.now.t
+             s
+LineNumber : 24
+Line       :     $id: Now.ID['rob-access-item-eopf'],
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\records\starter-rob-access-items.now.t
+             s
+LineNumber : 28
+Line       :         name: 'eOPF',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\records\starter-rob-access-items.now.t
+             s
+LineNumber : 30
+Line       :         access_item_code: 'EOPF',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\records\starter-rob-access-items.now.t
+             s
+LineNumber : 37
+Line       :         external_provisioning_system: 'eopf',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\records\starter-rob-access-items.now.t
+             s
+LineNumber : 38
+Line       :         external_target_system: 'eopf',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\records\starter-rob-access-items.now.t
+             s
+LineNumber : 48
+Line       :         name: 'USA Staffing',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\records\starter-rob-access-items.now.t
+             s
+LineNumber : 68
+Line       :         name: 'Human Capital Data Access',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\records\starter-rob-access-items.now.t
+             s
+LineNumber : 88
+Line       :         name: 'Report Access',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\records\starter-rob-access-items.now.t
+             s
+LineNumber : 108
+Line       :         name: 'Workforce Profile Charts',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\roles\rob-roles.now.ts
+LineNumber : 15
+Line       :     description: 'Completes assigned Operations Manager ARM role-assignment work for 
+             Workforce Profile Charts.',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-access-item-reference.now.t
+             s
+LineNumber : 103
+Line       :                 fpps_wtts: 'FPPS / WTTS',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-access-item-reference.now.t
+             s
+LineNumber : 104
+Line       :                 eopf: 'eOPF',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-access-item-reference.now.t
+             s
+LineNumber : 105
+Line       :                 usa_staffing: 'USA Staffing',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-access-item-reference.now.t
+             s
+LineNumber : 115
+Line       :                 fpps_wtts: 'FPPS / WTTS',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-access-item-reference.now.t
+             s
+LineNumber : 116
+Line       :                 eopf: 'eOPF',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-access-item-reference.now.t
+             s
+LineNumber : 117
+Line       :                 usa_staffing: 'USA Staffing',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+
+
+

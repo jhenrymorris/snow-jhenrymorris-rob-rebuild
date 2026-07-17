@@ -35,6 +35,11 @@ export const x_2108496_hr_acces_auth_detail = Table({
             element: ['source_hrsd_case', 'access_item'],
         },
         {
+            name: 'auth_detail_form_item_uq',
+            unique: true,
+            element: ['rob_authorization_form', 'access_item'],
+        },
+        {
             name: 'auth_detail_coverage',
             unique: false,
             element: ['subject_person', 'access_item', 'status', 'authorized_end_date'],
@@ -64,6 +69,7 @@ export const x_2108496_hr_acces_auth_detail = Table({
         rob_authorization_form: ReferenceColumn({
             label: 'ROB Authorization Form',
             referenceTable: x_2108496_hr_acces_rob_auth.name,
+            mandatory: true,
             cascadeRule: 'restrict',
             readOnly: true,
             audit: true,

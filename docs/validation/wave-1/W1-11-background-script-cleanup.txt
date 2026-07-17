@@ -1,0 +1,9 @@
+﻿W1-11 Background Script Cleanup
+
+Form Version restored to blank: Yes
+GlideRecord.setWorkflow test privilege absent: Yes
+GlideRecord.setValue test privilege absent: Yes
+GlideRecord.update test privilege absent: Yes
+Unexpected related privilege remaining: No
+
+Result: Pass

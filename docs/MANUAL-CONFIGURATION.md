@@ -65,6 +65,26 @@ The source intentionally leaves all assignment-group references blank. Populate 
 - [ ] Confirm the installed Australia dictionary read-only option permits lifecycle and server-side processing to populate Form Version while preventing normal form editing.
 - [ ] Validate that the Business Justification label is visible on the normal HR Access ROB Authorization application form; record App Home Preview behavior separately because preview rendering is not the acceptance surface.
 
+## Authorized Access Detail related-list control
+
+Parent table: `x_2108496_hr_acces_rob_auth`
+
+Related list:
+`x_2108496_hr_acces_auth_detail.rob_authorization_form`
+
+Required list-control settings:
+
+- Omit New button: true
+- Omit Edit button: true
+- New condition: blank
+- Edit condition: blank
+
+Purpose: Authorized Access Detail records are lifecycle-created. Direct
+manual creation or mass editing from the parent related list is not supported.
+
+Validation: Reopen an ROB Authorization Form and confirm that the related
+list remains visible while New and Edit are absent.
+
 ## Known SDK Diagnostic — Simple Reference Qualifiers
 
 SDK version evaluated:

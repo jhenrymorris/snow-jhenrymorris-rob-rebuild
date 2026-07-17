@@ -1,0 +1,14 @@
+﻿
+> src\fluent\tables\authorized-access-detail.now.ts:33:            name: 'auth_detail_case_item_uq',
+  src\fluent\tables\authorized-access-detail.now.ts:34:            unique: true,
+  src\fluent\tables\authorized-access-detail.now.ts:35:            element: ['source_hrsd_case', 
+'access_item'],
+  src\fluent\tables\authorized-access-detail.now.ts:36:        },
+> src\fluent\tables\authorized-access-detail.now.ts:38:            name: 'auth_detail_form_item_uq',
+  src\fluent\tables\authorized-access-detail.now.ts:39:            unique: true,
+  src\fluent\tables\authorized-access-detail.now.ts:40:            element: ['rob_authorization_form', 
+'access_item'],
+  src\fluent\tables\authorized-access-detail.now.ts:41:        },
+
+
+

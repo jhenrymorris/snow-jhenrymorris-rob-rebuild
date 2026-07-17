@@ -1,0 +1,47 @@
+﻿
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\records\starter-rob-access-items.now.t
+             s
+LineNumber : 108
+Line       :         name: 'Workforce Profile Charts',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\records\starter-rob-access-items.now.t
+             s
+LineNumber : 117
+Line       :         external_provisioning_system: 'arm',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\records\starter-rob-access-items.now.t
+             s
+LineNumber : 118
+Line       :         external_target_system: 'oas',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\records\starter-rob-access-items.now.t
+             s
+LineNumber : 119
+Line       :         sort_order: 600,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\roles\rob-roles.now.ts
+LineNumber : 15
+Line       :     description: 'Completes assigned Operations Manager ARM role-assignment work for 
+             Workforce Profile Charts.',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-access-item-reference.now.t
+             s
+LineNumber : 102
+Line       :                 arm: 'ARM',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-access-item-reference.now.t
+             s
+LineNumber : 114
+Line       :                 oas: 'OAS',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+
+
+

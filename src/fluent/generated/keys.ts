@@ -1752,6 +1752,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_index'
+                        id: '3f0bdbcf029a474583313e6638027eb2'
+                        key: {
+                            logical_table_name: 'x_2108496_hr_acces_auth_detail'
+                            col_name_string: 'rob_authorization_form,access_item'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '400d51d1f6794e59be177c152c89d36d'
                         key: {

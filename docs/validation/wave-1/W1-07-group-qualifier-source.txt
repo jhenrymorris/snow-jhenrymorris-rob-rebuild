@@ -1,0 +1,45 @@
+﻿
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-configuration.now.ts
+LineNumber : 71
+Line       :             referenceQual: 'active=true',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-configuration.now.ts
+LineNumber : 72
+Line       :             useReferenceQualifier: 'simple',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-configuration.now.ts
+LineNumber : 78
+Line       :             referenceQual: 'active=true',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-configuration.now.ts
+LineNumber : 79
+Line       :             useReferenceQualifier: 'simple',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-configuration.now.ts
+LineNumber : 85
+Line       :             referenceQual: 'active=true',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-configuration.now.ts
+LineNumber : 86
+Line       :             useReferenceQualifier: 'simple',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-configuration.now.ts
+LineNumber : 92
+Line       :             referenceQual: 'active=true',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : C:\ServiceNow\hr-access-rob-authorization\src\fluent\tables\rob-configuration.now.ts
+LineNumber : 93
+Line       :             useReferenceQualifier: 'simple',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+
+
+

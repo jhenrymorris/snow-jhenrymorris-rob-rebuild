@@ -1,0 +1,10 @@
+﻿W1-17 Authorization Form Attachment Test
+
+Paperclip available: Yes
+Synthetic attachment uploaded: Yes
+Attachment associated with ROBA0001001: Yes
+Attachment opened/downloaded successfully: Yes
+Attachment deleted after test: Yes
+Custom attachment table created: No
+
+Result: Pass

@@ -92,3 +92,11 @@ TM-01, TM-02, TM-06 through TM-16, TM-20, TM-23, TM-27, TM-29, TM-49 through TM-
 - Do not upload real signed forms.
 - Use fictional business justifications.
 - Use controlled dates for renewal testing.
+
+W1-08: ROBA0001001 observed
+W1-09: ROBD0001005 observed
+W1-12: Visible form annotation workaround
+W1-14: Source-controlled or documented manual list control
+W1-15: Installed dictionary and current source reviewed
+W1-16: Two unique compound indexes confirmed in source and installed metadata
+W1-17: Attachment uploaded, downloaded, and removed
