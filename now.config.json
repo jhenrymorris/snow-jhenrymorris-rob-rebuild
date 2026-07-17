@@ -1,5 +1,19 @@
 {
     "scope": "x_2108496_hr_acces",
     "scopeId": "b0d63cedc2d34e0ca4c05d6eb7acf61e",
-    "name": "HR Access ROB Authorization"
+    "name": "HR Access ROB Authorization",
+    "dependencies": {
+        "sn_hr_core": {
+            "tables": [
+                "sn_hr_core_case",
+                "sn_hr_core_task"
+            ]
+        },
+        "global": {
+            "tables": [
+                "sys_user",
+                "sys_user_group"
+            ]
+        }
+    }
 }
