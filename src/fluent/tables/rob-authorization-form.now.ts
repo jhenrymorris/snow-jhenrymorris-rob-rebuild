@@ -50,6 +50,7 @@ export const x_2108496_hr_acces_rob_auth = Table({
             label: 'Number',
             mandatory: true,
             readOnly: true,
+            default: 'javascript:global.getNextObjNumberPadded();',
             maxLength: 40,
         }),
         subject_person: ReferenceColumn({
@@ -93,7 +94,13 @@ export const x_2108496_hr_acces_rob_auth = Table({
             label: 'Access End Date',
         }),
         business_justification: MultiLineTextColumn({
-            label: 'Business Justification',
+            label: [
+                {
+                    language: 'en',
+                    label: 'Business Justification',
+                    hint: 'Explain the business need for the requested HR access.',
+                },
+            ],
             mandatory: true,
             maxLength: 4000,
         }),
@@ -108,7 +115,6 @@ export const x_2108496_hr_acces_rob_auth = Table({
         }),
         form_version: StringColumn({
             label: 'Form Version',
-            mandatory: true,
             readOnly: true,
             maxLength: 40,
         }),

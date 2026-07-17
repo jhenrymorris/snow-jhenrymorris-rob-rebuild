@@ -53,6 +53,22 @@ declare global {
                         table: 'sys_app_application'
                         id: '27c5e96fac7c4115909006441d504d7e'
                     }
+                    'rob-authorization-access-details-list-control': {
+                        table: 'sys_ui_list_control'
+                        id: 'fa641d2245a84d6282a01363a73e7a59'
+                    }
+                    'rob-authorization-access-details-related-list': {
+                        table: 'sys_ui_related_list'
+                        id: '78115b6a2db64a349c96d8be0c7c3868'
+                    }
+                    'rob-authorization-access-details-related-list-entry': {
+                        table: 'sys_ui_related_list_entry'
+                        id: '0f617b0d29c54ba0b66f95622c5c393d'
+                    }
+                    'rob-authorization-business-justification-label': {
+                        table: 'sys_ui_annotation'
+                        id: '6d696ea82b254d9f8002884b3a4736ee'
+                    }
                     'rob-authorization-forms-module': {
                         table: 'sys_app_module'
                         id: '44af6d26001445aa92d9d365575f051f'
@@ -97,6 +113,7 @@ declare global {
                     {
                         table: 'sys_ui_form_section'
                         id: '0129aa29785e4efe91843d3c66b853d6'
+                        deleted: true
                         key: {
                             sys_ui_form: {
                                 id: 'c79a5c2bf97a4b0b9504ae0e7412b212'
@@ -888,6 +905,28 @@ declare global {
                         key: {
                             name: 'x_2108496_hr_acces_rob_config'
                             element: 'lapse_notification_enabled'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '1cdf00df147b48b09c600747b3f45b47'
+                        key: {
+                            sys_ui_section: {
+                                id: '74109161e77f4060b120c2af8d1b8f3d'
+                                key: {
+                                    name: 'x_2108496_hr_acces_rob_auth'
+                                    caption: 'Authorization Scope'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '6d696ea82b254d9f8002884b3a4736ee'
+                            position: '6'
                         }
                     },
                     {
@@ -2109,6 +2148,7 @@ declare global {
                     {
                         table: 'sys_ui_section'
                         id: '4f3c429ef46e48b89fb4d726bc29a85b'
+                        deleted: true
                         key: {
                             name: 'x_2108496_hr_acces_rob_auth'
                             caption: 'Authorized Access Details'
@@ -3614,6 +3654,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: '89a6e41d14854a63be8f5079e0f764cf'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '74109161e77f4060b120c2af8d1b8f3d'
@@ -5654,6 +5695,28 @@ declare global {
                     },
                     {
                         table: 'sys_ui_element'
+                        id: 'dabce932bf9941b3b0343e1a09a55bad'
+                        key: {
+                            sys_ui_section: {
+                                id: '74109161e77f4060b120c2af8d1b8f3d'
+                                key: {
+                                    name: 'x_2108496_hr_acces_rob_auth'
+                                    caption: 'Authorization Scope'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'business_justification'
+                            position: '7'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
                         id: 'db7e3796efea40ea95c0f420b09128f8'
                         key: {
                             sys_ui_section: {
@@ -6374,6 +6437,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: 'fd59f77e3f604cbda99943ae700e40da'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '4f3c429ef46e48b89fb4d726bc29a85b'

@@ -60,6 +60,10 @@ The source intentionally leaves all assignment-group references blank. Populate 
 - [ ] Confirm normal ServiceNow attachments can be added only to the ROB Authorization Form during later document configuration; do not add a custom attachment field or table.
 - [ ] Confirm ROB Authorization Form history records audited field changes.
 - [ ] Confirm no automatic deletion or retention job removes Authorization Form or Authorized Access Detail history.
+- [ ] Confirm a Draft ROB Authorization Form may temporarily have no Form Version.
+- [ ] Confirm lifecycle processing reads the active ROB Configuration and populates Form Version before Employee Signature begins.
+- [ ] Confirm the installed Australia dictionary read-only option permits lifecycle and server-side processing to populate Form Version while preventing normal form editing.
+- [ ] Validate that the Business Justification label is visible on the normal HR Access ROB Authorization application form; record App Home Preview behavior separately because preview rendering is not the acceptance surface.
 
 ## Known SDK Diagnostic — Simple Reference Qualifiers
 

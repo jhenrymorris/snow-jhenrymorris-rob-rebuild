@@ -62,7 +62,7 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 
 | Step | SDK artifact | Test reference | Status |
 |---|---|---|---|
-| Step 26 - Administrative navigation and forms | `src/fluent/modules/rob-administration-menu.now.ts`; `src/fluent/forms/*.now.ts` | TM-69, TM-70 | Implemented |
+| Step 26 - Administrative navigation and forms | `src/fluent/modules/rob-administration-menu.now.ts`; `src/fluent/forms/*.now.ts` | TM-69, TM-70, TM-73 | Implemented |
 
 ## Wave Mapping
 
@@ -89,5 +89,5 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 
 | Step | SDK artifact | Test reference | Status |
 |---|---|---|---|
-| Step 24 — ROB Authorization Form | `src/fluent/tables/rob-authorization-form.now.ts` | TM-65, TM-66 | Implemented |
+| Step 24 — ROB Authorization Form | `src/fluent/tables/rob-authorization-form.now.ts` | TM-65, TM-66, TM-72 | Implemented |
 | Step 25 — Authorized Access Detail | `src/fluent/tables/authorized-access-detail.now.ts` | TM-67, TM-68 | Implemented |

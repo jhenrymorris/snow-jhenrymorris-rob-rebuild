@@ -122,7 +122,7 @@ Starter values:
 | Access End Date | Date | Case snapshot |
 | Business Justification | Multiline text | Case snapshot |
 | Authorization Action | Choice | New, Renewal, Amendment |
-| Form Version | String | Active configuration |
+| Form Version | String | System-managed from active configuration before Employee Signature; may be blank while Draft |
 | Effective Date | Date | Activation |
 | Expiration Date | Date | Expiration service |
 | Status | Choice | Governed lifecycle |

@@ -70,13 +70,15 @@ Status values: Not Run, Pass, Fail, Blocked, Manual Only.
 | TM-63 | ROB Access Item starter data | Six unique first-install access-item records build with approved routing, system, and sort values | SDK build/source review | Pass |
 | TM-64 | Workforce Profile Charts routing reference | Starter record requires Analytics and Operations Manager tasks, provisions through ARM, and targets OAS | SDK build/source review | Pass |
 | TM-65 | ROB Authorization Form schema | Authorization table builds with ROBA auto-numbering, approved choices, native references, display number, and table auditing | SDK build/source review | Pass |
-| TM-66 | Authorization evidence fields | Employee, approval, supervisor-signature, PDF, reminder, lapse, and supersession fields build without custom signature or attachment records | SDK build/source review | Pass |
+| TM-66 | Authorization evidence fields | Evidence fields build without custom signature or attachment records; Form Version remains read-only, has no dictionary default, and may be blank while Draft | SDK build/source review | Pass |
 | TM-67 | Authorized Access Detail schema | Detail table builds with ROBD auto-numbering, approved statuses, exact parent/access-item references, and routing snapshots | SDK build/source review | Pass |
 | TM-68 | Access-detail idempotency metadata | Unique source-case/access-item index and coverage/parent retrieval indexes build without test data or unrelated artifacts | SDK build/source review | Pass |
 
 | TM-69 | Step 26 administrative navigation | Application menu and four list modules build with admin/compliance visibility and no fulfiller or Operations Manager repository navigation | SDK build/source review | Pass |
 | TM-70 | Step 26 administrative forms | Four default-view forms build with approved sections and the Authorization Form includes the Authorized Access Detail related list | SDK build/source review | Pass |
 | TM-71 | Wave 1 application roles | Five scoped roles build with correct names; only ROB Admin is scoped application admin | SDK build/source review | Pass |
+| TM-72 | Form Version lifecycle population | A Draft may initially have no Form Version; lifecycle processing copies the active ROB Configuration version before Employee Signature, and the installed Australia read-only option permits lifecycle/server-side population | Manual/ATF | Not Run |
+| TM-73 | Business Justification label rendering | The Business Justification label is visible on the normal application form; App Home Preview behavior is evaluated and recorded separately | Manual | Not Run |
 
 ## Critical Release Gates
 

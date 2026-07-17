@@ -50,6 +50,7 @@ export const x_2108496_hr_acces_auth_detail = Table({
             label: 'Number',
             mandatory: true,
             readOnly: true,
+            default: 'javascript:global.getNextObjNumberPadded();',
             maxLength: 40,
         }),
         source_hrsd_case: ReferenceColumn({
