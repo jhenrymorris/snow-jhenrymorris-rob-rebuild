@@ -53,6 +53,10 @@ declare global {
                         table: 'sys_app_application'
                         id: '27c5e96fac7c4115909006441d504d7e'
                     }
+                    'rob-analytics-access-variable-set': {
+                        table: 'item_option_new_set'
+                        id: '2759a814f7fd4df8a81a7f55e1431290'
+                    }
                     'rob-authorization-access-details-list-control': {
                         table: 'sys_ui_list_control'
                         id: 'fa641d2245a84d6282a01363a73e7a59'
@@ -80,6 +84,10 @@ declare global {
                     'rob-configuration-module': {
                         table: 'sys_app_module'
                         id: '076b51d7efb043dd9674c80e00f53139'
+                    }
+                    'rob-staffing-access-variable-set': {
+                        table: 'item_option_new_set'
+                        id: '523c4fce4c6a4389893ed4eb0dba561c'
                     }
                 }
                 composite: [
@@ -1205,6 +1213,21 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: '26f2a05d025c4f0e9a192e98a333abb9'
+                        key: {
+                            question: {
+                                id: '2a2b9877c1674b93a56baed674f64877'
+                                key: {
+                                    cat_item: 'NULL'
+                                    variable_set: 'be7867ca16a44820af330aac92ae053d'
+                                    name: 'x_2108496_hr_acces_employment_type'
+                                }
+                            }
+                            value: 'contractor'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '274d433056334e2db8a9b5dbdcaf251c'
                         key: {
@@ -1219,6 +1242,15 @@ declare global {
                         key: {
                             name: 'x_2108496_hr_acces_rob_config'
                             element: 'mid_cycle_grace_window_days'
+                        }
+                    },
+                    {
+                        table: 'item_option_new'
+                        id: '2a2b9877c1674b93a56baed674f64877'
+                        key: {
+                            cat_item: 'NULL'
+                            variable_set: 'be7867ca16a44820af330aac92ae053d'
+                            name: 'x_2108496_hr_acces_employment_type'
                         }
                     },
                     {
@@ -2003,6 +2035,21 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: '4b5e796927d340b0b05aae700e7692d4'
+                        key: {
+                            question: {
+                                id: '2a2b9877c1674b93a56baed674f64877'
+                                key: {
+                                    cat_item: 'NULL'
+                                    variable_set: 'be7867ca16a44820af330aac92ae053d'
+                                    name: 'x_2108496_hr_acces_employment_type'
+                                }
+                            }
+                            value: 'other_time_limited'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '4b9ddf071d5d44cb876978715bb52181'
                         key: {
@@ -2474,6 +2521,15 @@ declare global {
                         key: {
                             name: 'x_2108496_hr_acces_auth_detail'
                             element: 'target_system_snapshot'
+                        }
+                    },
+                    {
+                        table: 'item_option_new'
+                        id: '5a9a476250f34c39af18345a6b0827a0'
+                        key: {
+                            cat_item: 'NULL'
+                            variable_set: 'be7867ca16a44820af330aac92ae053d'
+                            name: 'x_2108496_hr_acces_access_end_date'
                         }
                     },
                     {
@@ -3020,6 +3076,15 @@ declare global {
                         key: {
                             logical_table_name: 'x_2108496_hr_acces_rob_auth'
                             col_name_string: 'number'
+                        }
+                    },
+                    {
+                        table: 'item_option_new'
+                        id: '7202b25770c048b3847eecf06c3c356d'
+                        key: {
+                            cat_item: 'NULL'
+                            variable_set: '2759a814f7fd4df8a81a7f55e1431290'
+                            name: 'x_2108496_hr_acces_requested_items'
                         }
                     },
                     {
@@ -3839,6 +3904,15 @@ declare global {
                             name: 'x_2108496_hr_acces_rob_auth'
                             element: 'authorization_action'
                             value: 'renewal'
+                        }
+                    },
+                    {
+                        table: 'item_option_new'
+                        id: '912c4348c374489689b30d45dd3740e2'
+                        key: {
+                            cat_item: 'NULL'
+                            variable_set: '2759a814f7fd4df8a81a7f55e1431290'
+                            name: 'x_2108496_hr_acces_operations_manager'
                         }
                     },
                     {
@@ -5647,6 +5721,21 @@ declare global {
                         }
                     },
                     {
+                        table: 'question_choice'
+                        id: 'd792864534d14728b2a6798a54db91fb'
+                        key: {
+                            question: {
+                                id: '2a2b9877c1674b93a56baed674f64877'
+                                key: {
+                                    cat_item: 'NULL'
+                                    variable_set: 'be7867ca16a44820af330aac92ae053d'
+                                    name: 'x_2108496_hr_acces_employment_type'
+                                }
+                            }
+                            value: 'federal_employee'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: 'd8399cdfa238448aa83804d84ca9d2d3'
                         key: {
@@ -5737,6 +5826,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'item_option_new'
+                        id: 'daf1417c8c694fb2880932cde85cd5b4'
+                        key: {
+                            cat_item: 'NULL'
+                            variable_set: 'be7867ca16a44820af330aac92ae053d'
+                            name: 'x_2108496_hr_acces_business_justification'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: 'db7e3796efea40ea95c0f420b09128f8'
                         key: {
@@ -5756,6 +5854,21 @@ declare global {
                             }
                             element: '.split'
                             position: '4'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: 'dbc8cc315f71470abc602e335ee7f5f5'
+                        key: {
+                            question: {
+                                id: '2a2b9877c1674b93a56baed674f64877'
+                                key: {
+                                    cat_item: 'NULL'
+                                    variable_set: 'be7867ca16a44820af330aac92ae053d'
+                                    name: 'x_2108496_hr_acces_employment_type'
+                                }
+                            }
+                            value: 'auditor_investigator'
                         }
                     },
                     {
@@ -5811,6 +5924,21 @@ declare global {
                         key: {
                             name: 'x_2108496_hr_acces_rob_auth'
                             element: 'reminder_2_sent_date_time'
+                        }
+                    },
+                    {
+                        table: 'question_choice'
+                        id: 'dfc428f2cbf441f6b29ec1e0c05001c0'
+                        key: {
+                            question: {
+                                id: '2a2b9877c1674b93a56baed674f64877'
+                                key: {
+                                    cat_item: 'NULL'
+                                    variable_set: 'be7867ca16a44820af330aac92ae053d'
+                                    name: 'x_2108496_hr_acces_employment_type'
+                                }
+                            }
+                            value: 'ipa'
                         }
                     },
                     {
@@ -5934,6 +6062,15 @@ declare global {
                         key: {
                             name: 'x_2108496_hr_acces_rob_access'
                             element: 'access_item_code'
+                        }
+                    },
+                    {
+                        table: 'item_option_new'
+                        id: 'e6ba1a1ff6304450a7cc0e7bb48e8e29'
+                        key: {
+                            cat_item: 'NULL'
+                            variable_set: '523c4fce4c6a4389893ed4eb0dba561c'
+                            name: 'x_2108496_hr_acces_requested_items'
                         }
                     },
                     {
