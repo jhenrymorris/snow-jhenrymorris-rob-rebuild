@@ -73,6 +73,10 @@ declare global {
                         table: 'sys_app_module'
                         id: '44af6d26001445aa92d9d365575f051f'
                     }
+                    'rob-common-intake-variable-set': {
+                        table: 'item_option_new_set'
+                        id: 'be7867ca16a44820af330aac92ae053d'
+                    }
                     'rob-configuration-module': {
                         table: 'sys_app_module'
                         id: '076b51d7efb043dd9674c80e00f53139'
@@ -5376,6 +5380,15 @@ declare global {
                             }
                             element: '.split'
                             position: '3'
+                        }
+                    },
+                    {
+                        table: 'item_option_new'
+                        id: 'cb154a3abe734b9999922aa344115256'
+                        key: {
+                            cat_item: 'NULL'
+                            variable_set: 'be7867ca16a44820af330aac92ae053d'
+                            name: 'self_submission_notice'
                         }
                     },
                     {
