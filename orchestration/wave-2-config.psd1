@@ -1,4 +1,4 @@
-﻿@{
+@{
     Wave = 2
 
     Repository = 'C:\ServiceNow\hr-access-rob-authorization'
@@ -13,12 +13,12 @@
         Role     = 'implementation'
 
         AllowedPaths = @(
+            'docs/'
             'src/fluent/business-rules/'
             'src/fluent/server/'
-            'src/fluent/access-controls/'
-            'src/fluent/roles/'
+            'src/fluent/security/'
+            'src/fluent/tables/'
             'src/fluent/generated/'
-            'docs/decisions/'
         )
     }
 
