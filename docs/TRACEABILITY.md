@@ -83,15 +83,15 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 | Requirement / finding | SDK artifact | Test reference | Status |
 |---|---|---|---|
 | FR-3 requester title and supervisor snapshots | `rob-case-security-fields.now.ts`; `requester-profile-snapshot.server.js` | TM-75 | Implemented; PDI validation pending |
-| FR-4 self-submission and trusted ROB provenance; delegated submission remains deferred | `rob-requester-profile-security.now.ts`; `requester-profile-snapshot.server.js`; `docs/decisions/DEFERRED-DELEGATED-SUBMISSIONS.md` | TM-05, TM-76, TM-77 | Self-submission enforcement implemented; delegated capability deferred; PDI validation pending |
+| FR-4 self-submission and trusted ROB provenance; delegated submission remains deferred | `rob-requester-profile-security.now.ts`; `requester-profile-snapshot.server.js`; exact common intake notice; `docs/decisions/DEFERRED-DELEGATED-SUBMISSIONS.md` | TM-05, TM-76, TM-77, TM-84 | `gs.getUserID()` is the sole requester source; supplied mismatches fail before profile lookup; delegated capability remains documentation-only; native producer correction and PDI validation pending |
 | EX-1 / R2-F01 supervisor exception stop and native task | `create-supervisor-exception-task.server.js`; block/gate fields; native HR Task ROB Task Type | TM-78 | Implemented; PDI validation pending |
 | R2-F02 controlled audited correction | `requester-profile-correction.server.js`; `requester-profile-correction.now.ts`; correction evidence fields and ACLs | TM-79 | Implemented; PDI validation pending |
 | R2-F03 ACL and cross-scope runtime behavior | Declarative write/read ACLs; no speculative CrossScopePrivilege | TM-81 | Source implemented; PDI runtime evidence required |
 | R2-F04 least-privilege snapshot reads | Snapshot relationship read ACLs; internal evidence role ACLs | TM-80 | Source implemented; PDI persona/channel evidence required |
 | R2-F05 mutable discriminator | Active stable HR Service value/class validation plus active category-valid item validation | TM-76 | Implemented; PDI producer timing required |
 | R2-F06 source-complete integration | Source-owned dictionaries, rules, ACLs, task field, UI action, generated keys | TM-74, TM-82 | Implemented; final frozen-key validation pending |
-| Requested Access Items catalog resolution | Exact list collectors plus active-row `snc_internal` table/field reads; no employee create/write/delete grants | TM-83 | Implemented; 2026-07-27 PDI pre-deployment audit confirms ACL installation remains pending |
-| Native Wave 2 deployment contract | `wave-2-deployment-expectations.json`; read-only `verify-wave-2-deployment.ps1`; explicit native ownership boundary | TM-84 | Implemented; pre-deployment PDI blockers documented, including two unadopted application-package category M2M rows |
+| Requested Access Items catalog resolution | Exact list collectors plus active-row `snc_internal` table/field reads; ROB Admin maintenance ACLs; explicit `index.now.ts` ACL import; no employee create/write/delete grants | TM-83 | Corrected source builds the exact ten-ACL set; authorized installation and PDI persona validation remain pending |
+| Native Wave 2 deployment contract | `wave-2-deployment-expectations.json`; nested-value parser; read-only `verify-wave-2-deployment.ps1`; explicit native ownership boundary | TM-84 | Corrected verifier is fail-closed for producer policy, all six complete rows, exact ACLs, and required configuration; native corrections and authorized re-verification remain pending |
 
 ## Wave 1 Batch 1 Implementation
 

@@ -316,6 +316,31 @@ test('requester profile lookup occurs only after identity authorization', () => 
     }
 })
 
+test('authenticated user is the sole requester source and fills blank identities', () => {
+    const result = run(
+        snapshotScript,
+        baseCase({
+            opened_by: '',
+            opened_for: '',
+            subject_person: '',
+        })
+    )
+    assert.equal(result.current.aborted, false)
+    assert.equal(result.current.getValue('opened_by'), 'requester')
+    assert.equal(result.current.getValue('opened_for'), 'requester')
+    assert.equal(result.current.getValue('subject_person'), 'requester')
+    assert.match(snapshotScript, /var authenticatedUserId = gs\.getUserID\(\)/)
+    assert.match(snapshotScript, /var requesterId = authenticatedUserId/)
+    assert.doesNotMatch(
+        snapshotScript,
+        /(?:producer\.(?:opened_for|subject_person|requested_for)|current\.getValue\(['"](?:opened_for|subject_person|requested_for)['"]\))\s*\|\|\s*gs\.getUserID\(\)/
+    )
+    assert.doesNotMatch(
+        snapshotScript,
+        /if\s*\(\s*!\s*requesterId\s*\)[\s\S]*?requesterId\s*=\s*gs\.getUserID\(\)/
+    )
+})
+
 test('missing supervisor records a stop and leaves every lifecycle gate closed', () => {
     const result = run(
         snapshotScript,

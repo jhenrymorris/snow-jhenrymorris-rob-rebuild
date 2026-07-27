@@ -156,7 +156,9 @@ The following application-owned artifacts are represented in Fluent source:
 - the six starter ROB Access Item Reference records;
 - least-privilege table and field ACLs that allow `snc_internal` to resolve
   active access items without create, update, or delete access;
-- the server-side four-identity self-submission and provenance enforcement.
+- server-side self-submission enforcement that treats `gs.getUserID()` as the
+  sole requester source, rejects supplied identity mismatches before profile
+  lookup, and sets `opened_by`, `opened_for`, and `subject_person` from it.
 
 The two installed record producers, their HR Services, HR case templates,
 variable-set associations, user-criteria associations, Employee taxonomy
@@ -205,7 +207,8 @@ Pre-deployment read-only audit on 2026-07-27 found:
   installed but not source-adopted.
 
 Do not repair the missing access-item ACLs manually. They are now defined in
-Fluent and require a later reviewed, explicitly authorized SDK installation.
+Fluent, explicitly imported from `src/fluent/index.now.ts`, and require a later
+reviewed, explicitly authorized SDK installation.
 
 Required native deployment contract:
 
@@ -221,7 +224,18 @@ Required native deployment contract:
 - Both producers are active, visible in Employee Center, assigned through
   connected content to Employee > Human resources > HR Systems and Data
   Access, linked to an active HR Service and case template, and use only
-  self-submission wording.
+  self-submission wording. Each description must contain this exact sentence:
+  `This request will be submitted for your own HR systems or data access.`
+- Each producer script must read `gs.getUserID()` directly, reject any supplied
+  requester/subject identity that differs before any `sys_user` lookup, then
+  set `opened_for` and `subject_person` from that authenticated identity. Remove
+  the complete legacy conditional requester-profile fallback block. Do not
+  replace it with `producer.opened_for || gs.getUserID()`,
+  `producer.subject_person || gs.getUserID()`,
+  `producer.requested_for || gs.getUserID()`, or an equivalent fallback.
+- Do not add an on-behalf-of variable, alternate actor, supervisor override,
+  HR/admin bypass, or delegated path. The deferred design remains only in
+  `docs/decisions/DEFERRED-DELEGATED-SUBMISSIONS.md`.
 - The linked case templates retain the approved short description, service and
   category consistency, and configured assignment group. Assignment-group
   sys_ids remain environment-specific and must not be copied into Fluent.

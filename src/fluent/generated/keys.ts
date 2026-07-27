@@ -157,6 +157,42 @@ declare global {
                         table: 'sys_ui_action'
                         id: 'ed5058ac65e3434a96851c97eb77ce4f'
                     }
+                    'rob-access-item-active-active-read': {
+                        table: 'sys_security_acl'
+                        id: 'f2439c99e0ed49efb33cd3a4aa951402'
+                    }
+                    'rob-access-item-active-category-read': {
+                        table: 'sys_security_acl'
+                        id: '72ffb84c6fa34564a5643c3d0f4b2a37'
+                    }
+                    'rob-access-item-active-internal-read': {
+                        table: 'sys_security_acl'
+                        id: '9f20a0a0241d40cfb1366033226ec1af'
+                    }
+                    'rob-access-item-active-name-read': {
+                        table: 'sys_security_acl'
+                        id: 'bfca13a4d51a4df0854c4c9d295ed896'
+                    }
+                    'rob-access-item-active-sort-order-read': {
+                        table: 'sys_security_acl'
+                        id: '42589de09673439daedf76b44cd52045'
+                    }
+                    'rob-access-item-active-sys-id-read': {
+                        table: 'sys_security_acl'
+                        id: '29edb71cf28c45adb2896cd79f21b3f8'
+                    }
+                    'rob-access-item-admin-create': {
+                        table: 'sys_security_acl'
+                        id: '1fb7fcae32e449aca56b9e1c5e3d5ccb'
+                    }
+                    'rob-access-item-admin-read': {
+                        table: 'sys_security_acl'
+                        id: '86364df19a0e4d6fbc138b9178cd1a2f'
+                    }
+                    'rob-access-item-admin-write': {
+                        table: 'sys_security_acl'
+                        id: '82568fc24549492ebdff870387ebee2c'
+                    }
                     'rob-access-item-eopf': {
                         table: 'x_2108496_hr_acces_rob_access'
                         id: '2f65b6a0129c49b98f1fca2b54d1e74f'
@@ -168,6 +204,10 @@ declare global {
                     'rob-access-item-human-capital-data': {
                         table: 'x_2108496_hr_acces_rob_access'
                         id: '52f1f7b193a143fdafbebac07a15c763'
+                    }
+                    'rob-access-item-internal-field-mask': {
+                        table: 'sys_security_acl'
+                        id: 'db59b70aff774a5aa8ee978c80898990'
                     }
                     'rob-access-item-report-access': {
                         table: 'x_2108496_hr_acces_rob_access'
@@ -220,6 +260,10 @@ declare global {
                     'rob-configuration-module': {
                         table: 'sys_app_module'
                         id: '076b51d7efb043dd9674c80e00f53139'
+                    }
+                    'rob-require-access-end-date-for-time-limited-workers': {
+                        table: 'catalog_ui_policy'
+                        id: '2875dcd781e448efb19ea3abcecc0d34'
                     }
                     'rob-staffing-access-variable-set': {
                         table: 'item_option_new_set'
@@ -375,6 +419,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: '01078084d0854cc49f52f3810985977c'
+                        deleted: true
+                        key: {
+                            sys_security_acl: 'f2439c99e0ed49efb33cd3a4aa951402'
+                            sys_user_role: '785fb771d4204de697d36978a23688c0'
+                        }
+                    },
+                    {
                         table: 'sys_ui_form_section'
                         id: '0129aa29785e4efe91843d3c66b853d6'
                         deleted: true
@@ -495,6 +548,15 @@ declare global {
                     },
                     {
                         table: 'sys_security_acl_role'
+                        id: '0397489b4fc14966b7672d3489d27a48'
+                        deleted: true
+                        key: {
+                            sys_security_acl: 'bfca13a4d51a4df0854c4c9d295ed896'
+                            sys_user_role: 'b3c8001b76274265aae83c23a56ffc14'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
                         id: '03cfb1bdb19b4df0b4cbc97520cc7589'
                         key: {
                             sys_security_acl: '9ec98ee70c83439bb7dd246c5f07af80'
@@ -571,10 +633,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: '061c8a6a3431447f9a0573082acf4afe'
+                        deleted: true
+                        key: {
+                            sys_security_acl: '29edb71cf28c45adb2896cd79f21b3f8'
+                            sys_user_role: '785fb771d4204de697d36978a23688c0'
+                        }
+                    },
+                    {
                         table: 'sys_db_object'
                         id: '06bb28aa957d45d68f98614e77e02af8'
                         key: {
                             name: 'x_2108496_hr_acces_rob_access'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '06f1ac923f38431a9b91f6d2d726f1cf'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_employment_type'
+                            value: 'auditor_investigator'
                         }
                     },
                     {
@@ -865,6 +945,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '0fd858df66bb4066948536451f9f18b2'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_employment_type'
+                            value: 'ipa'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '0ff46a77ada84a5791b433e6e48236bb'
                         key: {
@@ -934,6 +1023,15 @@ declare global {
                                 }
                             }
                             sys_domain: 'global'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '11670245a03b48ef843c87a91839b9b8'
+                        deleted: true
+                        key: {
+                            sys_security_acl: '72ffb84c6fa34564a5643c3d0f4b2a37'
+                            sys_user_role: 'b3c8001b76274265aae83c23a56ffc14'
                         }
                     },
                     {
@@ -1102,6 +1200,15 @@ declare global {
                         key: {
                             name: 'x_2108496_hr_acces_rob_auth'
                             element: 'lapse_notice_sent_date_time'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '14fdc60650c54bcf87ac603b9df1833b'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_employment_type'
+                            value: 'ipa'
                         }
                     },
                     {
@@ -1564,6 +1671,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: '209803701f0f4401868382cdfd5b33b7'
+                        deleted: true
+                        key: {
+                            sys_security_acl: '42589de09673439daedf76b44cd52045'
+                            sys_user_role: '785fb771d4204de697d36978a23688c0'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '211b0fa33dac46bfa259c653ddeff93a'
                         key: {
@@ -1648,6 +1764,19 @@ declare global {
                             }
                             element: '.end_split'
                             position: '7'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '2459b9fa39454ee38c21b7a8aefa985f'
+                        key: {
+                            sys_security_acl: '86364df19a0e4d6fbc138b9178cd1a2f'
+                            sys_user_role: {
+                                id: 'a9e74986b2964fb7a9eb7bc594f1d41d'
+                                key: {
+                                    name: 'x_2108496_hr_acces.rob_admin'
+                                }
+                            }
                         }
                     },
                     {
@@ -1796,6 +1925,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: '2a9ce457c96a430b9497db8c75ff5605'
+                        deleted: true
+                        key: {
+                            sys_security_acl: '9f20a0a0241d40cfb1366033226ec1af'
+                            sys_user_role: '7a02721ac38f450caea5bef316386d8e'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '2aba8354d18443d5b4ad9ee2e935a8ae'
                         key: {
@@ -1876,6 +2014,14 @@ declare global {
                         key: {
                             name: 'x_2108496_hr_acces_rob_auth'
                             element: 'supervisor_signature_complete'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '2e306fbf45ab466d8de8c91d56f6681c'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_employment_type'
                         }
                     },
                     {
@@ -2270,6 +2416,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: '37d29900fd0b4c209ef4fd5064599f47'
+                        deleted: true
+                        key: {
+                            sys_security_acl: '29edb71cf28c45adb2896cd79f21b3f8'
+                            sys_user_role: '7a02721ac38f450caea5bef316386d8e'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '3803aea1971e42b4916113981d5c1e16'
                         key: {
@@ -2389,6 +2544,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '39e7173e672240a3bf822a25d98ab5d2'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_employment_type'
+                            value: 'federal_employee'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '3a0d7e648efa4aedbb1a2aa8cbd3c2e1'
                         key: {
@@ -2415,6 +2579,19 @@ declare global {
                         id: '3ba51796ac894bac9484da739e5f5e22'
                         key: {
                             sys_security_acl: '4617a5dfc3e643a6be56f203d03213fc'
+                            sys_user_role: {
+                                id: 'a9e74986b2964fb7a9eb7bc594f1d41d'
+                                key: {
+                                    name: 'x_2108496_hr_acces.rob_admin'
+                                }
+                            }
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '3cd44894099f48659d376745e1b87739'
+                        key: {
+                            sys_security_acl: '82568fc24549492ebdff870387ebee2c'
                             sys_user_role: {
                                 id: 'a9e74986b2964fb7a9eb7bc594f1d41d'
                                 key: {
@@ -2451,6 +2628,15 @@ declare global {
                         key: {
                             name: 'x_2108496_hr_acces_rob_access'
                             element: 'default_assignment_group'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '3dbee74882384a809e52a9e45b6f85a5'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_access_end_date'
                             language: 'en'
                         }
                     },
@@ -2801,11 +2987,29 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: '491eec3472c74c8ab00ebfdea189c405'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_employment_type'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: '49d181c6982d4e1bb8591c90066f1e4c'
                         key: {
                             name: 'x_2108496_hr_acces_rob_auth'
                             element: 'supervisor_approval_date_time'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '49d5d6a9561048cbad3d0d14fa43c711'
+                        deleted: true
+                        key: {
+                            sys_security_acl: '9f20a0a0241d40cfb1366033226ec1af'
+                            sys_user_role: 'b3c8001b76274265aae83c23a56ffc14'
                         }
                     },
                     {
@@ -3486,6 +3690,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '5cb4d945f9134181a66d2c46a7d3a858'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_employment_type'
+                            value: 'contractor'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '5cdd203c606f4ef0901832d94b1fd5e0'
                         key: {
@@ -3802,6 +4015,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '60557ab95ff14a7b811a090332656b27'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_employment_type'
+                            value: 'other_time_limited'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '60a22e7394514f919bd47ddbb53c0de4'
                         key: {
@@ -4018,6 +4240,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: '69a9bd3ab30048f78ffa8bca7a880efa'
+                        deleted: true
+                        key: {
+                            sys_security_acl: '72ffb84c6fa34564a5643c3d0f4b2a37'
+                            sys_user_role: '7a02721ac38f450caea5bef316386d8e'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '69b78bcd304a438f8dc21908e4c7260f'
                         key: {
@@ -4046,6 +4277,15 @@ declare global {
                                     name: 'x_2108496_hr_acces.rob_admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '6b4f44629a5e4111a8a3af7e230010d9'
+                        deleted: true
+                        key: {
+                            sys_security_acl: 'bfca13a4d51a4df0854c4c9d295ed896'
+                            sys_user_role: 'a2d40eae0ff24c2ea1552e9e1b69bcb1'
                         }
                     },
                     {
@@ -4399,6 +4639,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '760bf45a5c1d4615a9a37b7cf30b2690'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_employment_type'
+                            value: 'contractor'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '76aa5eb194554d4d999eb88c8fd1584e'
                         key: {
@@ -4689,6 +4938,15 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: '8066e6f27e29466eabc22a01273232bd'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_employment_type'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: '8172399caecd485889d480bcc7bb8392'
                         key: {
                             name: 'x_2108496_hr_acces_auth_detail'
@@ -4783,6 +5041,15 @@ declare global {
                                     sys_domain: 'global'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '82dbe954cedc4a41a1edcd1f4d5d0718'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_employment_type'
+                            value: 'other_time_limited'
                         }
                     },
                     {
@@ -4901,6 +5168,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: '86d28450c30249bba8093e246d22b4d3'
+                        deleted: true
+                        key: {
+                            sys_security_acl: '42589de09673439daedf76b44cd52045'
+                            sys_user_role: '7a02721ac38f450caea5bef316386d8e'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '86ef805d486941369cbb77cc44a7d3b1'
                         key: {
@@ -4950,6 +5226,14 @@ declare global {
                         key: {
                             name: 'x_2108496_hr_acces_rob_config'
                             element: 'default_operations_manager_escalation_group'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '88b95d26c952470ab275084bc9b5296a'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_employment_type'
                         }
                     },
                     {
@@ -5030,6 +5314,24 @@ declare global {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'NULL'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '8b3e07ecd48c423ab328deb4bd721771'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_operations_manager'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '8b74e9fc60704c4aaefd5cad9948fd7c'
+                        deleted: true
+                        key: {
+                            sys_security_acl: '42589de09673439daedf76b44cd52045'
+                            sys_user_role: 'a2d40eae0ff24c2ea1552e9e1b69bcb1'
                         }
                     },
                     {
@@ -5191,6 +5493,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '8fac2888f0e549e4bf231ef02d0c0cd6'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_access_end_date'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '8fc29687c69c4b44ae0fe3b8c81a5a49'
                         key: {
@@ -5219,6 +5529,24 @@ declare global {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2108496_hr_acces_exception_review_required'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '905d642f41494ae4900bb05b1114de3d'
+                        deleted: true
+                        key: {
+                            sys_security_acl: '72ffb84c6fa34564a5643c3d0f4b2a37'
+                            sys_user_role: 'a2d40eae0ff24c2ea1552e9e1b69bcb1'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '9079ecf14bb045b7a661e2fb358af3ae'
+                        deleted: true
+                        key: {
+                            sys_security_acl: 'f2439c99e0ed49efb33cd3a4aa951402'
+                            sys_user_role: '7a02721ac38f450caea5bef316386d8e'
                         }
                     },
                     {
@@ -5481,6 +5809,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: '9999bcc7f0fe479eae2c303e5a304516'
+                        deleted: true
+                        key: {
+                            sys_security_acl: 'bfca13a4d51a4df0854c4c9d295ed896'
+                            sys_user_role: '7a02721ac38f450caea5bef316386d8e'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '99b096d253554582a675feb5247f7150'
                         key: {
@@ -5505,12 +5842,30 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '9a408d46b92b48f09d84906581b4e74f'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_access_end_date'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '9ad6a440d15549a4bc273483800649a8'
                         key: {
                             name: 'x_2108496_hr_acces_rob_auth'
                             element: 'employment_type'
                             value: 'contractor'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '9befbb4bea5e40778cf1e14ef79b0f67'
+                        deleted: true
+                        key: {
+                            sys_security_acl: '9f20a0a0241d40cfb1366033226ec1af'
+                            sys_user_role: '785fb771d4204de697d36978a23688c0'
                         }
                     },
                     {
@@ -5780,6 +6135,14 @@ declare global {
                     },
                     {
                         table: 'sys_dictionary'
+                        id: 'a37c7499cfb24be6a007ef660c2ca6b1'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_operations_manager'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
                         id: 'a3a9c9f6dbd54dcdacde621a09b4a7b4'
                         key: {
                             name: 'sn_hr_core_case_payroll'
@@ -5830,6 +6193,15 @@ declare global {
                                     sys_domain: 'global'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'a517894a23304fb49297ac7b82ab3bba'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_employment_type'
+                            value: 'federal_employee'
                         }
                     },
                     {
@@ -6089,6 +6461,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: 'aedbee52e1b243c69ca5d4cf83b12524'
+                        deleted: true
+                        key: {
+                            sys_security_acl: 'f2439c99e0ed49efb33cd3a4aa951402'
+                            sys_user_role: 'a2d40eae0ff24c2ea1552e9e1b69bcb1'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: 'b02add1358964639844a4e8e66946e40'
                         key: {
@@ -6177,6 +6558,14 @@ declare global {
                             }
                             element: 'business_justification_snapshot'
                             position: '1'
+                        }
+                    },
+                    {
+                        table: 'catalog_ui_policy_action'
+                        id: 'b3957485571d4fe09b5591f997f4330f'
+                        key: {
+                            ui_policy: '2875dcd781e448efb19ea3abcecc0d34'
+                            catalog_variable: 'IO:x_2108496_hr_acces_access_end_date'
                         }
                     },
                     {
@@ -6331,6 +6720,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice_set'
+                        id: 'b6bc52dce5be49f2968c704607e1d209'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_employment_type'
+                        }
+                    },
+                    {
                         table: 'sys_index'
                         id: 'b71e675a8d4646b6a02e7025f0d9601b'
                         key: {
@@ -6404,6 +6801,19 @@ declare global {
                             }
                             element: 'operations_manager_task_required_snapshot'
                             position: '2'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'b8f5e3ef12e34b689f86f210648af2ae'
+                        key: {
+                            sys_security_acl: '1fb7fcae32e449aca56b9e1c5e3d5ccb'
+                            sys_user_role: {
+                                id: 'a9e74986b2964fb7a9eb7bc594f1d41d'
+                                key: {
+                                    name: 'x_2108496_hr_acces.rob_admin'
+                                }
+                            }
                         }
                     },
                     {
@@ -6723,6 +7133,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'c330346cf1694f759e01bb9edb17e392'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_employment_type'
+                            value: 'auditor_investigator'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: 'c36f09637fa1495aaf7cb33efce7ad99'
                         key: {
@@ -7013,6 +7432,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: 'c97965a91aa741e0809ccfac95767f2c'
+                        deleted: true
+                        key: {
+                            sys_security_acl: '29edb71cf28c45adb2896cd79f21b3f8'
+                            sys_user_role: 'a2d40eae0ff24c2ea1552e9e1b69bcb1'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: 'c97ee1f36a7f43afb36b6c4cec9a7997'
                         key: {
@@ -7254,6 +7682,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: 'cf5f3bb8a9c54e50be618f8042dd2056'
+                        deleted: true
+                        key: {
+                            sys_security_acl: 'bfca13a4d51a4df0854c4c9d295ed896'
+                            sys_user_role: '785fb771d4204de697d36978a23688c0'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: 'cf6507c26c1d4e70a21de9cbc7589e78'
                         key: {
@@ -7290,6 +7727,14 @@ declare global {
                             name: 'x_2108496_hr_acces_rob_access'
                             element: 'default_fulfillment_team'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'd265340a8ee5430a884a802ff4c309a9'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_access_end_date'
                         }
                     },
                     {
@@ -7376,11 +7821,38 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: 'd3d48b1d098b4841bb6ba242a5b724e1'
+                        deleted: true
+                        key: {
+                            sys_security_acl: '9f20a0a0241d40cfb1366033226ec1af'
+                            sys_user_role: 'a2d40eae0ff24c2ea1552e9e1b69bcb1'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'd432c7a050554a4f89acba0e78911035'
+                        deleted: true
+                        key: {
+                            sys_security_acl: 'f2439c99e0ed49efb33cd3a4aa951402'
+                            sys_user_role: 'b3c8001b76274265aae83c23a56ffc14'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'd54964ddc2004e4995bd2e74f65c59dc'
                         key: {
                             name: 'x_2108496_hr_acces_rob_config'
                             element: 'name'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'd682dfe50ae44780b21c5f800bf2745e'
+                        deleted: true
+                        key: {
+                            sys_security_acl: '29edb71cf28c45adb2896cd79f21b3f8'
+                            sys_user_role: 'b3c8001b76274265aae83c23a56ffc14'
                         }
                     },
                     {
@@ -8317,6 +8789,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: 'f4789f4e7b954cedba6ff26e6471cbc4'
+                        key: {
+                            sys_security_acl: 'db59b70aff774a5aa8ee978c80898990'
+                            sys_user_role: {
+                                id: 'a9e74986b2964fb7a9eb7bc594f1d41d'
+                                key: {
+                                    name: 'x_2108496_hr_acces.rob_admin'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'f4a6bd7a8d8b4e5e88bf1afd3a27f1ce'
                         key: {
@@ -8405,6 +8890,15 @@ declare global {
                     },
                     {
                         table: 'sys_security_acl_role'
+                        id: 'f929622e3e02412a870759e0b437e57a'
+                        deleted: true
+                        key: {
+                            sys_security_acl: '42589de09673439daedf76b44cd52045'
+                            sys_user_role: 'b3c8001b76274265aae83c23a56ffc14'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
                         id: 'f933a180434d430b8b85a63d655917fc'
                         key: {
                             sys_security_acl: '00d87f610b9842f9a8d02233c2e5f20a'
@@ -8460,6 +8954,14 @@ declare global {
                             }
                             element: 'signed_pdf_generated'
                             position: '1'
+                        }
+                    },
+                    {
+                        table: 'sys_choice_set'
+                        id: 'faa3ac8690ae4162bc792f15ca05e8b8'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_employment_type'
                         }
                     },
                     {
@@ -8536,6 +9038,15 @@ declare global {
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2108496_hr_acces_snapshot_correction_reason'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'fd0ad5b64b6c4d5eae48403070107f17'
+                        deleted: true
+                        key: {
+                            sys_security_acl: '72ffb84c6fa34564a5643c3d0f4b2a37'
+                            sys_user_role: '785fb771d4204de697d36978a23688c0'
                         }
                     },
                     {

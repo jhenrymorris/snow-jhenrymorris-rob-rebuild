@@ -124,24 +124,29 @@
         return
     }
 
-    var requesterId = current.getValue('opened_by')
-    var subjectPersonId = current.getValue('subject_person')
-    var openedForId = current.getValue('opened_for')
     var authenticatedUserId = gs.getUserID()
+    var suppliedRequesterId = current.getValue('opened_by')
+    var suppliedSubjectPersonId = current.getValue('subject_person')
+    var suppliedOpenedForId = current.getValue('opened_for')
 
     if (
-        !requesterId ||
-        !subjectPersonId ||
-        !openedForId ||
         !authenticatedUserId ||
-        requesterId !== authenticatedUserId ||
-        requesterId !== openedForId ||
-        requesterId !== subjectPersonId
+        (suppliedRequesterId &&
+            suppliedRequesterId !== authenticatedUserId) ||
+        (suppliedOpenedForId &&
+            suppliedOpenedForId !== authenticatedUserId) ||
+        (suppliedSubjectPersonId &&
+            suppliedSubjectPersonId !== authenticatedUserId)
     ) {
         reject('This HR access request must be submitted by and for the same person.')
         return
     }
 
+    current.setValue('opened_by', authenticatedUserId)
+    current.setValue('opened_for', authenticatedUserId)
+    current.setValue('subject_person', authenticatedUserId)
+
+    var requesterId = authenticatedUserId
     var requester = new GlideRecord('sys_user')
 
     if (!requester.get(requesterId)) {

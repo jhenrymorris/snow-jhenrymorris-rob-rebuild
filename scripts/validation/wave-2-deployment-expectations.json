@@ -1,6 +1,7 @@
 {
   "scope": "x_2108496_hr_acces",
   "scopeId": "b0d63cedc2d34e0ca4c05d6eb7acf61e",
+  "selfSubmissionSentence": "This request will be submitted for your own HR systems or data access.",
   "accessItemTable": {
     "name": "x_2108496_hr_acces_rob_access",
     "displayField": "name",
@@ -80,7 +81,7 @@
       ],
       "requestedItemsQualifier": "active=true^access_category=hr_system",
       "shortDescription": "Request access to approved HR systems, including FPPS / WTTS, eOPF, and USA Staffing.",
-      "description": "Submit this request for your own access to approved HR systems. Delegated and on-behalf-of submissions are not supported."
+      "description": "This request will be submitted for your own HR systems or data access. Delegated and on-behalf-of submissions are not supported."
     },
     {
       "name": "Request Access to HR Data and Reports",
@@ -104,7 +105,7 @@
       ],
       "requestedItemsQualifier": "active=true^access_categoryINhuman_capital_data,report,workforce_profile_chart",
       "shortDescription": "Request access to approved human capital data, reports, and Workforce Profile Charts.",
-      "description": "Submit this request for your own access to approved HR data, reports, or Workforce Profile Charts. Delegated and on-behalf-of submissions are not supported."
+      "description": "This request will be submitted for your own HR systems or data access. Delegated and on-behalf-of submissions are not supported."
     }
   ],
   "taxonomy": {

@@ -88,6 +88,11 @@ to fail. The script is limited to a cached session role check, performs no
 GlideRecord query, and is covered by TM-83. This exception must be re-evaluated
 after an SDK upgrade.
 
+The access-item ACL module is also imported by `src/fluent/index.now.ts`.
+This explicit edge supplements normal `.now.ts` discovery and is verified
+against the built package so the ten-record ACL set cannot silently fall out
+of the deployable source graph.
+
 ## 4. Protected Fields
 
 System-managed or administrator-only:
@@ -221,9 +226,11 @@ Workforce Administration services return without a requester lookup or ROB
 evidence write. A claimed ROB service with missing, inactive, unknown, or
 wrong-category items aborts before requester profile access.
 
-For accepted ROB intake, `opened_by`, `opened_for`, `subject_person`, and the
-authenticated user must be present and equal. Position Title Snapshot and
-Supervisor Snapshot are always re-derived from that verified requester's
+For accepted ROB intake, `gs.getUserID()` is the only requester source. Any
+nonblank supplied `opened_by`, `opened_for`, or `subject_person` that differs
+from that session identity is rejected before `sys_user` profile access. The
+rule then sets all three case identities from the authenticated user and
+derives Position Title Snapshot and Supervisor Snapshot from that user's
 directory record; incoming snapshot and exception values are overwritten.
 
 Missing, invalid, inactive, or self-referential supervisors atomically set:

@@ -9,6 +9,7 @@ $script:QueryFailed = $false
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $expectationsPath = Join-Path $PSScriptRoot 'wave-2-deployment-expectations.json'
 $expectations = Get-Content -Raw -LiteralPath $expectationsPath | ConvertFrom-Json
+Import-Module (Join-Path $PSScriptRoot 'wave-2-query-values.psm1') -Force
 
 function Add-Blocker {
     param([string]$Message)
@@ -92,21 +93,7 @@ function Get-RawValue {
         [Parameter(Mandatory)][AllowNull()]$Record,
         [Parameter(Mandatory)][string]$Field
     )
-    if ($null -eq $Record) {
-        return ''
-    }
-    $property = $Record.PSObject.Properties[$Field]
-    if (-not $property) {
-        return ''
-    }
-    $value = $property.Value
-    if ($null -eq $value) {
-        return ''
-    }
-    if ($value.PSObject.Properties['value']) {
-        return "$($value.value)"
-    }
-    return "$value"
+    return Get-Wave2RawValue -Record $Record -Field $Field
 }
 
 function Get-DisplayValue {
@@ -114,21 +101,7 @@ function Get-DisplayValue {
         [Parameter(Mandatory)][AllowNull()]$Record,
         [Parameter(Mandatory)][string]$Field
     )
-    if ($null -eq $Record) {
-        return ''
-    }
-    $property = $Record.PSObject.Properties[$Field]
-    if (-not $property) {
-        return ''
-    }
-    $value = $property.Value
-    if ($null -eq $value) {
-        return ''
-    }
-    if ($value.PSObject.Properties['display_value']) {
-        return "$($value.display_value)"
-    }
-    return "$value"
+    return Get-Wave2DisplayValue -Record $Record -Field $Field
 }
 
 function Show-Records {
@@ -244,11 +217,44 @@ foreach ($producerExpectation in $expectations.recordProducers) {
         if ((Get-RawValue $producer 'short_description') -ne $producerExpectation.shortDescription) {
             Add-Blocker "Record producer $($producerExpectation.name) short description differs from the deployment contract."
         }
-        if ((Get-RawValue $producer 'description') -ne $producerExpectation.description) {
+        [string]$producerDescription = Get-RawValue $producer 'description'
+        if (-not $producerDescription.Contains($expectations.selfSubmissionSentence)) {
             Add-Blocker "Record producer $($producerExpectation.name) description does not contain the approved self-submission wording."
         }
-        if ((Get-RawValue $producer 'script') -match 'requesterId\s*=\s*gs\.getUserID\(\)') {
+        [string]$producerScript = Get-RawValue $producer 'script'
+        if (
+            $producerScript -match
+                '(?is)(?:producer\.(?:opened_for|subject_person|requested_for)|current\.getValue\(''(?:opened_for|subject_person|requested_for)''\))\s*\|\|\s*gs\.getUserID\(\)' -or
+            $producerScript -match
+                '(?is)if\s*\(\s*!\s*requesterId\s*\)[\s;]*requesterId\s*=\s*gs\.getUserID\(\)'
+        ) {
             Add-Blocker "Record producer $($producerExpectation.name) still contains the legacy authenticated-user requester fallback."
+        }
+        if ($producerScript -notmatch 'authenticatedUserId\s*=\s*gs\.getUserID\(\)') {
+            Add-Blocker "Record producer $($producerExpectation.name) does not derive the requester directly from gs.getUserID()."
+        }
+        foreach ($identityField in @('opened_for', 'subject_person')) {
+            if (
+                $producerScript -notmatch
+                    "current\.(?:setValue\('$identityField',\s*authenticatedUserId\)|$identityField\s*=\s*authenticatedUserId)"
+            ) {
+                Add-Blocker "Record producer $($producerExpectation.name) does not set $identityField from the authenticated user."
+            }
+        }
+        $identityValidationIndex = $producerScript.IndexOf(
+            '!== authenticatedUserId',
+            [System.StringComparison]::Ordinal
+        )
+        $profileLookupIndex = $producerScript.IndexOf(
+            "new GlideRecord('sys_user')",
+            [System.StringComparison]::Ordinal
+        )
+        if (
+            $identityValidationIndex -lt 0 -or
+            ($profileLookupIndex -ge 0 -and
+                $identityValidationIndex -gt $profileLookupIndex)
+        ) {
+            Add-Blocker "Record producer $($producerExpectation.name) does not reject identity mismatch before employee-profile lookup."
         }
     }
 }
@@ -510,6 +516,20 @@ foreach ($itemExpectation in $expectations.accessItems) {
     Assert-Count $matches 1 "Access item code $($itemExpectation.code)"
     if ($matches.Count -eq 1) {
         $item = $matches[0]
+        foreach ($requiredField in @(
+            'name',
+            'active',
+            'access_item_code',
+            'access_category',
+            'sort_order'
+        )) {
+            if (-not (Get-RawValue $item $requiredField)) {
+                Add-Blocker "Access item $($itemExpectation.code) has no value for $requiredField."
+            }
+        }
+        if ((Get-RawValue $item 'name') -ne $itemExpectation.name) {
+            Add-Blocker "Access item $($itemExpectation.code) has the wrong name."
+        }
         if ((Get-RawValue $item 'active') -notin @('true', '1')) {
             Add-Blocker "Access item $($itemExpectation.code) is inactive."
         }
@@ -543,6 +563,9 @@ $accessAclRoles = Invoke-ReadOnlyQuery `
     -Query "sys_security_aclIN$accessAclIdQuery" `
     -Fields 'sys_id,sys_security_acl,sys_user_role'
 Show-Records $accessAclRoles @('sys_id', 'sys_security_acl', 'sys_user_role')
+if ($accessAcls.Count -ne 10) {
+    Add-Blocker "The access-item ACL set must contain exactly 10 ACLs; found $($accessAcls.Count)."
+}
 $employeeReadAcl = @($accessAcls | Where-Object {
     (Get-RawValue $_ 'name') -eq $expectations.accessItemTable.name -and
     (Get-RawValue $_ 'operation') -eq 'read' -and
@@ -584,19 +607,22 @@ foreach ($acl in $employeeScriptAcls) {
     }
 }
 foreach ($adminOperation in @('read', 'create', 'write')) {
-    $adminAcls = @($accessAcls | Where-Object {
+    $tableOperationAcls = @($accessAcls | Where-Object {
         (Get-RawValue $_ 'name') -eq $expectations.accessItemTable.name -and
         (Get-RawValue $_ 'operation') -eq $adminOperation
     })
-    $adminRoleLinks = @()
-    foreach ($acl in $adminAcls) {
+    $adminAcls = @()
+    foreach ($acl in $tableOperationAcls) {
         $aclId = Get-RawValue $acl 'sys_id'
-        $adminRoleLinks += @($accessAclRoles | Where-Object {
+        $adminRoleLinks = @($accessAclRoles | Where-Object {
             (Get-RawValue $_ 'sys_security_acl') -eq $aclId -and
             (Get-DisplayValue $_ 'sys_user_role') -eq "$($expectations.scope).rob_admin"
         })
+        if ($adminRoleLinks.Count -eq 1) {
+            $adminAcls += $acl
+        }
     }
-    if ($adminAcls.Count -ne 1 -or $adminRoleLinks.Count -ne 1) {
+    if ($adminAcls.Count -ne 1) {
         Add-Blocker "ROB Admin does not have exactly one table-level $adminOperation ACL on the access-item table."
     }
 }
@@ -606,6 +632,33 @@ $fieldMaskAcls = @($accessAcls | Where-Object {
 })
 if ($fieldMaskAcls.Count -ne 1) {
     Add-Blocker 'The ROB Admin-only access-item wildcard field-read ACL is missing or duplicated.'
+}
+elseif (-not @($accessAclRoles | Where-Object {
+    (Get-RawValue $_ 'sys_security_acl') -eq
+        (Get-RawValue $fieldMaskAcls[0] 'sys_id') -and
+    (Get-DisplayValue $_ 'sys_user_role') -eq
+        "$($expectations.scope).rob_admin"
+})) {
+    Add-Blocker 'The access-item wildcard field-read ACL is not assigned to ROB Admin.'
+}
+$expectedAccessAclNames = @($expectedEmployeeReadNames)
+$expectedAccessAclNames += "$($expectations.accessItemTable.name).*"
+foreach ($acl in $accessAcls) {
+    $aclName = Get-RawValue $acl 'name'
+    if (
+        $aclName -notin $expectedAccessAclNames -or
+        (Get-RawValue $acl 'active') -notin @('true', '1') -or
+        (
+            -not (Get-RawValue $acl 'condition') -and
+            -not (Get-RawValue $acl 'script') -and
+            -not @($accessAclRoles | Where-Object {
+                (Get-RawValue $_ 'sys_security_acl') -eq
+                    (Get-RawValue $acl 'sys_id')
+            })
+        )
+    ) {
+        Add-Blocker "Access-item ACL '$aclName' is outside the exact active, constrained ACL contract."
+    }
 }
 foreach ($operation in $expectations.accessItemTable.employeeDeniedOperations) {
     $operationAcls = @($accessAcls | Where-Object {
