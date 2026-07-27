@@ -1,4 +1,4 @@
-﻿[CmdletBinding()]
+[CmdletBinding()]
 param(
     [Parameter(Mandatory)]
     [hashtable]$Agent,
@@ -13,13 +13,29 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-function Invoke-Git {
-    param([string[]]$Arguments)
+function Invoke-AgentGit {
+    param(
+        [Parameter(Mandatory)]
+        [string[]]$Arguments
+    )
 
-    $output = @(& git -C $Agent.Worktree @Arguments 2>&1)
+    $output = @(
+        & git -C $Agent.Worktree @Arguments 2>&1
+    )
 
     if ($LASTEXITCODE -ne 0) {
-        throw "git $($Arguments -join ' ') failed in $($Agent.Worktree):`n$($output -join "`n")"
+        throw @"
+Git command failed.
+
+Worktree:
+$($Agent.Worktree)
+
+Command:
+git $($Arguments -join ' ')
+
+Output:
+$($output -join [Environment]::NewLine)
+"@
     }
 
     return $output
@@ -46,64 +62,105 @@ try {
         throw "Worktree does not exist: $($Agent.Worktree)"
     }
 
-    $result.Branch = (
-        Invoke-Git @('branch', '--show-current') |
-        Select-Object -First 1
-    ).ToString().Trim()
+    $branchOutput = @(
+        Invoke-AgentGit -Arguments @(
+            'branch',
+            '--show-current'
+        )
+    )
 
-    $result.HeadCommit = (
-        Invoke-Git @('rev-parse', 'HEAD') |
-        Select-Object -First 1
-    ).ToString().Trim()
+    $result.Branch = if ($branchOutput.Count -gt 0) {
+        $branchOutput[0].ToString().Trim()
+    }
+    else {
+        ''
+    }
+
+    $headOutput = @(
+        Invoke-AgentGit -Arguments @(
+            'rev-parse',
+            'HEAD'
+        )
+    )
+
+    $result.HeadCommit = if ($headOutput.Count -gt 0) {
+        $headOutput[0].ToString().Trim()
+    }
+    else {
+        ''
+    }
 
     $statusLines = @(
-        Invoke-Git @('status', '--porcelain') |
+        Invoke-AgentGit -Arguments @(
+            'status',
+            '--porcelain'
+        ) |
         Where-Object {
-            $_ -and $_.ToString().Trim()
+            $_ -and $_.ToString().Trim().Length -gt 0
         }
     )
 
     $result.WorktreeClean = ($statusLines.Count -eq 0)
 
-    if (-not $result.WorktreeClean -and -not $AllowDirtyWorktree) {
+    if (
+        -not $result.WorktreeClean -and
+        -not $AllowDirtyWorktree
+    ) {
         $result.Errors += 'Worktree is not clean.'
     }
 
     if ($result.Branch -ne $Agent.Branch) {
-        $result.Errors += "Wrong branch. Expected '$($Agent.Branch)' but found '$($result.Branch)'."
+        $result.Errors += (
+            "Wrong branch. Expected '{0}' but found '{1}'." -f
+            $Agent.Branch,
+            $result.Branch
+        )
     }
 
     if ($ExpectedCommit) {
-        $result.CommitMatches = ($result.HeadCommit -eq $ExpectedCommit)
+        $result.CommitMatches = (
+            $result.HeadCommit -eq $ExpectedCommit
+        )
 
         if (-not $result.CommitMatches) {
-            $result.Errors += "HEAD does not match expected commit $ExpectedCommit."
+            $result.Errors += (
+                "HEAD does not match expected commit {0}." -f
+                $ExpectedCommit
+            )
         }
     }
 
     if ($BaselineCommit) {
-        Invoke-Git @('cat-file', '-e', "$BaselineCommit^{commit}") | Out-Null
+        Invoke-AgentGit -Arguments @(
+            'cat-file',
+            '-e',
+            "$BaselineCommit^{commit}"
+        ) | Out-Null
 
-        $changed = Invoke-Git @(
-            'diff',
-            '--name-only',
-            "$BaselineCommit..$($result.HeadCommit)"
+        $changedOutput = @(
+            Invoke-AgentGit -Arguments @(
+                'diff',
+                '--name-only',
+                "$BaselineCommit..$($result.HeadCommit)"
+            )
         )
     }
     else {
-        $changed = Invoke-Git @(
-            'diff-tree',
-            '--no-commit-id',
-            '--name-only',
-            '-r',
-            $result.HeadCommit
+        $changedOutput = @(
+            Invoke-AgentGit -Arguments @(
+                'diff-tree',
+                '--no-commit-id',
+                '--name-only',
+                '-r',
+                $result.HeadCommit
+            )
         )
     }
 
     $result.ChangedFiles = @(
-        $changed |
+        $changedOutput |
         Where-Object {
-            $_ -and $_.ToString().Trim()
+            $_ -and $_.ToString().Trim().Length -gt 0
         } |
         ForEach-Object {
             $_.ToString().Trim().Replace('\', '/')
@@ -113,46 +170,69 @@ try {
     $allowedPaths = @()
 
     if ($Agent.ContainsKey('AllowedPaths')) {
-        $allowedPaths = @($Agent.AllowedPaths)
+        $allowedPaths = @(
+            $Agent['AllowedPaths']
+        ) |
+        Where-Object {
+            $null -ne $_ -and
+            $_.ToString().Trim().Length -gt 0
+        } |
+        ForEach-Object {
+            $_.ToString().Trim().Replace('\', '/')
+        }
+
+        $allowedPaths = @($allowedPaths)
     }
 
     if ($allowedPaths.Count -eq 0) {
         $result.AllowedPathCheck = 'SKIPPED'
     }
     else {
-        foreach ($file in $result.ChangedFiles) {
-            $allowed = $false
+        $violations = @()
 
-            foreach ($prefix in $allowedPaths) {
-                $normalizedPrefix = $prefix.ToString().Replace('\', '/')
+        foreach ($file in @($result.ChangedFiles)) {
+            $pathIsAllowed = $false
 
-                if ($file.StartsWith(
-                    $normalizedPrefix,
-                    [System.StringComparison]::OrdinalIgnoreCase
-                )) {
-                    $allowed = $true
+            foreach ($allowedPrefix in $allowedPaths) {
+                if (
+                    $file.StartsWith(
+                        $allowedPrefix,
+                        [System.StringComparison]::OrdinalIgnoreCase
+                    )
+                ) {
+                    $pathIsAllowed = $true
                     break
                 }
             }
 
-            if (-not $allowed) {
-                $result.Violations += $file
+            if (-not $pathIsAllowed) {
+                $violations += $file
             }
         }
 
-        if ($result.Violations.Count -eq 0) {
+        $result.Violations = @($violations)
+
+        if (@($result.Violations).Count -eq 0) {
             $result.AllowedPathCheck = 'PASSED'
         }
         else {
             $result.AllowedPathCheck = 'FAILED'
-            $result.Errors += "Prohibited paths changed: $($result.Violations -join ', ')"
+            $result.Errors += (
+                'Prohibited paths changed: {0}' -f
+                (@($result.Violations) -join ', ')
+            )
         }
     }
 
+    $result.Errors = @($result.Errors)
     $result.Valid = ($result.Errors.Count -eq 0)
 }
 catch {
-    $result.Errors += $_.Exception.Message
+    $result.Errors = @(
+        @($result.Errors)
+        $_.Exception.Message
+    )
+
     $result.Valid = $false
 }
 

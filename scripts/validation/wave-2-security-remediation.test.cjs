@@ -256,13 +256,64 @@ test('forged, inactive, or wrong-category items fail before profile lookup', () 
     }
 })
 
-test('identity mismatch fails before requester profile lookup', () => {
-    const result = run(snapshotScript, baseCase({ subject_person: 'victim' }))
+function assertIdentityRejectedBeforeProfileLookup(values, options = {}) {
+    const result = run(snapshotScript, values, options)
     assert.equal(result.current.aborted, true)
     assert.equal(
         result.state.lookups.some(([table]) => table === 'sys_user'),
         false
     )
+    return result
+}
+
+test('opened_for mismatch fails before requester profile lookup', () => {
+    assertIdentityRejectedBeforeProfileLookup(
+        baseCase({ opened_for: 'another_employee' })
+    )
+})
+
+test('subject_person mismatch fails before requester profile lookup', () => {
+    assertIdentityRejectedBeforeProfileLookup(
+        baseCase({ subject_person: 'another_employee' })
+    )
+})
+
+test('supervisor cannot submit for another employee', () => {
+    assertIdentityRejectedBeforeProfileLookup(
+        baseCase({
+            opened_by: 'supervisor_actor',
+            opened_for: 'requester',
+            subject_person: 'requester',
+        }),
+        { userId: 'supervisor_actor' }
+    )
+})
+
+test('HR user cannot submit for another employee', () => {
+    assertIdentityRejectedBeforeProfileLookup(
+        baseCase({
+            opened_by: 'hr_actor',
+            opened_for: 'requester',
+            subject_person: 'requester',
+        }),
+        { userId: 'hr_actor' }
+    )
+})
+
+test('requester profile lookup occurs only after identity authorization', () => {
+    const authorized = run(snapshotScript, baseCase())
+    assert.equal(
+        authorized.state.lookups.some(([table]) => table === 'sys_user'),
+        true
+    )
+
+    for (const values of [
+        baseCase({ opened_by: 'another_employee' }),
+        baseCase({ opened_for: 'another_employee' }),
+        baseCase({ subject_person: 'another_employee' }),
+    ]) {
+        assertIdentityRejectedBeforeProfileLookup(values)
+    }
 })
 
 test('missing supervisor records a stop and leaves every lifecycle gate closed', () => {

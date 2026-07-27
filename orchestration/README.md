@@ -1,25 +1,34 @@
-# Wave 2 Minimal Controller
+# Wave 2 Minimal Controller v2
 
-Version 1 only verifies worktrees/commits, composes prompts, optionally launches agents, validates allowed paths, and generates a lead-orchestrator handoff.
+This replacement removes scalar `.Count` failures, validates all PowerShell files, validates the complete baseline-to-candidate implementation range, and supports a fully automated non-interactive Lead Orchestrator launch.
 
-It does not create/delete branches, merge, cherry-pick, deploy, modify ServiceNow records, or retry agents automatically.
-
-## Dry run
+## Self-test
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-$config = Import-PowerShellDataFile .\orchestration\wave-2-config.psd1
-.\orchestration\Test-AgentResult.ps1 -Agent $config.Agents.HrsdBridge -ExpectedCommit cfd428dd3791f48724d0e1b1e17a273dab4b2f79
+.\orchestration\Test-Orchestration.ps1
 ```
 
-## Generate handoff
+Required result: `Passed : True`.
+
+## Generate handoff only
 
 ```powershell
 .\orchestration\Start-Wave2Review.ps1 `
-  -SnapshotTestCommit '<HASH>' `
-  -SnapshotTestSummary '44 tests; 44 passed; 0 failed' `
+  -SnapshotTestCommit '0a66301c4186d2d22f2a3975b01ca3fcf026be59' `
+  -SnapshotTestSummary '44 tests; 44 passed; 0 failed; source/mock validation only; PDI runtime validation remains required' `
   -SnapshotTestReport 'docs/validation/wave-2/requester-profile-snapshots.md' `
-  -SecurityReviewCommit '<HASH>' `
+  -SecurityReviewCommit '94c457ad79150d741749644d4e43f0725629ccb3' `
   -SecurityDecision 'REJECT' `
-  -SecurityReport 'docs/security/<REPORT>.md'
+  -SecurityReport 'docs/security/wave-2-requester-profile-security-second-review.md'
 ```
+
+## Launch Lead Orchestrator non-interactively
+
+Add both switches:
+
+```powershell
+-LaunchLeadOrchestrator -NonInteractiveLeadOrchestrator
+```
+
+The launcher uses `codex exec - --json --output-last-message ...`, with the complete prompt supplied on stdin.

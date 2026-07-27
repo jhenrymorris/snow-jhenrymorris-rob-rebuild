@@ -6,3 +6,8 @@ target/
 *.tsbuildinfo
 .jest_cache
 .claude/
+
+# Generated Wave 2 orchestration artifacts
+orchestration/output/
+orchestration/prompts/
+orchestration/*.before-*

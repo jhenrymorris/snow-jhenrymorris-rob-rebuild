@@ -8,7 +8,8 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 | FR-1 | HR case support fields | Staffing HR service and Employee Center entry | TM-01 | Planned |
 | FR-2 | HR case support fields | Analytics HR service and Employee Center entry | TM-02 | Planned |
 | FR-3 | Table extensions and validation support | Intake variables and UI policies | TM-03, TM-04 | Planned |
-| FR-4 | Self-submission logic | Intake restriction | TM-05 | Planned |
+| FR-4 | Four-way self-submission identity authorization | Intake restriction | TM-05, TM-77 | Implemented; PDI validation pending |
+| DEFERRED-1 | Delegated supervisor and authorized-HR submission design is documented but not implemented or activated | `docs/decisions/DEFERRED-DELEGATED-SUBMISSIONS.md`; no delegated role, fields, feature flags, or code | TM-05, TM-77 | Deferred |
 | FR-5 | AuthorizationRepository | None | TM-06 | Planned |
 | FR-6 | AccessComparisonService | None | TM-07, TM-08 | Planned |
 | FR-7 | AuthorizationDecisionService | Lifecycle flow | TM-09 | Planned |
@@ -82,7 +83,7 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 | Requirement / finding | SDK artifact | Test reference | Status |
 |---|---|---|---|
 | FR-3 requester title and supervisor snapshots | `rob-case-security-fields.now.ts`; `requester-profile-snapshot.server.js` | TM-75 | Implemented; PDI validation pending |
-| FR-4 self-submission and trusted ROB provenance | `rob-requester-profile-security.now.ts`; `requester-profile-snapshot.server.js` | TM-76, TM-77 | Implemented; PDI validation pending |
+| FR-4 self-submission and trusted ROB provenance; delegated submission remains deferred | `rob-requester-profile-security.now.ts`; `requester-profile-snapshot.server.js`; `docs/decisions/DEFERRED-DELEGATED-SUBMISSIONS.md` | TM-05, TM-76, TM-77 | Self-submission enforcement implemented; delegated capability deferred; PDI validation pending |
 | EX-1 / R2-F01 supervisor exception stop and native task | `create-supervisor-exception-task.server.js`; block/gate fields; native HR Task ROB Task Type | TM-78 | Implemented; PDI validation pending |
 | R2-F02 controlled audited correction | `requester-profile-correction.server.js`; `requester-profile-correction.now.ts`; correction evidence fields and ACLs | TM-79 | Implemented; PDI validation pending |
 | R2-F03 ACL and cross-scope runtime behavior | Declarative write/read ACLs; no speculative CrossScopePrivilege | TM-81 | Source implemented; PDI runtime evidence required |
