@@ -89,10 +89,12 @@ an unimplemented capability; its negative enforcement tests remain active.
 | TM-80 | Snapshot field read exposure | Persona/channel matrix permits only approved subject, supervisor, compliance, and administrative context; internal evidence stays admin/compliance only | Manual/ATF | Not Run |
 | TM-81 | ACL and cross-scope runtime | Server rules populate protected fields; unauthorized UI/API/import/list/workspace edits fail; RCA/privileges contain only proven minimum operations | Manual/ATF | Not Run |
 | TM-82 | Complete frozen-key integration | Normal build and repeated frozen-key builds succeed with no generated-key drift or unresolved field reference | SDK build/source review | Pass |
+| TM-83 | Requested Access Items deployment configuration | Both active mandatory list collectors use `x_2108496_hr_acces_rob_access` and the exact approved qualifier; six starter rows and exact categories exist; `snc_internal` can read only active rows and the minimum resolution fields; ordinary employees receive no create/write/delete grant | Local/PDI | Local Pass; 2026-07-27 pre-deployment PDI Fail because source ACLs are not installed |
+| TM-84 | Native Wave 2 deployment contract | Read-only verification reports HR Services, producers, catalog/category, user criteria, taxonomy/connected content, variable-set links, case templates/groups, scoped dictionaries, and ACLs; missing or inconsistent metadata returns FAIL with blockers | Local/PDI | Local Pass; 2026-07-27 pre-deployment PDI Fail with documented native/source-adoption blockers |
 
 ## Critical Release Gates
 
-TM-01, TM-02, TM-06 through TM-16, TM-20, TM-23, TM-27, TM-29, TM-49 through TM-56, TM-58, and TM-75 through TM-82 must pass before MVP acceptance.
+TM-01, TM-02, TM-06 through TM-16, TM-20, TM-23, TM-27, TM-29, TM-49 through TM-56, TM-58, and TM-75 through TM-84 must pass before MVP acceptance.
 
 ## Test Data Rules
 

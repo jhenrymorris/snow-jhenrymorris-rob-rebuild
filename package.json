@@ -11,7 +11,10 @@
       "deploy": "now-sdk install --auth rob-pdi",
       "deploy:open": "now-sdk install --auth rob-pdi --open-browser true",
       "transform": "now-sdk transform --auth rob-pdi",
-      "types": "now-sdk dependencies --auth rob-pdi"
+      "types": "now-sdk dependencies --auth rob-pdi",
+      "test:security": "node --test scripts/validation/wave-2-security-remediation.test.cjs",
+      "test:wave2-deployment": "node --test scripts/validation/wave-2-deployment-configuration.test.cjs",
+      "verify:wave2:pdi": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validation/verify-wave-2-deployment.ps1 -Auth rob-pdi"
     },
     "devDependencies": {
         "@servicenow/glide": "27.0.5",

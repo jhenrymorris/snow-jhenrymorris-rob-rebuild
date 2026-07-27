@@ -60,7 +60,33 @@
 | ROB Admin | Yes | Yes | Yes |
 | Authorized process | No | Yes | No |
 | Fulfillers | No | Read when required | No |
-| General user | No | No direct administration | No |
+| Internal employee | No | Active catalog-reference rows and selection fields only | No |
+| External user | No | No | No |
+
+The Employee Center list collectors require ordinary internal employees to
+resolve active rows on `x_2108496_hr_acces_rob_access`. The SDK-managed ACL
+model therefore requires an authenticated session and `snc_internal`:
+
+- table read only when `active=true`;
+- field read for `sys_id`, `name`, `access_category`, `active`, and
+  `sort_order`, also only when `active=true`.
+
+A wildcard field-read ACL remains restricted to ROB Admin so routing,
+assignment, external-system, notes, description, and access-item-code fields
+are not exposed to catalog users. ROB Admin receives table read, create, and
+write. No delete ACL is granted. Ordinary employees receive no create, write,
+or delete ACL. The reference qualifier narrows choices but is not treated as a
+security control.
+
+These six employee-read ACLs use the same no-query script,
+`gs.hasRole('snc_internal')`, in addition to the declarative
+`user_is_authenticated` security attribute and `active=true` condition. A
+pure `roles: [Now.ref('sys_user_role', { name: 'snc_internal' })]` definition
+was tested first, but SDK 4.8.1 generated a new unresolved external-role sys_id
+and new ACL-role link keys on each build, causing the mandatory frozen-key gate
+to fail. The script is limited to a cached session role check, performs no
+GlideRecord query, and is covered by TM-83. This exception must be re-evaluated
+after an SDK upgrade.
 
 ## 4. Protected Fields
 

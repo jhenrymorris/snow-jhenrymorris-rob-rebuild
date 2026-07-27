@@ -91,9 +91,10 @@ SDK version evaluated:
 
 - `@servicenow/sdk` 4.8.1
 
-Affected file:
+Affected files:
 
 - `src/fluent/tables/rob-configuration.now.ts`
+- `src/fluent/tables/rob-case-security-fields.now.ts`
 
 Affected fields:
 
@@ -101,6 +102,7 @@ Affected fields:
 - `default_analytics_assignment_group`
 - `default_operations_manager_escalation_group`
 - `default_exception_review_group`
+- Workforce Administration `x_2108496_hr_acces_operations_manager`
 
 Configured syntax:
 
@@ -109,13 +111,20 @@ referenceQual: 'active=true',
 useReferenceQualifier: 'simple',
 ```
 
-For all four fields, `referenceQual` remains `active=true` and `useReferenceQualifier` remains `simple`. This is the documented Fluent syntax for a plain encoded-query reference qualifier. The SDK 4.8.1 build succeeds but emits TS11 because its diagnostic incorrectly infers that any populated `referenceQual` implies an advanced qualifier. The warning is a known SDK diagnostic inconsistency; the explicit `simple` value is retained and used.
+For all five fields, `referenceQual` remains `active=true` and
+`useReferenceQualifier` remains `simple`. This is the documented Fluent syntax
+for a plain encoded-query reference qualifier. The SDK 4.8.1 build succeeds but
+emits TS11 because its diagnostic incorrectly infers that any populated
+`referenceQual` implies an advanced qualifier. The warning is a known SDK
+diagnostic inconsistency; the explicit `simple` value is retained and used.
 
 Reference qualifiers limit choices presented by a reference picker. They are not ACL security and do not grant or deny access to `sys_user_group` records.
 
 Required validation after an authorized installation:
 
 - [ ] Run TM-61 against all four assignment-group fields.
+- [ ] Confirm the Analytics Operations Manager picker also shows only active
+      users in Employee Center.
 - [ ] Confirm only active groups appear in each reference picker.
 - [ ] Confirm the installed dictionary qualifier is `active=true` and its qualifier mode is `simple`.
 - [ ] Re-evaluate the source, installed metadata, and diagnostic after every SDK upgrade.
@@ -133,6 +142,89 @@ Required validation after an authorized installation:
 - [ ] Create the Reports and Dashboards module during the reporting wave after a valid target exists; Step 26 omits a broken placeholder.
 
 ## 3. HR Services and Employee Center
+
+### Wave 2 SDK-first deployment ownership boundary
+
+The following application-owned artifacts are represented in Fluent source:
+
+- all three ROB intake variable sets and their employee-facing variables;
+- the Employment Type and Access End Date dictionaries on both supported case
+  subclasses and the Analytics Operations Manager dictionary;
+- both Requested Access Items type-21 list collectors, including their exact
+  reference table and qualifiers;
+- the Access End Date catalog UI policy for time-limited employment types;
+- the six starter ROB Access Item Reference records;
+- least-privilege table and field ACLs that allow `snc_internal` to resolve
+  active access items without create, update, or delete access;
+- the server-side four-identity self-submission and provenance enforcement.
+
+The two installed record producers, their HR Services, HR case templates,
+variable-set associations, user-criteria associations, Employee taxonomy
+topics, connected-content rows, and assignment groups are existing Human
+Resources: Core or Employee Experience records. They are not present in the
+application build.
+Creating new `CatalogItemRecordProducer` or generic `Record` definitions with
+new Fluent keys would create duplicate intake records rather than safely adopt
+the installed native records. The SDK does not provide a coalescing adoption
+operation for those existing records. Do not hard-code their PDI sys_ids into
+source and do not create duplicate M2M rows.
+
+The two installed `sc_cat_item_category` associations currently identify the
+HR Access ROB Authorization package even though they point to Human Resources:
+Core producers and categories. They are not yet represented in Fluent source.
+The SDK transform attempt could not access `rob-pdi` through the transform
+credential path even though read-only `now-sdk query` access succeeded.
+Because a new `Record` key would create a duplicate M2M row, safe SDK adoption
+of these two existing records remains a deployment blocker. Resolve it by
+transforming the exact existing M2M records into reviewed source when the SDK
+credential path is available; do not recreate them manually or paste their
+PDI sys_ids into Fluent.
+
+Until those native records can be transformed into reviewed, application-owned
+metadata without changing scope ownership or duplicating records, they remain
+a narrow native boundary. Validate them after every authorized install with:
+
+```powershell
+npm.cmd run verify:wave2:pdi
+```
+
+The underlying script is
+`scripts/validation/verify-wave-2-deployment.ps1`. It uses only read-only
+`now-sdk query` calls and returns `PASS` or `FAIL` with blockers. A missing or
+unreadable native association is a blocker, not an assumed manual success.
+
+Pre-deployment read-only audit on 2026-07-27 found:
+
+- no installed ACLs on `x_2108496_hr_acces_rob_access` (the direct cause of
+  ordinary employees seeing no list-collector matches);
+- blank producer descriptions instead of the approved self-submission text;
+- legacy requester fallbacks in both Human Resources: Core producer scripts;
+- blank Operations Manager escalation and Exception Review groups on the
+  active ROB Configuration;
+- the two application-package catalog-category M2M rows described above are
+  installed but not source-adopted.
+
+Do not repair the missing access-item ACLs manually. They are now defined in
+Fluent and require a later reviewed, explicitly authorized SDK installation.
+
+Required native deployment contract:
+
+- Request Access to HR Systems targets `sn_hr_core_case_payroll`, uses active
+  HR Service value `request_access_to_hr_systems`, Human Resources Catalog,
+  Staffing, Available For = All Users, Not Available For = SNC External, and
+  the ROB Common Intake and ROB Staffing Access variable sets.
+- Request Access to HR Data and Reports targets
+  `sn_hr_core_case_workforce_admin`, uses active HR Service value
+  `request_access_to_hr_data_and_reports`, Human Resources Catalog, Analytics,
+  Available For = All Users, Not Available For = SNC External, and the ROB
+  Common Intake and ROB Analytics Access variable sets.
+- Both producers are active, visible in Employee Center, assigned through
+  connected content to Employee > Human resources > HR Systems and Data
+  Access, linked to an active HR Service and case template, and use only
+  self-submission wording.
+- The linked case templates retain the approved short description, service and
+  category consistency, and configured assignment group. Assignment-group
+  sys_ids remain environment-specific and must not be copied into Fluent.
 
 ### Wave 2 security-remediation PDI gate
 
