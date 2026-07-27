@@ -77,6 +77,19 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 | Wave 7 | Security, audit, and notifications |
 | Wave 8 | Reporting, ATF, manual tests, and hardening |
 
+## Wave 2 requester-profile security remediation
+
+| Requirement / finding | SDK artifact | Test reference | Status |
+|---|---|---|---|
+| FR-3 requester title and supervisor snapshots | `rob-case-security-fields.now.ts`; `requester-profile-snapshot.server.js` | TM-75 | Implemented; PDI validation pending |
+| FR-4 self-submission and trusted ROB provenance | `rob-requester-profile-security.now.ts`; `requester-profile-snapshot.server.js` | TM-76, TM-77 | Implemented; PDI validation pending |
+| EX-1 / R2-F01 supervisor exception stop and native task | `create-supervisor-exception-task.server.js`; block/gate fields; native HR Task ROB Task Type | TM-78 | Implemented; PDI validation pending |
+| R2-F02 controlled audited correction | `requester-profile-correction.server.js`; `requester-profile-correction.now.ts`; correction evidence fields and ACLs | TM-79 | Implemented; PDI validation pending |
+| R2-F03 ACL and cross-scope runtime behavior | Declarative write/read ACLs; no speculative CrossScopePrivilege | TM-81 | Source implemented; PDI runtime evidence required |
+| R2-F04 least-privilege snapshot reads | Snapshot relationship read ACLs; internal evidence role ACLs | TM-80 | Source implemented; PDI persona/channel evidence required |
+| R2-F05 mutable discriminator | Active stable HR Service value/class validation plus active category-valid item validation | TM-76 | Implemented; PDI producer timing required |
+| R2-F06 source-complete integration | Source-owned dictionaries, rules, ACLs, task field, UI action, generated keys | TM-74, TM-82 | Implemented; final frozen-key validation pending |
+
 ## Wave 1 Batch 1 Implementation
 
 | Step | SDK artifact | Test reference | Status |

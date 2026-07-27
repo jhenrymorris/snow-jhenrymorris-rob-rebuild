@@ -34,6 +34,21 @@ Legend:
 | Decision Date/Time | Date/time | Scoped extension | Intake flow | Audit |
 | Exception Reason | ROB Exception Reason | Scoped extension | Decision service | Human-readable outcome |
 
+Wave 2 security adds these scoped, audited controls separately to Payroll and
+Workforce Administration because the existing intake dictionaries are
+subclass-owned rather than inherited from `sn_hr_core_case`:
+
+| Business data | Intended location | Behavior |
+|---|---|---|
+| ROB Authorization Processing Blocked | Both supported HR case subclasses | System-managed mandatory stop for supervisor exceptions |
+| Requires Employee Signature | Both supported HR case subclasses | Forced false while blocked; later lifecycle-owned |
+| Requires Supervisor Signature | Both supported HR case subclasses | Forced false while blocked; later lifecycle-owned |
+| Fulfillment Gate Complete | Both supported HR case subclasses | Forced false while blocked; later lifecycle-owned |
+| Snapshot Correction Requested | Both supported HR case subclasses | Server action trigger; reset after processing |
+| Snapshot Correction Reason | Both supported HR case subclasses | ROB Admin-entered, required and changed for each correction |
+| Prior Position Title / Supervisor | Both supported HR case subclasses | Audited prior values captured by controlled correction |
+| Snapshot Corrected By / At | Both supported HR case subclasses | Audited authoritative actor and date/time |
+
 ## 2. HR Task Field Map
 
 | Business data | Intended location | Type | Notes |
@@ -46,7 +61,7 @@ Legend:
 | Work Notes | Native work notes | Native | Operational history |
 | Close Notes | Native close notes | Native | Completion evidence |
 | Related Authorization | Related ROB Authorization Form | Scoped extension | Exact form |
-| Task Type | ROB Task Type | Scoped extension | Staffing, Analytics, OM, Exception |
+| Task Type | ROB Task Type | Scoped extension | System-managed; Staffing, Analytics, OM, Exception |
 | Access Items | ROB Access Items | Scoped extension | Reference-based list |
 | Provisioning System | External Provisioning System | Scoped extension | ARM, FPPS/WTTS, eOPF, USA Staffing |
 | Target System | External Target System | Scoped extension | OAS or other target |

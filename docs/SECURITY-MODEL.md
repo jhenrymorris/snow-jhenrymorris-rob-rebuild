@@ -183,3 +183,51 @@ Enable auditing for:
 - Unrelated Employee
 
 For each persona test list, record, field, attachment, direct URL, report, task, and Employee Center access.
+
+## 11. Wave 2 requester-profile security controls
+
+The Wave 2 requester-profile implementation is fail-closed for the two approved
+intake paths. The parent-case before-insert rule first validates the active
+native HR Service by its stable value and target case subclass, then validates every
+requested item as an active ROB Access Item in an allowed category. A populated
+requested-items field alone is not trusted provenance. Unrelated Payroll and
+Workforce Administration services return without a requester lookup or ROB
+evidence write. A claimed ROB service with missing, inactive, unknown, or
+wrong-category items aborts before requester profile access.
+
+For accepted ROB intake, `opened_by`, `opened_for`, `subject_person`, and the
+authenticated user must be present and equal. Position Title Snapshot and
+Supervisor Snapshot are always re-derived from that verified requester's
+directory record; incoming snapshot and exception values are overwritten.
+
+Missing, invalid, inactive, or self-referential supervisors atomically set:
+
+- Exception Review Required = true
+- a controlled exception reason
+- Authorization Processing Blocked = true
+- employee-signature, supervisor-signature, and fulfillment gates = false
+
+An after-insert rule creates at most one native `sn_hr_core_task` with ROB Task
+Type `exception_review`, using the active ROB Configuration's Exception Review
+group. ROB Task Type is system-managed and protected from direct writes because
+it is part of the idempotency discriminator. No signature, authorization, or
+fulfillment process may proceed while Authorization Processing Blocked is true.
+
+Direct edits to requested items after creation are rejected. Direct edits to
+snapshot, exception, gate, and correction-audit evidence are rejected by the
+before-update integrity rule even when the field ACL is otherwise satisfied.
+The ROB Admin-only **Re-derive ROB Requester Profile** action requires a
+nonblank new correction reason, revalidates active ROB HR Service provenance,
+and re-derives the current title and supervisor from the original requester's
+directory profile. It records the prior title, prior supervisor, correction
+actor, and authoritative date/time on audited fields. The action never accepts
+a caller-supplied replacement supervisor or title and never opens a lifecycle
+gate automatically.
+
+Field read ACLs require the native HR case record-read ACL first. Title and
+supervisor snapshots are limited to a subject whose three stored identities
+remain equal, the validated supervisor, ROB Admin, or Compliance Viewer.
+Internal exception, gate, and
+correction evidence is limited to ROB Admin and Compliance Viewer. These
+scripted read ACLs perform no database query; runtime inheritance and workspace
+behavior must still pass the PDI persona/channel matrix before deployment.

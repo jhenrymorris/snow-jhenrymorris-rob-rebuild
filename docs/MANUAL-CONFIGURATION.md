@@ -134,6 +134,96 @@ Required validation after an authorized installation:
 
 ## 3. HR Services and Employee Center
 
+### Wave 2 security-remediation PDI gate
+
+Do not run these tests until the user separately authorizes installation. Use
+synthetic users, access items, cases, and correction reasons only. Enable ACL
+debugging and capture case/task numbers, execution timestamps, system logs,
+`sys_restricted_caller_access`, and `sys_scope_privilege` evidence.
+
+Run every applicable case through both **Request Access to HR Systems** and
+**Request Access to HR Data and Reports**:
+
+1. Submit a valid self-request with an active non-self manager. Confirm one
+   case on the expected subclass, the correct HR Service, title/supervisor
+   snapshots, and unchanged short description, description, employment type,
+   access end date, requested items, Operations Manager, assignment group, and
+   priority.
+2. Prove `opened_by`, `opened_for`, `subject_person`, and session user are all
+   populated and equal before the order-100 rule runs. If native HRSD populates
+   any identity later, stop and change the execution point; do not add an actor
+   fallback.
+3. Create unrelated Payroll and Workforce Administration cases with empty and
+   populated scoped requested-items fields. Confirm an unrelated HR Service
+   causes no requester lookup or ROB evidence write. Deactivate each approved
+   synthetic ROB HR Service in turn and confirm a claimed request aborts before
+   requester lookup; reactivate it before continuing.
+4. On each approved ROB HR Service, test empty items, an unknown sys_id, an
+   inactive ROB item, and an active item from the wrong category. Each must
+   stop before requester profile lookup or snapshot write.
+5. Test each identity empty in turn and every mismatch combination, including
+   UI, API, import, flow, integration, background, administrator, and
+   impersonation contexts. Confirm no delegated fallback and no victim lookup.
+6. Inject title, supervisor, exception, block, and gate values on insert.
+   Confirm server-derived values replace them and all native mappings remain
+   unchanged.
+7. Test missing, invalid, inactive, and self-referential supervisors. Confirm
+   the exact reason, blank supervisor, processing block, all three gates false,
+   and exactly one native Exception Review HR task assigned from active ROB
+   Configuration.
+8. Replay/retry the exception-task rule and update the case repeatedly. Confirm
+   no second Exception Review task, signature work, approval work,
+   authorization activation, or fulfillment work is created while blocked.
+   Attempt to change ROB Task Type through every supported write channel and
+   confirm the system-managed `exception_review` value remains unchanged.
+9. As subject, supervisor, both fulfillers, Operations Manager, compliance
+   viewer, unrelated employee, API/import user, and platform admin without
+   `rob_admin`, attempt protected writes through form, list edit, workspace,
+   API, import, and background interfaces. Every direct write must fail.
+10. Confirm platform `admin` without `rob_admin` cannot use admin override and
+    `rob_admin` without native HR case update permission is still denied.
+11. As a user with both `rob_admin` and native case update access, try direct
+    snapshot/exception/gate edits. Confirm they abort. Enter a new correction
+    reason and use **Re-derive ROB Requester Profile**; confirm the title and
+    supervisor come only from the original requester directory profile and
+    prior title, prior supervisor, actor, timestamp, and reason appear in
+    audited history.
+12. Repeat the controlled correction without changing the reason, with a
+    whitespace-only reason, on an unrelated case in each supported subclass,
+    with a caller-supplied replacement manager/title, and after changing the
+    directory manager to missing, invalid, inactive, and self. Confirm stale or
+    blank reasons and unrelated cases fail, supplied replacements fail, invalid
+    directory outcomes remain blocked, and no lifecycle gate opens
+    automatically.
+13. For subject, supervisor, approver, Staffing Fulfiller, Analytics Fulfiller,
+    Operations Manager, compliance viewer, ROB Admin, platform admin, and
+    unrelated employee, test form, list, workspace, API, report, export,
+    reference preview/click-through, Employee Center, and notification preview.
+    Title/supervisor appear only in approved context; internal exception/gate/
+    correction evidence is admin/compliance only; no snapshot or exception
+    detail appears in a notification.
+14. Confirm the before-insert rule can write protected fields and the after-
+    insert rule can create `sn_hr_core_task`. Review every matching Restricted
+    Caller Access request and cross-scope privilege for `sn_hr_core_case`, both
+    subclasses, `sn_hr_core_task`, `sn_hr_core_service`, and `sys_user`. Approve
+    only the exact demonstrated operation; never grant broad case CRUD or any
+    `sys_user` create/update/delete privilege.
+15. Inspect installed dictionaries on both subclasses for Requested Items,
+    Position Title Snapshot, Supervisor Snapshot, all exception/gate/correction
+    fields, and their audit/read-only settings. Confirm the HR Task ROB Task
+    Type choice is `exception_review`.
+16. After all scoped tests pass, remove only the rejected trailing snapshot
+    block from each Human Resources: Core producer in a clean reviewed update
+    set. Retest one producer at a time and compare complete pre/post scripts so
+    every existing mapping listed in step 1 is preserved.
+17. Run a normal SDK build followed by two frozen-key conflict-checking builds
+    from the complete integrated source. Confirm no key drift, duplicate
+    dictionary owner, unresolved field reference, or unrelated metadata.
+
+Deployment remains blocked until all steps pass and the captured PDI evidence
+receives security review. Do not add a speculative `CrossScopePrivilege` to
+make a denied test pass.
+
 ### Request Access to HR Systems
 
 - [ ] HR service configured

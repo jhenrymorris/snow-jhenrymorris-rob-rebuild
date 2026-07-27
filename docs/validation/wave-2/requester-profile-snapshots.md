@@ -1,164 +1,76 @@
-# Wave 2D Requester Profile Snapshots
+# Wave 2 Requester Profile Snapshot Validation
 
-## Outcome
+## Implemented outcome
 
-ServiceNow SDK 4.8.1 supports creating a complete record producer with
-`CatalogItemRecordProducer`, including its pre-insert `script`. It does not
-expose a supported API for augmenting only the script of an existing record
-producer owned by another application.
+The scoped application now owns a source-complete requester-profile security
+slice for the approved Payroll and Workforce Administration HR access cases.
+No PDI installation or native HR Core edit was performed.
 
-Both affected record producers are owned by Human Resources: Core. They must
-not be recreated or claimed by HR Access ROB Authorization source. The minimum
-bridge change is therefore to append the script block below to each existing
-record producer's pre-insert Script field through normal HRSD configuration.
-No bridge change was applied to the PDI as part of this source-only update.
+The before-insert rule validates, in order:
 
-## Affected artifacts
+1. supported native case subclass;
+2. the matching active native HR Service stable value;
+3. a non-empty set of active ROB Access Item records in categories allowed for
+   that service;
+4. equality of `opened_by`, `opened_for`, `subject_person`, and session user;
+5. the verified requester directory record and manager.
 
-| Record producer | Target table | Ownership | Required change |
-|---|---|---|---|
-| Request Access to HR Systems | `sn_hr_core_case_payroll` | Human Resources: Core | Append the profile-snapshot block to the existing pre-insert script |
-| Request Access to HR Data and Reports | `sn_hr_core_case_workforce_admin` | Human Resources: Core | Append the same profile-snapshot block to the existing pre-insert script |
+Unrelated HR Services return before requester lookup. A claimed ROB service
+with invalid access items aborts before requester lookup. Accepted requests
+overwrite untrusted title, supervisor, exception, block, and gate inputs with
+server-derived values.
 
-The existing mappings for HR service, requested access items, employment type,
-access end date, business justification, Operations Manager, and short
-description must remain unchanged.
+## Security stop and correction
 
-Read-only PDI inspection found no direct variables on either producer. Their
-attached ROB variable sets contain no `opened_for` or `subject_person`
-variable. Requester resolution must therefore use inherited fields on
-`current`, not `producer.opened_for` or `producer.subject_person`.
+A supervisor validation failure records one controlled reason, leaves the
+Supervisor Snapshot blank, sets Authorization Processing Blocked, and forces
+employee signature, supervisor signature, and fulfillment gates false. The
+after-insert rule queries native HR Tasks by parent plus ROB Task Type and
+creates one `exception_review` task only when none exists. Assignment comes
+from active ROB Configuration and is never hard-coded.
 
-## Exact bridge script
+Protected evidence cannot be directly changed after insert. The ROB Admin-only
+re-derivation action requires a nonblank newly changed correction reason,
+revalidates the active ROB HR Service, and re-reads the original self-submitting
+requester. It preserves prior title and supervisor plus correction actor and
+timestamp in audited fields. It never accepts a supplied replacement title or
+supervisor and never opens a gate. The native task's ROB Task Type is protected
+from direct writes because it participates in exception-task idempotency.
 
-Append this block after the existing mappings in both record-producer scripts:
+## Source artifacts
 
-```javascript
-// Snapshot the requester profile without overwriting explicit case values.
-var requesterId = current.getValue('subject_person');
+| Artifact | Purpose |
+|---|---|
+| `src/fluent/tables/rob-case-security-fields.now.ts` | Source-owned case and native HR Task dictionaries |
+| `src/fluent/business-rules/rob-requester-profile-security.now.ts` | Insert validation, update integrity, and exception-task rules |
+| `src/fluent/server/requester-profile-snapshot.server.js` | Provenance, item, identity, and supervisor validation |
+| `src/fluent/server/requester-profile-correction.server.js` | Controlled audited directory re-derivation |
+| `src/fluent/server/create-supervisor-exception-task.server.js` | Idempotent native Exception Review task creation |
+| `src/fluent/security/rob-case-requester-profile-acls.now.ts` | Write and least-privilege field read controls |
+| `src/fluent/ui-actions/requester-profile-correction.now.ts` | Restricted correction entry point |
+| `scripts/validation/wave-2-security-remediation.test.cjs` | Dependency-free local regression suite |
 
-if (!requesterId)
-    requesterId = current.getValue('opened_for');
+## Required mapping preservation
 
-if (!requesterId)
-    requesterId = gs.getUserID();
+The security scripts do not change HR Service, short description, description,
+employment type, access end date, requested access items, Operations Manager,
+assignment group, or priority. The local suite asserts every listed mapping on
+both representative paths. Native producer cleanup remains manual and may
+remove only the rejected trailing snapshot block after the scoped correction
+passes PDI validation.
 
-if (requesterId) {
-    var requester = new GlideRecord('sys_user');
+## Local test result
 
-    if (requester.get(requesterId)) {
-        var requesterTitle = requester.getValue('title');
-        var requesterManager = requester.getValue('manager');
+Command:
 
-        if (
-            !current.getValue('x_2108496_hr_acces_position_title') &&
-            requesterTitle
-        ) {
-            current.setValue(
-                'x_2108496_hr_acces_position_title',
-                requesterTitle
-            );
-        }
-
-        if (
-            !current.getValue('x_2108496_hr_acces_supervisor_snapshot') &&
-            requesterManager
-        ) {
-            current.setValue(
-                'x_2108496_hr_acces_supervisor_snapshot',
-                requesterManager
-            );
-        }
-    }
-}
+```powershell
+node scripts/validation/wave-2-security-remediation.test.cjs
 ```
 
-The block is ES5-compatible and runs before the record-producer insert. It
-does not call `current.update()`, `current.insert()`, or
-`current.setAbortAction()`.
+Result on 2026-07-27: 13 passed, 0 failed.
 
-## Requester resolution order
-
-1. `current.subject_person`
-2. `current.opened_for`
-3. `gs.getUserID()`
-
-The first non-empty sys_id is used to retrieve one `sys_user` record.
-
-## Target fields
-
-| Target field | Source user field | Behavior |
-|---|---|---|
-| `x_2108496_hr_acces_position_title` | `sys_user.title` | Set only when the case field is empty and the user title is non-empty |
-| `x_2108496_hr_acces_supervisor_snapshot` | `sys_user.manager` | Set only when the case field is empty and the user manager is non-empty |
-
-## Null handling
-
-- An empty subject person falls through to opened for.
-- An empty opened-for value falls through to the logged-in user.
-- An empty session user leaves the snapshot fields unchanged.
-- A missing or inaccessible `sys_user` record leaves both fields unchanged.
-- A user without a title leaves Position Title Snapshot unchanged.
-- A user without a manager leaves Supervisor Snapshot unchanged.
-- A value already assigned by existing producer logic or platform processing
-  is never overwritten.
-
-## Expected staffing case result
-
-Submitting **Request Access to HR Systems** creates an
-`sn_hr_core_case_payroll` record with all existing mappings preserved. When
-the resolved requester has profile values and the target fields were not
-already populated:
-
-- Position Title Snapshot equals the resolved user's `title`.
-- Supervisor Snapshot references the resolved user's `manager`.
-
-## Expected analytics case result
-
-Submitting **Request Access to HR Data and Reports** creates an
-`sn_hr_core_case_workforce_admin` record with all existing mappings preserved,
-including Operations Manager. When the resolved requester has profile values
-and the target fields were not already populated:
-
-- Position Title Snapshot equals the resolved user's `title`.
-- Supervisor Snapshot references the resolved user's `manager`.
-
-## PDI validation procedure
-
-1. Use synthetic users only. Give the submitting user a known title and
-   manager.
-2. Capture the complete current Script value of each producer for rollback.
-3. In the appropriate HRSD configuration scope, append the exact bridge block
-   to **Request Access to HR Systems** without changing its existing script.
-4. Append the same block to **Request Access to HR Data and Reports** without
-   changing its existing script.
-5. Confirm neither script contains `current.update()` or `current.insert()`.
-6. Submit the Staffing producer and verify the created Payroll case retains
-   its existing variable mappings and contains the expected two snapshots.
-7. Submit the Analytics producer and verify the created Workforce
-   Administration case retains HR service, short description, Operations
-   Manager, and all common mappings, plus the expected two snapshots.
-8. Validate subject-person precedence with a synthetic case where subject
-   person and opened for resolve to different test users, if the HRSD intake
-   permits that state.
-9. Validate opened-for fallback when subject person is empty.
-10. Validate session-user fallback when both inherited fields are empty.
-11. Validate null handling with a synthetic user lacking title, manager, or
-    both.
-12. Validate non-overwrite behavior by arranging an explicit target value
-    before the snapshot block and confirming it remains unchanged.
-13. Confirm exactly one case is created per submission and no post-insert
-    update is issued by the bridge block.
-
-## Rollback procedure
-
-1. Stop further synthetic submissions through the affected producer.
-2. Restore the complete pre-change Script value captured for that producer,
-   or remove only the appended profile-snapshot block.
-3. Save the producer without changing its variables, variable-set
-   associations, target table, HR service, publication state, or other
-   mappings.
-4. Submit one synthetic request and confirm the previous behavior is restored.
-5. Preserve any cases created during validation as test evidence unless the
-   PDI test-data procedure explicitly authorizes their removal.
-
+This result does not substitute for installed Business Rule timing, native HR
+case/task ACL inheritance, cross-scope and Restricted Caller Access, workspace
+and API enforcement, audit-history rendering, Flow gate consumption, or native
+producer cleanup. Run the exact PDI gate in `docs/MANUAL-CONFIGURATION.md`
+after separate installation authorization.

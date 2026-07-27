@@ -79,10 +79,19 @@ Status values: Not Run, Pass, Fail, Blocked, Manual Only.
 | TM-71 | Wave 1 application roles | Five scoped roles build with correct names; only ROB Admin is scoped application admin | SDK build/source review | Pass |
 | TM-72 | Form Version lifecycle population | A Draft may initially have no Form Version; lifecycle processing copies the active ROB Configuration version before Employee Signature, and the installed Australia read-only option permits lifecycle/server-side population | Manual/ATF | Not Run |
 | TM-73 | Business Justification label rendering | The Business Justification label is visible on the normal application form; App Home Preview behavior is evaluated and recorded separately | Manual | Not Run |
+| TM-74 | Wave 2 security metadata | Both native case subclasses own the requested-items, snapshot, exception, block, gate, and correction-evidence dictionaries; native HR Task owns ROB Task Type; ACLs and Business Rules build | SDK build/source review | Pass |
+| TM-75 | Requester snapshot derivation | Both approved HR services derive title and active non-self supervisor from the verified self-submitting requester without changing existing producer mappings | Local/PDI | Local Pass; PDI Not Run |
+| TM-76 | ROB provenance and requested-item validation | Unrelated services perform no profile lookup; inactive approved services and missing, inactive, unknown, or wrong-category items fail before requester profile access | Local/PDI | Local Pass; PDI Not Run |
+| TM-77 | Protected-field injection and identity mismatch | Caller-supplied evidence is replaced and any four-identity mismatch stops before requester lookup | Local/PDI | Local Pass; PDI Not Run |
+| TM-78 | Supervisor exception enforcement | Missing, invalid, inactive, and self supervisors record the exact reason, block processing, keep all gates false, and create at most one configuration-routed Exception Review HR task whose ROB Task Type cannot be directly changed | Local/PDI | Local Pass; PDI Not Run |
+| TM-79 | Controlled snapshot correction | Direct protected edits fail; ROB Admin action requires a new reason, re-derives directory values, preserves prior values/actor/time, and does not open lifecycle gates | Local/PDI | Local Pass; PDI Not Run |
+| TM-80 | Snapshot field read exposure | Persona/channel matrix permits only approved subject, supervisor, compliance, and administrative context; internal evidence stays admin/compliance only | Manual/ATF | Not Run |
+| TM-81 | ACL and cross-scope runtime | Server rules populate protected fields; unauthorized UI/API/import/list/workspace edits fail; RCA/privileges contain only proven minimum operations | Manual/ATF | Not Run |
+| TM-82 | Complete frozen-key integration | Normal build and repeated frozen-key builds succeed with no generated-key drift or unresolved field reference | SDK build/source review | Pass |
 
 ## Critical Release Gates
 
-TM-01, TM-02, TM-06 through TM-16, TM-20, TM-23, TM-27, TM-29, TM-49 through TM-56, and TM-58 must pass before MVP acceptance.
+TM-01, TM-02, TM-06 through TM-16, TM-20, TM-23, TM-27, TM-29, TM-49 through TM-56, TM-58, and TM-75 through TM-82 must pass before MVP acceptance.
 
 ## Test Data Rules
 
