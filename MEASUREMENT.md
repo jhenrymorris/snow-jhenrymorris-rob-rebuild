@@ -1062,3 +1062,64 @@ Not exposed by session/tool — no estimate recorded.
 - Token accounting: not exposed by the session; not estimated.
 - Status: R4 — BLOCKED; R4-POLICY-01 resolved; R4-PDI-01 remains open.
 - Wave 5: not started.
+
+### R4.2 — Native Document Templates / ServiceNow Sign Runtime Proof
+
+- Measurement shape: `turn-by-turn` continuation of R4; the runtime sequence
+  crossed a user authentication renewal turn before close-out.
+- Active session start: 2026-08-15 17:53:52 EDT.
+- Active session end: 2026-08-15 19:33:47 EDT.
+- Calendar span / instrumented session duration: 1 hour 39 minutes 55 seconds.
+  The authentication wait is included because a separate active-time counter
+  was not exposed; no alternate duration is estimated.
+- Turn 1 classification: capability/environment — inventoried native template,
+  participant, task, attachment, and privilege artifacts; created a minimal
+  synthetic capability configuration; tested employee signing, supervisor
+  signing, PDF output, signer isolation, and persisted evidence.
+- Turn 2 classification: environment/method-rework and close-out — user restored
+  the expired PDI session; completed persisted-evidence, read-only, cleanup,
+  privilege, documentation, and source-protection checks.
+- Reviewer interventions: 0 policy/design interventions. One user action restored
+  PDI authentication and is recorded as an environment/access intervention.
+- Silent defects: 0.
+- Visible defects: 4: local PDF authoring helper initially referenced the wrong
+  AcroForm property and was corrected; an app-owned PDF-template attachment was
+  inaccessible through the signer path; a Flow experiment generated one
+  unintended RCA record, which was removed and verified absent; the copied HR
+  Core template retained unrelated source-template body content. A later native
+  Preview action opened only a blank child tab, preventing the denial/history
+  rerun without bypassing the approved path; this is recorded as an environment
+  capability limitation rather than silently marked PASS.
+- Runtime evidence: HRC0001026; execution
+  `a635f8e4c33ecb1068a35f2b2b01316d` closed after employee DOCT0001003 and
+  supervisor DOCT0001004; system PDF attachment
+  `0876f06cc33ecb1068a35f2b2b01313a` (`application/pdf`, 11,519 bytes).
+- Security evidence: employee and supervisor were distinct; unrelated Amelia
+  Caputo had no signing task; employee could not perform the supervisor stage;
+  completed task UI was read-only; HR Access cross-scope privileges to `sn_doc`
+  / `sn_esign` = 0; RCA side effect remaining = 0; temporary roles = 0.
+- Cleanup evidence: Staffing and Analytics HR templates restored without
+  document-template bindings; all temporary templates non-published; failed
+  draft case HRC0001025 deleted; successful synthetic case/task/PDF chain
+  retained as controlled evidence; local temporary PDF tooling removed.
+- Source/build/deployment evidence: no application source or generated-key
+  change; Class C native capability configuration plus documentation only;
+  SDK build and deployment not applicable. Generated-key diff empty.
+- Count assertion:
+  - Minimal native templates required: expected 1; actual 1 successful template.
+  - Employee signer stages: expected 1; actual 1.
+  - Supervisor approval/signature stages: expected 1; actual 1 combined acknowledgement/signature stage; distinct approval artifact not proven.
+  - Completed signed PDFs: expected at least 1; actual 1.
+  - Persisted employee signer identities: expected at least 1; actual 1.
+  - Persisted supervisor signer identities: expected at least 1; actual 1.
+  - Broad cross-scope privileges remaining: expected 0; actual 0.
+  - Custom signature tables added: expected 0; actual 0.
+  - Custom PDF/document tables added: expected 0; actual 0.
+  - R2-AGENCY-01 closed: expected no; actual no.
+  - Unexpected generated-key changes: expected 0; actual 0.
+- Count assertion result: FAIL for complete R4-PDI-01 acceptance because distinct
+  approval evidence, executed denial, independent signed-history retention, and
+  clean exact Form 1768 rendering remain unproven.
+- Token accounting: not exposed by the session; not estimated.
+- Status: R4-PDI-01 — OPEN; partial native capability only.
+- Wave 5 and full R4 lifecycle implementation: not started.

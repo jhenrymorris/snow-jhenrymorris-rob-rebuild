@@ -2299,6 +2299,23 @@ Manual does not mean informal.
 
 Each manual test shall have an exact procedure and expected result.
 
+## R4.2 native capability evidence
+
+| Test | Result | Evidence |
+|---|---|---|
+| Minimal template rendering | PASS with defect | R4.2 content rendered, but copied source template also rendered unrelated sample body |
+| Employee signer routing | PASS | DOCT0001003 assigned/closed by Amos Linnan |
+| Supervisor signer routing | PASS | DOCT0001004 created only after employee completion and closed by Rebekah Lindboe |
+| Separate supervisor approval | NOT PROVEN | Native task combined acknowledgement and ServiceNow Sign; no separate approval record |
+| Incomplete chain | PASS | Execution remained in progress and no final PDF existed after employee-only completion |
+| Final PDF | PASS | `application/pdf` attachment `0876f06cc33ecb1068a35f2b2b01313a` on HRC0001026 |
+| Completed artifact control | PARTIAL PASS | Closed task/read-only signer UI proven; replacement/version audit unproven |
+| Historical retention | NOT PROVEN | No second completed signed document created |
+| Supervisor refusal | NOT PROVEN | Refusal control visible; denial execution not completed |
+| Full Form 1768 rendering | NOT RUN | Minimal path did not meet every `R4-PDI-01` criterion |
+
+`R4-PDI-01` remains OPEN. `R2-AGENCY-01` remains OPEN.
+
 ---
 
 # 47. ATF Suite Structure

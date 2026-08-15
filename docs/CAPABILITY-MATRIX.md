@@ -78,3 +78,27 @@ distinct electronic-only extensions; ARM remains non-rendered provisioning
 metadata; and approved system-managed values render in a separate Electronic
 Authorization Metadata section. `R4-PDI-01` remains OPEN because this policy
 does not prove template/signature/PDF runtime capability.
+
+### R4.2 native runtime proof
+
+Controlled Australia runtime testing materially advanced the capability result,
+but did not satisfy every mandatory `R4-PDI-01` acceptance criterion:
+
+| Capability | Runtime evidence | Classification / result |
+|---|---|---|
+| HR Core HTML Document Template | Temporary HR Core-owned template `41103ca0c3facb1068a35f2b2b0131b0` rendered native case data and ordered participants | Class C capability configuration; PASS for mechanics, not production Form 1768 fidelity |
+| Employee signing | DOCT0001003 closed by Amos Linnan at `2026-08-15 23:18:08` | PASS; intended employee identity and timestamp persisted |
+| Supervisor attestation/signing | DOCT0001004 closed by Rebekah Lindboe at `2026-08-15 23:19:43` after employee completion | PARTIAL PASS; acknowledgement plus signature persisted, but a distinct approval record was not produced |
+| PDF output and association | System attachment `0876f06cc33ecb1068a35f2b2b01313a`, `application/pdf`, 11,519 bytes, on native case HRC0001026 | PASS for PDF generation and native-case association |
+| Completed-artifact control | Execution `a635f8e4c33ecb1068a35f2b2b01316d` is closed; completed signer UI is read-only | PARTIAL PASS; replacement audit/version behavior was not exercised |
+| Denial and independent history | Refusal control was visible; a second execution could not be started after Preview opened only a blank child tab | NOT PROVEN |
+| Full Form 1768 rendering | Not attempted because the minimal capability path did not fully pass | NOT RUN |
+
+The copied native template retained unrelated source-template body content, so
+the minimal rendering was not clean enough for production use. All temporary
+templates are non-published (`draft` or `edit`), both intake template bindings
+were removed, and the successful synthetic case/PDF/task chain is retained only
+as audit evidence. No broad cross-scope privilege remains.
+
+`R4-PDI-01` therefore remains OPEN. Classification is Class C for the manual
+PDI capability proof and Class D for the still-unproven complete ROB runtime.

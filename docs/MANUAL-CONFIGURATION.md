@@ -23,6 +23,22 @@ separate native supervisor approval, exact signed content, final attachment
 destination, immutability, and historical retention. No broad cross-scope
 privilege is approved for this work.
 
+R4.2 runtime evidence: an HR Core-owned HTML template successfully created an
+ordered employee/supervisor Document Task chain and a system-generated PDF on
+synthetic Workforce Administration case HRC0001026. Persisted evidence is
+DOCT0001003 (employee Amos Linnan, closed `2026-08-15 23:18:08`), DOCT0001004
+(supervisor Rebekah Lindboe, closed `2026-08-15 23:19:43`), execution
+`a635f8e4c33ecb1068a35f2b2b01316d`, and PDF attachment
+`0876f06cc33ecb1068a35f2b2b01313a`. This is capability evidence only.
+
+The native supervisor stage combined a required acknowledgement with ServiceNow
+Sign; it did not create a separately proven approval record. Denial execution,
+independent historical signed-version retention, and exact Form 1768 rendering
+remain unproven. The copied template also retained unrelated sample-template
+body content. Do not promote it. All R4.2 templates are non-published, and the
+Staffing/Analytics HR templates have been restored without a document-template
+binding. `R4-PDI-01` remains OPEN.
+
 ## 2. Synthetic Users and Groups
 
 Users:

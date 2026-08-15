@@ -50,6 +50,11 @@ R0 records implementation deltas only. It does not change application metadata o
   supervisor signing with separate supervisor approval, signer/timestamp
   evidence, final PDF generation, exact attachment destination, immutability,
   and historical retention. Status: OPEN — PDI/agency capability validation.
+  R4.2 partial proof generated one ordered two-signer native task execution and
+  one system PDF attached to synthetic native case HRC0001026, with persisted
+  signer identities and timestamps. Still open: distinct supervisor approval
+  evidence, executed denial, independent signed-version retention, clean exact
+  Form 1768 rendering, and final Authorization Form attachment/security proof.
 - [ ] Implement New, Amendment, and Renewal lifecycle only after the two R4
   gates above are resolved; keep Reuse free of new forms/details and preserve
   its original employee evidence/PDF.

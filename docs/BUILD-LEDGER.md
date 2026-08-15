@@ -119,3 +119,26 @@ Build evidence is package-specific and must remain distinct from install, runtim
   Authorization Metadata** section using field-map terminology.
 - Source PDF unchanged. Application source and generated keys unchanged.
   Deployment not applicable. `R4-PDI-01` remains OPEN and R4 remains BLOCKED.
+
+### R4.2 native Document Templates / ServiceNow Sign runtime proof
+
+- Classification: Class C manual/native capability configuration; no source or
+  generated-key artifact was retained.
+- Successful synthetic chain: HRC0001026; execution
+  `a635f8e4c33ecb1068a35f2b2b01316d`; employee task DOCT0001003; supervisor
+  task DOCT0001004; final PDF attachment
+  `0876f06cc33ecb1068a35f2b2b01313a`.
+- Persisted employee and supervisor identities/timestamps passed, ordered
+  participant gating passed, and one `application/pdf` attachment was generated
+  by `system` on the native Workforce Administration case.
+- Supervisor acknowledgement and signature were combined by the native task;
+  a distinct approval record was not proven. Denial execution, independent
+  historical signed-version retention, exact Form 1768 rendering, and final
+  Authorization Form association/security were not proven.
+- Cleanup: both HR Service template bindings removed; temporary templates left
+  non-published for auditable evidence; failed draft case HRC0001025 deleted;
+  one unintended RCA record removed and verified absent; broad HR Access
+  cross-scope privileges remaining = 0.
+- Source/build/deployment: documentation only; build and deployment not
+  applicable. Generated-key diff empty.
+- Result: `R4-PDI-01` OPEN; partial native capability only. R4 remains BLOCKED.
