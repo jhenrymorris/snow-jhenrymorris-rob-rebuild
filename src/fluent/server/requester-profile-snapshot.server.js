@@ -1,7 +1,11 @@
 (function executeRule(current) {
     var requestedItemsField = 'x_2108496_hr_acces_requested_items'
     var positionTitleField = 'x_2108496_hr_acces_position_title'
+    var organizationField = 'x_2108496_hr_acces_organization_snapshot'
     var supervisorField = 'x_2108496_hr_acces_supervisor_snapshot'
+    var employmentTypeField = 'x_2108496_hr_acces_employment_type'
+    var accessEndDateField = 'x_2108496_hr_acces_access_end_date'
+    var operationsManagerField = 'x_2108496_hr_acces_operations_manager'
     var exceptionRequiredField =
         'x_2108496_hr_acces_exception_review_required'
     var exceptionReasonField = 'x_2108496_hr_acces_exception_reason'
@@ -13,6 +17,16 @@
         'x_2108496_hr_acces_requires_supervisor_signature'
     var fulfillmentGateField =
         'x_2108496_hr_acces_fulfillment_gate_complete'
+    var requestRequirements = {
+        requiresAccessEndDate: false,
+        requiresOperationsManager: false,
+    }
+    var approvedEmploymentTypes = {
+        federal_employee: true,
+        contractor: true,
+        ipa: true,
+        auditor_investigator: true,
+    }
     var supportedServices = {
         sn_hr_core_case_payroll: {
             value: 'request_access_to_hr_systems',
@@ -39,7 +53,13 @@
     }
 
     function isApprovedRobRequest() {
-        var className = current.getValue('sys_class_name')
+        var className = current.getTableName()
+
+        if (!supportedServices[className]) {
+            className =
+                current.getValue('sys_class_name') ||
+                current.getRecordClassName()
+        }
         var servicePolicy = supportedServices[className]
         var serviceId = current.getValue('hr_service')
         var requestedItems = current.getValue(requestedItemsField)
@@ -109,6 +129,18 @@
                 reject('One or more requested ROB access items are not valid for this service.')
                 return false
             }
+
+            if (isActiveFlag(accessItem.getValue('requires_access_end_date'))) {
+                requestRequirements.requiresAccessEndDate = true
+            }
+
+            if (
+                isActiveFlag(
+                    accessItem.getValue('requires_operations_manager_task')
+                )
+            ) {
+                requestRequirements.requiresOperationsManager = true
+            }
             approvedCount += 1
         }
 
@@ -121,6 +153,27 @@
     }
 
     if (!isApprovedRobRequest()) {
+        return
+    }
+
+    function isActiveFlag(value) {
+        return value === '1' || value === 'true'
+    }
+
+    var businessJustification = current.getValue('rich_description')
+
+    if (
+        !businessJustification ||
+        !String(businessJustification).replace(/^\s+|\s+$/g, '')
+    ) {
+        reject('Business Justification is required.')
+        return
+    }
+
+    var employmentType = current.getValue(employmentTypeField)
+
+    if (!approvedEmploymentTypes[employmentType]) {
+        reject('Select an approved Employment Type.')
         return
     }
 
@@ -155,6 +208,10 @@
     }
 
     current.setValue(positionTitleField, requester.getValue('title') || '')
+    current.setValue(
+        organizationField,
+        requester.getValue('department') || ''
+    )
     current.setValue(supervisorField, '')
     current.setValue(exceptionRequiredField, '0')
     current.setValue(exceptionReasonField, '')
@@ -165,7 +222,7 @@
 
     var managerId = requester.getValue('manager')
 
-    function setSupervisorException(reason) {
+    function setPrerequisiteException(reason) {
         current.setValue(supervisorField, '')
         current.setValue(exceptionRequiredField, '1')
         current.setValue(exceptionReasonField, reason)
@@ -175,27 +232,70 @@
         current.setValue(fulfillmentGateField, '0')
     }
 
+    if (!current.getValue(positionTitleField)) {
+        setPrerequisiteException('missing_position')
+        return
+    }
+
+    if (!current.getValue(organizationField)) {
+        setPrerequisiteException('missing_organization')
+        return
+    }
+
+    var requiresEmploymentEndDate =
+        employmentType === 'contractor' ||
+        employmentType === 'auditor_investigator'
+
+    if (
+        (requiresEmploymentEndDate || requestRequirements.requiresAccessEndDate) &&
+        !current.getValue(accessEndDateField)
+    ) {
+        setPrerequisiteException('missing_required_access_end_date')
+        return
+    }
+
+    if (requestRequirements.requiresOperationsManager) {
+        var operationsManagerId = current.getValue(operationsManagerField)
+
+        if (!operationsManagerId) {
+            setPrerequisiteException('missing_operations_manager')
+            return
+        }
+
+        var operationsManager = new GlideRecord('sys_user')
+
+        if (!operationsManager.get(operationsManagerId)) {
+            setPrerequisiteException('invalid_operations_manager')
+            return
+        }
+
+        if (!isActive(operationsManager)) {
+            setPrerequisiteException('inactive_operations_manager')
+            return
+        }
+    }
+
     if (!managerId) {
-        setSupervisorException('missing_supervisor')
+        setPrerequisiteException('missing_supervisor')
         return
     }
 
     if (managerId === requesterId) {
-        setSupervisorException('self_supervisor')
+        setPrerequisiteException('self_supervisor')
         return
     }
 
     var manager = new GlideRecord('sys_user')
 
     if (!manager.get(managerId)) {
-        setSupervisorException('invalid_supervisor')
+        setPrerequisiteException('invalid_supervisor')
         return
     }
 
     var managerActive = manager.getValue('active')
 
     if (managerActive !== '1' && managerActive !== 'true') {
-        setSupervisorException('inactive_supervisor')
+        setPrerequisiteException('inactive_supervisor')
         return
     }
 

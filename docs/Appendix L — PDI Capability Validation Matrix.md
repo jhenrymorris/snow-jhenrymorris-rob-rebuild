@@ -339,6 +339,24 @@ If unsupported, identify a supported native or transform-based design.
 
 Do not create a custom request table.
 
+## CASE-01A — R2 Snapshot Population Outcome
+
+The PDI can host the six application-owned snapshot dictionaries but cannot
+safely populate them from the HR Access scope across the native HR Core table
+boundary. Both target subclasses expose Read but disallow cross-scope Create,
+Update, Delete, and web-service access. Same-record assignment, direct producer
+assignment, app-scoped mapped variables, exact table Write access, and available
+declarative mechanisms did not yield a supported secure solution.
+
+Status: **BLOCKED-PDI**.
+
+Platform-owner Option B resolves the architecture direction: an agency HR
+Core-owned controlled mechanism must populate the fields from authenticated/
+subject profile data. Agency validation must cover committed persistence on
+both subclasses, forged requester/subject/snapshot inputs, ordinary-user field
+immutability, and any approved audited correction path. No broad privilege or
+replacement data model is permitted.
+
 ---
 
 # 17. CASE-02 — Field Label Validation

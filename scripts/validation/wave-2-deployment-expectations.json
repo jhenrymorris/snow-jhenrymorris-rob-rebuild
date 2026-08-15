@@ -119,6 +119,7 @@
       "x_2108496_hr_acces_access_end_date",
       "x_2108496_hr_acces_requested_items",
       "x_2108496_hr_acces_position_title",
+      "x_2108496_hr_acces_organization_snapshot",
       "x_2108496_hr_acces_supervisor_snapshot",
       "x_2108496_hr_acces_exception_review_required",
       "x_2108496_hr_acces_exception_reason",
@@ -129,6 +130,7 @@
       "x_2108496_hr_acces_snapshot_correction_requested",
       "x_2108496_hr_acces_snapshot_correction_reason",
       "x_2108496_hr_acces_prior_position_title",
+      "x_2108496_hr_acces_prior_organization_snapshot",
       "x_2108496_hr_acces_prior_supervisor_snapshot",
       "x_2108496_hr_acces_snapshot_corrected_by",
       "x_2108496_hr_acces_snapshot_corrected_at"

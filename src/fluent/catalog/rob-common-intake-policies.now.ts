@@ -5,7 +5,7 @@ export const requireAccessEndDateForTimeLimitedWorkers = CatalogUiPolicy({
     $id: Now.ID['rob-require-access-end-date-for-time-limited-workers'],
     shortDescription: 'Require ROB Access End Date for time-limited workers',
     description:
-        'Makes Access End Date visible and mandatory for contractor, IPA, auditor/investigator, and other time-limited employment types.',
+        'Makes Access End Date visible and mandatory for contractor and auditor/investigator employment types. The IPA rule remains an unresolved business configuration decision.',
     appliesTo: 'set',
     variableSet: robCommonIntakeVariableSet,
     active: true,
@@ -18,7 +18,7 @@ export const requireAccessEndDateForTimeLimitedWorkers = CatalogUiPolicy({
     appliesOnRequestedItems: false,
     appliesOnTargetRecord: false,
     catalogCondition:
-        'x_2108496_hr_acces_employment_typeINcontractor,ipa,auditor_investigator,other_time_limited',
+        'x_2108496_hr_acces_employment_typeINcontractor,auditor_investigator',
     actions: [
         {
             variableName: 'x_2108496_hr_acces_access_end_date',

@@ -33,7 +33,6 @@ export const robCommonIntakeVariableSet = VariableSet({
                 contractor: { label: 'Contractor', sequence: 200 },
                 ipa: { label: 'IPA', sequence: 300 },
                 auditor_investigator: { label: 'Auditor / Investigator', sequence: 400 },
-                other_time_limited: { label: 'Other Time-Limited', sequence: 500 },
             },
         }),
         x_2108496_hr_acces_access_end_date: DateVariable({

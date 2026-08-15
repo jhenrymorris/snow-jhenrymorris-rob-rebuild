@@ -831,4 +831,104 @@ Not exposed by session/tool — no estimate recorded.
 - Count assertion result: PASS.
 - Token accounting: Not exposed by session/tool — no estimate recorded.
 - R1 status: PASS.
+
+## R2 — Australia HRSD Intake / Runtime Remediation
+
+### Start Record
+
+- Measurement shape: `one-pass` (the package was approved once for continuous inventory, remediation, build, deployment, and Australia verification; revise only if execution actually becomes turn-by-turn).
+- Start timestamp: 2026-08-15 12:49:53 EDT
+- Active session 1 start: 2026-08-15 12:49:53 EDT
+- Branch / worktree: remediation/02-australia-intake-validation
+- Starting commit: 6bbd3bc7197d71f0287c2e54df19f8c31d076134
+- Validated baseline tag: r1-data-foundation-remediated
+- Target instance: Australia PDI (`rob-pdi`)
+- Applicable PRD requirements: BR-1–BR-4 MVP subset; FR-1–FR-4; SEC-5; AC-1, AC-2, AC-24; Wave 2 native HRSD intake gate
+- Applicable appendix/test IDs: Appendices A, C, E, F, I, J, K, L, M, N, O; W2-01 through W2-20; TM-01 through TM-05 and TM-74 through TM-84
+- Planned artifact classes: Class A scoped case/task extensions, catalog variables/policies, server validation, ACLs, tests, and documentation; Class B installed HR Services, producers, templates, variable associations, taxonomy/content metadata, and supported transforms; Class C environment-specific groups, personas, and native configuration; Class D delegated intake and all Wave 3+ behavior
+- Planned package scope: Validate and remediate exactly two native Australia HRSD self-service intake paths, reference-driven access selection, self-submission, required/conditional intake data, profile snapshots, WPC/OM prerequisites, approved prerequisite exceptions, and negative lifecycle guards without activating Wave 3 or later processing.
+- Expected count-assertion at close-out:
+  - Employee Center HR Services / native intake paths: 2
+  - Custom request tables: 0
+  - Active controlled access items: 6
+  - Staffing-visible items: 3
+  - Analytics-visible items: 3
+  - WPC visible on Staffing / Analytics: 0 / 1
+  - Other-subject submissions allowed: 0
+  - Authorization Forms, Access Details, and signature/approval/fulfillment artifacts created by Wave 2 intake: 0
+  - Unexpected existing generated-key changes: 0
+
+### Blocked Close-Out Record
+
+- End timestamp: 2026-08-15 13:55:53 EDT
+- Calendar span: 2026-08-15 12:49:53 EDT through 2026-08-15 13:55:53 EDT (1 hour 6 minutes).
+- Instrumented active-session duration: 1 hour 6 minutes; the session was continuous and no inactive time was estimated.
+- Measurement shape: `one-pass`.
+- One-pass narrative: validated the R1 baseline; inventoried source/native artifacts; remediated exact Wave 2 source and the two existing Class B producer scripts; passed local/build/frozen-key gates; performed normal installs; exercised ordinary-employee Staffing and Analytics portals; traced cross-scope runtime through privacy-safe temporary diagnostics; removed diagnostics and prohibited temporary privileges; stopped on native snapshot-write capability.
+- Reviewer interventions: 0 during R2.
+- Silent defects: 4 - employee list collectors initially returned zero items; producers did not stamp native HR Service or all self identities; Australia uses `rich_description` rather than `description`; validated snapshot writes did not persist and required targeted record inspection to reveal.
+- Visible defects: 2 - the first build rejected a Fluent `ForOfStatement` and was corrected to explicit ACL declarations; runtime generated prohibited broad `GlideRecord.setValue` Execute API privilege `d3b8e750c3ba8b1068a35f2b2b013123`, which was deleted and verified absent.
+- Source evidence: 22/22 Wave 2 security tests PASS; 16/16 deployment-configuration tests PASS after aligning the assertions with the runtime-proven authenticated security-attribute ACL.
+- Build evidence: normal build PASS; frozen-key build PASS; exactly five unchanged TS11 reference-qualifier warnings; no conflicts.
+- Install evidence: normal installs PASS without `--reinstall`; final diagnostic-cleanup rollback context `c21b271cc3ba8b1068a35f2b2b013115`.
+- Runtime evidence: exactly two active services and native case paths; ordinary employee sees Staffing items 3 and Analytics items 3; WPC is Analytics-only; exact four Employment Types; Contractor/Auditor date rule and IPA non-mandate; Business Justification mandatory; case `HRC0001015` has matching `opened_by`, `opened_for`, and `subject_person`. Scoped validation logs proved provenance, justification, access-item, and requester/profile checks passed before diagnostic removal.
+- Runtime blocker: position, organization, and supervisor snapshot values did not persist on the Australia native HR Case subclass. A safe table-scoped supported write mechanism was not demonstrated. The broad API privilege workaround is prohibited.
+- Lifecycle guard evidence: all nine synthetic R2 case sys_ids have zero native HR child tasks; zero Authorization Forms and zero Authorized Access Details were created on 2026-08-15.
+- Cleanup evidence: temporary diagnostic logging removed and normally installed; temporary ROB Admin assignments `22e9efd4c3ba8b1068a35f2b2b013101` and `336a2b58c3ba8b1068a35f2b2b01315d` removed; broad privilege query returns zero records.
+- Count assertion:
+  - Employee Center HR Services: expected 2; actual 2.
+  - Native HR Case intake paths: expected 2; actual 2.
+  - Custom request tables: expected 0; actual 0.
+  - Active controlled Access Items: expected 6; actual 6.
+  - Staffing-visible items: expected 3; actual 3.
+  - Analytics-visible items: expected 3; actual 3.
+  - WPC visible on Staffing / Analytics: expected 0 / 1; actual 0 / 1.
+  - Other-subject submission allowed: expected 0; actual 0 in local enforcement and installed producer identity stamping; full persona/channel matrix incomplete.
+  - Authorization Forms created by Wave 2 intake: expected 0; actual 0.
+  - Authorized Access Details created by Wave 2 intake: expected 0; actual 0.
+  - Signature/approval/fulfillment artifacts created by Wave 2 intake: expected 0; actual 0.
+  - Unexpected existing generated-key changes: expected 0; actual 0; all additions/deleted markers are explained R2 metadata.
+- Count assertion result: FAIL because required profile-snapshot and full persona/runtime gates remain incomplete despite numeric architecture/lifecycle counts passing.
+- Token accounting: not exposed by the session; not estimated.
+- Status: BLOCKED.
+- Commit/tag: not created. Do not begin Wave 3.
+
+### R2.1 blocker-resolution continuation
+
+- Continuation label: R2.1 - Native HR Case Snapshot Persistence Capability Spike.
+- Measurement shape: one-pass continuation of R2; one reviewer-approved environment/method-rework turn executed continuously through diagnostics, bounded capability tests, cleanup, rebuild, deployment, and reread verification.
+- Active session start: 2026-08-15 14:09:06 EDT.
+- Active session end: 2026-08-15 14:48:58 EDT.
+- Calendar span / instrumented active duration: 39 minutes 52 seconds; no inactive time estimated.
+- Turn classification: 1 environment/method-rework turn.
+- Reviewer interventions: 0.
+- Capability result: A FAIL (same-record property assignment); B FAIL (direct producer assignment and app-scoped mapped variables; HR Core-owned variable creation unavailable); C FAIL/unsupported (target Application Access has `update_access=false` and no exact table Write privilege was offered); D FAIL/unavailable (no supported declarative profile-derivation mechanism exposed). Final classification: Class D - BLOCKED-PDI / agency platform-owner capability decision.
+- Silent defects: 2 - same-record and direct native-producer assignments completed case creation but only committed-reread inspection revealed all three snapshots remained blank.
+- Visible defects: 3 - Test A generated prohibited broad `GlideRecord.setValue` Execute privilege `1d013754c33e8b1068a35f2b2b01319b` (removed); one normal install attempt returned transient `fetch failed` before a successful retry; producer cleanup initially duplicated editor content due the native syntax-highlighting editor and was caught by exact database reread, then restored exactly before close-out.
+- Runtime evidence: Payroll cases `HRC0001016` (`69f07354c33e8b1068a35f2b2b013137`) and `HRC0001017` (`2313b350c37e8b1068a35f2b2b013168`) reread with blank Position, Organization, and Supervisor snapshots. App-scoped mapped-variable probe case `7394ff18c37e8b1068a35f2b2b013156` was rejected by HR Core cross-scope enforcement. Analytics was not repeated after the identical subclass ownership/Application Access boundary was proven, avoiding another prohibited privilege side effect.
+- Security cleanup evidence: final source-scope privilege list contains exactly two approved Read entries (`sn_hr_core_service`, `sys_user`), no broad API Execute privilege, no temporary role, and no temporary producer script. The three app-scoped mapped-variable probe records reread as absent.
+- Lifecycle guard evidence: the three R2.1 probe cases have zero native HR tasks, zero Authorization Forms, and zero Authorized Access Details; therefore zero signature, approval, or fulfillment artifacts were created.
+- Test evidence: Wave 2 security 22/22 PASS; deployment-configuration 16/16 PASS.
+- Build evidence: normal build PASS; frozen-key build PASS; exactly five unchanged TS11 reference-qualifier warnings; no conflicts; failed-probe keys removed and no unexpected existing-key change.
+- Install evidence: cleanup normal install PASS without `--reinstall`; rollback context `1786bb10c3be8b1068a35f2b2b0131c7`.
+- R2 result after R2.1: BLOCKED. Full persona/forgery runtime gates were not run because snapshot persistence did not pass both subclasses. Commit/tag not created. Wave 3 not started.
+- Token accounting: not exposed by the session; not estimated.
+
+### R2.2 architecture/governance blocker resolution
+
+- Measurement shape: one-pass continuation of the R2 package.
+- Active session start: 2026-08-15 15:06:37 EDT (session turn metadata).
+- Active session end: 2026-08-15 15:13:07 EDT.
+- Calendar span / active duration: 6 minutes 30 seconds.
+- Turn classification: 1 `clean` turn — recorded the approved architecture direction, agency handoff, security contract, deferred runtime tests, cleanup evidence, and blocked-baseline checkpoint gates without changing application source.
+- Reviewer/platform-owner interventions: 1 — the platform owner selected Option B, resolving the target ownership decision in favor of an HR Core-owned controlled population mechanism while explicitly leaving PDI implementation and R2 production acceptance blocked.
+- New silent defects: 0.
+- New visible defects: 0.
+- Cleanup evidence: read-only Australia queries returned exactly two approved source-scope Table Read privileges (`sn_hr_core_service`, `sys_user`), zero temporary role assignments by the known R2 ids, zero `snapshot_input` probe variables, and both producer scripts restored without temporary snapshot-population blocks.
+- Verification evidence: Wave 2 security 22/22 PASS; deployment-configuration 16/16 PASS; normal build PASS; frozen-key build PASS; exactly five unchanged TS11 warnings; no unexplained existing-key mutation.
+- Deployment evidence: not applicable — R2.2 changed documentation and measurement only; the already tested R2 application source remained unchanged after R2.1 cleanup.
+- Decision state: architecture resolved via Option B; PDI technical implementation unavailable; `R2-AGENCY-01` open; R2 production acceptance incomplete.
+- Status: R2 — BLOCKED-PDI; Option B architecture approved; agency HR Core implementation required.
+- Wave 3 boundary: not started. Progression requires separate authorization while R2 remains BLOCKED-PDI.
+- Token accounting: not exposed by the session; not estimated.
 - Recommended next package: R2 — Australia HRSD Intake / Runtime Remediation. Do not begin without explicit approval.

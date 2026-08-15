@@ -724,3 +724,99 @@ Acl({
     adminOverrides: false,
     description: 'Prevents direct changes to the system-managed ROB Task Type used for exception-task idempotency.',
 })
+
+Acl({
+    $id: Now.ID['payroll-organization-snapshot-write'],
+    type: 'record',
+    table: 'sn_hr_core_case_payroll',
+    field: 'x_2108496_hr_acces_organization_snapshot',
+    operation: 'write',
+    decisionType: 'allow',
+    roles: [robAdminRole],
+    adminOverrides: false,
+    description: 'Requires ROB Admin and native HR case update access. The integrity rule rejects direct evidence changes outside controlled re-derivation.',
+})
+
+Acl({
+    $id: Now.ID['payroll-organization-snapshot-read'],
+    type: 'record',
+    table: 'sn_hr_core_case_payroll',
+    field: 'x_2108496_hr_acces_organization_snapshot',
+    operation: 'read',
+    decisionType: 'allow',
+    adminOverrides: false,
+    script: snapshotReadScript,
+    description: 'Allows the subject, validated supervisor, ROB Admin, or Compliance Viewer only after native HR case record-read ACLs pass. Performs no query.',
+})
+
+Acl({
+    $id: Now.ID['payroll-prior-organization-snapshot-write'],
+    type: 'record',
+    table: 'sn_hr_core_case_payroll',
+    field: 'x_2108496_hr_acces_prior_organization_snapshot',
+    operation: 'write',
+    decisionType: 'allow',
+    roles: [robAdminRole],
+    adminOverrides: false,
+    description: 'Requires ROB Admin and native HR case update access. The integrity rule rejects direct evidence changes outside controlled re-derivation.',
+})
+
+Acl({
+    $id: Now.ID['payroll-prior-organization-snapshot-read'],
+    type: 'record',
+    table: 'sn_hr_core_case_payroll',
+    field: 'x_2108496_hr_acces_prior_organization_snapshot',
+    operation: 'read',
+    decisionType: 'allow',
+    roles: [robAdminRole, robComplianceViewerRole],
+    adminOverrides: false,
+    description: 'Limits prior organization correction evidence to ROB Admin and Compliance Viewer after native HR case record-read ACLs pass.',
+})
+
+Acl({
+    $id: Now.ID['workforce-admin-organization-snapshot-write'],
+    type: 'record',
+    table: 'sn_hr_core_case_workforce_admin',
+    field: 'x_2108496_hr_acces_organization_snapshot',
+    operation: 'write',
+    decisionType: 'allow',
+    roles: [robAdminRole],
+    adminOverrides: false,
+    description: 'Requires ROB Admin and native HR case update access. The integrity rule rejects direct evidence changes outside controlled re-derivation.',
+})
+
+Acl({
+    $id: Now.ID['workforce-admin-organization-snapshot-read'],
+    type: 'record',
+    table: 'sn_hr_core_case_workforce_admin',
+    field: 'x_2108496_hr_acces_organization_snapshot',
+    operation: 'read',
+    decisionType: 'allow',
+    adminOverrides: false,
+    script: snapshotReadScript,
+    description: 'Allows the subject, validated supervisor, ROB Admin, or Compliance Viewer only after native HR case record-read ACLs pass. Performs no query.',
+})
+
+Acl({
+    $id: Now.ID['workforce-admin-prior-organization-snapshot-write'],
+    type: 'record',
+    table: 'sn_hr_core_case_workforce_admin',
+    field: 'x_2108496_hr_acces_prior_organization_snapshot',
+    operation: 'write',
+    decisionType: 'allow',
+    roles: [robAdminRole],
+    adminOverrides: false,
+    description: 'Requires ROB Admin and native HR case update access. The integrity rule rejects direct evidence changes outside controlled re-derivation.',
+})
+
+Acl({
+    $id: Now.ID['workforce-admin-prior-organization-snapshot-read'],
+    type: 'record',
+    table: 'sn_hr_core_case_workforce_admin',
+    field: 'x_2108496_hr_acces_prior_organization_snapshot',
+    operation: 'read',
+    decisionType: 'allow',
+    roles: [robAdminRole, robComplianceViewerRole],
+    adminOverrides: false,
+    description: 'Limits prior organization correction evidence to ROB Admin and Compliance Viewer after native HR case record-read ACLs pass.',
+})

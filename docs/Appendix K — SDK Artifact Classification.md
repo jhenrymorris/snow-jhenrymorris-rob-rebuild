@@ -580,6 +580,20 @@ If the modification is unsupported and a native alternative must be used instead
 
 No custom replacement request table shall be introduced merely because cross-scope modification is difficult.
 
+## R2 Option B Disposition
+
+For the Position, Organization / DIR-DIV, and Supervisor snapshot population
+artifact, the Australia PDI result is **Class D — unsupported/blocking**. The
+approved agency target is a platform-owner, HR Core-owned implementation on the
+native Payroll and Workforce Administration case subclasses. It is not Class A
+application source and must not be represented by a broad cross-scope
+privilege or substitute custom table.
+
+Where the agency governance model permits, the selected HR Core artifact may
+later be managed as a platform-owner Class B or C configuration. That future
+classification depends on the actual approved artifact and evidence; Option B
+does not preselect it.
+
 ---
 
 # 23. Native HR Task Field Extensions

@@ -658,6 +658,24 @@ Instead:
 
 Wave 7 specifically directs the design to use native HRSD access for requesters/subjects and custom ACLs primarily on the four custom tables and sensitive fields.
 
+## 21.1 Option B Snapshot Population Security Contract
+
+The approved target direction assigns request-time Position, Organization /
+DIR-DIV, and Supervisor population to an HR Core-owned controlled mechanism on
+the two native case subclasses. Authoritative inputs are limited to the
+authenticated user, approved Subject Person, and authoritative user/profile/
+organization data. Arbitrary producer, client, URL, import, or API values must
+not become authoritative snapshots.
+
+Writes occur inside the HR Core-owned execution boundary. The HR Access scope
+must not receive broad `GlideRecord.setValue` Execute access, generic case Write
+access, scope-wide API access, or an ACL bypass. Ordinary employees cannot
+alter snapshots after creation. Any approved support correction must remain
+role-restricted, require a reason, and audit prior values, actor, and time.
+
+This is an agency implementation dependency, not evidence that the mechanism
+exists in the PDI. Persona and forgery acceptance remain BLOCKED-PDI.
+
 ---
 
 # 22. Native HR Task Security

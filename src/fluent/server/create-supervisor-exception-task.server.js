@@ -32,11 +32,11 @@
     )
     exceptionTask.setValue(
         'short_description',
-        'Review ROB requester supervisor exception'
+        'Review ROB intake prerequisite exception'
     )
     exceptionTask.setValue(
         'description',
-        'Validate the requester directory supervisor and use the controlled ROB snapshot correction action. Authorization, signatures, and fulfillment remain blocked.'
+        'Correct the recorded ROB intake prerequisite identified on the parent case. Profile-derived values must use the controlled ROB snapshot correction action. Authorization, signatures, and fulfillment remain blocked.'
     )
 
     if (assignmentGroup) {

@@ -15,14 +15,14 @@ Legend:
 |---|---|---|---|---|
 | Requester | Native HR case `opened_by` or equivalent | Native | Logged-in user | Confirm exact field |
 | Subject Person | Native HR case `opened_for` or equivalent | Native | Logged-in user | Self-submission only |
-| Supervisor | ROB Supervisor | Scoped extension or native | HR profile/user | Fallback correction allowed |
-| Position Title | ROB Position Title | Scoped extension or native | HR profile/user | Request snapshot |
-| DIR/DIV / Organization | ROB Organization | Scoped extension or native | HR profile/user | Reporting |
+| Supervisor | `x_2108496_hr_acces_supervisor_snapshot` on both native subclasses | Scoped extension | HR Core-owned profile enrichment | Request snapshot; client values are not authoritative |
+| Position Title | `x_2108496_hr_acces_position_title` on both native subclasses | Scoped extension | HR Core-owned profile enrichment | Request snapshot; client values are not authoritative |
+| DIR/DIV / Organization | `x_2108496_hr_acces_organization_snapshot` on both native subclasses | Scoped extension | HR Core-owned profile enrichment | Request snapshot; client values are not authoritative |
 | Employment Type | ROB Employment Type | Scoped extension | Request | Aligned to Authorization Form |
 | Access End Date | ROB Access End Date | Scoped extension | Request | Conditionally required |
 | Request Category | ROB Request Category | Scoped extension | Intake item | Systems or Data/Reports |
 | Requested Access Items | ROB Requested Access Items | Scoped extension | Request | Reference-based list |
-| Business Justification | ROB Business Justification | Scoped extension | Request | Required |
+| Business Justification | Native HR case `rich_description` | Native | Request | Required; Australia producer/runtime validation uses the rich-description field |
 | Operations Manager | ROB Operations Manager | Scoped extension | Request/profile | WPC only or exception |
 | Existing Authorization Status | ROB Existing Authorization Status | Scoped extension | Decision service | None, Active, Expired, etc. |
 | Request Path | ROB Request Path | Scoped extension | Decision service | New, Reuse, Renewal, Amendment, Exception |
@@ -48,6 +48,20 @@ subclass-owned rather than inherited from `sn_hr_core_case`:
 | Snapshot Correction Reason | Both supported HR case subclasses | ROB Admin-entered, required and changed for each correction |
 | Prior Position Title / Supervisor | Both supported HR case subclasses | Audited prior values captured by controlled correction |
 | Snapshot Corrected By / At | Both supported HR case subclasses | Audited authoritative actor and date/time |
+
+Australia R2 runtime proved that the scoped before-insert rule can read and
+validate native HR Service data only after exact caller-access approval, but
+its writes to the subclass-owned snapshot fields do not persist without an
+unsupported broad API privilege. The profile snapshot rows above therefore
+remain blocked runtime requirements, not completed runtime mappings.
+
+Platform-owner Option B preserves these mappings and assigns population to an
+HR Core-owned controlled mechanism. PDI classification remains Class D —
+unsupported/blocking. Agency implementation must derive authoritative values
+from the authenticated/request subject, persist them before downstream
+authorization decisions, ignore or reject client overrides, and preserve the
+audited support-correction contract without granting the HR Access scope a
+general case-write capability.
 
 ## 2. HR Task Field Map
 

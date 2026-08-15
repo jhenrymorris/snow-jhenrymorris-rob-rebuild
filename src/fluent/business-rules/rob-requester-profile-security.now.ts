@@ -5,14 +5,25 @@ const supportedCaseFilter =
 
 export const populateRequesterProfileSnapshotsBeforeInsert = BusinessRule({
     $id: Now.ID['populate-requester-profile-snapshots-before-insert'],
-    name: 'ROB Validate Intake and Populate Requester Profile Snapshots',
-    table: 'sn_hr_core_case',
+    name: 'ROB Validate Payroll Intake and Populate Requester Profile Snapshots',
+    table: 'sn_hr_core_case_payroll',
     when: 'before',
     action: ['insert'],
     order: 100,
-    filterCondition: supportedCaseFilter,
     description:
-        'Validates approved ROB HR-service provenance, access items, and self-submission identities before deriving requester profile snapshots.',
+        'Validates approved Staffing HR-service provenance, access items, and self-submission identities before deriving requester profile snapshots.',
+    script: Now.include('../server/requester-profile-snapshot.server.js'),
+})
+
+export const populateWorkforceRequesterProfileSnapshotsBeforeInsert = BusinessRule({
+    $id: Now.ID['populate-workforce-requester-profile-snapshots-before-insert'],
+    name: 'ROB Validate Workforce Intake and Populate Requester Profile Snapshots',
+    table: 'sn_hr_core_case_workforce_admin',
+    when: 'before',
+    action: ['insert'],
+    order: 100,
+    description:
+        'Validates approved Analytics HR-service provenance, access items, and self-submission identities before deriving requester profile snapshots.',
     script: Now.include('../server/requester-profile-snapshot.server.js'),
 })
 
@@ -31,14 +42,28 @@ export const enforceRequesterProfileSecurityBeforeUpdate = BusinessRule({
 
 export const createSupervisorExceptionReviewTaskAfterInsert = BusinessRule({
     $id: Now.ID['create-supervisor-exception-review-task-after-insert'],
-    name: 'ROB Create Supervisor Exception Review Task',
-    table: 'sn_hr_core_case',
+    name: 'ROB Create Payroll Intake Exception Review Task',
+    table: 'sn_hr_core_case_payroll',
     when: 'after',
     action: ['insert'],
     order: 200,
     filterCondition:
-        'sys_class_name=sn_hr_core_case_payroll^x_2108496_hr_acces_exception_review_required=true^x_2108496_hr_acces_authorization_processing_blocked=true^NQsys_class_name=sn_hr_core_case_workforce_admin^x_2108496_hr_acces_exception_review_required=true^x_2108496_hr_acces_authorization_processing_blocked=true',
+        'x_2108496_hr_acces_exception_review_required=true^x_2108496_hr_acces_authorization_processing_blocked=true',
     description:
-        'Creates at most one native HR Exception Review task for a supervisor validation exception.',
+        'Creates at most one native HR Exception Review task for an approved Staffing intake prerequisite exception.',
+    script: Now.include('../server/create-supervisor-exception-task.server.js'),
+})
+
+export const createWorkforceExceptionReviewTaskAfterInsert = BusinessRule({
+    $id: Now.ID['create-workforce-exception-review-task-after-insert'],
+    name: 'ROB Create Workforce Intake Exception Review Task',
+    table: 'sn_hr_core_case_workforce_admin',
+    when: 'after',
+    action: ['insert'],
+    order: 200,
+    filterCondition:
+        'x_2108496_hr_acces_exception_review_required=true^x_2108496_hr_acces_authorization_processing_blocked=true',
+    description:
+        'Creates at most one native HR Exception Review task for an approved Analytics intake prerequisite exception.',
     script: Now.include('../server/create-supervisor-exception-task.server.js'),
 })

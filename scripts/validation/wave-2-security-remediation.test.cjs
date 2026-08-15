@@ -28,6 +28,7 @@ const aclSource = fs.readFileSync(
 const names = {
     items: 'x_2108496_hr_acces_requested_items',
     title: 'x_2108496_hr_acces_position_title',
+    organization: 'x_2108496_hr_acces_organization_snapshot',
     supervisor: 'x_2108496_hr_acces_supervisor_snapshot',
     exception: 'x_2108496_hr_acces_exception_review_required',
     reason: 'x_2108496_hr_acces_exception_reason',
@@ -38,6 +39,7 @@ const names = {
     correctionRequested: 'x_2108496_hr_acces_snapshot_correction_requested',
     correctionReason: 'x_2108496_hr_acces_snapshot_correction_reason',
     priorTitle: 'x_2108496_hr_acces_prior_position_title',
+    priorOrganization: 'x_2108496_hr_acces_prior_organization_snapshot',
     priorSupervisor: 'x_2108496_hr_acces_prior_supervisor_snapshot',
     correctedBy: 'x_2108496_hr_acces_snapshot_corrected_by',
     correctedAt: 'x_2108496_hr_acces_snapshot_corrected_at',
@@ -46,7 +48,7 @@ const names = {
 const preservedMappings = [
     'hr_service',
     'short_description',
-    'description',
+    'rich_description',
     'x_2108496_hr_acces_employment_type',
     'x_2108496_hr_acces_access_end_date',
     names.items,
@@ -67,14 +69,45 @@ const services = {
     unrelated_service: { value: 'unrelated_native_hr_service', active: '1' },
 }
 const accessItems = {
-    staffing_item: { active: '1', access_category: 'hr_system' },
-    analytics_item: { active: '1', access_category: 'report' },
+    staffing_item: {
+        active: '1',
+        access_category: 'hr_system',
+        requires_access_end_date: '0',
+        requires_operations_manager_task: '0',
+    },
+    analytics_item: {
+        active: '1',
+        access_category: 'report',
+        requires_access_end_date: '0',
+        requires_operations_manager_task: '0',
+    },
+    wpc_item: {
+        active: '1',
+        access_category: 'workforce_profile_chart',
+        requires_access_end_date: '0',
+        requires_operations_manager_task: '1',
+    },
     inactive_item: { active: '0', access_category: 'hr_system' },
 }
 const users = {
-    requester: { title: 'Synthetic Analyst', manager: 'manager', active: '1' },
-    no_manager: { title: 'Synthetic Specialist', manager: '', active: '1' },
+    requester: {
+        title: 'Synthetic Analyst',
+        department: 'synthetic_department',
+        manager: 'manager',
+        active: '1',
+    },
+    no_manager: {
+        title: 'Synthetic Specialist',
+        department: 'synthetic_department',
+        manager: '',
+        active: '1',
+    },
     manager: { title: 'Synthetic Manager', manager: '', active: '1' },
+    operations_manager: {
+        title: 'Synthetic Operations Manager',
+        manager: '',
+        active: '1',
+    },
 }
 
 function record(values) {
@@ -94,6 +127,12 @@ function record(values) {
         },
         getUniqueValue() {
             return this.values.sys_id || 'case_sys_id'
+        },
+        getTableName() {
+            return this.values.sys_class_name || 'sn_hr_core_case'
+        },
+        getRecordClassName() {
+            return this.values.sys_class_name || 'sn_hr_core_case'
         },
     }
 }
@@ -165,7 +204,7 @@ function baseCase(overrides = {}) {
         opened_for: 'requester',
         subject_person: 'requester',
         short_description: 'Request access to HR systems',
-        description: 'Synthetic justification',
+        rich_description: 'Synthetic justification',
         x_2108496_hr_acces_employment_type: 'federal_employee',
         x_2108496_hr_acces_access_end_date: '2027-09-30',
         [names.items]: 'staffing_item',
@@ -214,9 +253,99 @@ test('both approved intake paths derive the requester snapshots', () => {
         const result = run(snapshotScript, values)
         assert.equal(result.current.aborted, false)
         assert.equal(result.current.getValue(names.title), 'Synthetic Analyst')
+        assert.equal(
+            result.current.getValue(names.organization),
+            'synthetic_department'
+        )
         assert.equal(result.current.getValue(names.supervisor), 'manager')
         assert.equal(result.current.getValue(names.blocked), '0')
     }
+})
+
+test('business justification is required before profile lookup', () => {
+    const result = run(snapshotScript, baseCase({ rich_description: '   ' }))
+    assert.equal(result.current.aborted, true)
+    assert.equal(
+        result.state.lookups.some(([table]) => table === 'sys_user'),
+        false
+    )
+    assert.match(result.errors[0], /Business Justification is required/)
+})
+
+test('only the four approved employment types are accepted and IPA is not forced to have an end date', () => {
+    for (const employmentType of [
+        'federal_employee',
+        'contractor',
+        'ipa',
+        'auditor_investigator',
+    ]) {
+        const result = run(
+            snapshotScript,
+            baseCase({
+                x_2108496_hr_acces_employment_type: employmentType,
+                x_2108496_hr_acces_access_end_date:
+                    employmentType === 'ipa' || employmentType === 'federal_employee'
+                        ? ''
+                        : '2027-09-30',
+            })
+        )
+        assert.equal(result.current.aborted, false)
+        assert.notEqual(
+            result.current.getValue(names.reason),
+            'missing_required_access_end_date'
+        )
+    }
+
+    const invalid = run(
+        snapshotScript,
+        baseCase({ x_2108496_hr_acces_employment_type: 'other_time_limited' })
+    )
+    assert.equal(invalid.current.aborted, true)
+})
+
+test('contractor and auditor requests without an end date are blocked for exception review', () => {
+    for (const employmentType of ['contractor', 'auditor_investigator']) {
+        const result = run(
+            snapshotScript,
+            baseCase({
+                x_2108496_hr_acces_employment_type: employmentType,
+                x_2108496_hr_acces_access_end_date: '',
+            })
+        )
+        assert.equal(result.current.aborted, false)
+        assert.equal(
+            result.current.getValue(names.reason),
+            'missing_required_access_end_date'
+        )
+        assert.equal(result.current.getValue(names.blocked), '1')
+    }
+})
+
+test('WPC requires one active Operations Manager and remains Analytics-only', () => {
+    const baseWpc = baseCase({
+        sys_class_name: 'sn_hr_core_case_workforce_admin',
+        hr_service: 'analytics_service',
+        [names.items]: 'wpc_item',
+        x_2108496_hr_acces_access_end_date: '',
+    })
+    const missing = run(snapshotScript, baseWpc)
+    assert.equal(missing.current.aborted, false)
+    assert.equal(missing.current.getValue(names.reason), 'missing_operations_manager')
+    assert.equal(missing.current.getValue(names.blocked), '1')
+
+    const valid = run(snapshotScript, {
+        ...baseWpc,
+        x_2108496_hr_acces_operations_manager: 'operations_manager',
+    })
+    assert.equal(valid.current.aborted, false)
+    assert.equal(valid.current.getValue(names.blocked), '0')
+
+    const staffing = run(snapshotScript, {
+        ...baseWpc,
+        sys_class_name: 'sn_hr_core_case_payroll',
+        hr_service: 'staffing_service',
+    })
+    assert.equal(staffing.current.aborted, true)
 })
 
 test('unrelated HR services do not read a requester or write ROB evidence', () => {
@@ -344,7 +473,11 @@ test('authenticated user is the sole requester source and fills blank identities
 test('missing supervisor records a stop and leaves every lifecycle gate closed', () => {
     const result = run(
         snapshotScript,
-        baseCase({ opened_by: 'no_manager', opened_for: 'no_manager', subject_person: 'no_manager' }),
+        baseCase({
+            opened_by: 'no_manager',
+            opened_for: 'no_manager',
+            subject_person: 'no_manager',
+        }),
         { userId: 'no_manager' }
     )
     assert.equal(result.current.getValue(names.exception), '1')

@@ -2,8 +2,6 @@ import { Acl } from '@servicenow/sdk/core'
 import { robAdminRole } from '../roles/rob-roles.now'
 
 const accessItemTable = 'x_2108496_hr_acces_rob_access'
-const internalEmployeeRead = "return gs.hasRole('snc_internal');"
-
 export const activeAccessItemInternalRead = Acl({
     $id: Now.ID['rob-access-item-active-internal-read'],
     type: 'record',
@@ -11,7 +9,6 @@ export const activeAccessItemInternalRead = Acl({
     operation: 'read',
     decisionType: 'allow',
     securityAttribute: 'user_is_authenticated',
-    script: internalEmployeeRead,
     condition: 'active=true',
     adminOverrides: false,
     description:
@@ -75,7 +72,6 @@ export const activeAccessItemSysIdRead = Acl({
     operation: 'read',
     decisionType: 'allow',
     securityAttribute: 'user_is_authenticated',
-    script: internalEmployeeRead,
     condition: 'active=true',
     adminOverrides: false,
     description:
@@ -90,7 +86,6 @@ export const activeAccessItemNameRead = Acl({
     operation: 'read',
     decisionType: 'allow',
     securityAttribute: 'user_is_authenticated',
-    script: internalEmployeeRead,
     condition: 'active=true',
     adminOverrides: false,
     description:
@@ -105,7 +100,6 @@ export const activeAccessItemCategoryRead = Acl({
     operation: 'read',
     decisionType: 'allow',
     securityAttribute: 'user_is_authenticated',
-    script: internalEmployeeRead,
     condition: 'active=true',
     adminOverrides: false,
     description:
@@ -120,7 +114,6 @@ export const activeAccessItemActiveRead = Acl({
     operation: 'read',
     decisionType: 'allow',
     securityAttribute: 'user_is_authenticated',
-    script: internalEmployeeRead,
     condition: 'active=true',
     adminOverrides: false,
     description:
@@ -135,7 +128,6 @@ export const activeAccessItemSortOrderRead = Acl({
     operation: 'read',
     decisionType: 'allow',
     securityAttribute: 'user_is_authenticated',
-    script: internalEmployeeRead,
     condition: 'active=true',
     adminOverrides: false,
     description:

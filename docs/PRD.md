@@ -360,6 +360,14 @@ The product shall capture or derive the following data.
 
 The source requirements specify subject, requester, supervisor, organization, position, employment type, requested access and justification as core process data and require end-date handling for applicable time-limited access.
 
+Implementation dependency: an HR Core-owned server-side snapshot population
+mechanism is required in the agency environment for Position, Organization /
+DIR-DIV, and Supervisor on both approved native HR Case subclasses. The PDI
+cannot implement this execution boundary safely. This dependency does not
+remove or weaken the snapshot requirement; successful persistence, resistance
+to forged client values, and post-creation protection remain mandatory for
+production acceptance.
+
 ---
 
 # 10. Employee Center Experience

@@ -7,8 +7,8 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 
 | Requirement | SDK artifact | Native/manual artifact | Test reference | Status |
 |---|---|---|---|---|
-| FR-1 | Staffing list collector, access-item ACLs, deployment contract and verifier | Native Staffing HR service, producer, category, topic and template | TM-01, TM-83, TM-84 | SDK configuration implemented; native deployment verification pending |
-| FR-2 | Analytics list collector, access-item ACLs, deployment contract and verifier | Native Analytics HR service, producer, category, topic and template | TM-02, TM-83, TM-84 | SDK configuration implemented; native deployment verification pending |
+| FR-1 | Staffing list collector, access-item ACLs, deployment contract and verifier | Native Staffing HR service, producer, category, topic and template | TM-01, TM-83, TM-84 | Australia runtime verified: service visible, native case, exact three Staffing items |
+| FR-2 | Analytics list collector, access-item ACLs, deployment contract and verifier | Native Analytics HR service, producer, category, topic and template | TM-02, TM-83, TM-84 | Australia runtime verified: service visible, exact three Analytics items, WPC only here |
 | FR-3 | Table extensions, intake variable sets, conditional Access End Date policy and validation support | Native producer mappings | TM-03, TM-04, TM-83 | SDK configuration implemented; native deployment verification pending |
 | FR-4 | Four-way self-submission identity authorization | Intake restriction | TM-05, TM-77 | Implemented; PDI validation pending |
 | DEFERRED-1 | Delegated supervisor and authorized-HR submission design is documented but not implemented or activated | `docs/decisions/DEFERRED-DELEGATED-SUBMISSIONS.md`; no delegated role, fields, feature flags, or code | TM-05, TM-77 | Deferred |
@@ -84,11 +84,12 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 
 | Requirement / finding | SDK artifact | Test reference | Status |
 |---|---|---|---|
-| FR-3 requester title and supervisor snapshots | `rob-case-security-fields.now.ts`; `requester-profile-snapshot.server.js` | TM-75 | Implemented; PDI validation pending |
+| FR-3 requester Position, Organization, and Supervisor snapshots | Fields remain on both native subclasses; agency HR Core-owned Option B enrichment is required (`R2-AGENCY-01`) | TM-75, TM-88–TM-96 | BLOCKED-PDI; architecture direction approved, agency implementation and runtime proof open |
 | FR-4 self-submission and trusted ROB provenance; delegated submission remains deferred | `rob-requester-profile-security.now.ts`; `requester-profile-snapshot.server.js`; exact common intake notice; `docs/decisions/DEFERRED-DELEGATED-SUBMISSIONS.md` | TM-05, TM-76, TM-77, TM-84 | `gs.getUserID()` is the sole requester source; supplied mismatches fail before profile lookup; delegated capability remains documentation-only; native producer correction and PDI validation pending |
 | EX-1 / R2-F01 supervisor exception stop and native task | `create-supervisor-exception-task.server.js`; block/gate fields; native HR Task ROB Task Type | TM-78 | Implemented; PDI validation pending |
 | R2-F02 controlled audited correction | `requester-profile-correction.server.js`; `requester-profile-correction.now.ts`; correction evidence fields and ACLs | TM-79 | Implemented; PDI validation pending |
-| R2-F03 ACL and cross-scope runtime behavior | Declarative write/read ACLs; no speculative CrossScopePrivilege | TM-81 | Source implemented; PDI runtime evidence required |
+| R2-F03 ACL and cross-scope runtime behavior | Declarative field ACLs plus approved HR Core-owned Option B boundary; no broad CrossScopePrivilege | TM-81, TM-86, TM-87 | BLOCKED-PDI: exact reads work; application-owned writes do not persist across the native table boundary; broad generated API privilege removed |
+| R2-AGENCY-01 HR Core-owned snapshot population | Agency-owned native HRSD enrichment on Payroll and Workforce Administration cases; exact artifact unselected | TM-88–TM-96 | OPEN — required for R2 production acceptance |
 | R2-F04 least-privilege snapshot reads | Snapshot relationship read ACLs; internal evidence role ACLs | TM-80 | Source implemented; PDI persona/channel evidence required |
 | R2-F05 mutable discriminator | Active stable HR Service value/class validation plus active category-valid item validation | TM-76 | Implemented; PDI producer timing required |
 | R2-F06 source-complete integration | Source-owned dictionaries, rules, ACLs, task field, UI action, generated keys | TM-74, TM-82 | Implemented; final frozen-key validation pending |

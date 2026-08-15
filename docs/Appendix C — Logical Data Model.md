@@ -260,6 +260,22 @@ Where no suitable native field exists, the HR Case may require controlled suppor
 
 The source requirements identify subject, requester, supervisor, DIR/DIV, position, employment type, access end date, requested access, business justification, portal category, existing form status, OM action, signed version, expiration date, and fulfillment status as core data requirements.
 
+## 6.1 Approved HR Core Ownership Boundary for Request Snapshots
+
+Platform-owner Option B preserves `sn_hr_core_case_payroll` and
+`sn_hr_core_case_workforce_admin` as the Wave 2 intake records and preserves
+Position, Organization / DIR-DIV, and Supervisor as fields on those native
+subclasses. An HR Core-owned controlled mechanism is responsible for deriving
+and persisting those values from the authenticated/request subject profile.
+
+The mechanism must run within the HR Core execution boundary, reject or ignore
+forged client values, preserve case auditability, complete before downstream
+authorization decisions, and expose no general-purpose write facility to the
+HR Access scope. The exact HR Core artifact is an agency implementation
+decision. The PDI remains BLOCKED-PDI until both subclasses pass committed
+reread and security validation; the mandatory logical fields are not removed
+or weakened.
+
 ---
 
 # 7. Requested Access Representation

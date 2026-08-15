@@ -5,7 +5,10 @@
     var correctionReasonField =
         'x_2108496_hr_acces_snapshot_correction_reason'
     var positionTitleField = 'x_2108496_hr_acces_position_title'
+    var organizationField = 'x_2108496_hr_acces_organization_snapshot'
     var supervisorField = 'x_2108496_hr_acces_supervisor_snapshot'
+    var accessEndDateField = 'x_2108496_hr_acces_access_end_date'
+    var operationsManagerField = 'x_2108496_hr_acces_operations_manager'
     var exceptionRequiredField =
         'x_2108496_hr_acces_exception_review_required'
     var exceptionReasonField = 'x_2108496_hr_acces_exception_reason'
@@ -19,6 +22,8 @@
         'x_2108496_hr_acces_fulfillment_gate_complete'
     var priorPositionTitleField =
         'x_2108496_hr_acces_prior_position_title'
+    var priorOrganizationField =
+        'x_2108496_hr_acces_prior_organization_snapshot'
     var priorSupervisorField =
         'x_2108496_hr_acces_prior_supervisor_snapshot'
     var correctedByField = 'x_2108496_hr_acces_snapshot_corrected_by'
@@ -30,6 +35,7 @@
     }
     var protectedFields = [
         positionTitleField,
+        organizationField,
         supervisorField,
         exceptionRequiredField,
         exceptionReasonField,
@@ -38,6 +44,7 @@
         supervisorSignatureField,
         fulfillmentGateField,
         priorPositionTitleField,
+        priorOrganizationField,
         priorSupervisorField,
         correctedByField,
         correctedAtField,
@@ -62,6 +69,48 @@
         return
     }
 
+    function clearResolvedException() {
+        current.setValue(exceptionRequiredField, '0')
+        current.setValue(exceptionReasonField, '')
+        current.setValue(processingBlockedField, '0')
+        current.setValue(employeeSignatureField, '0')
+        current.setValue(supervisorSignatureField, '0')
+        current.setValue(fulfillmentGateField, '0')
+    }
+
+    var previousExceptionReason = previous.getValue(exceptionReasonField)
+
+    if (
+        previousExceptionReason === 'missing_required_access_end_date' &&
+        changed(accessEndDateField) &&
+        current.getValue(accessEndDateField)
+    ) {
+        clearResolvedException()
+        return
+    }
+
+    if (
+        (previousExceptionReason === 'missing_operations_manager' ||
+            previousExceptionReason === 'invalid_operations_manager' ||
+            previousExceptionReason === 'inactive_operations_manager') &&
+        changed(operationsManagerField)
+    ) {
+        var correctedOperationsManagerId = current.getValue(operationsManagerField)
+        var correctedOperationsManager = new GlideRecord('sys_user')
+
+        if (
+            correctedOperationsManagerId &&
+            correctedOperationsManager.get(correctedOperationsManagerId) &&
+            isActive(correctedOperationsManager)
+        ) {
+            clearResolvedException()
+            return
+        }
+
+        abort('Select an active Operations Manager before resolving this exception.')
+        return
+    }
+
     var protectedValueChanged = false
     var i
 
@@ -80,6 +129,20 @@
         if (protectedValueChanged) {
             abort('ROB requester profile evidence can be changed only by the controlled correction action.')
         }
+        return
+    }
+
+    var profileCorrectionReasons = {
+        missing_supervisor: true,
+        invalid_supervisor: true,
+        inactive_supervisor: true,
+        self_supervisor: true,
+        missing_position: true,
+        missing_organization: true,
+    }
+
+    if (!profileCorrectionReasons[previousExceptionReason]) {
+        abort('This correction action is limited to requester profile exceptions.')
         return
     }
 
@@ -150,10 +213,12 @@
     }
 
     current.setValue(priorPositionTitleField, previous.getValue(positionTitleField))
+    current.setValue(priorOrganizationField, previous.getValue(organizationField))
     current.setValue(priorSupervisorField, previous.getValue(supervisorField))
     current.setValue(correctedByField, gs.getUserID())
     current.setValue(correctedAtField, new GlideDateTime().getValue())
     current.setValue(positionTitleField, requester.getValue('title') || '')
+    current.setValue(organizationField, requester.getValue('department') || '')
     current.setValue(supervisorField, '')
     current.setValue(exceptionRequiredField, '0')
     current.setValue(exceptionReasonField, '')
@@ -164,7 +229,7 @@
 
     var managerId = requester.getValue('manager')
 
-    function setSupervisorException(reason) {
+    function setProfileException(reason) {
         current.setValue(supervisorField, '')
         current.setValue(exceptionRequiredField, '1')
         current.setValue(exceptionReasonField, reason)
@@ -174,20 +239,32 @@
         current.setValue(fulfillmentGateField, '0')
     }
 
+    if (!current.getValue(positionTitleField)) {
+        setProfileException('missing_position')
+        current.setValue(correctionRequestedField, '0')
+        return
+    }
+
+    if (!current.getValue(organizationField)) {
+        setProfileException('missing_organization')
+        current.setValue(correctionRequestedField, '0')
+        return
+    }
+
     if (!managerId) {
-        setSupervisorException('missing_supervisor')
+        setProfileException('missing_supervisor')
     } else if (managerId === requesterId) {
-        setSupervisorException('self_supervisor')
+        setProfileException('self_supervisor')
     } else {
         var manager = new GlideRecord('sys_user')
 
         if (!manager.get(managerId)) {
-            setSupervisorException('invalid_supervisor')
+            setProfileException('invalid_supervisor')
         } else {
             var managerActive = manager.getValue('active')
 
             if (managerActive !== '1' && managerActive !== 'true') {
-                setSupervisorException('inactive_supervisor')
+                setProfileException('inactive_supervisor')
             } else {
                 current.setValue(supervisorField, managerId)
             }

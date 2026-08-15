@@ -212,3 +212,31 @@ Reuse links the current case to the existing Authorization Form, creates no new 
 - Do not use `--reinstall` as a normal deployment workaround.
 - Tag validated waves.
 - Use only synthetic PDI data.
+
+## 9. R2 Option B — HR Core-owned Snapshot Population
+
+The platform owner has approved Option B as the target architecture for Wave 2
+request-time profile snapshots. Native-case ownership remains unchanged:
+
+- Staffing intake creates `sn_hr_core_case_payroll`.
+- Analytics intake creates `sn_hr_core_case_workforce_admin`.
+- Position, Organization / DIR-DIV, and Supervisor snapshots remain
+  application-owned fields on those native subclasses.
+
+Population responsibility belongs to HR Core. An HR Core-owned controlled
+mechanism shall operate within the HR Core application boundary, derive values
+from the authenticated/request subject and authoritative profile data, populate
+the three approved fields at case creation or the earliest safe server-side
+lifecycle point, prevent client values from becoming authoritative, and
+preserve case auditability. It shall expose no general-purpose write interface
+to the HR Access scope and shall require no broad cross-scope API privilege.
+
+The exact HR Core artifact remains an agency platform-owner implementation
+decision. Candidate mechanisms for evaluation include an HR Core-owned Business
+Rule, Script Include or controlled API, Flow/Action, case-creation enrichment,
+or another approved native HRSD mechanism. None is represented as implemented.
+
+R2 status remains **BLOCKED-PDI / architecture dependency resolved via Option
+B**. Production acceptance requires agency implementation and runtime proof on
+both subclasses. Wave 3 progression requires separate authorization while R2
+remains blocked.

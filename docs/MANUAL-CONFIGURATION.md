@@ -207,6 +207,69 @@ the installed native records. The SDK does not provide a coalescing adoption
 operation for those existing records. Do not hard-code their PDI sys_ids into
 source and do not create duplicate M2M rows.
 
+R2 Australia runtime on 2026-08-15 confirmed an additional native contract:
+each producer must resolve its unique active HR Service by stable `value` and
+write that reference to the case, must persist Business Justification to native
+`rich_description`, and must stamp `opened_by`, `opened_for`, and
+`subject_person` from `gs.getUserID()`. Both installed producers were corrected
+in place accordingly without hard-coded sys_ids. The scoped before-insert rule
+then executed and passed provenance, justification, access-item, and requester
+profile validation. Its writes to the subclass-owned snapshot fields did not
+persist. Do not approve or recreate a broad `GlideRecord.setValue` or
+`GlideRecord.update` Execute API privilege as a workaround; the generated
+`GlideRecord.setValue` record was removed by exact sys_id. R2 remains blocked
+until ServiceNow/SDK guidance identifies a table-scoped supported write path.
+
+R2.1 revalidated that boundary on 2026-08-15. The six snapshot dictionaries
+are application-owned fields defined separately on `sn_hr_core_case_payroll`
+and `sn_hr_core_case_workforce_admin`, while both target tables are owned by
+Human Resources: Core and expose `read_access=true` but
+`create_access=false`, `update_access=false`, `delete_access=false`, and
+`ws_access=false`. Same-record property assignment, direct native-producer
+assignment, and app-scoped creation-time mapped variables all failed database
+reread. The attempted app-scoped variables were removed by normal install.
+The HR Core variable form could be opened only read-only: its controls were
+disabled and no Submit action was available. Exact table Write RCA was not
+offered; the platform generated a broad API Execute request instead. That
+request was deleted, and the final source-scope privilege list contains only
+the approved exact Read entries for `sn_hr_core_service` and `sys_user`.
+
+Do not repeat these mechanisms in the PDI. Agency platform owners must decide
+whether the agency environment supports an exact, documented native HRSD
+creation mapping or table-scoped write capability for these six dictionaries.
+Until that capability is proven on both subclasses, R2 remains
+`BLOCKED-PDI` and the full persona matrix must not be reported as passed.
+
+### Agency platform-owner implementation required — Option B
+
+Target tables:
+
+- `sn_hr_core_case_payroll`
+- `sn_hr_core_case_workforce_admin`
+
+Target fields on each table:
+
+- `x_2108496_hr_acces_position_title`
+- `x_2108496_hr_acces_organization_snapshot`
+- `x_2108496_hr_acces_supervisor_snapshot`
+
+The agency mechanism must be HR Core-owned, run at native case creation or the
+earliest safe server-side lifecycle point, derive values from the authenticated
+user / approved Subject Person and authoritative profile/organization data,
+persist before downstream authorization decisions, prevent client override,
+preserve audit history, and avoid broad privilege escalation. It must expose no
+general-purpose case-write API to the HR Access application.
+
+An HR Core-owned Business Rule, controlled Script Include/API, Flow/Action,
+case-creation enrichment, or another native HRSD mechanism may be evaluated;
+none is selected or implemented by this repository decision.
+
+Agency validation must prove separately on Payroll and Workforce
+Administration cases: all three fields persist after database reread; employee
+self-submission succeeds; forged requester, subject, and snapshot values are
+ignored or rejected; ordinary employees cannot alter snapshots after creation;
+and any retained support-correction path is role-restricted and audited.
+
 The two installed `sc_cat_item_category` associations currently identify the
 HR Access ROB Authorization package even though they point to Human Resources:
 Core producers and categories. They are not yet represented in Fluent source.

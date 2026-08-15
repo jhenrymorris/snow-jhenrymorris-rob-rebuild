@@ -15,6 +15,12 @@ const supervisorExceptionChoices = {
     invalid_supervisor: 'Invalid supervisor',
     inactive_supervisor: 'Inactive supervisor',
     self_supervisor: 'Supervisor matches requester',
+    missing_position: 'Missing position',
+    missing_organization: 'Missing organization / DIR-DIV',
+    missing_required_access_end_date: 'Missing required access end date',
+    missing_operations_manager: 'Missing Operations Manager',
+    invalid_operations_manager: 'Invalid Operations Manager',
+    inactive_operations_manager: 'Inactive Operations Manager',
 }
 
 const employmentTypeChoices = {
@@ -22,7 +28,6 @@ const employmentTypeChoices = {
     contractor: 'Contractor',
     ipa: 'IPA',
     auditor_investigator: 'Auditor / Investigator',
-    other_time_limited: 'Other Time-Limited',
 }
 
 const caseSecuritySchema = {
@@ -41,6 +46,13 @@ const caseSecuritySchema = {
     x_2108496_hr_acces_position_title: StringColumn({
         label: 'Position Title Snapshot',
         maxLength: 160,
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_organization_snapshot: ReferenceColumn({
+        label: 'Organization / DIR-DIV Snapshot',
+        referenceTable: 'cmn_department',
+        cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
@@ -101,6 +113,13 @@ const caseSecuritySchema = {
     x_2108496_hr_acces_prior_position_title: StringColumn({
         label: 'Prior Position Title Snapshot',
         maxLength: 160,
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_prior_organization_snapshot: ReferenceColumn({
+        label: 'Prior Organization / DIR-DIV Snapshot',
+        referenceTable: 'cmn_department',
+        cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
@@ -151,6 +170,13 @@ const workforceCaseSecuritySchema = {
         readOnly: true,
         audit: true,
     }),
+    x_2108496_hr_acces_organization_snapshot: ReferenceColumn({
+        label: 'Organization / DIR-DIV Snapshot',
+        referenceTable: 'cmn_department',
+        cascadeRule: 'clear',
+        readOnly: true,
+        audit: true,
+    }),
     x_2108496_hr_acces_supervisor_snapshot: ReferenceColumn({
         label: 'Supervisor Snapshot',
         referenceTable: 'sys_user',
@@ -208,6 +234,13 @@ const workforceCaseSecuritySchema = {
     x_2108496_hr_acces_prior_position_title: StringColumn({
         label: 'Prior Position Title Snapshot',
         maxLength: 160,
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_prior_organization_snapshot: ReferenceColumn({
+        label: 'Prior Organization / DIR-DIV Snapshot',
+        referenceTable: 'cmn_department',
+        cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),

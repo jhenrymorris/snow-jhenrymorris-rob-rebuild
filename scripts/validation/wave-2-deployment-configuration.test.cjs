@@ -128,18 +128,16 @@ test('ordinary employees receive active-row read through snc_internal only', () 
                 /table:\s*accessItemTable/.test(block) &&
                 !/field:/.test(block) &&
                 /operation:\s*'read'/.test(block) &&
-                /script:\s*internalEmployeeRead/.test(block)
+                /securityAttribute:\s*'user_is_authenticated'/.test(block) &&
+                /condition:\s*'active=true'/.test(block)
         ).length,
         1
     )
     assert.match(
         accessAcls,
-        /const internalEmployeeRead = "return gs\.hasRole\('snc_internal'\);"/
+        /\$id: Now\.ID\['rob-access-item-active-internal-read'\][\s\S]*?operation: 'read'[\s\S]*?securityAttribute: 'user_is_authenticated'[\s\S]*?condition: 'active=true'/
     )
-    assert.match(
-        accessAcls,
-        /\$id: Now\.ID\['rob-access-item-active-internal-read'\][\s\S]*?operation: 'read'[\s\S]*?securityAttribute: 'user_is_authenticated'[\s\S]*?script: internalEmployeeRead[\s\S]*?condition: 'active=true'/
-    )
+    assert.doesNotMatch(accessAcls, /internalEmployeeRead/)
     assert.doesNotMatch(
         accessAcls,
         /rob-access-item-active-internal-read[\s\S]*?rob_(?:staffing|analytics)_fulfiller/
@@ -153,7 +151,7 @@ test('employee field reads expose only list-collector resolution fields', () => 
         assert.match(
             accessAcls,
             new RegExp(
-                `field:\\s*'${field}'[\\s\\S]*?securityAttribute:\\s*'user_is_authenticated'[\\s\\S]*?script:\\s*internalEmployeeRead[\\s\\S]*?condition:\\s*'active=true'`
+                `field:\\s*'${field}'[\\s\\S]*?securityAttribute:\\s*'user_is_authenticated'[\\s\\S]*?condition:\\s*'active=true'`
             )
         )
     }
@@ -357,10 +355,10 @@ test('employee-facing dependencies remain portal-safe and self-only', () => {
         'contractor',
         'ipa',
         'auditor_investigator',
-        'other_time_limited',
     ]) {
         assert.match(commonVariables, new RegExp(`${value}:`))
     }
+    assert.doesNotMatch(commonVariables, /other_time_limited:/)
     assert.match(
         commonVariables,
         /x_2108496_hr_acces_business_justification:\s*MultiLineTextVariable/
@@ -376,8 +374,9 @@ test('employee-facing dependencies remain portal-safe and self-only', () => {
     )
     assert.match(
         commonPolicies,
-        /catalogCondition:\s*[\s\S]*?employment_typeINcontractor,ipa,auditor_investigator,other_time_limited/
+        /catalogCondition:\s*[\s\S]*?employment_typeINcontractor,auditor_investigator/
     )
+    assert.doesNotMatch(commonPolicies, /employment_typeIN[^'\n]*ipa/)
     assert.doesNotMatch(
         `${commonVariables}\n${staffingVariables}\n${analyticsVariables}`,
         /opened_for|subject_person|requested_for|delegate|on_behalf/
@@ -419,6 +418,10 @@ test('employee-facing dependencies remain portal-safe and self-only', () => {
         requesterSecurity.indexOf('!== authenticatedUserId') <
             requesterSecurity.indexOf("new GlideRecord('sys_user')")
     )
+    assert.match(requesterSecurity, /Business Justification is required/)
+    assert.match(requesterSecurity, /missing_required_access_end_date/)
+    assert.match(requesterSecurity, /missing_operations_manager/)
+    assert.match(requesterSecurity, /x_2108496_hr_acces_organization_snapshot/)
 })
 
 test('nested SDK query values retain raw and display values', () => {

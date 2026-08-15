@@ -17,12 +17,12 @@ R0 records implementation deltas only. It does not change application metadata o
 
 ## R2 — Australia HRSD Intake / Runtime Remediation
 
-- Revalidate native HR Case extensions on Australia, including both current subclass augmentations (`src/fluent/tables/rob-case-security-fields.now.ts`).
+- [x] Revalidate native HR Case extensions on Australia, including both current subclass augmentations (`src/fluent/tables/rob-case-security-fields.now.ts`).
 - Revalidate native HR Task extension feasibility and cross-scope SDK/configuration behavior.
-- Validate Employee Center and the two native HR Services.
-- Validate server-side self-submission enforcement (`src/fluent/server/requester-profile-snapshot.server.js`).
-- Validate active-reference requested access, category filtering, Business Justification, Employment Type, and conditional Access End Date.
-- Validate profile/position and supervisor snapshots.
+- [x] Validate Employee Center and the two native HR Services.
+- [x] Validate server-side self-submission identity stamping (`src/fluent/server/requester-profile-snapshot.server.js` and the two Class B producer scripts).
+- [x] Validate active-reference requested access, category filtering, Business Justification, Employment Type, and conditional Access End Date.
+- [ ] **R2-AGENCY-01 — HR Core-owned profile snapshot population.** Status: OPEN — requires agency platform-owner implementation. Option B is approved, but the PDI remains Class D / blocked. Acceptance requires all three snapshots to persist on both native subclasses, authoritative profile derivation, no ordinary-client override, no broad cross-scope privilege, and a passing full persona/forgery matrix.
 - Validate WPC/Operations Manager prerequisites and exception handling.
 - Perform Australia PDI runtime, attachment-security, and impersonation testing.
 

@@ -526,6 +526,27 @@ At Wave 2 baseline, submission does not prematurely create:
 
 ---
 
+## W2-21 — Agency HR Core-owned Snapshot Persistence
+
+Status in PDI: **BLOCKED-PDI**. Required agency Option B tests:
+
+1. Payroll Position snapshot persists after database reread.
+2. Payroll Organization snapshot persists after database reread.
+3. Payroll Supervisor snapshot persists after database reread.
+4. Workforce Administration Position snapshot persists after database reread.
+5. Workforce Administration Organization snapshot persists after database reread.
+6. Workforce Administration Supervisor snapshot persists after database reread.
+7. Forged client snapshot values are ignored or rejected.
+8. Ordinary employees cannot modify snapshots after creation.
+9. Any retained support correction is role-restricted and records prior values,
+   actor, timestamp, and reason.
+
+All tests must use an HR Core-owned mechanism and must prove that no broad
+cross-scope privilege is required. Passing source/unit tests alone is not
+runtime acceptance.
+
+---
+
 # 11. Wave 3 — Decision Tests
 
 ## W3-01 — No Existing Form
