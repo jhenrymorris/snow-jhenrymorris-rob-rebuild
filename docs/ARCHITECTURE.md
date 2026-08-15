@@ -240,3 +240,21 @@ R2 status remains **BLOCKED-PDI / architecture dependency resolved via Option
 B**. Production acceptance requires agency implementation and runtime proof on
 both subclasses. Wave 3 progression requires separate authorization while R2
 remains blocked.
+
+## 10. Conditional R3 Decision Engine
+
+R3 is a deterministic, side-effect-free source layer with separate
+authorization selection/scope comparison, expiration calculation, and decision
+selection components. It returns exactly New, Reuse, Amendment, Renewal, or
+Exception Review and creates no Authorization Form, Authorized Access Detail,
+signature, approval, PDF, or fulfillment artifact.
+
+The engine consumes normalized authoritative inputs. No runtime Business Rule
+is activated by the conditional source/unit package. Approved read-only
+decision-output fields are defined on both native case subclasses for later
+controlled persistence.
+
+Open policy mappings `DEC-MAP-01`, `DEC-MAP-02`, and `DEC-MAP-03` are not
+inferred. An unresolved material-change or annual-renewal disposition returns a
+controlled Exception. Synthetic snapshot fixtures do not resolve
+`R2-AGENCY-01`.

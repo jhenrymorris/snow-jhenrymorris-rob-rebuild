@@ -106,6 +106,10 @@ an unimplemented capability; its negative enforcement tests remain active.
 | TM-95 | Ordinary-user snapshot immutability | Ordinary employee cannot change snapshots after creation | Agency security/runtime | BLOCKED-PDI — R2-AGENCY-01 |
 | TM-96 | Approved support correction audit | If retained, correction is role-restricted and records prior values, actor, time, and reason | Agency security/runtime | BLOCKED-PDI — R2-AGENCY-01 |
 
+| TM-97 | R3 deterministic decision suite | New, Reuse, Amendment, Renewal, Exception, coverage/delta, WPC, expiration, ambiguity, and idempotency | Local source/unit | PASS — 30/30 |
+| TM-98 | R3 lifecycle guard | Decision source has no record/task write API and no runtime trigger; creates zero Form, Detail, signature, approval, or fulfillment artifacts | Local source/unit | PASS |
+| TM-99 | R3 native persisted-snapshot context | Evaluate decisions from agency-persisted Position, Organization, and Supervisor snapshots on both native subclasses | Agency runtime | BLOCKED-AGENCY — R2-AGENCY-01 |
+
 ## Critical Release Gates
 
 TM-01, TM-02, TM-06 through TM-16, TM-20, TM-23, TM-27, TM-29, TM-49 through TM-56, TM-58, and TM-75 through TM-84 must pass before MVP acceptance.

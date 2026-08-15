@@ -41,3 +41,16 @@ populate Position, Organization / DIR-DIV, and Supervisor snapshots on
 Core artifact is deliberately unselected pending agency design and validation.
 Architecture decision: resolved. PDI implementation: unavailable. Agency
 dependency: open. R2 production acceptance: incomplete.
+
+### R3 conditional source/unit capability
+
+| Artifact | Classification | Result |
+|---|---|---|
+| Authorization selector and scope comparator | Class A source-first | Implemented and unit validated |
+| Expiration calculator | Class A source-first | Implemented and unit validated |
+| Deterministic five-path decision service | Class A source-first | Implemented and unit validated |
+| Native-subclass decision-output fields | Class A source-first metadata | Build validated; runtime persistence not activated |
+| Runtime context acquisition/persistence | Conditional / agency-dependent | Not activated; must not imply R2 acceptance |
+
+`R2-AGENCY-01` remains OPEN. Source tests use explicit synthetic snapshot values
+and are not native persistence evidence.

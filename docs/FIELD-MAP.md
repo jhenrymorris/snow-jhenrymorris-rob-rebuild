@@ -224,3 +224,27 @@ Do not create:
 - Custom password or signature credential fields
 - Duplicate signed-PDF field on the HR case
 - Hard-coded access-item choices that duplicate the reference table
+
+## 8. R3 Native HR Case Decision Outputs
+
+The following application-owned, read-only, audited fields are defined on both
+`sn_hr_core_case_payroll` and `sn_hr_core_case_workforce_admin`:
+
+| Logical output | Physical field |
+|---|---|
+| Authorization Path | `x_2108496_hr_acces_authorization_path` |
+| Decision Reason | `x_2108496_hr_acces_decision_reason` |
+| Decision Evaluated At | `x_2108496_hr_acces_decision_evaluated_at` |
+| Existing Authorization Status | `x_2108496_hr_acces_existing_authorization_status` |
+| Evaluated Authorization | `x_2108496_hr_acces_evaluated_authorization` |
+| Covered Access | `x_2108496_hr_acces_covered_access` |
+| Uncovered Access | `x_2108496_hr_acces_uncovered_access` |
+| Proposed Expiration Date | `x_2108496_hr_acces_proposed_expiration_date` |
+| Requires Supervisor Approval | `x_2108496_hr_acces_requires_supervisor_approval` |
+| Material Context Change | `x_2108496_hr_acces_material_context_change` |
+| Renewal Reason | `x_2108496_hr_acces_renewal_reason` |
+| Duplicate Case | `x_2108496_hr_acces_duplicate_case` |
+
+Conditional R3 source validation does not activate a PDI persistence trigger.
+Later controlled persistence must respect the native-table ownership boundary
+and must not be treated as evidence that R2 snapshot persistence works.

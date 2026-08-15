@@ -96,6 +96,17 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 | Requested Access Items catalog resolution | Exact list collectors plus active-row `snc_internal` table/field reads; ROB Admin maintenance ACLs; explicit `index.now.ts` ACL import; no employee create/write/delete grants | TM-83 | Corrected source builds the exact ten-ACL set; authorized installation and PDI persona validation remain pending |
 | Native Wave 2 deployment contract | `wave-2-deployment-expectations.json`; nested-value parser; read-only `verify-wave-2-deployment.ps1`; explicit native ownership boundary | TM-84 | Corrected verifier is fail-closed for producer policy, all six complete rows, exact ACLs, and required configuration; native corrections and authorized re-verification remain pending |
 
+## Wave 3 Conditional Decision Engine
+
+| Requirement | Source artifact | Test | Status |
+|---|---|---|---|
+| Deterministic five-path decision | `AuthorizationDecisionService.js` | TM-97 / W3-01–W3-27 | Source/unit PASS |
+| Existing authorization selection and scope delta | `AuthorizationRepository.js` | TM-97 | Source/unit PASS |
+| Configuration-driven expiration and grace | `ExpirationDateService.js` | TM-97 | Source/unit PASS with synthetic configuration |
+| Decision output model on native subclasses | `rob-case-security-fields.now.ts` | TM-98 | Build validated; runtime persistence not activated |
+| No Wave 4+ side effects | pure source modules; no runtime trigger | TM-98 | Source/unit PASS |
+| Native persisted snapshot-dependent evaluation | `R2-AGENCY-01` | TM-88–TM-96, TM-99 | BLOCKED-AGENCY; remains OPEN |
+
 ## Wave 1 Batch 1 Implementation
 
 | Step | SDK artifact | Test reference | Status |

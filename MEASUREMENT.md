@@ -932,3 +932,50 @@ Not exposed by session/tool — no estimate recorded.
 - Wave 3 boundary: not started. Progression requires separate authorization while R2 remains BLOCKED-PDI.
 - Token accounting: not exposed by the session; not estimated.
 - Recommended next package: R2 — Australia HRSD Intake / Runtime Remediation. Do not begin without explicit approval.
+
+## R3 — Authorization Decision Engine
+
+### Conditional Source / Unit Record
+
+- Measurement shape: `turn-by-turn` because the baseline gate stopped for a
+  reviewer confirmation before the approved implementation turn proceeded.
+- Starting commit: `ab92afaa583582f0122f69065b8f592c16ee0b36`.
+- Branch: `feature/03-authorization-decision-engine`.
+- R2 dependency at start and close: `R2-AGENCY-01` OPEN; R2 BLOCKED-PDI.
+- Instrumented implementation session start: 2026-08-15 16:37:42 EDT.
+- Instrumented implementation session end: 2026-08-15 16:51:39 EDT.
+- Calendar span / instrumented active duration: 13 minutes 57 seconds. The
+  preceding baseline-stop turn duration was not exposed and is not estimated.
+- Turn 1 classification: environment/method-rework — correct commit and clean
+  tree were confirmed, but the requested R3 branch was already checked out;
+  work stopped under the explicit baseline rule.
+- Turn 2 classification: implementation — inventory, decision implementation,
+  unit/regression tests, builds, documentation, and conditional close-out.
+- Reviewer interventions: 1 — user confirmed the pre-created R3 branch was the
+  approved starting state.
+- Silent defects: 0.
+- Visible defects: 1 — initial normal build rejected Fluent helper-function and
+  object-spread composition with TS305; corrected to explicit per-subclass field
+  declarations without changing the data model.
+- Test evidence: R1 9/9 PASS; Wave 2 security 22/22 PASS; Wave 2 deployment
+  configuration 16/16 PASS; R3 deterministic decision suite 30/30 PASS.
+- Build evidence: normal PASS; frozen-key PASS; exactly five unchanged TS11
+  warnings; no conflicts.
+- Generated-key evidence: 827/827 baseline unique ids preserved; 177 intentional
+  R3 ids added; unexplained existing-key changes 0.
+- Deployment/runtime evidence: not applicable to this conditional source/unit
+  package. No decision trigger was activated and no PDI runtime claim is made.
+- Count assertion:
+  - Decision classes: expected 5; actual 5.
+  - Custom decision tables: expected 0; actual 0.
+  - Custom request tables added: expected 0; actual 0.
+  - Authorization Forms created by decision evaluation: expected 0; actual 0.
+  - Authorized Access Details created by decision evaluation: expected 0; actual 0.
+  - Signature/approval tasks created: expected 0; actual 0.
+  - Fulfillment tasks created: expected 0; actual 0.
+  - R2-AGENCY-01 closed: expected no; actual no.
+  - Unexpected existing generated-key changes: expected 0; actual 0.
+- Count assertion result: CONDITIONAL PASS.
+- Token accounting: not exposed by the session; not estimated.
+- Result: R3 — CONDITIONAL PASS; R2-AGENCY-01 remains open.
+- Wave 4: not started; explicit approval required.

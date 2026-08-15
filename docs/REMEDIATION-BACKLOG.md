@@ -26,6 +26,17 @@ R0 records implementation deltas only. It does not change application metadata o
 - Validate WPC/Operations Manager prerequisites and exception handling.
 - Perform Australia PDI runtime, attachment-security, and impersonation testing.
 
+## R3 — Authorization Decision Engine (Conditional Source / Unit)
+
+- [x] Implement deterministic New, Reuse, Amendment, Renewal, and Exception outcomes.
+- [x] Separate authorization selection, access comparison, expiration calculation, and decision selection.
+- [x] Preserve WPC as a first-class access item and enforce its OM prerequisite.
+- [x] Route ambiguous material-change and annual-renewal mappings to controlled Exception outcomes.
+- [x] Prove idempotency and zero Wave 4+ record/task creation at source/unit level.
+- [x] Add approved read-only decision-output fields to both native HR Case subclasses.
+- [ ] Activate and validate native runtime context acquisition/persistence only under a separately approved, secure path.
+- [ ] `R2-AGENCY-01` remains OPEN; R3 fixtures do not close it.
+
 ## R0 Boundary
 
 No item above is authorized for implementation in R0. Unsupported native capabilities must be recorded in Appendix L rather than replaced with custom request, task, approval, signature, PDF, attachment, or authentication architecture.

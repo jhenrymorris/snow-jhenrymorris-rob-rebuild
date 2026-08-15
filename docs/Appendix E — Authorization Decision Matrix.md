@@ -1733,6 +1733,14 @@ Unless the business owner approves a different policy, the safest MVP interpreta
 
 ---
 
+## R3 Conditional Implementation Disposition
+
+The conditional R3 source engine accepts explicit normalized dispositions for
+material context and annual-renewal due status. When a required disposition is
+unknown under `DEC-MAP-01`, `DEC-MAP-02`, or `DEC-MAP-03`, it returns Exception
+Review rather than inferring policy. This is an implementation safety boundary,
+not closure of the open business mappings.
+
 # 80. Decision Matrix Definition of Done
 
 The authorization decision capability is complete when:

@@ -51,3 +51,28 @@ Build evidence is package-specific and must remain distinct from install, runtim
 - R2.2 changes are documentation and measurement only. No additional PDI
   deployment is applicable.
 - Wave 3 was not started and requires separate authorization.
+
+## R3 — Conditional Authorization Decision Engine
+
+- Baseline: `ab92afaa583582f0122f69065b8f592c16ee0b36` on
+  `feature/03-authorization-decision-engine`; R2 remains BLOCKED-PDI and
+  `R2-AGENCY-01` remains OPEN.
+- Added pure source modules for candidate selection/scope comparison,
+  configuration-driven expiration, and deterministic five-path selection.
+- Added approved read-only decision-output fields to Payroll and Workforce
+  Administration native subclasses. No runtime decision trigger was activated.
+- Open `DEC-MAP-01`/`02`/`03` inputs route to controlled Exception when their
+  disposition is unknown; no AI or semantic inference is used.
+- R3 source/unit suite: 30/30 PASS. Lifecycle guard confirms no downstream
+  record/task APIs.
+- Initial build exposed Fluent TS305 for helper-function/object-spread field
+  composition; corrected to explicit field declarations without model changes.
+- Deployment: not performed; conditional source/unit validation does not
+  require premature runtime activation.
+- Regression evidence: R1 9/9 PASS; Wave 2 security 22/22 PASS; Wave 2
+  deployment configuration 16/16 PASS; R3 decision suite 30/30 PASS.
+- Build evidence: normal PASS; frozen-key PASS; exactly five unchanged TS11
+  reference-qualifier warnings.
+- Generated-key evidence: all 827 baseline unique ids remain present; 177 new
+  ids correspond to intentional R3 native fields, choices, documentation, and
+  three packaged source modules; unexplained existing-key changes = 0.

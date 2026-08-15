@@ -2381,6 +2381,15 @@ Testing is complete when:
 
 ---
 
+## R3 Conditional Source/Unit Evidence
+
+The R3 deterministic suite implements W3-01 through W3-27 at source/unit level
+using synthetic inputs. It verifies five decision classes, subject/status/
+version/date/scope precedence, WPC as a distinct item, configuration-driven
+expiration, ambiguous-policy Exception routing, idempotency, and zero Wave 4+
+side effects. Native tests that require persisted Position, Organization, and
+Supervisor snapshots remain **BLOCKED-AGENCY — R2-AGENCY-01**.
+
 # 51. Baseline Test Statement
 
 The HR Access ROB Authorization product shall be accepted only through **traceable runtime evidence demonstrating both successful behavior and enforcement of prohibited behavior**.

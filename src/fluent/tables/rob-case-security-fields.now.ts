@@ -9,6 +9,7 @@ import {
     Table,
 } from '@servicenow/sdk/core'
 import { x_2108496_hr_acces_rob_access } from './rob-access-item-reference.now'
+import { x_2108496_hr_acces_rob_auth } from './rob-authorization-form.now'
 
 const supervisorExceptionChoices = {
     missing_supervisor: 'Missing supervisor',
@@ -21,6 +22,17 @@ const supervisorExceptionChoices = {
     missing_operations_manager: 'Missing Operations Manager',
     invalid_operations_manager: 'Invalid Operations Manager',
     inactive_operations_manager: 'Inactive Operations Manager',
+    EX_INVALID_CONFIG: 'Invalid ROB configuration',
+    EX_MISSING_REQUIRED_DATA: 'Missing required decision data',
+    EX_MISSING_SUPERVISOR: 'Missing supervisor decision input',
+    EX_MISSING_END_DATE: 'Missing required access end date',
+    EX_MISSING_OM: 'Missing Operations Manager',
+    EX_INVALID_ACCESS_ITEM: 'Invalid or inactive requested access item',
+    EX_DUPLICATE_OPEN_CASE: 'Duplicate equivalent open request',
+    EX_CONFLICTING_ACTIVE_FORMS: 'Conflicting active authorizations',
+    EX_INCOMPLETE_AUTHORIZATION_HISTORY: 'Incomplete authorization history',
+    EX_AMBIGUOUS_MATERIAL_CHANGE: 'Ambiguous material context change',
+    EX_UNRESOLVED_ANNUAL_RENEWAL_RULE: 'Unresolved annual renewal trigger',
 }
 
 const employmentTypeChoices = {
@@ -30,7 +42,106 @@ const employmentTypeChoices = {
     auditor_investigator: 'Auditor / Investigator',
 }
 
+const decisionReasonChoices = {
+    NEW_NO_PRIOR_FORM: 'New — no prior form',
+    NEW_PRIOR_REVOKED: 'New — prior form revoked',
+    NEW_NO_CURRENT_FORM: 'New — no current governing form',
+    REUSE_FULLY_COVERED: 'Reuse — fully covered',
+    AMD_PARTIAL_COVERAGE: 'Amendment — partial coverage',
+    AMD_NO_COVERAGE_ACTIVE_FORM: 'Amendment — new scope on active form',
+    AMD_ORG_CHANGE: 'Amendment — organization change',
+    AMD_POSITION_ROLE_CHANGE: 'Amendment — position or role change',
+    AMD_JUSTIFICATION_CHANGE: 'Amendment — justification change',
+    AMD_MULTIPLE_MATERIAL_CHANGES: 'Amendment — multiple material changes',
+    REN_EXPIRED: 'Renewal — expired',
+    REN_LAPSED: 'Renewal — lapsed',
+    REN_OBSOLETE_VERSION: 'Renewal — obsolete form version',
+    REN_ANNUAL_RECERTIFICATION: 'Renewal — annual recertification',
+}
+
 const caseSecuritySchema = {
+    x_2108496_hr_acces_authorization_path: ChoiceColumn({
+        label: 'ROB Authorization Path',
+        choices: {
+            new: 'New', reuse: 'Reuse', amendment: 'Amendment',
+            renewal: 'Renewal', exception: 'Exception Review',
+        },
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_decision_reason: StringColumn({
+        label: 'ROB Decision Reason',
+        maxLength: 80,
+        choices: decisionReasonChoices,
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_decision_evaluated_at: DateTimeColumn({
+        label: 'ROB Decision Evaluated At',
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_existing_authorization_status: ChoiceColumn({
+        label: 'ROB Existing Authorization Status',
+        choices: {
+            none: 'None', active: 'Active', expired: 'Expired',
+            lapsed: 'Lapsed', superseded: 'Superseded', revoked: 'Revoked',
+            obsolete_version: 'Obsolete Version', denied: 'Denied',
+        },
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_evaluated_authorization: ReferenceColumn({
+        label: 'ROB Evaluated Authorization',
+        referenceTable: x_2108496_hr_acces_rob_auth.name,
+        cascadeRule: 'clear',
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_covered_access: ListColumn({
+        label: 'ROB Covered Access',
+        referenceTable: x_2108496_hr_acces_rob_access.name,
+        maxLength: 1000,
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_uncovered_access: ListColumn({
+        label: 'ROB Uncovered Access',
+        referenceTable: x_2108496_hr_acces_rob_access.name,
+        maxLength: 1000,
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_proposed_expiration_date: DateColumn({
+        label: 'ROB Proposed Expiration Date',
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_requires_supervisor_approval: BooleanColumn({
+        label: 'ROB Requires Supervisor Approval',
+        default: false,
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_material_context_change: BooleanColumn({
+        label: 'ROB Material Context Change',
+        default: false,
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_renewal_reason: StringColumn({
+        label: 'ROB Renewal Reason',
+        maxLength: 80,
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_duplicate_case: ReferenceColumn({
+        label: 'ROB Duplicate Case',
+        referenceTable: 'sn_hr_core_case',
+        cascadeRule: 'clear',
+        readOnly: true,
+        audit: true,
+    }),
     x_2108496_hr_acces_employment_type: ChoiceColumn({
         label: 'Employment Type Snapshot',
         choices: employmentTypeChoices,
@@ -145,6 +256,88 @@ const caseSecuritySchema = {
 }
 
 const workforceCaseSecuritySchema = {
+    x_2108496_hr_acces_authorization_path: ChoiceColumn({
+        label: 'ROB Authorization Path',
+        choices: {
+            new: 'New', reuse: 'Reuse', amendment: 'Amendment',
+            renewal: 'Renewal', exception: 'Exception Review',
+        },
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_decision_reason: StringColumn({
+        label: 'ROB Decision Reason',
+        maxLength: 80,
+        choices: decisionReasonChoices,
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_decision_evaluated_at: DateTimeColumn({
+        label: 'ROB Decision Evaluated At',
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_existing_authorization_status: ChoiceColumn({
+        label: 'ROB Existing Authorization Status',
+        choices: {
+            none: 'None', active: 'Active', expired: 'Expired',
+            lapsed: 'Lapsed', superseded: 'Superseded', revoked: 'Revoked',
+            obsolete_version: 'Obsolete Version', denied: 'Denied',
+        },
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_evaluated_authorization: ReferenceColumn({
+        label: 'ROB Evaluated Authorization',
+        referenceTable: x_2108496_hr_acces_rob_auth.name,
+        cascadeRule: 'clear',
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_covered_access: ListColumn({
+        label: 'ROB Covered Access',
+        referenceTable: x_2108496_hr_acces_rob_access.name,
+        maxLength: 1000,
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_uncovered_access: ListColumn({
+        label: 'ROB Uncovered Access',
+        referenceTable: x_2108496_hr_acces_rob_access.name,
+        maxLength: 1000,
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_proposed_expiration_date: DateColumn({
+        label: 'ROB Proposed Expiration Date',
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_requires_supervisor_approval: BooleanColumn({
+        label: 'ROB Requires Supervisor Approval',
+        default: false,
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_material_context_change: BooleanColumn({
+        label: 'ROB Material Context Change',
+        default: false,
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_renewal_reason: StringColumn({
+        label: 'ROB Renewal Reason',
+        maxLength: 80,
+        readOnly: true,
+        audit: true,
+    }),
+    x_2108496_hr_acces_duplicate_case: ReferenceColumn({
+        label: 'ROB Duplicate Case',
+        referenceTable: 'sn_hr_core_case',
+        cascadeRule: 'clear',
+        readOnly: true,
+        audit: true,
+    }),
     x_2108496_hr_acces_employment_type: ChoiceColumn({
         label: 'Employment Type Snapshot',
         choices: employmentTypeChoices,

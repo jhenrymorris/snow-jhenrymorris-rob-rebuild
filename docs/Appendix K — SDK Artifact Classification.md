@@ -1531,6 +1531,14 @@ Appendix K is successfully implemented when:
 
 ---
 
+## R3 Conditional Source Disposition
+
+The deterministic decision modules and approved native-subclass decision-output
+fields are Class A source-first artifacts. The conditional package intentionally
+does not activate runtime orchestration or persistence. Agency/runtime tests
+whose authoritative context depends on native profile snapshots remain blocked
+by `R2-AGENCY-01`; this does not reclassify or close the R2 dependency.
+
 # 82. Baseline SDK Artifact Statement
 
 The HR Access ROB Authorization product shall use the ServiceNow SDK as the **source-controlled development backbone for supported artifacts**, while preserving native ServiceNow configuration where the platform requires it.
