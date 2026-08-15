@@ -14,6 +14,15 @@
 - [ ] Document/PDF capability available
 - [ ] Required plugins documented
 
+R4 capability status (2026-08-15): current Document Templates, ServiceNow Sign,
+E-Signature, Digital Signature API/component, and PDF Generation Utilities are
+installed. This is availability evidence only. `R4-POLICY-01` is RESOLVED by
+the approved Appendix B rendering contract. `R4-PDI-01` remains OPEN and must
+validate a controlled native template end to end, including both signers,
+separate native supervisor approval, exact signed content, final attachment
+destination, immutability, and historical retention. No broad cross-scope
+privilege is approved for this work.
+
 ## 2. Synthetic Users and Groups
 
 Users:

@@ -109,6 +109,11 @@ an unimplemented capability; its negative enforcement tests remain active.
 | TM-97 | R3 deterministic decision suite | New, Reuse, Amendment, Renewal, Exception, coverage/delta, WPC, expiration, ambiguity, and idempotency | Local source/unit | PASS — 30/30 |
 | TM-98 | R3 lifecycle guard | Decision source has no record/task write API and no runtime trigger; creates zero Form, Detail, signature, approval, or fulfillment artifacts | Local source/unit | PASS |
 | TM-99 | R3 native persisted-snapshot context | Evaluate decisions from agency-persisted Position, Organization, and Supervisor snapshots on both native subclasses | Agency runtime | BLOCKED-AGENCY — R2-AGENCY-01 |
+| TM-100 | Current Document Templates availability | Australia has current `sn_doc` tables, PDF templates/mappings, ordered participants, and ServiceNow Sign support | PDI read-only capability | PARTIAL PASS — applications/tables/sample HR templates present; ROB runtime not configured |
+| TM-101 | ROB two-signer sequence | Employee signature, separate supervisor approval, and supervisor signature execute in order with authoritative identity/timestamps | PDI/agency runtime | BLOCKED — R4-PDI-01 |
+| TM-102 | Signed Form 1768 fidelity | April 2026 policy, approved fields, distinct IPA/WPC extensions, printed Date = Supervisor Signature Date / Final Authorization Date, and separate Electronic Authorization Metadata section render exactly | Policy plus PDI/agency runtime | POLICY RESOLVED — R4-POLICY-01; runtime BLOCKED by R4-PDI-01 |
+| TM-103 | Authoritative signed PDF | Exactly one immutable/auditable final PDF is associated with the Authorization Form and historical PDFs are retained | PDI/agency runtime/security | BLOCKED — R4-PDI-01 |
+| TM-104 | R4 lifecycle source/unit suite | New, Reuse, Amendment, Renewal, denial, idempotency, lineage, evidence, and zero fulfillment behavior | Local source/unit | NOT RUN — capability-first stop condition reached before implementation |
 
 ## Critical Release Gates
 

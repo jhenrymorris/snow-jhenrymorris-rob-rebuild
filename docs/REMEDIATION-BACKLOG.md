@@ -37,6 +37,24 @@ R0 records implementation deltas only. It does not change application metadata o
 - [ ] Activate and validate native runtime context acquisition/persistence only under a separately approved, secure path.
 - [ ] `R2-AGENCY-01` remains OPEN; R3 fixtures do not close it.
 
+## R4 — Authorization Lifecycle, E-Signature, and Signed PDF
+
+- [x] **R4-POLICY-01 — Approve final Form 1768 document mappings.** Status:
+  RESOLVED. Printed Date = Supervisor Signature Date / Final Authorization Date;
+  IPA and WPC are distinct electronic-only extensions; ARM remains provisioning
+  metadata; approved system-managed values render only in a separate Electronic
+  Authorization Metadata section.
+- [ ] **R4-PDI-01 — Prove current Document Templates / ServiceNow Sign runtime.**
+  Configure a controlled ROB template in the authorized native boundary and
+  prove custom Authorization Form data, repeated Access Details, employee and
+  supervisor signing with separate supervisor approval, signer/timestamp
+  evidence, final PDF generation, exact attachment destination, immutability,
+  and historical retention. Status: OPEN — PDI/agency capability validation.
+- [ ] Implement New, Amendment, and Renewal lifecycle only after the two R4
+  gates above are resolved; keep Reuse free of new forms/details and preserve
+  its original employee evidence/PDF.
+- [ ] `R2-AGENCY-01` remains OPEN; no R4 fixture or capability evidence closes it.
+
 ## R0 Boundary
 
 No item above is authorized for implementation in R0. Unsupported native capabilities must be recorded in Appendix L rather than replaced with custom request, task, approval, signature, PDF, attachment, or authentication architecture.

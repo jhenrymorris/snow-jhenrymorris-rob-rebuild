@@ -222,14 +222,16 @@ This creates a document-mapping distinction that must be handled explicitly.
 | Federal | Federal | Not normally required by form | Defined |
 | Contractor | Contractor | Required for time-limited access | Defined |
 | Auditor/Investigator | Auditor/Investigator | Required | Defined |
-| IPA | No explicit IPA field on April 2026 Form 1768 | Product may require applicable end date | **Mapping confirmation required** |
+| IPA | Approved electronic-only Access Request Type extension; no printed checkbox on the April 2026 source form | No additional requirement approved; remain configuration/policy controlled | **Approved electronic extension** |
 | Other approved type | No explicit printed field | Product rule dependent | **Mapping confirmation required** |
 
 ## 7.2 Design Rule
 
-The application shall **not invent a new checkbox on the official PDF** for IPA or another employment type without approval of the form/template design.
-
-Until the approved template mapping is confirmed, the application's richer employment-type model may remain available for workflow and expiration calculations while only supported values are rendered into the official form layout.
+The electronic authorization shall present IPA as a distinct electronic Access
+Request Type and shall identify it as an electronic-only extension. It shall not
+claim that the April 2026 source PDF contains an IPA checkbox. No IPA End Date
+requirement is approved by this rendering decision; any such requirement remains
+business/configuration controlled.
 
 ## 7.3 End-Date Rules
 
@@ -286,28 +288,19 @@ The business requirements establish that:
 - ARM grants the role necessary for access to the report hosted in OAS;
 - the OM action is tracked separately.
 
-However, **the April 2026 Form 1768 does not contain a printed field explicitly labeled “Workforce Profile Charts.”** Its relevant printed categories are OAS/DataMart and Human Capital Reports.
+However, **the April 2026 Form 1768 does not contain a printed field explicitly
+labeled “Workforce Profile Charts.”**
 
-Therefore:
+### DOC-MAP-01 — Resolved Electronic Extension
 
-### DOC-MAP-01 — Open Mapping Decision
+Workforce Profile Charts shall render as a distinct electronic-only option in
+System Requesting Access. It shall not be collapsed into OAS/DataMart or Human
+Capital Reports and shall not be described as a printed checkbox on the April
+2026 source form.
 
-The product owner/form owner shall confirm whether Workforce Profile Chart authorization shall render on Form 1768 as:
-
-- OAS/DataMart;
-- Human Capital Reports;
-- both;
-- or another formally approved document representation.
-
-Until that decision is approved, implementation shall:
-
-- retain Workforce Profile Charts as its own Access Item Reference;
-- retain Analytics as its primary fulfillment owner;
-- retain ARM as the provisioning-system dependency;
-- retain OAS as the target/report-hosting environment;
-- **not silently assign a paper-form checkbox mapping.**
-
-This is a document-rendering decision, not a routing ambiguity.
+ARM shall not render as a requested system/access option. ARM remains
+system-managed provisioning metadata for WPC; OAS / Workforce Profile Charts
+remains the target/hosting context.
 
 ---
 
@@ -452,20 +445,17 @@ The system, however, shall retain more granular electronic evidence:
 - authorization effective date;
 - expiration date.
 
-### DOC-MAP-02 — Date Rendering Decision
+### DOC-MAP-02 — Resolved Date Rendering Decision
 
-The document-template design shall confirm which authoritative date populates the printed Form 1768 “Date” field.
+The printed Form 1768 **Date** field shall represent the **Supervisor Signature
+Date / Final Authorization Date**. The supervisor signature completes execution
+of the authorization, so its completion date is the printed final execution
+date.
 
-Recommended candidates supported by the workflow are:
-
-- supervisor/final signature completion date; or
-- final authorization completion/effective date.
-
-**The source artifacts do not explicitly define which electronic lifecycle timestamp should populate this single printed date field.**
-
-Therefore, this shall remain an explicit document-template mapping decision until business/form-owner confirmation.
-
-Regardless of the visible printed date, all individual electronic event timestamps shall remain available in audit history.
+Employee Signature Date/Time and Supervisor Signature Date/Time remain separate
+authoritative electronic audit values. Neither timestamp is collapsed into or
+replaced by the printed Date field, and the employee signature timestamp does
+not populate that printed field.
 
 ---
 
@@ -550,13 +540,13 @@ The following matrix shall become the basis for the final Australia Document Tem
 | Contractor End Date | Access End Date | USER/SNAPSHOT | Yes | Conditional | Yes |
 | Auditor/Investigator indicator | Employment Type | USER/SNAPSHOT | Yes | If applicable | Yes |
 | Auditor/Investigator End Date | Access End Date | USER/SNAPSHOT | Yes | Conditional | Yes |
-| IPA representation | Employment Type | USER/SNAPSHOT | Yes | If applicable | **TBD** |
+| IPA electronic extension | Employment Type | USER/SNAPSHOT | Yes | If applicable | Yes; distinct electronic-only Access Request Type |
 | FPPS/WTTS | Authorized Access Detail | CONFIG/SNAPSHOT | Yes | If selected | Yes |
 | eOPF | Authorized Access Detail | CONFIG/SNAPSHOT | Yes | If selected | Yes |
 | USA Staffing | Authorized Access Detail | CONFIG/SNAPSHOT | Yes | If selected | Yes |
 | OAS/DataMart | Authorized Access Detail | CONFIG/SNAPSHOT | Yes | If selected | Yes |
 | Human Capital Reports | Authorized Access Detail | CONFIG/SNAPSHOT | Yes | If selected | Yes |
-| Workforce Profile Charts | Authorized Access Detail | CONFIG/SNAPSHOT | Yes | If selected | **TBD mapping** |
+| Workforce Profile Charts electronic extension | Authorized Access Detail | CONFIG/SNAPSHOT | Yes | If selected | Yes; distinct electronic-only access option mapped by `WPC` |
 | Business Justification | Case → Authorization snapshot | USER/SNAPSHOT | Yes | Yes | Yes |
 | Employee Signature | Native signature record | SIGN | Evidence | Yes for N/A/R | Yes |
 | Employee Signature Timestamp | Native signature record | SIGN | Evidence | Yes for N/A/R | Yes/metadata |
@@ -567,6 +557,43 @@ The following matrix shall become the basis for the final Australia Document Tem
 | Effective Date | Authorization Form | SYSTEM | Yes | Finalization | Yes |
 | Authorization Expiration Date | Authorization Form | SYSTEM | Yes | Finalization | Yes |
 | Source HRSD Case Number | HR Case | SYSTEM | Link | No | Optional metadata |
+
+## 17.1 Approved Electronic Rendering Contract
+
+The electronic artifact shall preserve three explicit layers:
+
+1. **Printed source-form body.** Preserve the recognizable April 2026 Form 1768
+   policy and printed fields: Employee Name, Position Title,
+   Directorate/Office, Federal, Contractor and Contractor End Date,
+   Auditor/Investigator and Auditor/Investigator End Date, the five printed
+   system/access selections, Business Justification, Employee Signature,
+   Supervisor Signature, and the single printed Date.
+2. **Electronic-only extensions.** Add IPA as a distinct Access Request Type and
+   Workforce Profile Charts as a distinct System Requesting Access option.
+   Clearly identify both as electronic extensions. Do not represent IPA or WPC
+   as printed April 2026 checkboxes. Do not render ARM as a requested access
+   option.
+3. **Electronic Authorization Metadata.** Render approved system-managed
+   governance values in a clearly separated section titled exactly
+   **Electronic Authorization Metadata**. Do not insert or intermingle these
+   values with the printed-form fields and do not include implementation/debug
+   metadata.
+
+The Electronic Authorization Metadata section shall use the approved field-map
+terminology and include:
+
+- Authorization Number;
+- Source HRSD Case (render the HR Case Number);
+- Form Version;
+- Employee Signature Date/Time;
+- Supervisor Signature Date/Time;
+- Effective Date;
+- Expiration Date;
+- ROB Authorization Path;
+- Signed PDF Generated Date/Time.
+
+The printed Date renders Supervisor Signature Date / Final Authorization Date.
+The two signature Date/Time fields remain separate electronic audit metadata.
 
 ---
 
@@ -882,47 +909,42 @@ No `TBD` result shall be silently treated as supported implementation behavior.
 
 ---
 
-# 29. Open Document-Mapping Decisions
+# 29. Approved Electronic Rendering Decisions
 
-## DOC-MAP-01 — Workforce Profile Charts
+## DOC-MAP-01 — Workforce Profile Charts — RESOLVED
 
-**Question:** Which printed Form 1768 system/access selection represents Workforce Profile Chart authorization?
-
-**Source status:** Not explicitly defined by the April 2026 form or existing requirements.
-
-**Required owner:** Product/Form Owner.
+Workforce Profile Charts is a distinct electronic-only System Requesting Access
+option. It does not map to OAS/DataMart or Human Capital Reports. ARM remains
+provisioning metadata and does not render as a requested access option.
 
 ---
 
-## DOC-MAP-02 — Printed Date
+## DOC-MAP-02 — Printed Date — RESOLVED
 
-**Question:** Which electronic lifecycle timestamp populates the single visible Form 1768 signature Date field?
-
-**Source status:** The form contains one Date field but the requirements do not prescribe its electronic mapping.
-
-**Required owner:** Product/Form Owner.
+The single printed Date represents Supervisor Signature Date / Final
+Authorization Date. Employee Signature Date/Time and Supervisor Signature
+Date/Time remain separately retained electronic audit values.
 
 ---
 
-## DOC-MAP-03 — IPA Representation
+## DOC-MAP-03 — IPA Representation — RESOLVED
 
-**Question:** How shall IPA employment type be represented on the official Form 1768 PDF when the April 2026 form provides Federal, Contractor, and Auditor/Investigator options but no explicit IPA option?
-
-**Source status:** Application requirements include IPA as an employment type; the printed form does not contain an IPA field.
-
-**Required owner:** Product/Form Owner.
+IPA is a distinct electronic-only Access Request Type. The implementation shall
+not claim that IPA is a printed April 2026 checkbox and shall not infer an IPA
+End Date requirement from this rendering decision.
 
 ---
 
-## DOC-MAP-04 — Electronic Supplemental Metadata
+## DOC-MAP-04 — Electronic Supplemental Metadata — RESOLVED
 
-**Question:** Where shall authorization number, form version, effective date, and annual expiration date appear on the generated electronic artifact when not represented as labeled fields on the paper form?
+Approved system-managed governance values shall appear in a clearly separated
+**Electronic Authorization Metadata** section. The section shall preserve the
+recognizable source-form body, use approved field-map terminology, and exclude
+implementation/debug metadata.
 
-**Recommended approach:** Approved supplemental metadata section/header/footer while preserving Form 1768 content.
-
-**Source status:** Product requires the metadata, but the source form does not prescribe its layout.
-
-**Required owner:** Product/Form Owner + Records/Compliance as appropriate.
+Together, DOC-MAP-01 through DOC-MAP-04 resolve `R4-POLICY-01`. They do not
+prove Document Templates, signature, approval, PDF, attachment, or security
+runtime behavior; `R4-PDI-01` remains open.
 
 ---
 

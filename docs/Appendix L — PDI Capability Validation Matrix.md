@@ -1476,3 +1476,41 @@ The SDK shall not be used to infer that a runtime platform feature works merely 
 Native HRSD, Employee Center, current Document Templates, electronic signature, approval, attachment, security, reporting, and testing capabilities shall each be proven through the appropriate runtime evidence.
 
 Where a required PDI capability is unavailable, development shall stop for that dependency and preserve the approved architecture rather than introducing unsupported replacement components.
+
+---
+
+# 89. R4 Australia Capability-Spike Result — 2026-08-15
+
+The capability-first R4 spike stopped before implementation with a partial
+platform result and unresolved policy dependencies.
+
+| ID | Result | Evidence / limitation |
+|---|---|---|
+| DOC-01 | PASS — availability only | Active Document Templates scope `sn_doc` version 27.1.1 |
+| DOC-02–05 | NOT PROVEN | No controlled ROB template demonstrated the custom Authorization Form data source, related Access Details, or reliable multi-item rendering |
+| DOC-06 | PASS — availability only | Active ServiceNow Sign support plus E-Signature 1.0.0, Digital Signature API 26.0.0, and Digital signature component 27.1.0 |
+| DOC-07–12 | NOT PROVEN | No ROB employee/supervisor runtime sequence, separate approval coexistence, signer/timestamp reread, or final signed-content test |
+| DOC-13–15 | NOT PROVEN | No generated ROB PDF established output, attachment destination, authoritative relocation, immutability, or Reuse retention behavior |
+| DOC-16 | NOT PROVEN | No R4 Class B transform/source-control round trip was attempted after the stop condition |
+
+Installed schema confirms `sn_doc_template` supports table-based templates,
+ServiceNow Sign, signing order, and storage configuration; ordered
+`sn_doc_participant` records and `sn_doc_pdf_template_mapping` are present.
+Sample published templates target native HR Case tables. The PDI contained zero
+Document Task records, so no committed generated/signed output was available as
+runtime evidence.
+
+The HR Access source scope had zero `sn_doc`/`sn_esign` cross-scope privileges,
+and this spike created none. No instance record was modified.
+
+Policy update: `R4-POLICY-01` is RESOLVED by the approved Appendix B contract.
+The printed Date is Supervisor Signature Date / Final Authorization Date; IPA
+and WPC are distinct electronic-only extensions; ARM is provisioning metadata;
+and approved system-managed values render in a separate Electronic
+Authorization Metadata section. This removes the policy blocker but does not
+prove the runtime capabilities tracked by `R4-PDI-01`.
+
+Classification: native template/signature/PDF configuration remains a Class
+B/C candidate, but the unproven ROB runtime path is Class D for the current PDI
+spike. R4 remains BLOCKED by `R4-PDI-01`. No substitute signature, approval, or PDF
+architecture is authorized.

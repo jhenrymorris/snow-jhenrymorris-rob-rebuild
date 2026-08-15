@@ -979,3 +979,86 @@ Not exposed by session/tool — no estimate recorded.
 - Token accounting: not exposed by the session; not estimated.
 - Result: R3 — CONDITIONAL PASS; R2-AGENCY-01 remains open.
 - Wave 4: not started; explicit approval required.
+
+## R4 — Authorization Lifecycle, E-Signature, and Signed PDF
+
+### Blocked capability-spike record
+
+- Measurement shape: `turn-by-turn`; the baseline gate stopped for reviewer
+  confirmation because the requested R4 branch was already checked out, then a
+  separate capability-validation turn proceeded.
+- Starting commit: `29a75f920d787fea85fe62cb1d97fbeacf0ecbd7`.
+- Branch: `feature/04-authorization-lifecycle-signatures-pdf`.
+- R2 dependency at start and close: `R2-AGENCY-01` OPEN; R2 BLOCKED-PDI.
+- Instrumented capability session start: 2026-08-15 17:04:49 EDT.
+- Instrumented capability session end: 2026-08-15 17:17:28 EDT.
+- Calendar span / instrumented active duration: 12 minutes 39 seconds. The
+  preceding baseline-stop turn duration was not exposed and is not estimated.
+- Turn 1 classification: environment/method-rework — correct commit and clean
+  tree were confirmed, but the requested R4 branch was already checked out;
+  work stopped under the explicit baseline rule.
+- Turn 2 classification: capability/environment — read required governance,
+  rendered and visually verified the authoritative April 2026 PDF, inventoried
+  source, and performed read-only Australia Document Templates, ServiceNow Sign,
+  e-signature, PDF, participant, and privilege queries.
+- Reviewer interventions: 1 — user confirmed the pre-created R4 branch as the
+  approved starting state.
+- Silent defects: 0.
+- Visible defects: 1 environment/tooling issue — the dependency loader's
+  advertised Poppler `.exe` wrapper path did not exist; the installed native
+  Poppler binary was located and used without changing repository source.
+- Source evidence: no R4 application source existed or changed; no lifecycle,
+  signature, approval, template, PDF, or fulfillment runtime trigger was added.
+- Capability evidence: current Document Templates 27.1.1, E-Signature 1.0.0,
+  Digital Signature API 26.0.0, Digital signature component 27.1.0, and PDF
+  Generation Utilities are active. Published HR templates use ServiceNow Sign,
+  table data sources, signing order, and ordered participants. These facts prove
+  availability, not the required ROB two-signer signed-PDF lifecycle.
+- Runtime blocker evidence: no Document Task record or completed ROB artifact
+  existed to prove signer/timestamp persistence, approval coexistence, PDF
+  generation, attachment destination, immutability, or historical retention.
+- Policy blocker evidence: Appendix B leaves `DOC-MAP-02` and the exact IPA/WPC/
+  supplemental electronic rendering unresolved. The R4 stop rule prohibits
+  implementing a template by guessing those mappings.
+- Security evidence: zero `x_2108496_hr_acces` cross-scope privileges targeted
+  `sn_doc` or `sn_esign`; none were created; no broad privilege or temporary
+  role/artifact was introduced.
+- Build/test/deployment evidence: not applicable after the capability-first stop;
+  no application source or instance data changed, and no install was performed.
+- Count assertion:
+  - Custom authorization/signature/approval/document/PDF tables added: expected 0; actual 0.
+  - New lifecycle decision classes: expected 0; actual 0.
+  - Duplicate Authorization Forms / Access Details: expected 0 / 0; actual 0 / 0.
+  - Fulfillment tasks / renewal processes added: expected 0 / 0; actual 0 / 0.
+  - R2-AGENCY-01 closed: expected no; actual no.
+  - Unexpected existing generated-key changes: expected 0; actual 0.
+- Count assertion result: BLOCKED because required R4 signature/PDF/runtime and
+  document-fidelity gates are not proven.
+- Token accounting: not exposed by the session; not estimated.
+- Result: R4 — BLOCKED.
+- Wave 5: not started; explicit approval remains required after R4 blockers are resolved.
+
+### R4.1 — Form 1768 Electronic Rendering Policy Resolution
+
+- Measurement shape: `turn-by-turn` continuation of R4.
+- Active session start: 2026-08-15 17:30:06 EDT.
+- Active session end: 2026-08-15 17:35:02 EDT.
+- Calendar span / active duration: 4 minutes 56 seconds.
+- Turn classification: 1 policy/governance turn — recorded the approved Date,
+  IPA, WPC, and supplemental metadata rendering contract; updated traceability,
+  tests, backlog, capability, build, and manual-configuration records; performed
+  documentation and generated-key validation.
+- Reviewer/form-owner interventions: 1 — the reviewer supplied and approved all
+  four electronic rendering decisions.
+- Silent defects: 0.
+- Visible defects: 0.
+- Policy result: `R4-POLICY-01` RESOLVED. DOC-MAP-01 through DOC-MAP-04 now
+  define the complete electronic rendering contract.
+- Preserved dependency: `R4-PDI-01` OPEN; no template, signature, approval, PDF,
+  attachment, or runtime capability is claimed by the policy decision.
+- Source/build/install/runtime evidence: documentation/measurement only; no
+  application source or generated-key change; build and deployment not
+  applicable; source PDF unchanged.
+- Token accounting: not exposed by the session; not estimated.
+- Status: R4 — BLOCKED; R4-POLICY-01 resolved; R4-PDI-01 remains open.
+- Wave 5: not started.

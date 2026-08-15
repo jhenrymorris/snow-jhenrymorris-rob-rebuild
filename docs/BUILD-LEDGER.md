@@ -76,3 +76,46 @@ Build evidence is package-specific and must remain distinct from install, runtim
 - Generated-key evidence: all 827 baseline unique ids remain present; 177 new
   ids correspond to intentional R3 native fields, choices, documentation, and
   three packaged source modules; unexplained existing-key changes = 0.
+
+## R4 — Authorization Lifecycle, E-Signature, and Signed PDF (BLOCKED)
+
+- Baseline: `29a75f920d787fea85fe62cb1d97fbeacf0ecbd7` on
+  `feature/04-authorization-lifecycle-signatures-pdf`; the branch was already
+  present and the reviewer explicitly confirmed it as the approved start.
+- Source inventory found no pre-existing R4 lifecycle, signature, approval,
+  Document Template, or PDF-generation implementation to preserve or extend.
+- Authoritative source-form verification: the two-page April 2026 AcroForm was
+  rendered and inspected. Printed elements match Appendix B; IPA and WPC are
+  electronic extensions, and the printed form exposes only one Date field.
+- Australia capability evidence: current Document Templates 27.1.1,
+  E-Signature 1.0.0, Digital Signature API 26.0.0, Digital signature component
+  27.1.0, and PDF Generation Utilities are active. Published native HR case
+  templates demonstrate ServiceNow Sign and ordered participants.
+- Capability gaps: no ROB template/runtime artifact demonstrated custom
+  Authorization Form data, related Access Detail repetition, both required
+  signers plus separate supervisor approval, generated signed PDF placement,
+  or signed-content immutability. The PDI contained no Document Task record to
+  serve as committed output evidence.
+- Policy blockers: Appendix B leaves `DOC-MAP-02`, IPA rendering, and WPC /
+  supplemental electronic rendering unapproved. The implementation stop rule
+  prohibits guessing those mappings.
+- No application source, generated keys, instance records, cross-scope
+  privileges, or runtime activation changed. Build, deployment, and lifecycle
+  tests were therefore not applicable after the capability stop.
+- Result: R4 BLOCKED. R2 remains BLOCKED-PDI and `R2-AGENCY-01` remains OPEN.
+
+### R4.1 electronic rendering policy resolution
+
+- Reviewer/form-owner decision resolved `R4-POLICY-01` without application or
+  instance changes.
+- Printed Date mapping: Supervisor Signature Date / Final Authorization Date;
+  Employee and Supervisor Signature Date/Time remain separate audit metadata.
+- IPA is a distinct electronic-only Access Request Type with no invented IPA
+  End Date rule.
+- Workforce Profile Charts is a distinct electronic-only System Requesting
+  Access option; it is not collapsed into OAS/DataMart or Human Capital Reports,
+  and ARM remains non-rendered provisioning metadata.
+- Approved governance values render only in a separate **Electronic
+  Authorization Metadata** section using field-map terminology.
+- Source PDF unchanged. Application source and generated keys unchanged.
+  Deployment not applicable. `R4-PDI-01` remains OPEN and R4 remains BLOCKED.

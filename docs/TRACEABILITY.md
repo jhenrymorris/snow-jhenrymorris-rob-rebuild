@@ -107,6 +107,16 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 | No Wave 4+ side effects | pure source modules; no runtime trigger | TM-98 | Source/unit PASS |
 | Native persisted snapshot-dependent evaluation | `R2-AGENCY-01` | TM-88–TM-96, TM-99 | BLOCKED-AGENCY; remains OPEN |
 
+## Wave 4 Capability Gate
+
+| Requirement | Artifact / dependency | Test | Status |
+|---|---|---|---|
+| Current Document Templates and ServiceNow Sign availability | Native `sn_doc` / `sn_esign` applications | TM-100 | PARTIAL PASS — installed capability only |
+| Employee → supervisor approval → supervisor signature | `R4-PDI-01` controlled native runtime configuration | TM-101 | BLOCKED — runtime sequence/evidence not proven |
+| Exact April 2026 Form 1768 rendering policy | Appendix B DOC-MAP-01 through DOC-MAP-04 and `docs/FIELD-MAP.md` | TM-102 | POLICY RESOLVED — Date, IPA, WPC, and Electronic Authorization Metadata contract approved; runtime remains blocked by `R4-PDI-01` |
+| Exactly one authoritative immutable signed PDF | `R4-PDI-01` native output and attachment validation | TM-103 | BLOCKED — generation, destination, integrity, and retention not proven |
+| Lifecycle implementation and guards | No R4 source artifact created | TM-104 | NOT RUN — capability-first stop condition |
+
 ## Wave 1 Batch 1 Implementation
 
 | Step | SDK artifact | Test reference | Status |

@@ -54,3 +54,27 @@ dependency: open. R2 production acceptance: incomplete.
 
 `R2-AGENCY-01` remains OPEN. Source tests use explicit synthetic snapshot values
 and are not native persistence evidence.
+
+## R4 capability spike — BLOCKED
+
+Read-only Australia PDI inspection on 2026-08-15 established only a partial
+native capability result:
+
+| Capability | Evidence | Classification / result |
+|---|---|---|
+| Current Document Templates | Active `sn_doc` scope, version `27.1.1`; published ServiceNow Sign templates exist for `sn_hr_core_case` and `sn_hr_core_case_workforce_admin` | Class B/C candidate; availability proven, ROB configuration not proven |
+| Current electronic signature | Active `sn_esign` 1.0.0, Digital Signature API 26.0.0, and Digital signature component 27.1.0; native `sn_esign_acknowledgement` retains user, document/revision, signature, acknowledgement, and creation time | Class B/C candidate; component availability proven, compliant two-signer ROB execution not proven |
+| Participant sequencing | `sn_doc_template.set_signing_order` and ordered `sn_doc_participant` records are present; sample HR templates use ServiceNow Sign | Partial; employee → approval → supervisor sequence not runtime proven |
+| PDF template/mapping | `sn_doc_pdf_template` and `sn_doc_pdf_template_mapping` are installed; PDF Generation Utilities is active | Partial; exact ROB data source, related-detail repetition, signed output, and attachment destination not proven |
+| Final authoritative PDF | No Document Task records or completed ROB artifact were available as committed runtime evidence | Class D for this PDI spike until generation, association, immutability, and retention are demonstrated |
+
+No cross-scope privilege from `x_2108496_hr_acces` to `sn_doc` or `sn_esign`
+was present or created. No template, participant, signature, approval, or PDF
+record was modified.
+
+`R4-POLICY-01` is RESOLVED by Appendix B DOC-MAP-01 through DOC-MAP-04: printed
+Date = Supervisor Signature Date / Final Authorization Date; IPA and WPC are
+distinct electronic-only extensions; ARM remains non-rendered provisioning
+metadata; and approved system-managed values render in a separate Electronic
+Authorization Metadata section. `R4-PDI-01` remains OPEN because this policy
+does not prove template/signature/PDF runtime capability.

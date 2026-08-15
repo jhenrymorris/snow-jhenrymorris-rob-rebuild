@@ -248,3 +248,40 @@ The following application-owned, read-only, audited fields are defined on both
 Conditional R3 source validation does not activate a PDI persistence trigger.
 Later controlled persistence must respect the native-table ownership boundary
 and must not be treated as evidence that R2 snapshot persistence works.
+
+## 9. R4 Electronic Form 1768 Rendering Contract
+
+The April 2026 source PDF remains unchanged and authoritative. The electronic
+artifact preserves its recognizable body while distinguishing printed fields,
+electronic-only extensions, and system-managed metadata.
+
+Electronic Access Request Type values are Federal, Contractor, IPA, and
+Auditor/Investigator. IPA is an approved electronic-only extension and does not
+introduce an IPA End Date rule.
+
+Electronic System Requesting Access values are FPPS/WTTS, eOPF, USA Staffing,
+OAS/DataMart, Human Capital Reports, and Workforce Profile Charts. WPC remains
+distinct and uses the controlled `WPC` document mapping. ARM is provisioning
+metadata and is not rendered as a requested system/access option.
+
+The single printed Date renders Supervisor Signature Date / Final Authorization
+Date. `Employee Signature Date/Time` and `Supervisor Signature Date/Time` remain
+separate authoritative audit fields.
+
+The separate **Electronic Authorization Metadata** section renders only:
+
+| Rendered label | Approved logical/physical source |
+|---|---|
+| Authorization Number | Authorization Form `Number` |
+| Source HRSD Case | Authorization Form `Source HRSD Case`; render referenced HR Case Number |
+| Form Version | Authorization Form `Form Version` |
+| Employee Signature Date/Time | Authorization Form `Employee Signature Date/Time` |
+| Supervisor Signature Date/Time | Authorization Form `Supervisor Signature Date/Time` |
+| Effective Date | Authorization Form `Effective Date` |
+| Expiration Date | Authorization Form `Expiration Date` |
+| ROB Authorization Path | Source HRSD Case `x_2108496_hr_acces_authorization_path` |
+| Signed PDF Generated Date/Time | Authorization Form `Signed PDF Generated Date/Time` |
+
+These values shall not be intermingled with printed-form fields, and no
+implementation/debug metadata may be rendered. This policy resolves
+`R4-POLICY-01`; runtime capability remains open under `R4-PDI-01`.
