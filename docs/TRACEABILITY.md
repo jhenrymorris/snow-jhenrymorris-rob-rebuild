@@ -1,6 +1,8 @@
 # Requirements Traceability Matrix
 ## HR Access ROB Authorization
 
+Appendix A is the authoritative Australia PRD traceability baseline. This file records repository implementation evidence only. Existing Wave 1/2 source statuses are historical source/build evidence and do not establish Australia install, runtime, security, or UAT PASS status. R1 and R2 must revalidate them.
+
 Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 
 | Requirement | SDK artifact | Native/manual artifact | Test reference | Status |

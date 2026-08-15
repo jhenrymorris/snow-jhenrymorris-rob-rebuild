@@ -1,6 +1,8 @@
 # Security Model
 ## HR Access ROB Authorization
 
+This implementation view is governed by Appendix F and the Australia PRD. Existing source/build evidence does not prove Australia runtime enforcement. R2 must revalidate ACL, attachment direct-URL protection, contextual fulfiller access, Operations Manager isolation, self-submission, and impersonation behavior on the PDI.
+
 ## 1. Objectives
 
 - Protect authorization records and signed PDFs.

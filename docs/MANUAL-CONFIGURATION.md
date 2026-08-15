@@ -43,7 +43,7 @@ Do not hard-code group sys_ids in source.
 - [ ] Confirm `x_2108496_hr_acces.rob_admin` is reserved for ROB application administrators.
 - [ ] Open the active record on `x_2108496_hr_acces_rob_config` and populate the Staffing, Analytics, Operations Manager escalation, and Exception Review group references.
 - [ ] Confirm exactly one ROB Configuration record is active.
-- [ ] Confirm the default configuration uses form version `2024.04`, annual recertification date `2027-09-30`, grace window 90, reminders 90/60/30, and lapse notification enabled.
+- [ ] After R1 remediation, confirm the active configuration uses the approved **NSF Form 1768 — April 2026** identifier, the approved annual recertification date, grace window, reminders, and lapse-notification setting. Do not treat the current `2024.04` seed as accepted.
 - [ ] Review the six records on `x_2108496_hr_acces_rob_access` for active state, category, routing flags, external systems, and sort order.
 - [ ] Confirm Workforce Profile Charts uses ARM for provisioning and OAS as the target platform.
 

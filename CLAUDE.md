@@ -11,7 +11,9 @@ Follow this file for every Claude Code session.
 
 Read these files before planning or editing:
 
+- `MEASUREMENT.md`
 - `docs/PRD.md`
+- applicable Appendices A–O under `docs/`
 - `docs/ARCHITECTURE.md`
 - `docs/FIELD-MAP.md`
 - `docs/TRACEABILITY.md`
@@ -21,6 +23,8 @@ Read these files before planning or editing:
 
 Use the installed ServiceNow SDK skill/plugin and current SDK documentation. Do not rely on stale API memory when `now-sdk explain`, official SDK types, or read-only instance queries can resolve uncertainty.
 
+Content under `docs/archive/zurich-development/` is historical evidence only and is not current implementation guidance. Do not invent requirements when the PRD and appendices are silent.
+
 ---
 
 ## Project Identity
@@ -29,7 +33,8 @@ Use the installed ServiceNow SDK skill/plugin and current SDK documentation. Do 
 - Platform: ServiceNow Australia
 - App type: Scoped
 - PDI authentication alias: `rob-pdi`
-- Scope: preserve the value in `now.config.json`
+- SDK baseline: `4.8.1`
+- Scope: `x_2108496_hr_acces` (preserve the value in `now.config.json`)
 - MVP: self-submission only
 
 ---
@@ -45,6 +50,7 @@ Use the installed ServiceNow SDK skill/plugin and current SDK documentation. Do 
   2. ROB Access Item Reference
   3. ROB Authorization Form
   4. Authorized Access Detail
+- Authorized Access Detail is governed authorization scope, not request input. Wave 2 intake and Wave 3 decision evaluation do not create it; Wave 3 does not create Authorization Forms; Reuse creates neither a new form nor duplicate details.
 - No custom approval table
 - No custom signature table
 - No custom authentication
@@ -86,7 +92,7 @@ If a requirement cannot be implemented with supported SDK or native metadata, st
 - HR case/task templates
 - Native HR e-signature
 - Native supervisor approval
-- HR document template and PDF mapping
+- Current Australia Document Templates and PDF mapping
 - Attachment-security testing
 - Impersonation testing
 - Final dashboard/flow visual review
@@ -294,6 +300,9 @@ For each request:
 - Add external integrations
 - Delete historical records
 - Run `install --reinstall` without explicit approval
+- Use `--reinstall` as a normal deployment workaround
+- Stage unexpected generated-key changes
+- Treat Source or Build evidence as Install, Runtime, Security, or UAT evidence
 - Modify unrelated working artifacts
 - Install without approval
 

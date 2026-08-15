@@ -1,6 +1,8 @@
 # Test Matrix
 ## HR Access ROB Authorization MVP
 
+Appendix M is the authoritative Australia PRD test baseline. Results below distinguish source/build evidence from install, runtime, security, and UAT evidence. A source review or successful build must not be reported as an Australia runtime PASS; existing Wave 1/2 PASS entries apply only to their stated evidence type and require R1/R2 revalidation.
+
 Status values: Not Run, Pass, Fail, Blocked, Manual Only. `Deferred` classifies
 an unimplemented capability; its negative enforcement tests remain active.
 

@@ -109,7 +109,7 @@ Stores:
 
 ### Authorized Access Detail
 
-Stores one record per access item and supports:
+Stores one governed authorization-scope record per access item. It is not a request line and supports:
 
 - Coverage comparison
 - Amendment delta
@@ -144,20 +144,21 @@ Responsibilities:
 1. Trigger on valid ROB HR case.
 2. Read request values.
 3. Call decision subflow/service.
-4. Create missing Requested access-detail records.
-5. Snapshot routing values.
-6. Update case outcome.
-7. Stop before signature processing.
+4. Retain requested access on the native HR Case without creating Authorization Forms or Authorized Access Details.
+5. Update the case decision outcome.
+6. Stop before signature processing.
 
 ### Authorization lifecycle flow
 
-1. Create Authorization Form when needed.
+1. In Wave 4, create an Authorization Form and governed Authorized Access Details for New, Amendment, or Renewal only.
 2. Route employee signature.
 3. Route supervisor approval and signature.
 4. Handle denial.
 5. Generate signed PDF.
 6. Activate authorization.
 7. Open fulfillment gate.
+
+Reuse links the current case to the existing Authorization Form, creates no new form or detail records, and preserves the existing employee signature and signed PDF.
 
 ### Fulfillment flow
 
@@ -195,8 +196,8 @@ Responsibilities:
 - HR services and COE configuration
 - Employee Center placement
 - HR case/task templates
-- HR e-signature
-- HR document template and PDF mapping
+- current Australia-supported electronic signature capability
+- current Document Templates and PDF mapping
 - Visual flow review
 - Attachment and impersonation testing
 - Dashboard presentation refinements
@@ -208,5 +209,6 @@ Responsibilities:
 - Synchronize instance changes before later installs.
 - Do not define the same metadata independently in Fluent and XML.
 - Avoid reinstall unless exact reconciliation is intended.
+- Do not use `--reinstall` as a normal deployment workaround.
 - Tag validated waves.
 - Use only synthetic PDI data.

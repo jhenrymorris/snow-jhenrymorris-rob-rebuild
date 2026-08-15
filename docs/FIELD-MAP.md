@@ -90,6 +90,10 @@ subclass-owned rather than inherited from `sn_hr_core_case`:
 | Default Analytics Assignment Group | Reference `sys_user_group` | No | PDI-configured |
 | Default OM Escalation Group | Reference `sys_user_group` | No | PDI-configured |
 | Default Exception Review Group | Reference `sys_user_group` | No | PDI-configured |
+| Operations Manager Task Due Days | Integer | Yes | R1 configuration remediation |
+| Exception Task Due Days | Integer | Yes | R1 configuration remediation |
+| Operations Manager Escalation Timing | Integer/duration | Yes | R1 configuration remediation |
+| Renewal Notification Copy Configuration | String/reference | No | Optional; R1 configuration remediation |
 | Notes | Multiline text | No | Administrative |
 
 ## 4. ROB Access Item Reference
@@ -110,6 +114,7 @@ subclass-owned rather than inherited from `sn_hr_core_case`:
 | External Provisioning System | Choice | ARM, FPPS/WTTS, eOPF, USA Staffing, Other, N/A |
 | External Target System | Choice | OAS, FPPS/WTTS, eOPF, USA Staffing, Other, N/A |
 | Sort Order | Integer | Employee experience |
+| Form 1768 Mapping Metadata | Structured fields/references | Exact R1 design follows Appendix B |
 | Notes | Multiline text | Administrative |
 
 Starter values:
@@ -119,8 +124,8 @@ Starter values:
 | FPPS / WTTS | HR System | Yes | No | No | FPPS / WTTS | FPPS / WTTS |
 | eOPF | HR System | Yes | No | No | eOPF | eOPF |
 | USA Staffing | HR System | Yes | No | No | USA Staffing | USA Staffing |
-| Human Capital Data Access | Human Capital Data | No | Yes | No | N/A | N/A |
-| Report Access | Report | No | Yes | No | N/A | N/A |
+| OAS/DataMart | Human Capital Data | No | Yes | No | N/A | OAS/DataMart |
+| Human Capital Reports | Report | No | Yes | No | N/A | Human Capital Reports |
 | Workforce Profile Charts | Workforce Profile Chart | No | Yes | Yes | ARM | OAS |
 
 ## 5. ROB Authorization Form
@@ -181,7 +186,7 @@ Attachment policy:
 | Business Justification Snapshot | Multiline text | Case snapshot |
 | Authorized Start Date | Date | Activation |
 | Authorized End Date | Date | Expiration/end date |
-| Status | Choice | Requested through historical states |
+| Status | Choice | Governed lifecycle per Appendix D; current source requires R1 reconciliation |
 | Staffing Required Snapshot | Boolean | Access-item snapshot |
 | Analytics Required Snapshot | Boolean | Access-item snapshot |
 | OM Required Snapshot | Boolean | Access-item snapshot |
@@ -190,6 +195,8 @@ Attachment policy:
 | Notes | Multiline text | Operational/audit |
 
 ## 7. Prohibited Fields
+
+Authorized Access Detail is created only as governed authorization scope in Wave 4. Wave 2 intake and Wave 3 decision evaluation do not create details; Reuse creates no new details.
 
 Do not create:
 

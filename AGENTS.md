@@ -11,7 +11,9 @@ Codex must follow these instructions for every task in this repository.
 
 Before planning or modifying files, read:
 
+- `MEASUREMENT.md`
 - `docs/PRD.md`
+- applicable Appendices A–O under `docs/`
 - `docs/ARCHITECTURE.md`
 - `docs/FIELD-MAP.md`
 - `docs/TRACEABILITY.md`
@@ -20,6 +22,8 @@ Before planning or modifying files, read:
 - `docs/MANUAL-CONFIGURATION.md`
 
 Do not rely only on this file. The documents above contain the approved requirements, architecture, field mappings, security model, test cases, and manual configuration boundaries.
+
+Content under `docs/archive/zurich-development/` is historical evidence only. Do not use it as current implementation guidance. Do not invent requirements when the PRD and appendices are silent; record the question or stop condition instead.
 
 ---
 
@@ -30,7 +34,8 @@ Do not rely only on this file. The documents above contain the approved requirem
 - Target release: ServiceNow Australia
 - Development target: Personal Developer Instance
 - Authentication alias: `rob-pdi`
-- Scope: use the scope already defined in `now.config.json`
+- SDK baseline: `4.8.1`
+- Scope: `x_2108496_hr_acces` (use the scope already defined in `now.config.json`)
 - MVP submission model: Self-submission only
 
 Do not change the application scope after metadata creation begins.
@@ -52,6 +57,7 @@ Do not change the application scope after metadata creation begins.
    - ROB Access Item Reference
    - ROB Authorization Form
    - Authorized Access Detail
+   Authorized Access Detail is governed authorization scope, not request input or a request line. Wave 2 intake and Wave 3 decision evaluation must not create it; Wave 3 must not create Authorization Forms. New, Amendment, and Renewal create governed artifacts in Wave 4. Reuse creates neither a new form nor duplicate details.
 6. Do not create custom approval, signature, authentication, or attachment tables.
 7. MVP supports self-submission only.
 8. Delegated, on-behalf-of, organization-level, and bulk submission are post-MVP.
@@ -110,7 +116,7 @@ Do not replace these with custom mechanisms:
 - HR task templates
 - Native HR e-signature
 - Native supervisor approval
-- HR document template and PDF mappings
+- Current Australia Document Templates and PDF mappings
 - Final Flow Designer visual review
 - Attachment security validation
 - Impersonation testing
@@ -174,6 +180,9 @@ Use descriptive file names. Keep one logical artifact group per file when practi
 12. Use references to ROB Access Item Reference instead of duplicated access-item choice lists.
 13. Enable auditing only where required by the security and audit model.
 14. Use synthetic test data only.
+15. Preserve stable generated keys. Investigate any change to `src/fluent/generated/keys.ts` before staging or deployment.
+16. Keep Source, Build, Install, Runtime, Security, and UAT evidence distinct. Source review or build success is not runtime proof.
+17. If a required native capability is unsupported, stop and document the limitation instead of creating substitute architecture.
 
 ---
 
@@ -343,6 +352,7 @@ Do not:
 - Create a custom authentication mechanism
 - Store SSNs or real sensitive data
 - Use production employee records in PDI
+- Use production data, SSNs, or sensitive PII in PDI testing
 - Hard-code sys_ids
 - Grant broad cross-scope privileges
 - Grant broad repository access to fulfillers or Operations Managers
@@ -351,6 +361,7 @@ Do not:
 - Add external provisioning integrations
 - Delete historical authorization records
 - Use `install --reinstall` unless the user explicitly approves exact reconciliation
+- Use `--reinstall` as a normal deployment workaround
 - Modify unrelated working artifacts during defect correction
 - install to the PDI without explicit approval
 
