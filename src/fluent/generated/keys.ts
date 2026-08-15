@@ -419,6 +419,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '00a11632942946acb32a6f62d999f5b4'
+                        key: {
+                            sys_ui_section: {
+                                id: 'cf30695decf94abea5be20dfd96efa35'
+                                key: {
+                                    name: 'x_2108496_hr_acces_rob_access'
+                                    caption: 'External Systems'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.end_split'
+                            position: '5'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '01078084d0854cc49f52f3810985977c'
                         deleted: true
@@ -578,6 +600,14 @@ declare global {
                     },
                     {
                         table: 'sys_dictionary'
+                        id: '04ea0db7b9db4791ab2d06f6b4e30aca'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_config'
+                            element: 'operations_manager_escalation_days'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
                         id: '0539bf6b597f4f208789769ff5436052'
                         key: {
                             name: 'x_2108496_hr_acces_auth_detail'
@@ -650,6 +680,15 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '06c241bc22bc40b79e8e6eca0fcc8a0d'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_access'
+                            element: 'form_1768_mapping'
+                            value: 'fpps_wtts'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '06f1ac923f38431a9b91f6d2d726f1cf'
                         key: {
                             name: 'sn_hr_core_case_payroll'
@@ -708,6 +747,28 @@ declare global {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2108496_hr_acces_snapshot_correction_reason'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '07fe1d0a99ef465cb28ac45e8f7b8517'
+                        key: {
+                            sys_ui_section: {
+                                id: 'dc24ee5f0aef42cf9d317f27f7a01164'
+                                key: {
+                                    name: 'x_2108496_hr_acces_rob_config'
+                                    caption: 'Task Timing and Renewal Oversight'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.begin_split'
+                            position: '0'
                         }
                     },
                     {
@@ -1297,6 +1358,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: '16e986ff590c4dd795e3e1904ca60841'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: 'cf30695decf94abea5be20dfd96efa35'
@@ -1633,6 +1695,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '1ee74d0c1cef4fbe81f64795b0b1f04b'
+                        key: {
+                            sys_ui_section: {
+                                id: 'cf30695decf94abea5be20dfd96efa35'
+                                key: {
+                                    name: 'x_2108496_hr_acces_rob_access'
+                                    caption: 'External Systems'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.split'
+                            position: '3'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '1f18ccae05c645d48d99a41f79498e6b'
                         key: {
@@ -1685,6 +1769,15 @@ declare global {
                         key: {
                             name: 'x_2108496_hr_acces_rob_auth'
                             element: 'supervisor_signature_complete'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '21cdc83fc4954c2bbc6836e83bee1942'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_config'
+                            element: 'exception_task_due_days'
                             language: 'en'
                         }
                     },
@@ -1764,6 +1857,28 @@ declare global {
                             }
                             element: '.end_split'
                             position: '7'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '244c88de82a64b19b5a2fcdbe81364ce'
+                        key: {
+                            sys_ui_section: {
+                                id: 'dc24ee5f0aef42cf9d317f27f7a01164'
+                                key: {
+                                    name: 'x_2108496_hr_acces_rob_config'
+                                    caption: 'Task Timing and Renewal Oversight'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.end_split'
+                            position: '6'
                         }
                     },
                     {
@@ -1891,6 +2006,15 @@ declare global {
                                     name: 'x_2108496_hr_acces.rob_admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '292822c6f84a4dd1aa9912e0fb213f21'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_config'
+                            element: 'renewal_notification_copy_group'
+                            language: 'en'
                         }
                     },
                     {
@@ -2129,6 +2253,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '30a7c5109cd44faa95aec66654742b21'
+                        deleted: true
                         key: {
                             name: 'x_2108496_hr_acces_auth_detail'
                             element: 'status'
@@ -2309,6 +2434,15 @@ declare global {
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2108496_hr_acces_exception_review_required'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '366339f44f8b4b60907d7c9aa8c826d7'
+                        key: {
+                            name: 'x_2108496_hr_acces_auth_detail'
+                            element: 'status'
+                            value: 'lapsed'
                         }
                     },
                     {
@@ -2705,6 +2839,14 @@ declare global {
                             }
                             element: '.begin_split'
                             position: '0'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '40c4a8b7d3bb47329ea65f4494cb0fbd'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_config'
+                            element: 'renewal_notification_copy_group'
                         }
                     },
                     {
@@ -3314,6 +3456,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '51524ace9518400aa2674d53a26a7430'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_access'
+                            element: 'form_1768_mapping'
+                            value: 'wpc'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '51a88fe0938b4325822dee3f5c0344af'
                         key: {
@@ -3430,6 +3581,39 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_form_section'
+                        id: '54b42b14b1d041758223e17178c0979c'
+                        key: {
+                            sys_ui_form: {
+                                id: '9d66810bd7ab46c3a23c1a1d0da49e6b'
+                                key: {
+                                    name: 'x_2108496_hr_acces_rob_config'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            sys_ui_section: {
+                                id: 'dc24ee5f0aef42cf9d317f27f7a01164'
+                                key: {
+                                    name: 'x_2108496_hr_acces_rob_config'
+                                    caption: 'Task Timing and Renewal Oversight'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '5535e61198ba4ba5bc934b8a32d6c289'
                         key: {
@@ -3457,6 +3641,15 @@ declare global {
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2108496_hr_acces_position_title'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '557c42e8e9e14934bdaf0208d0971858'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_access'
+                            element: 'form_1768_mapping'
+                            language: 'en'
                         }
                     },
                     {
@@ -3523,6 +3716,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '57524e24bd1b4bd5bfffcdb96f618522'
+                        deleted: true
                         key: {
                             name: 'x_2108496_hr_acces_auth_detail'
                             element: 'status'
@@ -4678,6 +4872,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice_set'
+                        id: '77e5b1fb200b4907a792c21afeb81345'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_access'
+                            element: 'form_1768_mapping'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '78867ca80308402c8c0339f4b811f648'
                         key: {
@@ -4693,6 +4895,28 @@ declare global {
                             name: 'x_2108496_hr_acces_rob_access'
                             element: 'default_fulfillment_team'
                             value: 'analytics'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '797dd14353564810a32dd22ef5ef01fb'
+                        key: {
+                            sys_ui_section: {
+                                id: 'dc24ee5f0aef42cf9d317f27f7a01164'
+                                key: {
+                                    name: 'x_2108496_hr_acces_rob_config'
+                                    caption: 'Task Timing and Renewal Oversight'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'operations_manager_task_due_days'
+                            position: '1'
                         }
                     },
                     {
@@ -4726,6 +4950,15 @@ declare global {
                         key: {
                             name: 'x_2108496_hr_acces_rob_access'
                             element: 'default_assignment_group'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '7c085f33689f4ce6ae2b1bfb0e3fea6a'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_access'
+                            element: 'form_1768_mapping'
+                            value: 'human_capital_reports'
                         }
                     },
                     {
@@ -4986,6 +5219,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '81dfb0937d0a4a37a0691eba03edd16c'
+                        key: {
+                            sys_ui_section: {
+                                id: 'cf30695decf94abea5be20dfd96efa35'
+                                key: {
+                                    name: 'x_2108496_hr_acces_rob_access'
+                                    caption: 'External Systems'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'form_1768_mapping'
+                            position: '2'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '82108851b74a4f1bb34878619f56130b'
                         key: {
@@ -5221,6 +5476,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '87fa9db2057547b6b3990059c206cd84'
+                        key: {
+                            sys_ui_section: {
+                                id: 'dc24ee5f0aef42cf9d317f27f7a01164'
+                                key: {
+                                    name: 'x_2108496_hr_acces_rob_config'
+                                    caption: 'Task Timing and Renewal Oversight'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'renewal_notification_copy_group'
+                            position: '5'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '87fe0aacd6b24ea596305670eedf4c93'
                         key: {
@@ -5409,6 +5686,28 @@ declare global {
                             name: 'x_2108496_hr_acces_rob_auth'
                             element: 'reminder_cycle_identifier'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '8d803533ae6e451982db32d65919cbb4'
+                        key: {
+                            sys_ui_section: {
+                                id: 'cf30695decf94abea5be20dfd96efa35'
+                                key: {
+                                    name: 'x_2108496_hr_acces_rob_access'
+                                    caption: 'External Systems'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'external_target_system'
+                            position: '4'
                         }
                     },
                     {
@@ -5659,6 +5958,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '957ca498818845c2af9959b4a499f0ee'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_config'
+                            element: 'exception_task_due_days'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '95ece77e60ed4258b8f83f394490b25c'
                         key: {
@@ -5891,6 +6198,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '9d21354376704625a194fd34eef3d10a'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_access'
+                            element: 'form_1768_mapping'
+                        }
+                    },
+                    {
                         table: 'sys_ui_form'
                         id: '9d66810bd7ab46c3a23c1a1d0da49e6b'
                         key: {
@@ -6001,6 +6316,28 @@ declare global {
                         key: {
                             name: 'x_2108496_hr_acces_auth_detail'
                             element: 'number'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '9eac55210e1d40d4a4d8664f797c0dea'
+                        key: {
+                            sys_ui_section: {
+                                id: 'dc24ee5f0aef42cf9d317f27f7a01164'
+                                key: {
+                                    name: 'x_2108496_hr_acces_rob_config'
+                                    caption: 'Task Timing and Renewal Oversight'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'exception_task_due_days'
+                            position: '4'
                         }
                     },
                     {
@@ -6996,6 +7333,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: 'be643db0d9f543919a6dc720ce7e4597'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_config'
+                            element: 'operations_manager_task_due_days'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: 'be7e306297fb4e54a963953c2c055ae0'
                         key: {
@@ -7091,6 +7437,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: 'bffb9efe8e664771a491c7a0181d2eaa'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: 'cf30695decf94abea5be20dfd96efa35'
@@ -7130,6 +7477,15 @@ declare global {
                             name: 'x_2108496_hr_acces_rob_access'
                             element: 'notes'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'c2178c1afce24bd699c29ff4c1c543fc'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_access'
+                            element: 'form_1768_mapping'
+                            value: 'eopf'
                         }
                     },
                     {
@@ -7523,6 +7879,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: 'cb76897cbc6c4201919465b493070064'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_config'
+                            element: 'operations_manager_task_due_days'
+                        }
+                    },
+                    {
                         table: 'sys_index'
                         id: 'cb89588f0a294ab2bcf50e3cfbaaec67'
                         key: {
@@ -7801,6 +8165,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: 'd2ed675c38624417900d13ada91d36a3'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: 'cf30695decf94abea5be20dfd96efa35'
@@ -8100,6 +8465,21 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_section'
+                        id: 'dc24ee5f0aef42cf9d317f27f7a01164'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_config'
+                            caption: 'Task Timing and Renewal Oversight'
+                            view: {
+                                id: 'Default view'
+                                key: {
+                                    name: 'NULL'
+                                }
+                            }
+                            sys_domain: 'global'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: 'dc5023cfc52e4a56a4e8c19203e40870'
                         key: {
@@ -8277,6 +8657,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'e49925b255a94a109891ed9a5a49ba90'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_access'
+                            element: 'form_1768_mapping'
+                            value: 'oas_datamart'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'e4a32f7fd9564eb9b66d8567f4558ede'
                         key: {
@@ -8337,6 +8726,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'e62aaae05dd243e8b112bd5d53716d74'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_access'
+                            element: 'form_1768_mapping'
+                            value: 'usa_staffing'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'e63dbeb0ac934737a4ee00500cecca8b'
                         key: {
@@ -8384,6 +8782,28 @@ declare global {
                         id: 'e7ff9629bd3449a8b18a8a417c835d69'
                         key: {
                             name: 'x_2108496_hr_acces_rob_config'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'e827e6425347456c93c284ba5b0769e6'
+                        key: {
+                            sys_ui_section: {
+                                id: 'dc24ee5f0aef42cf9d317f27f7a01164'
+                                key: {
+                                    name: 'x_2108496_hr_acces_rob_config'
+                                    caption: 'Task Timing and Renewal Oversight'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.split'
+                            position: '3'
                         }
                     },
                     {
@@ -8984,6 +9404,46 @@ declare global {
                             }
                             element: 'audit_notes'
                             position: '0'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'fae28fe2cb784c0996b3ee042a571d86'
+                        key: {
+                            name: 'x_2108496_hr_acces_auth_detail'
+                            element: 'status'
+                            value: 'pending_fulfillment'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'fb1fe5a9d35c41d081062e51a9ef806c'
+                        key: {
+                            sys_ui_section: {
+                                id: 'dc24ee5f0aef42cf9d317f27f7a01164'
+                                key: {
+                                    name: 'x_2108496_hr_acces_rob_config'
+                                    caption: 'Task Timing and Renewal Oversight'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'operations_manager_escalation_days'
+                            position: '2'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'fb59279e9a63489e8b173d07813d3ae2'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_config'
+                            element: 'operations_manager_escalation_days'
+                            language: 'en'
                         }
                     },
                     {

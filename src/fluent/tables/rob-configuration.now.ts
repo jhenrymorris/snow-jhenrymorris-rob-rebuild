@@ -93,6 +93,25 @@ export const x_2108496_hr_acces_rob_config = Table({
             useReferenceQualifier: 'simple',
             cascadeRule: 'clear',
         }),
+        operations_manager_task_due_days: IntegerColumn({
+            label: 'Operations Manager Task Due Days',
+            min: 0,
+        }),
+        exception_task_due_days: IntegerColumn({
+            label: 'Exception Task Due Days',
+            min: 0,
+        }),
+        operations_manager_escalation_days: IntegerColumn({
+            label: 'Operations Manager Escalation Timing (Days)',
+            min: 0,
+        }),
+        renewal_notification_copy_group: ReferenceColumn({
+            label: 'Renewal Notification Copy Group',
+            referenceTable: 'sys_user_group',
+            referenceQual: 'active=true',
+            useReferenceQualifier: 'advanced',
+            cascadeRule: 'clear',
+        }),
         notes: MultiLineTextColumn({
             label: 'Notes',
             maxLength: 4000,

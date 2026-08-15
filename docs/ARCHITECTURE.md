@@ -86,8 +86,8 @@ Stores requestable access items and routing flags. Starter records:
 - FPPS / WTTS
 - eOPF
 - USA Staffing
-- Human Capital Data Access
-- Report Access
+- OAS/DataMart
+- Human Capital Reports
 - Workforce Profile Charts
 
 For Workforce Profile Charts:

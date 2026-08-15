@@ -25,7 +25,7 @@ export const robAuthorizationAccessDetailsListControl = Record({
     data: {
         name: 'x_2108496_hr_acces_rob_auth',
         related_list: 'x_2108496_hr_acces_auth_detail.rob_authorization_form',
-        omit_new_button: false,
+        omit_new_button: true,
         omit_edit_button: true,
     },
 })

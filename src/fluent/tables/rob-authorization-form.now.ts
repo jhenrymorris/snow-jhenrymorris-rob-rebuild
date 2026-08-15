@@ -83,10 +83,10 @@ export const x_2108496_hr_acces_rob_auth = Table({
             label: 'Employment Type',
             mandatory: true,
             choices: {
-                federal_employee: 'Federal Employee',
+                federal_employee: 'Federal',
                 contractor: 'Contractor',
                 ipa: 'IPA',
-                auditor_investigator: 'Auditor / Investigator',
+                auditor_investigator: 'Auditor/Investigator',
                 other_time_limited: 'Other Time-Limited Access',
             },
         }),

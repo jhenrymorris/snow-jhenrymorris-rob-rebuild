@@ -51,7 +51,7 @@ export const x_2108496_hr_acces_rob_access = Table({
                 hr_system: 'HR System',
                 human_capital_data: 'Human Capital Data',
                 report: 'Report',
-                workforce_profile_chart: 'Workforce Profile Chart',
+                workforce_profile_chart: 'Analytics',
             },
         }),
         description: MultiLineTextColumn({
@@ -111,12 +111,24 @@ export const x_2108496_hr_acces_rob_access = Table({
             label: 'External Target System',
             mandatory: true,
             choices: {
-                oas: 'OAS',
+                oas: 'OAS / Workforce Profile Charts',
                 fpps_wtts: 'FPPS / WTTS',
                 eopf: 'eOPF',
                 usa_staffing: 'USA Staffing',
                 other: 'Other',
                 not_applicable: 'Not Applicable',
+            },
+        }),
+        form_1768_mapping: ChoiceColumn({
+            label: 'Form 1768 Mapping',
+            mandatory: true,
+            choices: {
+                fpps_wtts: 'FPPS/WTTS',
+                eopf: 'eOPF',
+                usa_staffing: 'USA Staffing',
+                oas_datamart: 'OAS/DataMart',
+                human_capital_reports: 'Human Capital Reports',
+                wpc: 'WPC',
             },
         }),
         sort_order: IntegerColumn({

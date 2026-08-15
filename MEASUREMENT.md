@@ -726,3 +726,109 @@ Not exposed by session/tool — no estimate recorded.
 - Status: PASS
 - Remaining blockers: None for R0. R1/R2 implementation and broader runtime/security validation remain intentionally deferred.
 - Follow-up package: R1 — Data Foundation / Configuration Remediation
+
+## R1 — Data Foundation / Configuration Remediation
+
+### Start Record
+
+- Measurement shape: one-pass
+- Start timestamp: 2026-08-15 10:52:23 EDT (first instrumented timestamp; package work began with the baseline-inspection turn earlier in this same active session)
+- Active session 1 start: 2026-08-15 10:52:23 EDT (instrumented)
+- Branch / worktree: remediation/01-data-foundation-alignment
+- Starting commit: c98a5448222664bfb92189e668536f28f6a81ca6
+- Validated baseline tag: r0-australia-prd-baseline
+- Target instance: Australia PDI (`rob-pdi`)
+- Applicable PRD requirements: Wave 1 governed data foundation; April 2026 NSF Form 1768; WPC and IPA electronic extensions; configuration/state model
+- Applicable appendix/test IDs: Appendices B, C, D, E, J, K, L, M, N, O; W1-01 through W1-19
+- Planned artifact classes: Class A schema/reference/form/test metadata; Class C environment groups and unresolved business values; Class D deferred Wave 2+ capabilities
+- Planned package scope: Remediate the four-table/five-role Wave 1 foundation, six stable access-item records, configuration schema/version, Form 1768 mapping metadata, and Access Detail state choices without implementing Wave 2 or later behavior.
+- Expected count-assertion at close-out:
+  - Custom business tables: 4
+  - Scoped functional roles: 5
+  - Active ROB Configuration records: 1
+  - Initial active Access Item Reference records: 6
+  - Workforce Profile Charts records: 1
+  - OAS/DataMart records: 1
+  - Human Capital Reports records: 1
+  - Custom request/task/signature/approval/PDF/auth tables: 0
+  - Unexpected existing generated-key changes: 0
+
+### Blocked Close-Out Record
+
+- End timestamp: 2026-08-15 11:24:00 EDT
+- Calendar span: less than one calendar day (2026-08-15)
+- Instrumented active-session duration: 31 minutes 37 seconds; package work began slightly before instrumentation, so no unexposed duration was estimated.
+- One-pass narrative: validated the R0 baseline and authoritative PDF; inventoried source and PDI data; implemented and tested the R1 schema/reference remediation; passed normal and frozen-key builds; performed two normal installs; queried installed governed records; stopped when installed table data did not reconcile.
+- Reviewer interventions: 0
+- Silent defects: 0 recorded
+- Visible defects: 3 — one validation-regex false positive corrected; initially mandatory timing dictionaries rejected blank seed values and were corrected to configuration-controlled blank-capable fields; installed-data reconciliation failed under both `apply_once` and normal `update` metadata.
+- Source evidence: R1 source test PASS (9/9); exact four-table/five-role architecture preserved; stable seed IDs and codes preserved.
+- Build evidence: normal build PASS with the unchanged five-warning TS11 baseline.
+- Frozen-key evidence: PASS with no conflicts; 460 generated-key additions and 0 removals, all reviewed as new/deleted metadata markers; unexpected existing-key changes: 0.
+- Install evidence: two normal installs PASS; no `--reinstall`; rollback contexts `11474b18c3728b1068a35f2b2b0131ff` and `39c80bdcc3728b1068a35f2b2b013153`.
+- Runtime evidence: FAIL/BLOCKED. Exactly one active configuration remains at `2024.04`; all six installed access-item records retain blank Form 1768 Mapping values. Schema fields are present and exactly five scoped roles were observed.
+- Data/migration evidence: all seven governed sys_ids remained stable and no duplicate seed was created. No Authorized Access Detail state migration was performed because the pre-edit PDI count was zero. An approved in-place transformed/manual migration is required.
+- Count assertion result: FAIL because required installed values are not reconciled; source count assertions pass.
+- Token accounting: unavailable from the session; not estimated.
+- Status: BLOCKED
+- Blocker: SDK 4.8.1 installation did not update pre-existing governed table-data rows. R1 cannot be committed or tagged until a reference-preserving in-place migration and Australia UI/runtime verification pass.
+- Follow-up: Complete the R1 migration and verification. Do not begin R2.
+
+### R1.1 — Existing Governed Record Reconciliation
+
+- Measurement shape: `turn-by-turn` continuation of the one-pass R1 source/install session; do not pool its turn counts with one-pass package averages.
+- Active session 2: 2026-08-15 11:56:36 EDT through 2026-08-15 12:19:57 EDT (23 minutes 21 seconds).
+- Combined instrumented R1 active-session duration: 54 minutes 58 seconds.
+- Combined R1 calendar span: 2026-08-15 10:52:23 EDT through 2026-08-15 12:19:57 EDT (1 hour 27 minutes 34 seconds).
+- Excluded inactive/reviewer-authentication span: 32 minutes 36 seconds between the blocked close-out and R1.1 start.
+
+| Turn | Timestamp / Sequence | Category | Activity / Result | Requirement or Artifact | Notes |
+|---:|---|---|---|---|---|
+| 1 | R1.1 start | `environment` | Re-read governance, confirmed source remained correct, inventoried the seven installed records and all catalog reference fields/counts, then paused for PDI authentication. | R1.1 before-state and access | No instance write occurred. |
+| 2 | R1.1 reconciliation/close-out | `method-rework` | Used the documented Class B manual path after SDK seed updates proved ineffective; reconciled records in place, removed two generated privilege side effects, proved a zero-write repeat, completed runtime/UI/reference/count checks, and reran build gates. | Seven governed records and R1 close-out | No source migration artifact or `--reinstall`. |
+
+- Reviewer interventions: 1 — reviewer signed into the in-app Australia PDI after the authenticated UI was required for the controlled manual correction.
+- Additional silent defects: 0.
+- Additional visible defects: 1 — the scoped background execution automatically generated broad `GlideRecord.setValue` and `GlideRecord.update` API privileges. Both were identified and deleted by exact sys_id; direct post-delete UI checks returned `Record not found`.
+- Total recorded R1 visible defects: 4. Total recorded R1 silent defects: 0.
+- Reconciliation method: Class B controlled manual in-place script in the application scope with rollback recording enabled. It validated one active configuration, six active access items, every target sys_id, and every stable code before writing. It contained no insert/delete path.
+- First execution evidence: script history `7f741798c3368b1068a35f2b2b013193`; rollback context `f3741798c3368b1068a35f2b2b013193` (`BAK0001929`); six access records updated, nine field changes. Configuration `2024.04` to `2026.04` was saved immediately beforehand through the standard record form.
+- Idempotency evidence: second identical execution history `40e49b1cc3368b1068a35f2b2b01310c`; `recordsUpdated: 0`, `fieldChanges: 0`, `changes: []`.
+
+| Record | sys_id | Stable code | Before | After | Changed |
+|---|---|---|---|---|---|
+| ROB Configuration | `5a2f47bb7a7b4054a1cda69422fffbaf` | n/a | `2024.04` | `2026.04` | Yes |
+| FPPS/WTTS | `183e8d6e80fd4825bc0d0cb6b051facc` | `FPPS_WTTS` | name `FPPS / WTTS`; mapping blank | name `FPPS/WTTS`; mapping `fpps_wtts` | Yes |
+| eOPF | `2f65b6a0129c49b98f1fca2b54d1e74f` | `EOPF` | mapping blank | mapping `eopf` | Yes |
+| USA Staffing | `888b607ff5564df1b0f202346e83dbfb` | `USA_STAFFING` | mapping blank | mapping `usa_staffing` | Yes |
+| OAS/DataMart | `52f1f7b193a143fdafbebac07a15c763` | `HC_DATA` | name `Human Capital Data Access`; mapping blank | name `OAS/DataMart`; mapping `oas_datamart` | Yes |
+| Human Capital Reports | `088251b291f84df1a551e46128c4057e` | `REPORT_ACCESS` | name `Report Access`; mapping blank | name `Human Capital Reports`; mapping `human_capital_reports` | Yes |
+| Workforce Profile Charts | `dc96577f31514e57a137b265f3c07d78` | `WORKFORCE_PROFILE_CHARTS` | mapping blank | mapping `wpc`; Analytics/OM/ARM/OAS values retained | Yes |
+
+- Duplicate evidence before/after: one active configuration and six active access items both before and after; zero new configuration/access-item records.
+- Reference evidence before/after: FPPS/WTTS, eOPF, and USA Staffing each remain referenced by two Payroll HR cases; OAS/DataMart and WPC each remain referenced by four Workforce Administration HR cases; Human Capital Reports has zero current HR case references; all six have zero Authorized Access Detail references. The same original sys_ids resolve after migration and no broken references were observed.
+- Historical evidence: two existing Draft Authorization Forms remain unchanged with blank Form Version; no historical authorization or Access Detail record was rewritten.
+- Runtime/UI evidence: exact six display names and mappings; WPC Analytics/OM/ARM/OAS; Authorization Form numbering, Business Justification label, blank/read-only Draft Form Version, ten approved authorization states, and related-list New/Edit omission; eight approved disabled Access Detail states.
+- R1 source test: PASS, 9/9.
+- Normal build: PASS with exactly the five pre-existing TS11 warnings.
+- Frozen-key build: PASS with the same warnings and no conflicts.
+- Generated keys: 460 reviewed R1 additions, 0 removals, 0 unexpected existing-key changes.
+- R1.1 deployment: not applicable; no source-controlled migration metadata changed, so no meaningless deployment was run. Prior normal R1 installations remain the install evidence.
+- Count assertion:
+  - Custom business tables: expected 4; actual 4.
+  - Scoped functional roles: expected 5; actual 5.
+  - Active ROB Configuration: expected 1; actual 1.
+  - Current Accepted Form Version: expected `2026.04`; actual `2026.04`.
+  - Active Access Item References: expected 6; actual 6.
+  - Populated Form 1768 Mapping values: expected 6; actual 6.
+  - Duplicate access items: expected 0; actual 0.
+  - Changed existing sys_ids: expected 0; actual 0.
+  - Broken references: expected 0; actual 0.
+  - Custom request tables: expected 0; actual 0.
+  - Custom task tables: expected 0; actual 0.
+  - Custom signature/approval/PDF/auth tables: expected 0; actual 0.
+  - Unexpected generated-key changes: expected 0; actual 0.
+- Count assertion result: PASS.
+- Token accounting: Not exposed by session/tool — no estimate recorded.
+- R1 status: PASS.
+- Recommended next package: R2 — Australia HRSD Intake / Runtime Remediation. Do not begin without explicit approval.

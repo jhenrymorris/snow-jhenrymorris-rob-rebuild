@@ -100,12 +100,12 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 | Step | SDK artifact | Test reference | Status |
 |---|---|---|---|
 | Step 21 — Application roles | `src/fluent/roles/rob-roles.now.ts` | TM-71 | Implemented |
-| Step 22 — ROB Configuration | `src/fluent/tables/rob-configuration.now.ts`; `src/fluent/records/default-rob-configuration.now.ts` | TM-62 | Implemented |
-| Step 23 — ROB Access Item Reference | `src/fluent/tables/rob-access-item-reference.now.ts`; `src/fluent/records/starter-rob-access-items.now.ts` | TM-63, TM-64 | Implemented |
+| Step 22 — ROB Configuration | `src/fluent/tables/rob-configuration.now.ts`; `src/fluent/records/default-rob-configuration.now.ts` | TM-62; Appendix M W1-09–W1-14 | R1 PASS — source/schema installed and stable active record reconciled to `2026.04` |
+| Step 23 — ROB Access Item Reference | `src/fluent/tables/rob-access-item-reference.now.ts`; `src/fluent/records/starter-rob-access-items.now.ts` | TM-63, TM-64; Appendix M W1-15–W1-16 | R1 PASS — six stable identities reconciled and runtime verified |
 
 ## Wave 1 Batch 2 Implementation
 
 | Step | SDK artifact | Test reference | Status |
 |---|---|---|---|
-| Step 24 — ROB Authorization Form | `src/fluent/tables/rob-authorization-form.now.ts` | TM-65, TM-66, TM-72 | Implemented |
-| Step 25 — Authorized Access Detail | `src/fluent/tables/authorized-access-detail.now.ts` | TM-67, TM-68 | Implemented |
+| Step 24 — ROB Authorization Form | `src/fluent/tables/rob-authorization-form.now.ts` | TM-65, TM-66, TM-72 | R1 PASS — form, numbering, labels, read-only version, states, and related list verified in Australia |
+| Step 25 — Authorized Access Detail | `src/fluent/tables/authorized-access-detail.now.ts` | TM-67, TM-68; Appendix M W1-05–W1-08, W1-18 | R1 PASS — exact managed lifecycle choices and zero broken references verified in Australia |

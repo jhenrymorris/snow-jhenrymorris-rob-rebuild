@@ -39,13 +39,48 @@ Do not hard-code group sys_ids in source.
 
 ### Wave 1 Batch 1 Configuration
 
+#### R1 installed-data reconciliation procedure and result
+
+The Australia PDI already contains the seven stable Wave 1 seed/configuration
+records. SDK 4.8.1 normal installs applied the R1 schema but did not update those
+existing table-data rows. Do not delete and recreate them and do not use
+`--reinstall`.
+
+R1.1 completed an approved controlled in-place update while retaining these
+sys_ids and all incoming references:
+
+- `5a2f47bb7a7b4054a1cda69422fffbaf`: set Current Accepted Form Version to
+  `2026.04`; retain `2027-09-30` only as an explicitly synthetic PDI value.
+- `183e8d6e80fd4825bc0d0cb6b051facc`: set Form 1768 Mapping to `fpps_wtts`.
+- `2f65b6a0129c49b98f1fca2b54d1e74f`: set Form 1768 Mapping to `eopf`.
+- `888b607ff5564df1b0f202346e83dbfb`: set Form 1768 Mapping to `usa_staffing`.
+- `52f1f7b193a143fdafbebac07a15c763`: retain code `HC_DATA`, rename in place to
+  OAS/DataMart, and set Form 1768 Mapping to `oas_datamart`.
+- `088251b291f84df1a551e46128c4057e`: retain code `REPORT_ACCESS`, rename in
+  place to Human Capital Reports, and set Form 1768 Mapping to
+  `human_capital_reports`.
+- `dc96577f31514e57a137b265f3c07d78`: retain the WPC record identity, set its
+  approved Analytics/OM/ARM/OAS-WPC metadata, and set Form 1768 Mapping to
+  `wpc`.
+
+The first rollback-recorded execution changed only incorrect values. The second
+identical execution made zero record or field updates. Existing HR case
+references still resolve to the same sys_ids, no duplicate configuration or
+access-item records were created, and no historical Authorization Form was
+changed. SDK 4.8.1 seed metadata alone did not reconcile these installed rows;
+future upgrades must retain this Class B in-place verification step.
+
 - [ ] Assign the five `x_2108496_hr_acces` application roles to the appropriate synthetic users or groups.
 - [ ] Confirm `x_2108496_hr_acces.rob_admin` is reserved for ROB application administrators.
 - [ ] Open the active record on `x_2108496_hr_acces_rob_config` and populate the Staffing, Analytics, Operations Manager escalation, and Exception Review group references.
 - [ ] Confirm exactly one ROB Configuration record is active.
-- [ ] After R1 remediation, confirm the active configuration uses the approved **NSF Form 1768 — April 2026** identifier, the approved annual recertification date, grace window, reminders, and lapse-notification setting. Do not treat the current `2024.04` seed as accepted.
-- [ ] Review the six records on `x_2108496_hr_acces_rob_access` for active state, category, routing flags, external systems, and sort order.
-- [ ] Confirm Workforce Profile Charts uses ARM for provisioning and OAS as the target platform.
+- [ ] Confirm the active configuration uses `2026.04` for **NSF Form 1768 — April 2026**, the approved grace window, reminders, and lapse-notification setting.
+- [ ] Do not approve `2027-09-30` as agency policy from source alone. It is a synthetic PDI seed; obtain the CFG-MAP-01 business value before production use.
+- [ ] Obtain approved values for OM Task Due Days, Exception Task Due Days, and OM Escalation Timing (CFG-MAP-02 through CFG-MAP-04). Do not invent defaults.
+- [ ] Populate the optional Renewal Notification Copy Group only when approved.
+- [ ] Review exactly six active records on `x_2108496_hr_acces_rob_access` for stable code, governed name, category/owner, routing, external systems, sort order, and Form 1768 Mapping.
+- [ ] Confirm Workforce Profile Charts is logically Analytics-owned, requires OM, uses ARM for provisioning, targets OAS / Workforce Profile Charts, and maps to `WPC`.
+- [ ] Confirm OAS/DataMart retains code `HC_DATA` and Human Capital Reports retains code `REPORT_ACCESS`; do not replace either record or change installed references.
 
 The source intentionally leaves all assignment-group references blank. Populate them only after the synthetic PDI groups are available; do not copy group sys_ids into Fluent source.
 
@@ -64,6 +99,7 @@ The source intentionally leaves all assignment-group references blank. Populate 
 - [ ] Confirm lifecycle processing reads the active ROB Configuration and populates Form Version before Employee Signature begins.
 - [ ] Confirm the installed Australia dictionary read-only option permits lifecycle and server-side processing to populate Form Version while preventing normal form editing.
 - [ ] Validate that the Business Justification label is visible on the normal HR Access ROB Authorization application form; record App Home Preview behavior separately because preview rendering is not the acceptance surface.
+- [ ] Confirm Authorized Access Detail exposes only Pending Authorization, Pending Fulfillment, Active, Denied, Superseded, Revoked, Expired, and Lapsed; `requested` and `authorized` must not remain active choices.
 
 ## Authorized Access Detail related-list control
 

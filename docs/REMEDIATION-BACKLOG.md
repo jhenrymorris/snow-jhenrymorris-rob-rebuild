@@ -5,15 +5,15 @@ R0 records implementation deltas only. It does not change application metadata o
 
 ## R1 — Data Foundation / Configuration Remediation
 
-- Update the current accepted Form 1768 version from `2024.04` to the approved April 2026 identifier (`src/fluent/records/default-rob-configuration.now.ts`).
-- Reconcile `Human Capital Data Access` to `OAS/DataMart` and `Report Access` to `Human Capital Reports`, preserving or migrating existing references rather than creating duplicates (`src/fluent/records/starter-rob-access-items.now.ts`).
-- Add explicit Form 1768 mapping metadata to ROB Access Item Reference (`src/fluent/tables/rob-access-item-reference.now.ts`; Appendix B).
-- Add ROB Configuration controls for OM task due days, Exception task due days, OM escalation timing, and optional renewal-notification copy configuration (`src/fluent/tables/rob-configuration.now.ts`).
-- Resolve Authorized Access Detail lifecycle choices to the approved state model (`src/fluent/tables/authorized-access-detail.now.ts`; Appendix D).
-- Verify WPC metadata: Analytics ownership, OM required, provisioning/action system ARM, and OAS/WPC target (`src/fluent/records/starter-rob-access-items.now.ts`).
-- Verify IPA as a first-class Employment Type and confirm its exact business/configuration-controlled Access End Date policy (`src/fluent/tables/rob-authorization-form.now.ts`, `src/fluent/tables/rob-case-security-fields.now.ts`, catalog policy/variable files).
-- Verify exactly four custom business tables and exactly five scoped functional roles.
-- Run normal build, frozen-key build, normal install, and separated runtime/security tests.
+- [x] Update the current accepted Form 1768 version from `2024.04` to the approved April 2026 identifier (`src/fluent/records/default-rob-configuration.now.ts`).
+- [x] Reconcile `Human Capital Data Access` to `OAS/DataMart` and `Report Access` to `Human Capital Reports`, preserving or migrating existing references rather than creating duplicates (`src/fluent/records/starter-rob-access-items.now.ts`).
+- [x] Add explicit Form 1768 mapping metadata to ROB Access Item Reference (`src/fluent/tables/rob-access-item-reference.now.ts`; Appendix B).
+- [x] Add ROB Configuration controls for OM task due days, Exception task due days, OM escalation timing, and optional renewal-notification copy configuration (`src/fluent/tables/rob-configuration.now.ts`).
+- [x] Resolve Authorized Access Detail lifecycle choices to the approved state model (`src/fluent/tables/authorized-access-detail.now.ts`; Appendix D).
+- [x] Verify WPC metadata: Analytics ownership, OM required, provisioning/action system ARM, and OAS/WPC target (`src/fluent/records/starter-rob-access-items.now.ts`).
+- [x] Verify IPA as a first-class Employment Type and preserve its exact business/configuration-controlled Access End Date policy as unresolved (`src/fluent/tables/rob-authorization-form.now.ts`, `src/fluent/tables/rob-case-security-fields.now.ts`, catalog policy/variable files).
+- [x] Verify exactly four custom business tables and exactly five scoped functional roles.
+- [x] Run normal build, frozen-key build, normal install, and separated runtime verification.
 
 ## R2 — Australia HRSD Intake / Runtime Remediation
 

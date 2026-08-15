@@ -22,7 +22,7 @@
   },
   "accessItems": [
     {
-      "name": "FPPS / WTTS",
+      "name": "FPPS/WTTS",
       "code": "FPPS_WTTS",
       "category": "hr_system",
       "sortOrder": 100
@@ -40,13 +40,13 @@
       "sortOrder": 300
     },
     {
-      "name": "Human Capital Data Access",
+      "name": "OAS/DataMart",
       "code": "HC_DATA",
       "category": "human_capital_data",
       "sortOrder": 400
     },
     {
-      "name": "Report Access",
+      "name": "Human Capital Reports",
       "code": "REPORT_ACCESS",
       "category": "report",
       "sortOrder": 500

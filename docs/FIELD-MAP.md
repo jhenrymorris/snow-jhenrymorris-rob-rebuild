@@ -96,6 +96,8 @@ subclass-owned rather than inherited from `sn_hr_core_case`:
 | Renewal Notification Copy Configuration | String/reference | No | Optional; R1 configuration remediation |
 | Notes | Multiline text | No | Administrative |
 
+R1 adds the three timing dictionaries as blank-capable fields without numeric defaults because CFG-MAP-02 through CFG-MAP-04 remain business-owned decisions. They are logically required before the later runtime capability that consumes them may proceed, but are not dictionary-mandatory while no approved value exists. The source value `2027-09-30` is retained only as a clearly labeled synthetic PDI seed; CFG-MAP-01 remains unresolved and the value is not approved agency policy.
+
 ## 4. ROB Access Item Reference
 
 | Field | Type | Notes |
@@ -114,19 +116,21 @@ subclass-owned rather than inherited from `sn_hr_core_case`:
 | External Provisioning System | Choice | ARM, FPPS/WTTS, eOPF, USA Staffing, Other, N/A |
 | External Target System | Choice | OAS, FPPS/WTTS, eOPF, USA Staffing, Other, N/A |
 | Sort Order | Integer | Employee experience |
-| Form 1768 Mapping Metadata | Structured fields/references | Exact R1 design follows Appendix B |
+| Form 1768 Mapping | Choice `form_1768_mapping` | Controlled document key: FPPS/WTTS, eOPF, USA Staffing, OAS/DataMart, Human Capital Reports, or WPC |
 | Notes | Multiline text | Administrative |
 
 Starter values:
 
-| Access item | Category | Staffing | Analytics | OM | Provisioning | Target |
-|---|---|---:|---:|---:|---|---|
-| FPPS / WTTS | HR System | Yes | No | No | FPPS / WTTS | FPPS / WTTS |
-| eOPF | HR System | Yes | No | No | eOPF | eOPF |
-| USA Staffing | HR System | Yes | No | No | USA Staffing | USA Staffing |
-| OAS/DataMart | Human Capital Data | No | Yes | No | N/A | OAS/DataMart |
-| Human Capital Reports | Report | No | Yes | No | N/A | Human Capital Reports |
-| Workforce Profile Charts | Workforce Profile Chart | No | Yes | Yes | ARM | OAS |
+| Access item | Physical category / logical owner | Staffing | Analytics | OM | Provisioning | Target | Form mapping |
+|---|---|---:|---:|---:|---|---|---|
+| FPPS/WTTS | HR System / Staffing | Yes | No | No | FPPS/WTTS | FPPS/WTTS | FPPS/WTTS |
+| eOPF | HR System / Staffing | Yes | No | No | eOPF | eOPF | eOPF |
+| USA Staffing | HR System / Staffing | Yes | No | No | USA Staffing | USA Staffing | USA Staffing |
+| OAS/DataMart | Human Capital Data / Analytics | No | Yes | No | N/A | N/A | OAS/DataMart |
+| Human Capital Reports | Report / Analytics | No | Yes | No | N/A | N/A | Human Capital Reports |
+| Workforce Profile Charts | Stable physical value `workforce_profile_chart`, logical label/owner Analytics | No | Yes | Yes | ARM | OAS / Workforce Profile Charts | WPC |
+
+R1 preserves the existing access-item codes and generated record identities. `HC_DATA` and `REPORT_ACCESS` remain the stable codes for the renamed OAS/DataMart and Human Capital Reports records so installed case references are not broken.
 
 ## 5. ROB Authorization Form
 
