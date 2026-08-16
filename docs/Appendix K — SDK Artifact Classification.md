@@ -1554,3 +1554,17 @@ Unsupported or deferred requirements shall remain explicit rather than being rep
 The development objective is therefore not “everything in code,” but:
 
 > **every artifact implemented through the most supportable ServiceNow mechanism, with every supported artifact reproducible, traceable, tested, and governed.**
+
+## R4.2.2 Classification
+
+Post-signature final rendering is **Class C — manual/environment capability
+configuration** in the Australia PDI. The proof used a non-published native HTML
+template and Document Template Script tokens owned by the Document Templates
+scope. A one-time same-scope UI action invoked the native generator and was
+deleted after evidence capture. No `.now.ts` artifact, generated key, SDK build,
+or deployment applies to this capability spike.
+
+Production orchestration may be Class B or C depending on the agency-approved
+HR Core/Document Templates artifact. It must preserve the same readiness,
+evidence, denial, association, and privilege contracts; this classification does
+not authorize a source-first substitute or a custom signature/PDF table.

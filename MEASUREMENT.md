@@ -1183,3 +1183,66 @@ Not exposed by session/tool — no estimate recorded.
 - Token accounting: not exposed by the session; not estimated.
 - Status: R4-PDI-01 — BLOCKED; platform-owner design decision required.
 - Production lifecycle implementation and Wave 5: not started.
+
+### R4.2.2 — Post-Signature Final Form 1768 Proof
+
+- Measurement shape: `turn-by-turn` continuation of R4; one capability/runtime
+  and documentation close-out turn after the user supplied the approved
+  post-signature architecture decision.
+- Active session start: 2026-08-16 06:10:51 EDT.
+- Active session end: 2026-08-16 06:58:34 EDT.
+- Calendar span / active duration: 47 minutes 43 seconds.
+- Reviewer intervention: the platform owner/user approved post-signature
+  finalization with native ServiceNow Sign retained as authoritative evidence.
+- Silent defects: 0.
+- Visible defects: 3, all resolved. A Global caller attempt to the restricted
+  Document Templates Script Include was denied and created no RCA/privilege; the
+  proof was rerun through a temporary same-scope UI action. The PDF font dropped
+  checked-box glyphs, so the template was changed to explicit `[X]`/`[ ]`
+  markers. The source editor appended rather than replaced the prior body; the
+  persisted body exposed the duplication, it was cleared explicitly, and the
+  accepted PDF was regenerated cleanly.
+- Native evidence: HRC0001034; execution
+  `454f0b68c3fe4f1068a35f2b2b0131bc`; employee DOCT0001011 / Amos Linnan /
+  `2026-08-16 03:28:28`; supervisor DOCT0001012 / Rebekah Lindboe / APPROVED /
+  `2026-08-16 03:29:14`.
+- Accepted final PDF: `b3d35f28c3328f1068a35f2b2b01319e`,
+  `application/pdf`, 3,890 bytes, attached to DOCT0001012 at
+  `2026-08-16 10:47:36` UTC. Visual/runtime reread confirmed two clean pages,
+  Final Authorization Date `2026-08-16`, employee/supervisor Date/Time fidelity,
+  and distinct Generated Date/Time `2026-08-16 03:47:35`.
+- Retention/integrity evidence: earlier post-signature attachments
+  `78631368c3328f1068a35f2b2b01316d` and
+  `4f93d76cc3fe4f1068a35f2b2b0131c4` remain distinct; native tasks/execution are
+  unchanged. Refused DOCT0001008 has zero attachments.
+- Security/cleanup evidence: HR template restored exactly; signing template
+  `edit`; finalization template `draft`; published/bound temporary templates 0;
+  temporary roles 0; one-time UI action and unused helper deleted; recent RCA 0;
+  broad HR Access privileges 0 (only two approved table reads remain).
+- Lifecycle guard: production Authorization Forms 0; production Authorized
+  Access Details 0; R2-AGENCY-01 remains OPEN.
+- Source/build/deployment: application source unchanged; SDK build and deploy
+  not applicable; generated-key diff expected/actual 0.
+- Count assertion:
+  - Successful employee signatures: expected at least 1; actual 1.
+  - Successful supervisor APPROVE + signatures: expected at least 1; actual 1.
+  - Persisted employee timestamps: expected at least 1; actual 1.
+  - Persisted supervisor timestamps: expected at least 1; actual 1.
+  - Post-signature final PDFs: expected at least 1; actual 3 (accepted clean = 1).
+  - Final Authorization Date matches supervisor signature date: expected yes;
+    actual yes.
+  - Employee timestamp metadata matches persisted evidence: expected yes; actual yes.
+  - Supervisor timestamp metadata matches persisted evidence: expected yes; actual yes.
+  - Independent retained final PDFs: expected at least 2; actual 3.
+  - Approved final PDFs generated after denial: expected 0; actual 0.
+  - Broad cross-scope privileges remaining: expected 0; actual 0.
+  - Temporary roles remaining: expected 0; actual 0.
+  - Temporary templates published/bound to intake: expected 0; actual 0.
+  - Production Authorization Forms created: expected 0; actual 0.
+  - Production Access Details created: expected 0; actual 0.
+  - R2-AGENCY-01 closed: expected no; actual no.
+  - Unexpected generated-key changes: expected 0; actual 0.
+- Count assertion result: PASS.
+- Token accounting: not exposed by the session; not estimated.
+- Status: `R4-PDI-01 — RESOLVED; R4 unblocked for production lifecycle
+  implementation`. R4 production lifecycle and Wave 5 have not started.

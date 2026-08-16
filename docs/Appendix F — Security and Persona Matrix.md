@@ -1765,3 +1765,19 @@ Compliance personnel receive controlled read-only access to current and historic
 ROB Administrators manage application configuration and governed records without replacing native approval or signature evidence.
 
 Signed Forms, authorization records, system-managed lifecycle fields, and historical evidence shall remain inaccessible or non-editable to unrelated or unauthorized users, including through direct attachment paths and reports.
+
+## R4 Post-Signature Finalization Security Contract
+
+- only the intended employee completes the employee native signing task;
+- only the intended supervisor completes the APPROVED/refused supervisor task;
+- finalization requires committed employee completion, supervisor APPROVED,
+  supervisor completion, and both non-null timestamps;
+- refused/incomplete executions cannot produce an approved final PDF;
+- final rendering operates inside the Document Templates/HR Core-owned boundary;
+- the HR Access scope receives no generic document, attachment, GlideRecord, or
+  cross-scope API privilege;
+- the generated PDF does not overwrite the native signing execution or prior
+  completed attachments.
+
+R4.2.2 satisfied this contract with synthetic users and left zero new RCA,
+broad privilege, temporary role, published test template, or intake binding.

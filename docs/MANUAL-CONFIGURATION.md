@@ -16,12 +16,13 @@
 
 R4 capability status (2026-08-15): current Document Templates, ServiceNow Sign,
 E-Signature, Digital Signature API/component, and PDF Generation Utilities are
-installed. This is availability evidence only. `R4-POLICY-01` is RESOLVED by
-the approved Appendix B rendering contract. `R4-PDI-01` remains OPEN and must
-validate a controlled native template end to end, including both signers,
+installed. This was availability evidence only. `R4-POLICY-01` is RESOLVED by
+the approved Appendix B rendering contract. At that checkpoint `R4-PDI-01` was
+OPEN and still had to validate a controlled native template end to end, including both signers,
 separate native supervisor approval, exact signed content, final attachment
 destination, immutability, and historical retention. No broad cross-scope
-privilege is approved for this work.
+privilege was approved for that work. The R4.2.2 section below records the
+subsequent resolved capability result.
 
 R4.2 runtime evidence: an HR Core-owned HTML template successfully created an
 ordered employee/supervisor Document Task chain and a system-generated PDF on
@@ -57,6 +58,25 @@ Cleanup requirement is satisfied: Analytics template
 temporary capability templates remain non-published for evidence only; broad
 privilege `ef33bcacc3facb1068a35f2b2b01312a` was deleted; temporary roles are
 zero. Do not publish or bind these evidence templates to normal intake.
+
+R4.2.2 resolved the remaining timestamp/final-date capability gate. Synthetic
+case HRC0001034 used execution `454f0b68c3fe4f1068a35f2b2b0131bc`, employee
+task DOCT0001011, and APPROVED supervisor task DOCT0001012. A Document
+Templates-owned draft template reread the committed task evidence and generated
+clean final PDF `b3d35f28c3328f1068a35f2b2b01319e` on DOCT0001012. The PDF renders employee
+time `2026-08-16 03:28:28`, supervisor time `2026-08-16 03:29:14`, Final
+Authorization Date `2026-08-16`, and distinct generation time
+`2026-08-16 03:47:35`.
+
+The capability configuration is Class C. Two non-published evidence templates
+and the two template-script helpers needed to reproduce the final rendering are
+retained; none is bound to normal intake. The one-time same-scope generation UI
+action was deleted. The Analytics HR template was restored exactly, the signing
+template is `edit`, the finalization template is `draft`, temporary roles are
+zero, and no new caller-access or cross-scope privilege remains. Production R4
+must replace the synthetic constants with governed Authorization Form fields and
+invoke finalization only after the readiness gate; do not reuse the capability
+records as production orchestration.
 
 ## 2. Synthetic Users and Groups
 

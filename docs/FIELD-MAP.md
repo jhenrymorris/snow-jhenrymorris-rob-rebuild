@@ -284,4 +284,16 @@ The separate **Electronic Authorization Metadata** section renders only:
 
 These values shall not be intermingled with printed-form fields, and no
 implementation/debug metadata may be rendered. This policy resolves
-`R4-POLICY-01`; runtime capability remains open under `R4-PDI-01`.
+`R4-POLICY-01`. R4.2.2 resolved the PDI capability gate by rendering these
+values after signing from committed native Document Task evidence. Production
+Authorization Form persistence/orchestration remains R4 implementation work.
+
+Post-signature binding contract:
+
+- Employee Signature Date/Time = committed employee Document Task `closed_at`.
+- Supervisor Signature Date/Time = committed APPROVED supervisor Document Task
+  `closed_at`.
+- Final Authorization Date = local calendar date of Supervisor Signature
+  Date/Time.
+- Signed PDF Generated Date/Time = the distinct final-generation event.
+- Native signing tasks/execution remain the authoritative signature evidence.

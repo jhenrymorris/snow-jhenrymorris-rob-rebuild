@@ -44,23 +44,26 @@ R0 records implementation deltas only. It does not change application metadata o
   IPA and WPC are distinct electronic-only extensions; ARM remains provisioning
   metadata; approved system-managed values render only in a separate Electronic
   Authorization Metadata section.
-- [ ] **R4-PDI-01 — Prove current Document Templates / ServiceNow Sign runtime.**
+- [x] **R4-PDI-01 — Prove current Document Templates / ServiceNow Sign runtime.**
   Configure a controlled ROB template in the authorized native boundary and
-  prove custom Authorization Form data, repeated Access Details, employee and
-  supervisor signing with separate supervisor approval, signer/timestamp
+  prove employee and supervisor signing with explicit supervisor approval, signer/timestamp
   evidence, final PDF generation, exact attachment destination, immutability,
-  and historical retention. Status: BLOCKED — platform-owner design decision
-  required. R4.2.1 proved a combined explicit supervisor approval/signature,
+  and historical retention. Status: RESOLVED for native capability. R4.2.1 proved a combined explicit supervisor approval/signature,
   executed refusal, two independently retained signed PDFs, and clean April
   2026 Form 1768 rendering with IPA/WPC and separate metadata. The blocker is
   exact signed-date integrity: native `${Date}` resolves before signing and is
-  not bound to the persisted Supervisor Signature Date; eventual employee and
-  supervisor timestamps likewise cannot be inserted into already signed
-  content. Final Authorization Form attachment/security proof also remains a
-  production-lifecycle acceptance item.
+  not bound to the persisted Supervisor Signature Date. R4.2.2 resolved that
+  limitation through post-signature finalization: committed employee/supervisor
+  task evidence is reread after APPROVED + signature, a distinct completed PDF
+  is generated, Final Authorization Date equals the supervisor signature date,
+  denial cannot finalize, and prior artifacts remain. Production lifecycle
+  orchestration and Authorization Form-only attachment/security remain open;
+  R4 itself is not yet PASS.
 - [ ] Implement New, Amendment, and Renewal lifecycle only after the two R4
   gates above are resolved; keep Reuse free of new forms/details and preserve
-  its original employee evidence/PDF.
+  its original employee evidence/PDF. This item includes production
+  Authorization Form data binding, repeated Access Detail rendering, and final
+  Authorization Form-only attachment/security validation.
 - [ ] `R2-AGENCY-01` remains OPEN; no R4 fixture or capability evidence closes it.
 
 ## R0 Boundary

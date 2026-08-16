@@ -173,3 +173,33 @@ Build evidence is package-specific and must remain distinct from install, runtim
   applicable; generated-key diff empty.
 - Result: `R4-PDI-01` BLOCKED; platform-owner design decision required. R4
   remains BLOCKED and Wave 5 has not started.
+
+### R4.2.2 post-signature final Form 1768 proof
+
+- Approved design: native ServiceNow Sign remains authoritative; the completed
+  Form 1768 is rendered only after committed employee signature and supervisor
+  APPROVED + signature evidence exists.
+- Synthetic chain: HRC0001034; execution
+  `454f0b68c3fe4f1068a35f2b2b0131bc`; employee DOCT0001011 (Amos Linnan,
+  `2026-08-16 03:28:28`); supervisor DOCT0001012 (Rebekah Lindboe,
+  `2026-08-16 03:29:14`).
+- Accepted output: PDF `b3d35f28c3328f1068a35f2b2b01319e`,
+  `application/pdf`, attached to DOCT0001012. It renders employee and supervisor
+  Date/Time from committed evidence, Final Authorization Date `2026-08-16`, and
+  separate Generated Date/Time `2026-08-16 03:47:35`.
+- History/integrity: earlier final PDFs
+  `78631368c3328f1068a35f2b2b01316d` and
+  `4f93d76cc3fe4f1068a35f2b2b0131c4` retain distinct sys_ids; native signing
+  tasks/execution were unchanged; refused DOCT0001008 has zero attachments.
+- Visual correction: unsupported checked-box glyphs were replaced with explicit
+  `[X]` / `[ ]` markers. A source-editor append was detected and corrected;
+  final PDF is clean, two pages, and contains no sample/duplicate body.
+- Security/cleanup: exact HR template restored; signing/final templates are
+  non-published; one-time Document Templates-owned generation UI action and one
+  unused helper were deleted; no RCA, broad privilege, temporary role, normal
+  intake binding, Authorization Form, or Access Detail remains/was created.
+- Source/build/deployment: documentation/measurement only; SDK build and deploy
+  not applicable; generated-key diff empty.
+- Result: `R4-PDI-01` RESOLVED; R4 is unblocked for production lifecycle
+  implementation. R4 is not PASS, `R2-AGENCY-01` remains OPEN, and Wave 5 has
+  not started.

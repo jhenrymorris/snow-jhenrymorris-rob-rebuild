@@ -258,3 +258,23 @@ Open policy mappings `DEC-MAP-01`, `DEC-MAP-02`, and `DEC-MAP-03` are not
 inferred. An unresolved material-change or annual-renewal disposition returns a
 controlled Exception. Synthetic snapshot fixtures do not resolve
 `R2-AGENCY-01`.
+
+## 11. R4 Post-Signature Finalization
+
+The native ServiceNow Sign execution is the authoritative evidence for employee
+identity/time, supervisor identity, the explicit supervisor outcome, supervisor
+signature time, and refusal. After the employee stage and an APPROVED supervisor
+stage are both committed, an HR Core/Document Templates-owned finalization step
+rereads that native evidence and generates a distinct completed Form 1768 PDF.
+
+The final PDF is derived output, not a replacement for the native signing
+execution. `Final Authorization Date` is the local calendar date of the persisted
+Supervisor Signature Date/Time. Employee Signature Date/Time, Supervisor
+Signature Date/Time, and PDF Generated Date/Time remain distinct. A refused or
+incomplete execution is not eligible for finalization. Production R4 must attach
+the final PDF only to the governed Authorization Form; the R4.2.2 capability
+proof used the completed supervisor Document Task as its synthetic native source.
+
+Australia runtime proof established this mechanism inside the Document Templates
+execution boundary without an HR Access cross-scope write/API privilege. It does
+not close `R2-AGENCY-01` and does not itself implement the production lifecycle.

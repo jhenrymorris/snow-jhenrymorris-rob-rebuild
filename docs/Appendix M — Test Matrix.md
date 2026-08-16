@@ -2430,3 +2430,21 @@ The HR Access ROB Authorization product shall be accepted only through **traceab
 Testing shall prove not only that employees can request access, sign, receive approval, and reach fulfillment, but also that the system prevents unauthorized submission, premature fulfillment, duplicate compliance records, invalid state transitions, inappropriate reuse, unauthorized document access, privacy violations, and incorrect lapse/deprovisioning handling.
 
 No wave or release shall be considered complete solely because code builds or metadata installs successfully.
+
+## R4.2.2 Capability Evidence
+
+| Test | Result | Evidence |
+|---|---|---|
+| Post-signature readiness | PASS | DOCT0001011 and APPROVED DOCT0001012 both closed with non-null committed timestamps before final generation. |
+| Final Authorization Date | PASS | Rendered `2026-08-16` equals DATE(supervisor display timestamp `2026-08-16 03:29:14`). |
+| Employee/Supervisor metadata | PASS | Rendered `2026-08-16 03:28:28` / `2026-08-16 03:29:14` match committed native task display values. |
+| Generated Date/Time separation | PASS | Rendered `2026-08-16 03:47:35`, later and distinct from both signing events. |
+| Final PDF/association | PASS | `b3d35f28c3328f1068a35f2b2b01319e`, `application/pdf`, on DOCT0001012. |
+| History/integrity | PASS | Three independent final attachment sys_ids retained; signer tasks/execution unchanged. |
+| Denial guard | PASS | Refused DOCT0001008 has zero attachments/final PDFs. |
+| Form fidelity | PASS | Two-page clean April 2026 rendering; explicit selections; IPA/WPC labeled electronic extensions; ARM absent; metadata separate; no duplicate/sample body. |
+| Cleanup/security | PASS | No new RCA/broad privilege, role, published test template, intake binding, Authorization Form, or Access Detail. |
+
+These are native capability tests, not production lifecycle acceptance and not
+evidence that `R2-AGENCY-01` is closed. They resolve `R4-PDI-01` and unblock R4
+production lifecycle implementation; they do not mark R4 PASS.

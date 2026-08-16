@@ -1716,3 +1716,16 @@ ROB Access Item Reference defines what may be requested, how it routes, and how 
 ROB Configuration controls product behavior without hard-coding agency-specific operational values.
 
 The data model shall preserve complete historical authorization evidence while preventing duplicate, orphaned, prematurely created, or manually fabricated compliance records.
+
+## R4 Post-Signature Evidence Relationship
+
+Native ServiceNow Sign Document Tasks/execution are the authoritative signature
+and supervisor-outcome records. The completed Form 1768 PDF is a separate,
+post-signature derived artifact generated from those committed records. It must
+not replace or mutate the signing execution. Production associates the accepted
+final PDF only with the governed ROB Authorization Form; the R4.2.2 capability
+proof used a native supervisor Document Task as the synthetic association target.
+
+Incomplete/refused executions produce no approved final PDF. Amendment and
+Renewal must create new independently retained artifacts rather than regenerate
+an existing attachment in place.

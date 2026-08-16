@@ -125,3 +125,19 @@ deleted, and verified absent. Only the two approved read privileges remain.
 `R4-PDI-01` is therefore **BLOCKED**, not resolved. Production lifecycle source
 must not start until the platform owner approves and proves the signed-date and
 electronic signature-timestamp rendering mechanism.
+
+### R4.2.2 post-signature finalization proof
+
+The approved post-signature design resolved the remaining PDI capability gap:
+
+| Capability | Runtime evidence | Classification / result |
+|---|---|---|
+| Persisted evidence reread | DOCT0001011 closed by Amos Linnan at `2026-08-16 03:28:28`; DOCT0001012 closed APPROVED by Rebekah Lindboe at `2026-08-16 03:29:14`; execution `454f0b68c3fe4f1068a35f2b2b0131bc` remained unchanged | Class C; PASS |
+| Post-signature rendering | Draft Document Task template `e4f117e8c3fe4f1068a35f2b2b013147` used controlled template-script tokens in the Document Templates boundary | Class C; PASS; no HR Access write/API privilege |
+| Timestamp/date fidelity | Final PDF renders employee/supervisor Date/Time from committed tasks, Final Authorization Date `2026-08-16` from the supervisor local calendar date, and separate Generated Date/Time `2026-08-16 03:47:35` | PASS |
+| Final PDF/association | Clean PDF `b3d35f28c3328f1068a35f2b2b01319e`, `application/pdf`, is attached to native supervisor task DOCT0001012 | PASS for capability; production target remains Authorization Form |
+| Retention/integrity | Three post-signature attachments have distinct sys_ids; prior artifacts and signer tasks remained unchanged; refused DOCT0001008 has zero attachments | PASS |
+| Security/cleanup | Intended participants were preserved; no broad privilege or RCA was created; one-time same-scope proof action removed; templates non-published and intake unbound | PASS |
+
+`R4-PDI-01` is **RESOLVED** for native capability. R4 is unblocked for production
+lifecycle implementation, but R4 is not complete and `R2-AGENCY-01` remains OPEN.

@@ -1560,3 +1560,20 @@ Classification: Class C for the proven native configuration mechanics and
 Class D for the unresolved signed-date/timestamp rendering boundary.
 `R4-PDI-01` is BLOCKED pending a platform-owner-supported mechanism. This does
 not close `R2-AGENCY-01` and does not authorize production lifecycle work.
+
+# 91. R4.2.2 Post-Signature Finalization Result — 2026-08-16
+
+| ID | Result | Evidence |
+|---|---|---|
+| DOC-07–10 | PASS | HRC0001034 ordered employee DOCT0001011 then APPROVED supervisor DOCT0001012; committed identities/timestamps persisted and execution remained intact. |
+| DOC-11 | PASS | Prior refused DOCT0001008 remains state `7` and has zero attachments; approved finalization did not run. |
+| DOC-12 | PASS | Final attachments `78631368c3328f1068a35f2b2b01316d`, `4f93d76cc3fe4f1068a35f2b2b0131c4`, and `b3d35f28c3328f1068a35f2b2b01319e` retain independent sys_ids. |
+| DOC-13 | PASS | Accepted clean PDF `b3d35f28c3328f1068a35f2b2b01319e` is `application/pdf` and associated with native supervisor task DOCT0001012. |
+| DOC-14 | PASS | Native tasks/execution and earlier artifacts were unchanged; finalization created a new attachment with creation audit metadata. |
+| DOC-15 | PASS | Employee/supervisor Date/Time match committed task display values; Final Authorization Date equals the supervisor local date; Generated Date/Time is distinct. |
+| DOC-16 | NOT APPLICABLE | Class C capability configuration; documentation only, no source/deployment artifact. |
+
+All R4-PDI-01 native capability criteria are satisfied. Templates are
+non-published and unbound; the one-time generation action and unused helper were
+deleted; no RCA or broad privilege remains. `R4-PDI-01` is RESOLVED and R4 is
+unblocked for production lifecycle implementation. `R2-AGENCY-01` remains OPEN.

@@ -1122,3 +1122,25 @@ employee and supervisor task timestamps likewise exist only after their signing
 events. Consequently DOC-MAP-01 remains mandatory but is not runtime-satisfied
 by this PDI mechanism. `R4-PDI-01` is BLOCKED pending a platform-owner-supported
 signed-content mechanism; the approved mapping itself is unchanged.
+
+## R4.2.2 Post-Signature Rendering Evidence
+
+The approved post-signature finalization design satisfies DOC-MAP-01 without
+reusing the preparation-time `${Date}` token. Native employee and supervisor
+Document Tasks remain the authoritative signing evidence. After the supervisor
+task commits APPROVED + signature, a Document Templates-owned finalization step
+rereads both `closed_at` values and renders a new completed PDF.
+
+Accepted synthetic PDF `b3d35f28c3328f1068a35f2b2b01319e` renders:
+
+- Employee Signature Date/Time: `2026-08-16 03:28:28`;
+- Supervisor Signature Date/Time: `2026-08-16 03:29:14`;
+- Final Authorization Date: `2026-08-16`;
+- Generated Date/Time: `2026-08-16 03:47:35`.
+
+The three values are distinct and the final date exactly equals the local
+calendar date of the persisted supervisor timestamp. The clean April 2026 body
+uses explicit `[X]`/`[ ]` access markers, identifies IPA and WPC as electronic
+extensions, excludes ARM from requested access, and separates Electronic
+Authorization Metadata. `R4-PDI-01` is resolved for native capability; final
+Authorization Form placement remains production R4 work.
