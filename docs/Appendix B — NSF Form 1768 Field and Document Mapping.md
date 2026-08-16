@@ -1107,3 +1107,18 @@ The HR Access ROB Authorization product shall implement NSF Form 1768 as a **ver
 ServiceNow shall use the employee's request and authoritative profile information to prepare the authorization; apply controlled New, Reuse, Amendment, or Renewal logic; capture employee and supervisor electronic evidence; generate the final signed artifact; and preserve the exact authorization used for each access request.
 
 The electronic implementation may add approved audit metadata needed by the product, but it shall not silently alter the policy meaning or invent mappings for elements not defined by the governing form.
+
+## R4.2.1 Rendering Evidence and Remaining Blocker
+
+Controlled Australia rendering produced clean PDF
+`668b256cc33a0f1068a35f2b2b0131f6` with the recognizable April 2026 structure,
+IPA and Workforce Profile Charts clearly marked as electronic extensions, ARM
+excluded from requested access, and a separate Electronic Authorization
+Metadata section. Sample-template contamination was removed.
+
+The native `${Date}` token is evaluated when the document body is prepared; it
+is not bound to the later persisted supervisor signature timestamp. Actual
+employee and supervisor task timestamps likewise exist only after their signing
+events. Consequently DOC-MAP-01 remains mandatory but is not runtime-satisfied
+by this PDI mechanism. `R4-PDI-01` is BLOCKED pending a platform-owner-supported
+signed-content mechanism; the approved mapping itself is unchanged.

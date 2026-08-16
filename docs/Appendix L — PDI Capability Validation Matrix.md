@@ -1543,3 +1543,20 @@ template bindings were removed. No broad privilege remains.
 
 Conclusion: `R4-PDI-01` remains OPEN. The PDI proves partial native capability,
 not the complete governed ROB path.
+
+## R4.2.1 Remaining Runtime Result — 2026-08-15
+
+| ID | Result | Evidence / limitation |
+|---|---|---|
+| DOC-07 | PASS | Employee DOCT0001005 and supervisor DOCT0001006 completed in order with persisted identities/timestamps. |
+| DOC-09 | PASS for combined native stage | DOCT0001006 signed the same persisted body containing explicit `Supervisor Authorization Decision: APPROVED`; no custom/separate approval table was needed. |
+| DOC-10 | PASS | DOCT0001008 persisted supervisor refusal state `7`, identity, timestamp, and reason; no final PDF was created. |
+| DOC-12 | PASS | V1 `0876f06cc33ecb1068a35f2b2b01313a` and V2 `00f925a4c33a0f1068a35f2b2b0131a2` remain independent and unchanged with separate signer histories. |
+| DOC-13 | PARTIAL PASS | Clean April 2026 PDF `668b256cc33a0f1068a35f2b2b0131f6` rendered IPA, WPC, signatures, and separate metadata without ARM or sample contamination. `${Date}` was prepared before signing and is not bound to the persisted supervisor timestamp. |
+| DOC-14 | PASS for native history control | Completed tasks are read-only and separate executions retain separate PDFs. Native regeneration states that it replaces the current attachment and is not approved for historical authorization versions. |
+| DOC-15 | PASS after cleanup | Temporary binding removed; four templates non-published; temporary roles zero; broad privilege `ef33bcacc3facb1068a35f2b2b01312a` deleted and verified absent. |
+
+Classification: Class C for the proven native configuration mechanics and
+Class D for the unresolved signed-date/timestamp rendering boundary.
+`R4-PDI-01` is BLOCKED pending a platform-owner-supported mechanism. This does
+not close `R2-AGENCY-01` and does not authorize production lifecycle work.

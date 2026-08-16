@@ -102,3 +102,26 @@ as audit evidence. No broad cross-scope privilege remains.
 
 `R4-PDI-01` therefore remains OPEN. Classification is Class C for the manual
 PDI capability proof and Class D for the still-unproven complete ROB runtime.
+
+### R4.2.1 remaining runtime and Form 1768 proof
+
+The continuation proved the remaining native mechanics except for the approved
+signed-date/content contract:
+
+| Capability | Runtime evidence | Classification / result |
+|---|---|---|
+| Explicit supervisor decision plus signature | DOCT0001006 persisted `Supervisor Authorization Decision: APPROVED` in the signed body and was closed/signed by Rebekah Lindboe at `2026-08-16 03:04:45`; PDF `00f925a4c33a0f1068a35f2b2b0131a2` was generated | Class C; PASS as one combined native approval/attestation stage. The generic task `approval` field remains `not requested`; no separate approval table is required for this proof. |
+| Executed refusal | DOCT0001008 closed in refused state `7` by Rebekah Lindboe at `2026-08-16 03:07:57`, with persisted decline reason; no PDF was created for HRC0001032 | Class C; PASS |
+| Independent signed history | V1 PDF `0876f06cc33ecb1068a35f2b2b01313a` and V2 PDF `00f925a4c33a0f1068a35f2b2b0131a2` remain distinct, independently associated, and unchanged since creation; signer tasks remain intact | Class C; PASS for independent native history. Native regeneration explicitly replaces the current attachment and must not be used for governed amendment/renewal history. |
+| Clean Form 1768 rendering | HRC0001033 / DOCT0001009-1010 produced PDF `668b256cc33a0f1068a35f2b2b0131f6`; April 2026 structure, IPA, WPC, signatures, and the separate Electronic Authorization Metadata section rendered without sample contamination or ARM | Class C; PASS for clean layout/content mechanics |
+| Final Authorization Date and signature-time metadata | `${Date}` resolved when the document body was prepared. The final task body therefore does not bind the printed Date or metadata rows to the later persisted supervisor/employee task timestamps. A different-day execution cannot correct that semantic mismatch. | Class D / BLOCKED; platform-owner-supported signed-content enrichment or an approved alternate native design is required. |
+
+Cleanup restored the Analytics HR case template without a document-template
+binding and returned all four capability templates to non-published `draft` or
+`edit` state. One prohibited `GlideRecord.setValue` Execute privilege created
+during the earlier R4.2 run (`ef33bcacc3facb1068a35f2b2b01312a`) was found,
+deleted, and verified absent. Only the two approved read privileges remain.
+
+`R4-PDI-01` is therefore **BLOCKED**, not resolved. Production lifecycle source
+must not start until the platform owner approves and proves the signed-date and
+electronic signature-timestamp rendering mechanism.

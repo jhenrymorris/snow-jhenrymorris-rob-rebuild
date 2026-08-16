@@ -142,3 +142,34 @@ Build evidence is package-specific and must remain distinct from install, runtim
 - Source/build/deployment: documentation only; build and deployment not
   applicable. Generated-key diff empty.
 - Result: `R4-PDI-01` OPEN; partial native capability only. R4 remains BLOCKED.
+
+### R4.2.1 native approval, refusal, history, and Form 1768 fidelity proof
+
+- Classification: Class C manual/native capability configuration plus Class D
+  blocker; no application source or generated-key change.
+- Explicit approval: HRC0001031, employee DOCT0001005, supervisor DOCT0001006,
+  and PDF `00f925a4c33a0f1068a35f2b2b0131a2`. The signed body contains explicit
+  `APPROVED`; supervisor identity/timestamp persisted.
+- Refusal: HRC0001032, employee DOCT0001007, supervisor DOCT0001008. The
+  supervisor task persisted state `7`, Rebekah Lindboe, timestamp, and decline
+  reason; no final PDF was created.
+- History: V1 `0876f06cc33ecb1068a35f2b2b01313a` and V2
+  `00f925a4c33a0f1068a35f2b2b0131a2` remain independent and unchanged, with
+  separate signer records. Native regeneration is documented as replacing the
+  current attachment and is not an approved history mechanism.
+- Form fidelity: HRC0001033 / DOCT0001009-1010 generated clean April 2026 PDF
+  `668b256cc33a0f1068a35f2b2b0131f6` with IPA/WPC electronic extensions, no
+  ARM requested-access rendering, signatures, and a separate Electronic
+  Authorization Metadata section. No sample-template contamination remained.
+- Blocker: `${Date}` resolves at document preparation rather than from the
+  persisted supervisor signature event; actual employee/supervisor timestamps
+  cannot be inserted into content before those signatures exist. The approved
+  Final Authorization Date / signed-metadata contract is therefore not proven.
+- Security/cleanup: temporary intake binding removed; all four templates
+  non-published; temporary roles 0. Prohibited broad privilege
+  `ef33bcacc3facb1068a35f2b2b01312a` discovered from the prior R4.2 run was
+  deleted and verified absent; only approved read privileges remain.
+- Source/build/deployment: no application source changed; SDK build/deploy not
+  applicable; generated-key diff empty.
+- Result: `R4-PDI-01` BLOCKED; platform-owner design decision required. R4
+  remains BLOCKED and Wave 5 has not started.

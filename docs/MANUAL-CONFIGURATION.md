@@ -39,6 +39,25 @@ body content. Do not promote it. All R4.2 templates are non-published, and the
 Staffing/Analytics HR templates have been restored without a document-template
 binding. `R4-PDI-01` remains OPEN.
 
+R4.2.1 completed explicit approval, refusal, independent-history, and clean
+Form 1768 rendering tests. Approval case HRC0001031 produced PDF
+`00f925a4c33a0f1068a35f2b2b0131a2`; refusal case HRC0001032 persisted
+DOCT0001008 with state `7` and a decline reason and produced no PDF; Form 1768
+case HRC0001033 produced clean PDF `668b256cc33a0f1068a35f2b2b0131f6`.
+V1 `0876f06cc33ecb1068a35f2b2b01313a` and V2 `00f925a4c33a0f1068a35f2b2b0131a2`
+remain independent. However, the native `${Date}` token is resolved before
+signing and is not bound to the persisted supervisor signature timestamp;
+likewise the eventual employee/supervisor timestamps cannot be rendered into
+the signed body before they exist. `R4-PDI-01` is BLOCKED pending a
+platform-owner-supported signed-content mechanism. Do not substitute the
+template-generation date for Final Authorization Date.
+
+Cleanup requirement is satisfied: Analytics template
+`94967a0fc30e4f1068a35f2b2b013152` has no document-template binding; all four
+temporary capability templates remain non-published for evidence only; broad
+privilege `ef33bcacc3facb1068a35f2b2b01312a` was deleted; temporary roles are
+zero. Do not publish or bind these evidence templates to normal intake.
+
 ## 2. Synthetic Users and Groups
 
 Users:

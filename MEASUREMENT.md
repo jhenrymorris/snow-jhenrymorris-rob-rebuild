@@ -1123,3 +1123,63 @@ Not exposed by session/tool — no estimate recorded.
 - Token accounting: not exposed by the session; not estimated.
 - Status: R4-PDI-01 — OPEN; partial native capability only.
 - Wave 5 and full R4 lifecycle implementation: not started.
+
+### R4.2.1 — Remaining Native Runtime and Form Fidelity Proof
+
+- Measurement shape: `turn-by-turn` continuation of R4.
+- Active session start: 2026-08-15 22:31:46 EDT.
+- Active session end: 2026-08-15 23:22:08 EDT.
+- Calendar span / active duration: 50 minutes 22 seconds.
+- Turn classification: one capability/environment and documentation close-out
+  turn.
+- Reviewer interventions: 0 new policy decisions; the user had already
+  authorized this continuation and supplied the approved R4.1 contract.
+- Silent defects: 0.
+- Visible defects: 2. The copied HTML source was initially prepended rather
+  than replaced; the persisted `html_script_body` exposed the cause and the
+  exact source was replaced. Cleanup also discovered prohibited broad
+  `GlideRecord.setValue` Execute privilege
+  `ef33bcacc3facb1068a35f2b2b01312a`, created during the preceding R4.2 run;
+  it was deleted and verified absent.
+- Explicit approval evidence: HRC0001031; DOCT0001005/1006; signed body contains
+  `Supervisor Authorization Decision: APPROVED`; Rebekah identity/timestamp
+  persisted; PDF `00f925a4c33a0f1068a35f2b2b0131a2`.
+- Refusal evidence: HRC0001032; DOCT0001008 persisted state `7`, supervisor,
+  timestamp, and decline reason; final case PDF count 0.
+- Version evidence: V1 `0876f06cc33ecb1068a35f2b2b01313a` and V2
+  `00f925a4c33a0f1068a35f2b2b0131a2` both remain independently associated and
+  unchanged with separate signer tasks.
+- Form evidence: HRC0001033 / DOCT0001009-1010 produced clean PDF
+  `668b256cc33a0f1068a35f2b2b0131f6` (`application/pdf`, 28,323 bytes). Visual
+  review confirmed recognizable April 2026 ordering, IPA and WPC electronic
+  extensions, no ARM requested-access option, signatures, no contamination,
+  and a separate Electronic Authorization Metadata section.
+- Blocker evidence: `${Date}` is replaced during document preparation, before
+  the supervisor task closes. It is not bound to the persisted supervisor
+  signature timestamp, and the eventual signature timestamps cannot be placed
+  into already signed content. A different-day wait would not change that
+  deterministic binding. `R4-PDI-01` is BLOCKED.
+- Security/cleanup evidence: Analytics HR template restored without the test
+  binding; four test templates retained non-published as audit evidence;
+  temporary roles 0; broad privileges remaining 0; approved read privileges
+  unchanged; production Authorization Forms/Access Details created 0/0.
+- Source/build/deployment evidence: documentation and measurement only; no
+  application source or generated-key change; SDK build/deploy not applicable.
+- Count assertion:
+  - Explicit supervisor approval outcomes: expected at least 1; actual 1.
+  - Executed supervisor denials/refusals: expected at least 1; actual 1.
+  - Independently retained signed PDF versions: expected at least 2; actual 2.
+  - Clean approved Form 1768 PDFs: expected at least 1; actual 1, but exact
+    signed-date/timestamp fidelity failed.
+  - Broad cross-scope privileges remaining: expected 0; actual 0.
+  - Temporary roles remaining: expected 0; actual 0.
+  - Temporary templates published/bound to normal intake: expected 0; actual 0.
+  - Production Authorization Forms created: expected 0; actual 0.
+  - Production Access Details created: expected 0; actual 0.
+  - R2-AGENCY-01 closed: expected no; actual no.
+  - Unexpected generated-key changes: expected 0; actual 0.
+- Count assertion result: FAIL because exact Final Authorization Date and
+  signature-time rendering are mandatory R4-PDI-01 criteria.
+- Token accounting: not exposed by the session; not estimated.
+- Status: R4-PDI-01 — BLOCKED; platform-owner design decision required.
+- Production lifecycle implementation and Wave 5: not started.

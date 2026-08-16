@@ -49,12 +49,15 @@ R0 records implementation deltas only. It does not change application metadata o
   prove custom Authorization Form data, repeated Access Details, employee and
   supervisor signing with separate supervisor approval, signer/timestamp
   evidence, final PDF generation, exact attachment destination, immutability,
-  and historical retention. Status: OPEN — PDI/agency capability validation.
-  R4.2 partial proof generated one ordered two-signer native task execution and
-  one system PDF attached to synthetic native case HRC0001026, with persisted
-  signer identities and timestamps. Still open: distinct supervisor approval
-  evidence, executed denial, independent signed-version retention, clean exact
-  Form 1768 rendering, and final Authorization Form attachment/security proof.
+  and historical retention. Status: BLOCKED — platform-owner design decision
+  required. R4.2.1 proved a combined explicit supervisor approval/signature,
+  executed refusal, two independently retained signed PDFs, and clean April
+  2026 Form 1768 rendering with IPA/WPC and separate metadata. The blocker is
+  exact signed-date integrity: native `${Date}` resolves before signing and is
+  not bound to the persisted Supervisor Signature Date; eventual employee and
+  supervisor timestamps likewise cannot be inserted into already signed
+  content. Final Authorization Form attachment/security proof also remains a
+  production-lifecycle acceptance item.
 - [ ] Implement New, Amendment, and Renewal lifecycle only after the two R4
   gates above are resolved; keep Reuse free of new forms/details and preserve
   its original employee evidence/PDF.

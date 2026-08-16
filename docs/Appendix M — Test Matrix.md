@@ -2316,6 +2316,22 @@ Each manual test shall have an exact procedure and expected result.
 
 `R4-PDI-01` remains OPEN. `R2-AGENCY-01` remains OPEN.
 
+## R4.2.1 native capability evidence
+
+| Test | Result | Evidence |
+|---|---|---|
+| Explicit supervisor approval/signature | PASS for combined native stage | DOCT0001006 body contains explicit `APPROVED`; Rebekah identity, timestamp, signature, and PDF persisted. |
+| Executed supervisor refusal | PASS | DOCT0001008 persisted refusal state `7`, identity, timestamp, and reason; no PDF on HRC0001032. |
+| Independent signed history | PASS | V1 `0876f06cc33ecb1068a35f2b2b01313a` and V2 `00f925a4c33a0f1068a35f2b2b0131a2` remain distinct with independent signer evidence. |
+| Clean Form 1768 rendering | PARTIAL PASS | PDF `668b256cc33a0f1068a35f2b2b0131f6` cleanly renders April 2026 structure, IPA/WPC electronic extensions, signatures, and separate metadata; ARM/sample content absent. |
+| Final Authorization Date fidelity | FAIL / BLOCKED | `${Date}` resolves at preparation time, not from the persisted supervisor signature timestamp. |
+| Electronic signature timestamp rendering | FAIL / BLOCKED | Actual employee/supervisor timestamps exist on native tasks only after signing and were not inserted into the already signed body. |
+| Cleanup/security | PASS | Test binding removed, templates non-published, temporary roles zero, broad privilege removed. |
+
+`R4-PDI-01` is BLOCKED; platform-owner design input is required. Production R4
+lifecycle implementation and Wave 5 remain out of scope. `R2-AGENCY-01`
+remains OPEN.
+
 ---
 
 # 47. ATF Suite Structure

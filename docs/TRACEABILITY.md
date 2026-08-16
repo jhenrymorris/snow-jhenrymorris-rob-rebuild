@@ -112,10 +112,10 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 | Requirement | Artifact / dependency | Test | Status |
 |---|---|---|---|
 | Current Document Templates and ServiceNow Sign availability | Native `sn_doc` / `sn_esign` applications | TM-100 | PASS — native HR Core rendering/task/PDF mechanics proven |
-| Employee → supervisor approval → supervisor signature | `R4-PDI-01` controlled native runtime configuration | TM-101 | PARTIAL PASS — ordered employee/supervisor signing persisted; distinct approval evidence remains unproven |
-| Exact April 2026 Form 1768 rendering policy | Appendix B DOC-MAP-01 through DOC-MAP-04 and `docs/FIELD-MAP.md` | TM-102 | POLICY RESOLVED — Date, IPA, WPC, and Electronic Authorization Metadata contract approved; runtime remains blocked by `R4-PDI-01` |
-| Exactly one authoritative immutable signed PDF | `R4-PDI-01` native output and attachment validation | TM-103, TM-108 | PARTIAL PASS — system PDF/native-case association proven; Authorization Form placement, replacement audit, and independent history remain unproven |
-| Native signer isolation and incomplete-chain guard | Ordered native document tasks | TM-105–TM-107 | PARTIAL PASS — isolation and incomplete-chain guards pass; refusal execution remains unproven |
+| Employee → supervisor approval → supervisor signature | `R4-PDI-01` controlled native runtime configuration | TM-101 | PASS for native combined stage — signed body contains explicit APPROVED and Rebekah identity/timestamp persisted; no custom approval table |
+| Exact April 2026 Form 1768 rendering policy | Appendix B DOC-MAP-01 through DOC-MAP-04 and `docs/FIELD-MAP.md` | TM-102 | BLOCKED — clean IPA/WPC/metadata PDF rendered, but Final Authorization Date and signature timestamps are not bound to persisted signing events |
+| Exactly one authoritative immutable signed PDF | `R4-PDI-01` native output and attachment validation | TM-103, TM-108 | PARTIAL PASS — independent V1/V2 native PDFs and signer evidence retained; production Authorization Form-only placement/security remains open |
+| Native signer isolation and incomplete-chain guard | Ordered native document tasks | TM-105–TM-107 | PASS for capability — isolation, incomplete chain, and executed supervisor refusal all proven |
 | Lifecycle implementation and guards | No R4 source artifact created | TM-104 | NOT RUN — capability-first stop condition |
 
 ## Wave 1 Batch 1 Implementation
