@@ -149,6 +149,6 @@ W1-17: Attachment uploaded, downloaded, and removed
 | TM-111 | R4 regression gate | R1 9/9; Wave 2 security 22/22; deployment configuration 16/16; R3 30/30 | PASS |
 | TM-112 | R4 normal/frozen build | SDK 4.8.1; five unchanged TS11 warnings | PASS |
 | TM-113 | R4 normal install | Two normal installs, no `--reinstall`; installed fields/rules verified; broad privilege additions 0 | PASS |
-| TM-114 | Production native template and launch | Stable-name production template count 1; published template has two ordered participants, 26 body mappings, and two signature blocks; initiation rules remain inactive | PARTIAL / BLOCKED â€” R4-RUNTIME-01 |
-| TM-115 | Reuse request-level attestation | No new form/details; exact persisted native evidence and gate contract not approved | BLOCKED â€” R4-DESIGN-01 |
+| TM-114 | Production native template and launch | Stable-name production template count 1; published template has two ordered participants, 26 body mappings, and two signature blocks; initiation rules remain inactive | PARTIAL / BLOCKED — R4-RUNTIME-01 |
+| TM-115 | Reuse request-level attestation | No new form/details; exact persisted native evidence and gate contract not approved | BLOCKED — R4-DESIGN-01 |
 | TM-116 | Controlled New/denial/Amendment/Renewal runtime | Synthetic R3 decision fields persisted, but the three mandatory dictionary-read-only snapshots could not be populated through native UI even with an exact temporary `rob_admin` grant; grant removed; zero forms/details created | NOT RUN / BLOCKED by R2-AGENCY-01 and R4-RUNTIME-01 |

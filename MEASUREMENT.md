@@ -1247,7 +1247,7 @@ Not exposed by session/tool — no estimate recorded.
 - Status: `R4-PDI-01 — RESOLVED; R4 unblocked for production lifecycle
   implementation`. R4 production lifecycle and Wave 5 have not started.
 
-### R4.3 â€” Production Authorization Lifecycle Implementation
+### R4.3 — Production Authorization Lifecycle Implementation
 
 - Measurement shape: `one-pass` implementation/build/install attempt with a
   runtime stop condition; no separate reviewer approval turn occurred.

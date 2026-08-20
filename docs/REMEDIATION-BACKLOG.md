@@ -68,7 +68,7 @@ R0 records implementation deltas only. It does not change application metadata o
 
 ## R4.3 open production dependencies
 
-- [ ] `R4-RUNTIME-01` â€” configure the production native signing and
+- [ ] `R4-RUNTIME-01` — configure the production native signing and
   post-signature finalization path for both HR Case subclasses, attach the final
   PDF only to the Authorization Form, and complete controlled runtime evidence.
   The published production template now exists with two ordered participants,
@@ -77,7 +77,7 @@ R0 records implementation deltas only. It does not change application metadata o
   mandatory dictionary-read-only native-case snapshots while
   `R2-AGENCY-01` is open. Source lifecycle initiation remains disabled until
   this passes.
-- [ ] `R4-DESIGN-01` â€” approve the exact request-level persisted supervisor
+- [ ] `R4-DESIGN-01` — approve the exact request-level persisted supervisor
   attestation and fulfillment-gate contract for Reuse. Reuse must create no new
   Authorization Form or Access Detail and must preserve the original signature
   and PDF.
