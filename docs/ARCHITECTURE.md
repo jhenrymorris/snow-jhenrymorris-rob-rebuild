@@ -307,3 +307,32 @@ that dictionary boundary and was removed. Global script, broad cross-scope, or
 ACL-bypass fixture injection is not an approved substitute for
 `R2-AGENCY-01`. Therefore `R4-RUNTIME-01` remains open and both lifecycle
 initiation rules remain inactive.
+
+## M1 Reuse request-level attestation contract
+
+Reuse is a request-level supervisory attestation against exactly one existing,
+qualifying Active Authorization Form. The native HR Case is the durable
+transaction anchor. Reuse creates no Authorization Form, Authorized Access
+Detail, Form 1768 PDF, or supersession relationship; the existing authorization,
+scope, employee evidence, and signed PDF remain unchanged and authoritative.
+
+Before starting attestation, the lifecycle layer revalidates—but does not
+reselect—the R3 result: the related authorization must still be Active, belong
+to the subject, use the currently accepted form version, remain unexpired and
+unlapsed, and fully cover the requested scope. A failed check invalidates any
+prior request attestation and returns the case for decision re-evaluation or
+Exception handling.
+
+The case stores only audited, system-managed request evidence: the existing R3
+decision and evaluated authorization, current Supervisor snapshot, Reuse
+attestation status, explicit supervisor decision, supervisor signer and
+signature timestamp, native Document Task and execution references, completion
+timestamp, and deterministic context key. APPROVED plus completed native
+attestation makes the request eligible for future fulfillment; denial affects
+only the current request. A changed supervisor, scope, decision, or qualifying
+authorization context invalidates prior evidence. The fulfillment contract is
+frozen for M4 but no fulfillment behavior is implemented here.
+
+`R4-DESIGN-01` is RESOLVED. `R4-RUNTIME-01` remains BLOCKED BY
+`R2-AGENCY-01`; both production lifecycle initiation Business Rules remain
+inactive.

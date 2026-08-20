@@ -1320,3 +1320,83 @@ Not exposed by session/tool — no estimate recorded.
 - Token accounting: not exposed by the session; not estimated.
 - Status: R4 BLOCKED; `R4-RUNTIME-01`, `R4-DESIGN-01`, and `R2-AGENCY-01`
   remain OPEN. No commit/tag and Wave 5 was not started.
+
+## M1 — Authorization Design Closure
+
+### Start Record
+
+- Measurement shape: `one-pass`.
+- First exposed host timestamp: 2026-08-20 17:46:08 EDT. Baseline inspection
+  began earlier in the same continuous session, but no earlier host timestamp
+  was exposed; no estimate is recorded for that uninstrumented interval.
+- Branch: `feature/04-authorization-lifecycle-signatures-pdf`.
+- Starting commit: `eaf75bd`.
+- Objective: resolve `R4-DESIGN-01` only; preserve `R2-AGENCY-01`, keep both
+  lifecycle initiation rules inactive, and create no fulfillment behavior.
+- Artifact classification: Class A source-first fields, deterministic service,
+  tests, and documentation.
+
+### Close-Out
+
+- Final deployment completed: 2026-08-20 18:12:04 EDT.
+- Instrumented calendar/session span: 25 minutes 56 seconds.
+- Active session duration: not separately exposed. The continuous instrumented
+  span is reported without adding an estimate for the earlier uninstrumented
+  baseline interval.
+- Token accounting: not exposed by the session/tool — no estimate recorded.
+
+#### One-pass step narrative
+
+| Step | Activity | Outcome | Classification | Evidence |
+|---:|---|---|---|---|
+| 1 | Baseline and governance inventory | Correct branch, clean tree, required three commits | `clean` | Git baseline gate |
+| 2 | Source implementation | Pure Reuse service plus eight audited fields on each existing native case subclass | `clean` | Source diff |
+| 3 | Focused and regression tests | R1 9/9; Wave 2 security 22/22; deployment configuration 16/16; R3 30/30; R4 52/52 | `clean` | npm test output |
+| 4 | Build gates | Normal and frozen-key PASS; five unchanged TS11 warnings; existing-key removals/mutations 0 | `clean` | SDK build output and generated-key review |
+| 5 | Normal deployment | Initial attempts hit expired OAuth/transport failure; supported OAuth refresh completed, the initial install passed, and the final evidence-guard source was installed normally without reinstall | `environment` | Final rollback context `8386de02c3f6431068a35f2b2b013171` |
+| 6 | Installed metadata verification | 16 read-only/audited fields installed; both lifecycle rules inactive; broad privileges 0 | `clean` | Read-only SDK queries |
+
+#### Reviewer interventions
+
+| # | Point in package | Intervention | Result |
+|---:|---|---|---|
+| 1 | Deployment authentication | User confirmed the ServiceNow session was signed in so the supported SDK OAuth authorization could complete | Existing `rob-pdi` alias refreshed; same normal install path resumed |
+
+#### Defects and environment friction
+
+- Silent product defects found: 1. Final targeted source review found that a
+  persisted `approved` Reuse status could be reused without proving the complete
+  native task, execution, signer, signature-timestamp, and completion evidence.
+  The idempotency guard now requires the complete evidence set and invalidates
+  incomplete or stale authorization-state evidence; the focused R4 suite passed
+  52/52 after adding both regression cases.
+- Visible product defects found: None.
+- Environment friction: the expired OAuth token and sandbox transport each
+  surfaced as visible `fetch failed` installation attempts. No application
+  install occurred on those attempts. OAuth was refreshed through the supported
+  SDK flow; the subsequent normal install passed.
+
+#### Count assertion
+
+- New custom business tables: expected 0; actual 0.
+- New Authorization Forms from Reuse tests: expected 0; actual 0.
+- New Authorized Access Details from Reuse tests: expected 0; actual 0.
+- New Form 1768 PDFs/supersessions from Reuse tests: expected 0/0; actual 0/0.
+- Fulfillment tasks: expected 0; actual 0.
+- Broad cross-scope privileges: expected 0; actual 0; installed inventory is
+  the same two approved read privileges only.
+- Temporary roles/snapshot bypasses: expected 0/0; actual 0/0.
+- Native case subclasses with Reuse evidence: expected 2; actual 2.
+- Reuse evidence fields per subclass: expected 8; actual 8.
+- Unexpected existing generated-key mutations/deletions: expected 0; actual 0.
+- Result: PASS.
+
+#### Package result
+
+- M1: COMPLETE.
+- R4 design: FROZEN.
+- `R4-DESIGN-01`: RESOLVED.
+- `R4-RUNTIME-01`: BLOCKED BY `R2-AGENCY-01`.
+- `R2-AGENCY-01`: OPEN.
+- Both production lifecycle initiation Business Rules remain inactive.
+- M2, M3, M4, M5, and Wave 5: not started.

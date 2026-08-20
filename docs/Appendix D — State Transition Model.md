@@ -629,7 +629,16 @@ For Reuse:
 
 ```text
 AND ExistingAuthorization == Active/Valid
+AND RequestedScope == FullyCovered
+AND ReuseSupervisorDecision == Approved
+AND ReuseSupervisorSignature == Complete
 ```
+
+Reuse is a request-level attestation state on the current HR Case, not a new
+Authorization Form lifecycle. Its controlled states are Pending, Approved,
+Denied, and Invalidated. Denial leaves the existing Active authorization and
+scope unchanged. A Supervisor, scope, decision, or qualifying-authorization
+context change invalidates prior evidence and requires decision re-evaluation.
 
 ---
 

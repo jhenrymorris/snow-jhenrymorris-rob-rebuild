@@ -337,6 +337,10 @@ declare global {
                         table: 'sys_module'
                         id: 'f796ca3a47db4f2685bbbefaa58461f8'
                     }
+                    src_server_authorization_ReuseAttestationService_js: {
+                        table: 'sys_module'
+                        id: '2786b10cd465440c904c17c337d8dbc8'
+                    }
                     src_server_authorization_SignatureExecutionService_js: {
                         table: 'sys_module'
                         id: 'e75faf5552ec449da6bcff339f89bdcf'
@@ -1338,6 +1342,23 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '126f51a5b3474236972e13405dd79dc5'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_attestation_completed_at'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice_set'
+                        id: '126f60ea025c44ec8140419d6e9ccf84'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_supervisor_decision'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '1378eeb9ae9f43249fe615d2d4fc118c'
                         key: {
@@ -1646,6 +1667,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '181e751886bc4a8a958ef432c262f526'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_attestation_status'
+                            value: 'denied'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '183ffa68f5d84ff19a4da319fe530145'
                         key: {
@@ -1903,6 +1933,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '1da261f7564d4dd5b91c6b7287d79cee'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_attestation_status'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '1db70ad6bbcc4fcca186ca225ccf2deb'
                         key: {
@@ -2009,6 +2047,15 @@ declare global {
                         key: {
                             name: 'x_2108496_hr_acces_rob_config'
                             element: 'default_exception_review_group'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '1edab10f0a7c40148ba70ede94dedf63'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_attestation_status'
+                            value: 'pending'
                         }
                     },
                     {
@@ -2550,6 +2597,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '2bc6da6c628749dca74c240a48fb2144'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_document_task'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '2c40a7b90f114ddb96231f87082a88be'
                         key: {
@@ -2608,6 +2663,14 @@ declare global {
                             name: 'x_2108496_hr_acces_rob_access'
                             element: 'external_target_system'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice_set'
+                        id: '2d76d0cc1b334567b32180fd3744e60a'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_attestation_status'
                         }
                     },
                     {
@@ -3100,6 +3163,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '37d6138cc6994224b75fb21438856638'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_supervisor_decision'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '3803aea1971e42b4916113981d5c1e16'
                         key: {
@@ -3216,6 +3288,14 @@ declare global {
                             }
                             element: 'organization'
                             position: '3'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '39dbcaae088f4b4faf0dd1d193be0bd9'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_supervisor_signature_at'
                         }
                     },
                     {
@@ -4011,6 +4091,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '4d2de40e7b114ef69ec39fa957a45be3'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_attestation_context'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '4d5795e6fc5d412b8fcd675048faf3ea'
                         key: {
@@ -4180,6 +4269,14 @@ declare global {
                             name: 'x_2108496_hr_acces_rob_config'
                             element: 'default_analytics_assignment_group'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '523e99e6934c49008d1dbd5f9cc5595a'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_attestation_completed_at'
                         }
                     },
                     {
@@ -4811,6 +4908,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '5dac40b460cb4b85a0f939aa297f09f0'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_supervisor_signature_at'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_ui_section'
                         id: '5dc73c976eb245089fe3066180cc7f37'
                         key: {
@@ -5009,6 +5115,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '5f926f1f11c244b8b9466fd1299e9477'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_document_task'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '5fbbe48ee5ee4887a970b4a0ba16869f'
                         key: {
@@ -5169,6 +5284,23 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '62ccb1100c5e42a4869bed3ff05c014e'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_attestation_status'
+                            value: 'approved'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '6310b4e0dfd0416789ccb1f081eb2829'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_attestation_status'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '639059ebbc594b3888c6e44698fa379b'
                         key: {
                             name: 'sn_hr_core_case_payroll'
@@ -5194,6 +5326,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '6421a971b207458cb40db5203c80e275'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_attestation_context'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '6427359f8b8d4791845250ad22094cb8'
                         key: {
@@ -5216,6 +5357,14 @@ declare global {
                         key: {
                             name: 'x_2108496_hr_acces_rob_auth'
                             element: 'signed_pdf_generated'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '6564ee4db131445cbe5ddbae67798ad1'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_supervisor_decision'
                         }
                     },
                     {
@@ -5329,6 +5478,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '682bf61060d64ea3973fa623654aa692'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_document_execution'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '6837f35616ca48389b25b8959269bd42'
                         key: {
@@ -5432,6 +5590,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '6a863fb41ba649f68ec2fb1529ee6457'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_attestation_context'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '6b4f44629a5e4111a8a3af7e230010d9'
                         deleted: true
@@ -5500,6 +5666,15 @@ declare global {
                             }
                             element: 'access_item'
                             position: '0'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '6e39b5cd88b2458fa2aaf26456c770d6'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_attestation_status'
+                            language: 'en'
                         }
                     },
                     {
@@ -5961,6 +6136,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '782bf76e8f154a77bb3c0f36be078f6b'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_attestation_status'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '78867ca80308402c8c0339f4b811f648'
                         key: {
@@ -6179,6 +6363,14 @@ declare global {
                         key: {
                             name: 'x_2108496_hr_acces_rob_auth'
                             element: 'decision_evidence'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '7e0bee5118f548b595ac7381aaab8d2d'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_supervisor_decision'
                         }
                     },
                     {
@@ -6853,6 +7045,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '8ab69498f80e42db974c961048624be6'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_supervisor_decision'
+                            value: 'denied'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '8ad9d07bdaf94065b6de2d807d8089fa'
                         key: {
@@ -6964,6 +7165,15 @@ declare global {
                             name: 'x_2108496_hr_acces_rob_config'
                             element: 'default_staffing_assignment_group'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '8cf660f634d243758c784aec345303e6'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_attestation_status'
+                            value: 'approved'
                         }
                     },
                     {
@@ -7110,6 +7320,14 @@ declare global {
                                     name: 'x_2108496_hr_acces.rob_admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '8ef00b05a5a14d83bdd0a5e8dd137d6a'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_attestation_completed_at'
                         }
                     },
                     {
@@ -7506,6 +7724,15 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: '9798a86937df4af38bb96c5cf5213f23'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_supervisor_signer'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: '97c70ddcc42648129d319a7948b6950b'
                         key: {
                             name: 'sn_hr_core_case_payroll'
@@ -7668,6 +7895,15 @@ declare global {
                                     name: 'x_2108496_hr_acces.rob_compliance_viewer'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '9dc44f1f979f4059a7a9d5da63e936a6'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_attestation_status'
+                            value: 'invalidated'
                         }
                     },
                     {
@@ -7897,6 +8133,23 @@ declare global {
                                     name: 'x_2108496_hr_acces.rob_admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'a249e6f637eb404aa20f081917c3b9c5'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_document_execution'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'a2db2ad410064ee4a4e3f5f41facea77'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_attestation_status'
+                            value: 'pending'
                         }
                     },
                     {
@@ -8149,6 +8402,15 @@ declare global {
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2108496_hr_acces_snapshot_correction_reason'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'a8820225a8b2441593e59cb50d8a7f0f'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_attestation_completed_at'
                             language: 'en'
                         }
                     },
@@ -8440,6 +8702,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: 'b2b2996c3f184c0fbcaec1b81068daec'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_supervisor_decision'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: 'b2d88a4a725c480e90f9250ec255075c'
                         key: {
@@ -8601,6 +8872,15 @@ declare global {
                             }
                             element: '.begin_split'
                             position: '0'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'b681272393964e97bc183b25e8225d75'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_supervisor_decision'
+                            value: 'approved'
                         }
                     },
                     {
@@ -9504,6 +9784,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: 'c94f12a4ecd14bcea76269c34b394be3'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_supervisor_signer'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: 'c97965a91aa741e0809ccfac95767f2c'
                         deleted: true
@@ -9573,6 +9861,14 @@ declare global {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2108496_hr_acces_exception_reason'
                             value: 'EX_INCOMPLETE_AUTHORIZATION_HISTORY'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'c9db4e45c9ec404db9647aaa8f5b2d99'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_supervisor_signer'
                         }
                     },
                     {
@@ -9858,6 +10154,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: 'd109445ec82a41f386bec93ca1004dc7'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_document_execution'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: 'd15f9d4544fa4ed890fdf07eb222739f'
                         key: {
@@ -9959,6 +10263,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice_set'
+                        id: 'd329e77272ca440ea95e782f4d0a1d3e'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_attestation_status'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: 'd3d48b1d098b4841bb6ba242a5b724e1'
                         deleted: true
@@ -9992,6 +10304,14 @@ declare global {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2108496_hr_acces_decision_reason'
                             value: 'ren_obsolete_version'
+                        }
+                    },
+                    {
+                        table: 'sys_choice_set'
+                        id: 'd50edbd49f324b129a918fd0447d434d'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_supervisor_decision'
                         }
                     },
                     {
@@ -10425,6 +10745,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: 'de9ec0174d2d43648e8dbd2fc2054b6c'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_supervisor_signer'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: 'dee2888f5b3a4cbab87e7cf06875ef48'
                         deleted: true
@@ -10720,6 +11049,23 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'e795216c5c604ad5b551b3506861d7cf'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_supervisor_decision'
+                            value: 'denied'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'e7957add17c64784aad88a7b092794a6'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_document_task'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: 'e7c4ea3f090d4588a7b21659acaa9930'
                         key: {
@@ -10812,6 +11158,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: 'ea014417bae34341997d1abf2c870cac'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_supervisor_signature_at'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: 'ea7e947a424e4966892f3082fff45369'
                         key: {
@@ -10865,6 +11219,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: 'eadae2ca64b84d34a35125a148d76499'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_document_execution'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: 'eafc030ce9fb4d70a8de407c5b4ae2de'
                         key: {
@@ -10887,6 +11250,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'eb2457bd43144ae2991416f2b1eb3985'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_attestation_status'
+                            value: 'invalidated'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: 'eb2ab9786e294d61aa626e72e2f72c8a'
                         key: {
@@ -10906,6 +11278,15 @@ declare global {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2108496_hr_acces_existing_authorization_status'
                             value: 'denied'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'eba7d7a2412c4cf2984e62a170e58b9b'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_supervisor_decision'
+                            value: 'approved'
                         }
                     },
                     {
@@ -10938,6 +11319,15 @@ declare global {
                             }
                             element: 'status'
                             position: '1'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'ed0d45368dc040d8b392a9f07f4b5f03'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_document_task'
+                            language: 'en'
                         }
                     },
                     {
@@ -11129,6 +11519,15 @@ declare global {
                         key: {
                             name: 'x_2108496_hr_acces_rob_config'
                             element: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'f1f733b7375b4877a48d6ea6c58a245c'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2108496_hr_acces_reuse_attestation_status'
+                            value: 'denied'
                         }
                     },
                     {
@@ -11379,6 +11778,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: 'f7259c7a5ac840139e1687c571a688c2'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_supervisor_signature_at'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: 'f750473da4b14e0cad06bb68105da3cd'
                         key: {
@@ -11572,6 +11980,14 @@ declare global {
                             name: 'x_2108496_hr_acces_rob_access'
                             element: 'external_provisioning_system'
                             value: 'usa_staffing'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'fba260bc746b43db84ae62f6cb066509'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2108496_hr_acces_reuse_attestation_context'
                         }
                     },
                     {

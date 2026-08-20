@@ -266,3 +266,19 @@ Internal exception, gate, and
 correction evidence is limited to ROB Admin and Compliance Viewer. These
 scripted read ACLs perform no database query; runtime inheritance and workspace
 behavior must still pass the PDI persona/channel matrix before deployment.
+
+## 12. M1 Reuse attestation security contract
+
+Reuse evidence is system-managed, audited case data. The intended current
+Supervisor is the only permitted native approval/signature participant.
+Employee, fulfiller, unrelated-user, and direct-field edits cannot become
+authoritative approval evidence. The native Document Task/execution and
+committed signer/timestamp remain the signature authority; the case references
+that evidence and records the explicit request outcome.
+
+APPROVED requires both the intended Supervisor and completed attestation.
+DENIED/REFUSED affects only the current case and cannot revoke, supersede, or
+alter the reused authorization or its details/PDF. A deterministic context key
+invalidates approval after a Supervisor, scope, decision, or authorization
+context change. No broad cross-scope privilege, temporary role, snapshot
+bypass, custom approval/signature table, or new business table is introduced.

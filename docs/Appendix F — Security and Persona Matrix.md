@@ -606,6 +606,13 @@ Direct list access is not required for MVP.
 
 May read assigned/current authorization context necessary for approval/signature.
 
+For Reuse, the current Supervisor may act only through the assigned native
+request-level APPROVE + Sign experience. The employee, fulfiller, ROB Admin,
+and unrelated users cannot substitute as signer through case-field edits.
+Outcome, signer, timestamp, Document Task/execution references, completion, and
+context are system-managed and audited on the native HR Case. Denial cannot
+alter the existing Active authorization, its scope, or signed PDF.
+
 ## Staffing / Analytics
 
 Contextual Read only where tied to authorized assigned work.

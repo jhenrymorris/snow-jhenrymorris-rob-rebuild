@@ -963,6 +963,54 @@ Expected blocked.
 
 ---
 
+## W4-27 — Reuse Qualifying Authorization
+
+Exactly one Active, subject-matched, current-version, unexpired authorization
+that fully covers requested scope permits request-level attestation.
+
+---
+
+## W4-28 — Reuse Historical-State Rejection
+
+Expired, Lapsed, Revoked, and Superseded authorizations each reject Reuse
+continuation and require decision re-evaluation/Exception.
+
+---
+
+## W4-29 — Reuse Coverage Revalidation
+
+Any uncovered requested item rejects Reuse continuation.
+
+---
+
+## W4-30 — Reuse Supervisor Approval and Signature
+
+Only the intended current Supervisor may persist APPROVED plus completed native
+attestation, signer, timestamp, Document Task, and execution evidence.
+
+---
+
+## W4-31 — Reuse Denial Isolation
+
+DENIED/REFUSED makes the current request ineligible while leaving the reused
+Authorization Form, Access Details, employee evidence, and PDF unchanged.
+
+---
+
+## W4-32 — Reuse Idempotency
+
+Repeating unchanged completed context creates no duplicate signing execution,
+evidence reference, Authorization Form, or Access Detail.
+
+---
+
+## W4-33 — Reuse Context Invalidation
+
+A changed Supervisor, requested scope, decision, or qualifying authorization
+context invalidates prior attestation and requires re-evaluation.
+
+---
+
 # 13. Wave 5 — Fulfillment Tests
 
 ## W5-01 — Staffing Routing

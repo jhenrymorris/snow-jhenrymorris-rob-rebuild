@@ -246,3 +246,27 @@ Build evidence is package-specific and must remain distinct from install, runtim
   16/16, R3 30/30, and R4 36/36 PASS.
 - Result: R4 BLOCKED; `R4-RUNTIME-01`, `R4-DESIGN-01`, and `R2-AGENCY-01`
   remain OPEN. No commit/tag and no Wave 5 work.
+
+### M1 authorization design closure
+
+- Added the Class A pure `ReuseAttestationService.js` and eight audited,
+  system-managed request-evidence fields to each existing native HR Case
+  subclass. No table, Form, Detail, PDF, supersession, or fulfillment artifact
+  was added.
+- Reuse now revalidates lifecycle eligibility without duplicating R3 decision
+  selection, records APPROVED/DENIED native evidence, uses a deterministic
+  context key for idempotency and stale-context invalidation, and leaves the
+  underlying authorization unchanged.
+- R4 source/unit suite: 52/52 PASS. Full regression/build/install evidence is
+  R1 9/9, Wave 2 security 22/22, deployment configuration 16/16, and R3
+  30/30 also PASS. Normal and frozen-key builds PASS with the same five TS11
+  warnings. The generated-key diff adds 49 intentional metadata records and
+  removes/mutates zero existing keys.
+- Final normal install completed without `--reinstall`; rollback context
+  `8386de02c3f6431068a35f2b2b013171`. Installed metadata reread confirmed all
+  16 read-only/audited Reuse fields across both native subclasses and both
+  production initiation rules remain inactive. Cross-scope inventory remains
+  exactly two approved table reads and zero broad privileges.
+- `R4-DESIGN-01` RESOLVED and R4 design FROZEN. `R4-RUNTIME-01` remains
+  BLOCKED BY `R2-AGENCY-01`; lifecycle initiation remains inactive and Wave 5
+  was not started.

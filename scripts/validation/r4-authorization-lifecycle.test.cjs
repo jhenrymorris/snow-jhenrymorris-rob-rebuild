@@ -11,6 +11,11 @@ const {
     recordSupervisorAction,
 } = require('../../src/server/authorization/SignatureExecutionService')
 const { finalize } = require('../../src/server/authorization/AuthorizationFinalizationService')
+const {
+    assessReuseEligibility,
+    beginReuseAttestation,
+    recordReuseSupervisorAction,
+} = require('../../src/server/authorization/ReuseAttestationService')
 
 function initiation(overrides = {}) {
     return {
@@ -30,6 +35,53 @@ function initiation(overrides = {}) {
         requestedAccess: ['usa_staffing'],
         priorAuthorizedAccess: [],
         relatedAuthorizationId: '',
+        relatedAuthorization: null,
+        currentAcceptedFormVersion: '2026.04',
+        evaluationDate: '2026-08-16',
+        ...overrides,
+    }
+}
+
+function reuseInput(overrides = {}) {
+    return initiation({
+        decisionClass: 'REUSE',
+        relatedAuthorizationId: 'authorization_1',
+        relatedAuthorization: {
+            id: 'authorization_1',
+            subjectId: 'employee_1',
+            status: 'active',
+            formVersion: '2026.04',
+            expirationDate: '2026-09-30',
+            authorizedAccess: ['eopf', 'usa_staffing'],
+        },
+        requestedAccess: ['usa_staffing'],
+        ...overrides,
+    })
+}
+
+function approvedReuseAction(overrides = {}) {
+    return {
+        ...reuseInput(),
+        signerId: 'supervisor_1',
+        outcome: 'APPROVED',
+        signatureComplete: true,
+        completedAt: '2026-08-16 12:20:00',
+        documentTaskId: 'reuse_task_1',
+        documentTaskExecutionId: 'reuse_execution_1',
+        ...overrides,
+    }
+}
+
+function persistedApprovedAttestation(contextKey, overrides = {}) {
+    return {
+        status: 'approved',
+        supervisorDecision: 'approved',
+        supervisorSignerId: 'supervisor_1',
+        supervisorSignatureDateTime: '2026-08-16 12:20:00',
+        supervisorDocumentTaskId: 'reuse_task_1',
+        documentTaskExecutionId: 'reuse_execution_1',
+        attestationCompletedAt: '2026-08-16 12:20:00',
+        contextKey,
         ...overrides,
     }
 }
@@ -126,21 +178,162 @@ test('replacement decisions require a predecessor', () => {
     )
 })
 
-test('Reuse creates no form and no Access Details', () => {
-    const result = initiate(
-        initiation({ decisionClass: 'REUSE', relatedAuthorizationId: 'authorization_1' })
-    )
+test('Reuse creates zero Authorization Forms', () => {
+    const result = initiate(reuseInput())
     assert.equal(result.form, null)
+    assert.equal(result.formsCreated, 0)
+})
+
+test('Reuse creates zero Authorized Access Details', () => {
+    const result = initiate(reuseInput())
     assert.deepEqual(result.details, [])
+    assert.equal(result.detailsCreated, 0)
     assert.equal(result.requiresEmployeeSignature, false)
 })
 
 test('Reuse still requires supervisor approval and signature', () => {
-    const result = initiate(
-        initiation({ decisionClass: 'REUSE', relatedAuthorizationId: 'authorization_1' })
-    )
+    const result = initiate(reuseInput())
     assert.equal(result.requiresSupervisorApproval, true)
     assert.equal(result.requiresSupervisorSignature, true)
+})
+
+test('Reuse references exactly one selected qualifying authorization', () => {
+    const result = assessReuseEligibility(reuseInput())
+    assert.equal(result.eligible, true)
+    assert.equal(result.relatedAuthorizationId, 'authorization_1')
+    assert.equal(result.action, 'attest')
+})
+
+test('active current authorization permits Reuse attestation', () => {
+    const result = beginReuseAttestation(reuseInput())
+    assert.equal(result.action, 'create_attestation')
+    assert.equal(result.attestationStatus, 'pending')
+    assert.equal(result.createSupervisorExecution, true)
+})
+
+for (const status of ['expired', 'lapsed', 'revoked', 'superseded']) {
+    test(`${status} authorization rejects Reuse continuation`, () => {
+        const result = assessReuseEligibility(
+            reuseInput({
+                relatedAuthorization: {
+                    ...reuseInput().relatedAuthorization,
+                    status,
+                },
+            })
+        )
+        assert.equal(result.eligible, false)
+        assert.equal(result.requiresDecisionReevaluation, true)
+    })
+}
+
+test('uncovered requested scope rejects Reuse continuation', () => {
+    const result = assessReuseEligibility(
+        reuseInput({ requestedAccess: ['usa_staffing', 'fpps_wtts'] })
+    )
+    assert.equal(result.eligible, false)
+    assert.equal(result.reasonCode, 'REUSE_SCOPE_NOT_FULLY_COVERED')
+    assert.deepEqual(result.uncoveredAccess, ['fpps_wtts'])
+})
+
+test('supervisor APPROVED and signed completes the request-level attestation', () => {
+    const result = recordReuseSupervisorAction(approvedReuseAction())
+    assert.equal(result.attestationStatus, 'approved')
+    assert.equal(result.supervisorDecision, 'approved')
+    assert.equal(result.supervisorSignatureComplete, true)
+    assert.equal(result.fulfillmentEligible, true)
+    assert.equal(result.supervisorDocumentTaskId, 'reuse_task_1')
+})
+
+test('supervisor denial makes the current Reuse request ineligible', () => {
+    const result = recordReuseSupervisorAction(
+        approvedReuseAction({ outcome: 'REFUSED', signatureComplete: false })
+    )
+    assert.equal(result.attestationStatus, 'denied')
+    assert.equal(result.supervisorDecision, 'denied')
+    assert.equal(result.fulfillmentEligible, false)
+})
+
+test('Reuse denial leaves the underlying authorization unchanged', () => {
+    const authorization = reuseInput().relatedAuthorization
+    const before = structuredClone(authorization)
+    const result = recordReuseSupervisorAction(
+        approvedReuseAction({
+            relatedAuthorization: authorization,
+            outcome: 'DENIED',
+            signatureComplete: false,
+        })
+    )
+    assert.deepEqual(authorization, before)
+    assert.equal(result.authorizationMutation, null)
+})
+
+test('repeat unchanged Reuse execution is idempotent', () => {
+    const first = recordReuseSupervisorAction(approvedReuseAction())
+    const repeated = beginReuseAttestation(
+        reuseInput({
+            existingReuseAttestation: persistedApprovedAttestation(first.contextKey),
+        })
+    )
+    assert.equal(repeated.action, 'existing_attestation')
+    assert.equal(repeated.changed, false)
+    assert.equal(repeated.createSupervisorExecution, false)
+    assert.equal(repeated.formsCreated, 0)
+    assert.equal(repeated.detailsCreated, 0)
+})
+
+test('changed supervisor invalidates the prior Reuse attestation', () => {
+    const completed = recordReuseSupervisorAction(approvedReuseAction())
+    const result = beginReuseAttestation(
+        reuseInput({
+            supervisorId: 'supervisor_2',
+            existingReuseAttestation: persistedApprovedAttestation(completed.contextKey),
+        })
+    )
+    assert.equal(result.attestationStatus, 'invalidated')
+    assert.equal(result.requiresDecisionReevaluation, true)
+    assert.equal(result.fulfillmentEligible, false)
+})
+
+test('changed scope invalidates the prior Reuse attestation context', () => {
+    const completed = recordReuseSupervisorAction(approvedReuseAction())
+    const result = beginReuseAttestation(
+        reuseInput({
+            requestedAccess: ['eopf'],
+            existingReuseAttestation: persistedApprovedAttestation(completed.contextKey),
+        })
+    )
+    assert.equal(result.attestationStatus, 'invalidated')
+    assert.equal(result.requiresDecisionReevaluation, true)
+})
+
+test('incomplete persisted approval evidence is invalidated instead of reused', () => {
+    const completed = recordReuseSupervisorAction(approvedReuseAction())
+    const result = beginReuseAttestation(
+        reuseInput({
+            existingReuseAttestation: persistedApprovedAttestation(
+                completed.contextKey,
+                { supervisorDocumentTaskId: '' }
+            ),
+        })
+    )
+    assert.equal(result.attestationStatus, 'invalidated')
+    assert.equal(result.reasonCode, 'REUSE_ATTESTATION_EVIDENCE_INCOMPLETE')
+    assert.equal(result.fulfillmentEligible, false)
+})
+
+test('changed authorization state invalidates completed Reuse evidence', () => {
+    const completed = recordReuseSupervisorAction(approvedReuseAction())
+    const result = beginReuseAttestation(
+        reuseInput({
+            relatedAuthorization: {
+                ...reuseInput().relatedAuthorization,
+                status: 'revoked',
+            },
+            existingReuseAttestation: persistedApprovedAttestation(completed.contextKey),
+        })
+    )
+    assert.equal(result.attestationStatus, 'invalidated')
+    assert.equal(result.requiresDecisionReevaluation, true)
 })
 
 test('Exception creates no authorization lifecycle', () => {

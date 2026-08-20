@@ -76,11 +76,13 @@ R0 records implementation deltas only. It does not change application metadata o
   still blocked because the PDI cannot safely fixture-populate the three
   mandatory dictionary-read-only native-case snapshots while
   `R2-AGENCY-01` is open. Source lifecycle initiation remains disabled until
-  this passes.
-- [ ] `R4-DESIGN-01` — approve the exact request-level persisted supervisor
-  attestation and fulfillment-gate contract for Reuse. Reuse must create no new
-  Authorization Form or Access Detail and must preserve the original signature
-  and PDF.
+  this passes. Status: BLOCKED BY `R2-AGENCY-01`.
+- [x] `R4-DESIGN-01` — RESOLVED in M1. Reuse is a request-level native
+  supervisor APPROVE + Sign attestation anchored to the current HR Case. It
+  revalidates exactly one qualifying Active authorization, persists audited
+  task/execution/outcome/signer/timestamp/context evidence, creates no Form,
+  Detail, PDF, or supersession, leaves denial scoped to the current request,
+  and invalidates stale context before future fulfillment eligibility.
 - [ ] `R2-AGENCY-01` remains OPEN; no R4 fixture closes it.
 
 ## R0 Boundary

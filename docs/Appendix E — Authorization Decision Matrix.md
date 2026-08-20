@@ -822,6 +822,19 @@ The original employee signature and signed PDF remain unchanged.
 
 The SDK plan explicitly requires this.
 
+The request-level attestation is anchored to the current native HR Case and
+references exactly one R3-selected Authorization Form. Before attestation, the
+lifecycle layer confirms that the selected form remains Active, belongs to the
+subject, is current-version and unexpired/unlapsed/unrevoked/unsuperseded, and
+fully covers the requested scope. This is a continuation guard, not a second
+decision engine. Failure returns the case for decision re-evaluation or
+Exception handling.
+
+APPROVED plus completed native Supervisor attestation makes the unchanged
+request eligible for the later fulfillment gate. DENIED/REFUSED affects only
+the current request. Reuse creates no Authorization Form, Access Detail, Form
+1768 PDF, or supersession relationship.
+
 ---
 
 # 43. New Signature Decision

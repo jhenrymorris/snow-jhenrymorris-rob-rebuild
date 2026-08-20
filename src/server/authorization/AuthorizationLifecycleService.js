@@ -1,6 +1,7 @@
 'use strict'
 
 const { detailPlan } = require('./AuthorizationScopeService')
+const { beginReuseAttestation } = require('./ReuseAttestationService')
 
 const FORM_DECISIONS = new Set(['NEW', 'AMENDMENT', 'RENEWAL'])
 
@@ -18,15 +19,7 @@ function initiate(input) {
 
     if (decisionClass === 'REUSE') {
         requireValue(input.relatedAuthorizationId, 'related authorization')
-        return {
-            action: 'reuse',
-            form: null,
-            details: [],
-            relatedAuthorizationId: input.relatedAuthorizationId,
-            requiresEmployeeSignature: false,
-            requiresSupervisorApproval: true,
-            requiresSupervisorSignature: true,
-        }
+        return beginReuseAttestation(input)
     }
 
     if (!FORM_DECISIONS.has(decisionClass)) {

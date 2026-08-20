@@ -134,7 +134,7 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 | Native employee and supervisor evidence | `SignatureExecutionService.js`, native-evidence handler, and production template `f99c3c0ac372031068a35f2b2b013138` | Source/unit PASS; template configured; controlled lifecycle runtime blocked by the unresolved native-case snapshot boundary |
 | Denial and zero final PDF | Native-evidence handler and R4 suite | Source/unit PASS; production runtime not run |
 | Post-signature PDF activation/lineage | `AuthorizationFinalizationService.js` and PDF guard/finalization rules | Source/unit PASS; Authorization Form attachment runtime not run |
-| Reuse | No new form/details; existing form retained | BLOCKED-DESIGN for exact request-level attestation persistence contract |
+| Reuse | `ReuseAttestationService.js`; audited case evidence fields on both native subclasses; no new form/details/PDF/supersession | M1 source/unit PASS — request-level contract frozen; `R4-DESIGN-01` RESOLVED; runtime remains blocked by `R2-AGENCY-01` |
 | R2 snapshots | `R2-AGENCY-01` | OPEN; unchanged. R4.3.1 native form seeding persisted decision fields but not the three dictionary-read-only snapshots; no bypass was accepted |
 
 ## Wave 1 Batch 2 Implementation

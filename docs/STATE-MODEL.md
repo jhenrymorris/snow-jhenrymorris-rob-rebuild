@@ -23,3 +23,18 @@ Authorization Path is a native HR Case decision result, not an Authorization
 Form or Access Detail state. The only values are New, Reuse, Amendment, Renewal,
 and Exception Review. Conditional R3 source evaluation does not transition the
 case into Wave 4, create governed authorization records, or open fulfillment.
+
+## M1 Reuse Attestation State
+
+Reuse request evidence is case-level and has only these controlled states:
+
+- `pending` — one qualifying authorization and current Supervisor are fixed for attestation;
+- `approved` — the intended Supervisor explicitly approved and completed native attestation;
+- `denied` — the Supervisor denied/refused the current request;
+- `invalidated` — Supervisor, scope, decision, or qualifying authorization context changed.
+
+`approved` permits the future M4 fulfillment gate only while the qualifying
+context remains unchanged. `denied` and `invalidated` keep that gate false.
+None of these states changes the existing Active Authorization Form or its
+Access Details. Reprocessing an unchanged completed attestation is idempotent;
+a changed context returns the case for decision re-evaluation/Exception.

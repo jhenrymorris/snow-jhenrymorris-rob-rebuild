@@ -315,3 +315,27 @@ blocks. The stable access mapping values are `fpps_wtts`, `eopf`,
 provisioning metadata only. This is configuration evidence, not completed
 lifecycle evidence, because the PDI cannot safely fixture-populate the three
 mandatory native-case snapshots while `R2-AGENCY-01` is open.
+
+## 10. M1 Reuse Request-Level Evidence
+
+Both `sn_hr_core_case_payroll` and `sn_hr_core_case_workforce_admin` use the
+same application-owned, read-only, audited evidence fields. Existing R3 fields
+remain the authority for decision, related authorization, covered scope, and
+current Supervisor.
+
+| Logical evidence | Physical field |
+|---|---|
+| Reuse Attestation Status | `x_2108496_hr_acces_reuse_attestation_status` |
+| Reuse Supervisor Decision | `x_2108496_hr_acces_reuse_supervisor_decision` |
+| Reuse Supervisor Signer | `x_2108496_hr_acces_reuse_supervisor_signer` |
+| Reuse Supervisor Signature At | `x_2108496_hr_acces_reuse_supervisor_signature_at` |
+| Reuse Document Task | `x_2108496_hr_acces_reuse_document_task` |
+| Reuse Document Execution | `x_2108496_hr_acces_reuse_document_execution` |
+| Reuse Attestation Completed At | `x_2108496_hr_acces_reuse_attestation_completed_at` |
+| Reuse Attestation Context | `x_2108496_hr_acces_reuse_attestation_context` |
+
+The context value is a deterministic system-managed snapshot of the request,
+Supervisor, selected authorization, status/version/expiration, and requested
+scope used only for repeat safety and stale-attestation invalidation. It is not
+an end-user field or a substitute authorization artifact. Reuse adds no field
+to the Authorization Form or Authorized Access Detail.
