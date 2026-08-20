@@ -16,6 +16,7 @@
       "test:security": "node --test scripts/validation/wave-2-security-remediation.test.cjs",
       "test:wave2-deployment": "node --test scripts/validation/wave-2-deployment-configuration.test.cjs",
       "test:r3": "node --test scripts/validation/r3-authorization-decision.test.cjs",
+      "test:r4": "node --test scripts/validation/r4-authorization-lifecycle.test.cjs",
       "verify:wave2:pdi": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validation/verify-wave-2-deployment.ps1 -Auth rob-pdi"
     },
     "devDependencies": {

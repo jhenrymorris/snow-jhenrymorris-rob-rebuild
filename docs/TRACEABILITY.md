@@ -126,6 +126,17 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 | Step 22 — ROB Configuration | `src/fluent/tables/rob-configuration.now.ts`; `src/fluent/records/default-rob-configuration.now.ts` | TM-62; Appendix M W1-09–W1-14 | R1 PASS — source/schema installed and stable active record reconciled to `2026.04` |
 | Step 23 — ROB Access Item Reference | `src/fluent/tables/rob-access-item-reference.now.ts`; `src/fluent/records/starter-rob-access-items.now.ts` | TM-63, TM-64; Appendix M W1-15–W1-16 | R1 PASS — six stable identities reconciled and runtime verified |
 
+## R4.3 authorization lifecycle implementation
+
+| Requirement | Source / evidence | Status |
+|---|---|---|
+| New, Amendment, Renewal governed preparation | `AuthorizationLifecycleService.js`, `AuthorizationScopeService.js`, and guarded runtime scripts | Source/unit PASS; runtime BLOCKED |
+| Native employee and supervisor evidence | `SignatureExecutionService.js`, native-evidence handler, and production template `f99c3c0ac372031068a35f2b2b013138` | Source/unit PASS; template configured; controlled lifecycle runtime blocked by the unresolved native-case snapshot boundary |
+| Denial and zero final PDF | Native-evidence handler and R4 suite | Source/unit PASS; production runtime not run |
+| Post-signature PDF activation/lineage | `AuthorizationFinalizationService.js` and PDF guard/finalization rules | Source/unit PASS; Authorization Form attachment runtime not run |
+| Reuse | No new form/details; existing form retained | BLOCKED-DESIGN for exact request-level attestation persistence contract |
+| R2 snapshots | `R2-AGENCY-01` | OPEN; unchanged. R4.3.1 native form seeding persisted decision fields but not the three dictionary-read-only snapshots; no bypass was accepted |
+
 ## Wave 1 Batch 2 Implementation
 
 | Step | SDK artifact | Test reference | Status |

@@ -9,8 +9,16 @@
                 "sn_hr_core_task"
             ]
         },
+        "sn_doc": {
+            "tables": [
+                "sn_doc_task",
+                "sn_doc_task_execution",
+                "sn_doc_template"
+            ]
+        },
         "global": {
             "tables": [
+                "sys_attachment",
                 "sys_user",
                 "sys_user_group"
             ]

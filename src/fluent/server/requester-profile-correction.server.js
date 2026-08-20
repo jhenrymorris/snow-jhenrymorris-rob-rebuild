@@ -69,6 +69,48 @@
         return
     }
 
+    var signedContentFields = [
+        'rich_description',
+        'x_2108496_hr_acces_employment_type',
+        accessEndDateField,
+        operationsManagerField,
+        positionTitleField,
+        organizationField,
+        supervisorField,
+    ]
+    var authorizationInProgress = new GlideRecord(
+        'x_2108496_hr_acces_rob_auth'
+    )
+    authorizationInProgress.addQuery('source_hrsd_case', current.getUniqueValue())
+    authorizationInProgress.addQuery(
+        'status',
+        'IN',
+        'draft,pending_employee_signature,pending_supervisor_approval_signature,active'
+    )
+    authorizationInProgress.setLimit(1)
+    authorizationInProgress.query()
+    var signedContentLocked = authorizationInProgress.next()
+    if (
+        !signedContentLocked &&
+        current.getValue('x_2108496_hr_acces_authorization_path') === 'reuse' &&
+        current.getValue('x_2108496_hr_acces_decision_evaluated_at')
+    ) {
+        signedContentLocked = true
+    }
+    var signedFieldIndex
+    for (
+        signedFieldIndex = 0;
+        signedFieldIndex < signedContentFields.length;
+        signedFieldIndex += 1
+    ) {
+        if (signedContentLocked && changed(signedContentFields[signedFieldIndex])) {
+            abort(
+                'Signed ROB authorization content cannot change after lifecycle preparation. Re-evaluate or amend the authorization instead.'
+            )
+            return
+        }
+    }
+
     function clearResolvedException() {
         current.setValue(exceptionRequiredField, '0')
         current.setValue(exceptionReasonField, '')

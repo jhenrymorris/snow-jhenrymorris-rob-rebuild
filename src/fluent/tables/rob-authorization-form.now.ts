@@ -113,6 +113,30 @@ export const x_2108496_hr_acces_rob_auth = Table({
                 amendment: 'Amendment',
             },
         }),
+        decision_reason: StringColumn({
+            label: 'Decision Reason',
+            readOnly: true,
+            audit: true,
+            maxLength: 80,
+        }),
+        decision_evaluated_at: DateTimeColumn({
+            label: 'Decision Evaluated At',
+            readOnly: true,
+            audit: true,
+        }),
+        evaluated_authorization: ReferenceColumn({
+            label: 'Evaluated Authorization',
+            referenceTable: 'x_2108496_hr_acces_rob_auth',
+            cascadeRule: 'clear',
+            readOnly: true,
+            audit: true,
+        }),
+        decision_evidence: MultiLineTextColumn({
+            label: 'Decision Evidence',
+            readOnly: true,
+            audit: true,
+            maxLength: 4000,
+        }),
         form_version: StringColumn({
             label: 'Form Version',
             readOnly: true,
@@ -159,6 +183,13 @@ export const x_2108496_hr_acces_rob_auth = Table({
             label: 'Employee Signature Date/Time',
             readOnly: true,
         }),
+        employee_document_task: ReferenceColumn({
+            label: 'Employee Document Task',
+            referenceTable: 'sn_doc_task',
+            cascadeRule: 'clear',
+            readOnly: true,
+            audit: true,
+        }),
         supervisor_approval_complete: BooleanColumn({
             label: 'Supervisor Approval Complete',
             default: false,
@@ -174,6 +205,15 @@ export const x_2108496_hr_acces_rob_auth = Table({
             label: 'Supervisor Approval Date/Time',
             readOnly: true,
         }),
+        supervisor_approval_outcome: ChoiceColumn({
+            label: 'Supervisor Approval Outcome',
+            readOnly: true,
+            audit: true,
+            choices: {
+                approved: 'Approved',
+                denied: 'Denied',
+            },
+        }),
         supervisor_signature_complete: BooleanColumn({
             label: 'Supervisor Signature Complete',
             default: false,
@@ -188,6 +228,20 @@ export const x_2108496_hr_acces_rob_auth = Table({
         supervisor_signature_date_time: DateTimeColumn({
             label: 'Supervisor Signature Date/Time',
             readOnly: true,
+        }),
+        supervisor_document_task: ReferenceColumn({
+            label: 'Supervisor Document Task',
+            referenceTable: 'sn_doc_task',
+            cascadeRule: 'clear',
+            readOnly: true,
+            audit: true,
+        }),
+        document_task_execution: ReferenceColumn({
+            label: 'Document Task Execution',
+            referenceTable: 'sn_doc_task_execution',
+            cascadeRule: 'clear',
+            readOnly: true,
+            audit: true,
         }),
         source_hrsd_case: ReferenceColumn({
             label: 'Source HRSD Case',
@@ -221,6 +275,18 @@ export const x_2108496_hr_acces_rob_auth = Table({
         signed_pdf_generated_date_time: DateTimeColumn({
             label: 'Signed PDF Generated Date/Time',
             readOnly: true,
+        }),
+        final_authorization_date: DateColumn({
+            label: 'Final Authorization Date',
+            readOnly: true,
+            audit: true,
+        }),
+        final_pdf_attachment: ReferenceColumn({
+            label: 'Final PDF Attachment',
+            referenceTable: 'sys_attachment',
+            cascadeRule: 'clear',
+            readOnly: true,
+            audit: true,
         }),
         audit_notes: MultiLineTextColumn({
             label: 'Audit Notes',

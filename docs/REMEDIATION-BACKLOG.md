@@ -66,6 +66,23 @@ R0 records implementation deltas only. It does not change application metadata o
   Authorization Form-only attachment/security validation.
 - [ ] `R2-AGENCY-01` remains OPEN; no R4 fixture or capability evidence closes it.
 
+## R4.3 open production dependencies
+
+- [ ] `R4-RUNTIME-01` â€” configure the production native signing and
+  post-signature finalization path for both HR Case subclasses, attach the final
+  PDF only to the Authorization Form, and complete controlled runtime evidence.
+  The published production template now exists with two ordered participants,
+  26 body mappings, and two signature blocks. Controlled runtime evidence is
+  still blocked because the PDI cannot safely fixture-populate the three
+  mandatory dictionary-read-only native-case snapshots while
+  `R2-AGENCY-01` is open. Source lifecycle initiation remains disabled until
+  this passes.
+- [ ] `R4-DESIGN-01` â€” approve the exact request-level persisted supervisor
+  attestation and fulfillment-gate contract for Reuse. Reuse must create no new
+  Authorization Form or Access Detail and must preserve the original signature
+  and PDF.
+- [ ] `R2-AGENCY-01` remains OPEN; no R4 fixture closes it.
+
 ## R0 Boundary
 
 No item above is authorized for implementation in R0. Unsupported native capabilities must be recorded in Appendix L rather than replaced with custom request, task, approval, signature, PDF, attachment, or authentication architecture.

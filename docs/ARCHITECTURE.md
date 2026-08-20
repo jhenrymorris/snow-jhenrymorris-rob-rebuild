@@ -278,3 +278,32 @@ proof used the completed supervisor Document Task as its synthetic native source
 Australia runtime proof established this mechanism inside the Document Templates
 execution boundary without an HR Access cross-scope write/API privilege. It does
 not close `R2-AGENCY-01` and does not itself implement the production lifecycle.
+
+## R4.3 production lifecycle checkpoint
+
+R4.3 adds a source-first lifecycle foundation for New, Amendment, and Renewal:
+decision-context validation, idempotent Authorization Form and complete-scope
+Access Detail preparation, committed native signer-evidence capture, denial,
+post-signature PDF gating, activation, and deferred predecessor supersession.
+Reuse still creates no form or detail. The two case initiation rules remain
+inactive until the production native templates, launch/finalization handoff, and
+Reuse request-level attestation contract are configured and runtime-validated.
+No Wave 5 task or provisioning behavior is present.
+
+### R4.3.1 production native-template checkpoint
+
+The Class C production template `ROB Form 1768 Authorization` is configured and
+published in Australia as `sn_doc_pdf_template`
+`f99c3c0ac372031068a35f2b2b013138`. It has the ordered Employee and Supervisor
+participants, 26 governed body mappings, and two signature blocks. The six
+access-item mappings use stable internal access values; ARM is not a requested
+access option. The template is not bound directly to Employee Center intake.
+
+Controlled lifecycle execution remains blocked in this PDI. R3 decision fields
+can be seeded on a synthetic native case, but the three mandatory snapshot
+fields remain dictionary read-only and cannot be populated through the native
+form/list path. An exact temporary `rob_admin` grant did not weaken or bypass
+that dictionary boundary and was removed. Global script, broad cross-scope, or
+ACL-bypass fixture injection is not an approved substitute for
+`R2-AGENCY-01`. Therefore `R4-RUNTIME-01` remains open and both lifecycle
+initiation rules remain inactive.

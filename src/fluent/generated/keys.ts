@@ -13,6 +13,10 @@ declare global {
                         table: 'sys_module'
                         id: 'af2cb67914044d6f9b26e9adc35ff208'
                     }
+                    'capture-authorization-signature-evidence': {
+                        table: 'sys_script'
+                        id: 'c60738c0cc414b6d9f539f0461757859'
+                    }
                     'create-supervisor-exception-review-task-after-insert': {
                         table: 'sys_script'
                         id: 'dbf1f9645e35471bbaa426930f97b2d3'
@@ -29,9 +33,21 @@ declare global {
                         table: 'sys_script'
                         id: '082c84a532204a4ca92c398e1e30c5d2'
                     }
+                    'finalize-authorization-after-pdf-association': {
+                        table: 'sys_script'
+                        id: 'd9b24c5ee0b14167b052eeb2bd979bb6'
+                    }
                     'hr-task-rob-task-type-write': {
                         table: 'sys_security_acl'
                         id: '6f0d81c60c714da1bd0f1f2b4037cb72'
+                    }
+                    'initiate-payroll-authorization-lifecycle': {
+                        table: 'sys_script'
+                        id: '2d7ed4c1f8fd48ef8fa20a7cb699f105'
+                    }
+                    'initiate-workforce-authorization-lifecycle': {
+                        table: 'sys_script'
+                        id: '65fb34e074784dd1a17feff394e2ab64'
                     }
                     package_json: {
                         table: 'sys_module'
@@ -177,6 +193,10 @@ declare global {
                         table: 'sys_script'
                         id: 'e4e23ac4ce4f470388e7ba584fa2da44'
                     }
+                    'prevent-duplicate-final-authorization-pdf': {
+                        table: 'sys_script'
+                        id: '8b77a7a68ced43e486c3f3972b8d37ea'
+                    }
                     'rederive-requester-profile-snapshots': {
                         table: 'sys_ui_action'
                         id: 'ed5058ac65e3434a96851c97eb77ce4f'
@@ -297,13 +317,29 @@ declare global {
                         table: 'sys_module'
                         id: '1a197e45de33416ea795141a77307f5d'
                     }
+                    src_server_authorization_AuthorizationFinalizationService_js: {
+                        table: 'sys_module'
+                        id: '703e87e23758486e8fbd42519588e419'
+                    }
+                    src_server_authorization_AuthorizationLifecycleService_js: {
+                        table: 'sys_module'
+                        id: 'ac878e2178d0479bbc54491de5bad2a1'
+                    }
                     src_server_authorization_AuthorizationRepository_js: {
                         table: 'sys_module'
                         id: 'eefc13600408485582366eeda7e12c24'
                     }
+                    src_server_authorization_AuthorizationScopeService_js: {
+                        table: 'sys_module'
+                        id: 'ac8d4c8ffb104781b87bfdc525b503f6'
+                    }
                     src_server_authorization_ExpirationDateService_js: {
                         table: 'sys_module'
                         id: 'f796ca3a47db4f2685bbbefaa58461f8'
+                    }
+                    src_server_authorization_SignatureExecutionService_js: {
+                        table: 'sys_module'
+                        id: 'e75faf5552ec449da6bcff339f89bdcf'
                     }
                     'workforce-admin-corrected-at-read': {
                         table: 'sys_security_acl'
@@ -499,6 +535,14 @@ declare global {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2108496_hr_acces_existing_authorization_status'
                             value: 'active'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '00ad2b321aa44ceab8bcedbd6836ae70'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'decision_evaluated_at'
                         }
                     },
                     {
@@ -1602,6 +1646,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '183ffa68f5d84ff19a4da319fe530145'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'decision_evidence'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '18672800a8b246309358a13cfc62b469'
                         key: {
@@ -2324,6 +2377,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '2790bf99d78d40f683b83edd221ffd47'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'document_task_execution'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '27bcec922fd441dcaeafa83cedac7b37'
                         key: {
@@ -2741,6 +2802,15 @@ declare global {
                         key: {
                             name: 'x_2108496_hr_acces_rob_auth'
                             element: 'authorization_action'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '32d26424aac54ee7966e0195a94e6b14'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'evaluated_authorization'
+                            language: 'en'
                         }
                     },
                     {
@@ -3310,6 +3380,14 @@ declare global {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2108496_hr_acces_proposed_expiration_date'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '3fdfca0577f34260bfc15df761b01deb'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'final_authorization_date'
                         }
                     },
                     {
@@ -4186,6 +4264,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '536bc99dfeb44186bf8739ffb50a9318'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'decision_reason'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '5396ec7e94e74e0296c439d078974f53'
                         key: {
@@ -4290,6 +4376,14 @@ declare global {
                             name: 'x_2108496_hr_acces_rob_access'
                             element: 'form_1768_mapping'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '5587322771ee40c8a46bc8f64886e5a6'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'supervisor_approval_outcome'
                         }
                     },
                     {
@@ -4422,6 +4516,15 @@ declare global {
                             }
                             element: '.end_split'
                             position: '6'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '58de3f1806464bda8b2cd2588cd46cb4'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'final_pdf_attachment'
+                            language: 'en'
                         }
                     },
                     {
@@ -4588,6 +4691,15 @@ declare global {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2108496_hr_acces_employment_type'
                             value: 'contractor'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '5cc861328b074c1d8b366940562f11af'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'supervisor_approval_outcome'
+                            value: 'approved'
                         }
                     },
                     {
@@ -5209,6 +5321,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '68038bd483fc41e8b3e1dba24ca28335'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'evaluated_authorization'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '6837f35616ca48389b25b8959269bd42'
                         key: {
@@ -5247,6 +5367,14 @@ declare global {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2108496_hr_acces_position_title'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '68dc2426ed10474da4db3bf3791ed131'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'supervisor_document_task'
                         }
                     },
                     {
@@ -6047,6 +6175,14 @@ declare global {
                     },
                     {
                         table: 'sys_dictionary'
+                        id: '7d9eeae13fd3409e92c34fea80c4dba3'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'decision_evidence'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
                         id: '7e9ca725e78f44708772cc1819be8e90'
                         key: {
                             name: 'x_2108496_hr_acces_rob_config'
@@ -6332,6 +6468,15 @@ declare global {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2108496_hr_acces_existing_authorization_status'
                             value: 'lapsed'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '83433fdfec964d198e74589634e5c57c'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'decision_reason'
+                            language: 'en'
                         }
                     },
                     {
@@ -7043,6 +7188,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '909d6a17a7004840971ad4e7a5ccde61'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'document_task_execution'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '90b7a9013f9044389578a1635197ed1d'
                         key: {
@@ -7112,6 +7266,15 @@ declare global {
                             name: 'x_2108496_hr_acces_auth_detail'
                             element: 'status'
                             value: 'expired'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '92ea260d73b54a9c941600406e3101fe'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'supervisor_document_task'
+                            language: 'en'
                         }
                     },
                     {
@@ -8402,6 +8565,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: 'b6420f98f17641ad90cc21f732920eed'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'final_pdf_attachment'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: 'b65ea8ca10a444b991bc71ae1736502f'
                         key: {
@@ -8789,6 +8960,15 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: 'be50271e9ab74c46b6bff45d68abe54a'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'final_authorization_date'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: 'be643db0d9f543919a6dc720ce7e4597'
                         key: {
                             name: 'x_2108496_hr_acces_rob_config'
@@ -8953,6 +9133,15 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: 'c16e19b434204af2b1ce368bddce585b'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'employee_document_task'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: 'c1a1b08ebd814c0ca87496316cb3138e'
                         key: {
                             name: 'x_2108496_hr_acces_rob_access'
@@ -8976,6 +9165,15 @@ declare global {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2108496_hr_acces_exception_reason'
                             value: 'missing_organization'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'c26f0b030ba1438db72fff0887cd627b'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'supervisor_approval_outcome'
+                            value: 'denied'
                         }
                     },
                     {
@@ -9552,6 +9750,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: 'ce1bc85564b24662b791a861ce16c994'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'employee_document_task'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: 'ce6141b874c947b5abbc9ba6185b73ec'
                         key: {
@@ -9759,6 +9965,14 @@ declare global {
                         key: {
                             sys_security_acl: '9f20a0a0241d40cfb1366033226ec1af'
                             sys_user_role: 'a2d40eae0ff24c2ea1552e9e1b69bcb1'
+                        }
+                    },
+                    {
+                        table: 'sys_choice_set'
+                        id: 'd3f6e9d2513541c8a9c0d9bb13f9b40f'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'supervisor_approval_outcome'
                         }
                     },
                     {
@@ -10579,6 +10793,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: 'e9a2fc9dc5a44968b25aa0545031b341'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'decision_evaluated_at'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: 'e9c110e207384510b32a81c9faf3ff16'
                         deleted: true
@@ -10906,6 +11129,15 @@ declare global {
                         key: {
                             name: 'x_2108496_hr_acces_rob_config'
                             element: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'f2b0bd6142094d748d015bb7d1a1df1e'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'supervisor_approval_outcome'
+                            language: 'en'
                         }
                     },
                     {

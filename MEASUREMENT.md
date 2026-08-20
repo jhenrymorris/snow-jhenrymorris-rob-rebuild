@@ -1246,3 +1246,77 @@ Not exposed by session/tool — no estimate recorded.
 - Token accounting: not exposed by the session; not estimated.
 - Status: `R4-PDI-01 — RESOLVED; R4 unblocked for production lifecycle
   implementation`. R4 production lifecycle and Wave 5 have not started.
+
+### R4.3 â€” Production Authorization Lifecycle Implementation
+
+- Measurement shape: `one-pass` implementation/build/install attempt with a
+  runtime stop condition; no separate reviewer approval turn occurred.
+- Active session start: 2026-08-16 07:40:33 EDT.
+- Active session end: 2026-08-16 08:15:48 EDT.
+- Calendar span / instrumented active duration: 35 minutes 15 seconds.
+- Turn classification: implementation, defect/method rework, build/regression,
+  install/environment recovery, and runtime capability review.
+- Reviewer interventions: 0 during R4.3.
+- Silent defects: 1 source review found ServiceNow boolean reread needed to
+  accept both `1` and `true`; corrected before deployment.
+- Visible defects: 3. A transient form-layout build produced explained but
+  unacceptable UI key churn and was removed before final build. One newly added
+  test referenced an undefined local variable and was corrected. The SDK OAuth
+  alias disappeared after the first successful install; it was restored through
+  the signed-in OAuth flow, and a sandbox `fetch failed` retry then installed
+  normally. None changed product architecture.
+- Build/test evidence: R1 9/9, Wave 2 security 22/22, deployment configuration
+  16/16, R3 30/30, R4 36/36; normal/frozen builds PASS; five unchanged warnings.
+- Install evidence: normal installs `1794eba4c3368f1068a35f2b2b013159`
+  and `e7966fa0c3768f1068a35f2b2b0131f2`; no `--reinstall`.
+- Runtime evidence: installed fields/rules reread; initiation rules inactive;
+  HR Access privileges remain two approved reads; production stable-name native
+  template count 0. Controlled lifecycle execution was not run.
+- Count assertion: source architecture expectations pass, but required runtime
+  lifecycle/signature/PDF counts are unproven. Result FAIL/BLOCKED.
+- Token accounting: not exposed by the session; not estimated.
+- Status: R4 BLOCKED; `R4-RUNTIME-01`, `R4-DESIGN-01`, and `R2-AGENCY-01` OPEN.
+- Wave 5: not started.
+
+### R4.3.1 — Production Native Template and Runtime Validation
+
+- Measurement shape: turn-by-turn runtime/configuration continuation with
+  discrete reviewer authentication, privilege-removal, role-elevation, and
+  cleanup interventions.
+- Active session start evidence: 2026-08-20 16:14:24 EDT (first captured host
+  timestamp in this continuation).
+- Active session end: 2026-08-20 16:40:21 EDT.
+- Calendar span: 25 minutes 57 seconds. Active duration was not separately
+  exposed by the session and is not estimated.
+- Turn classifications: native configuration/runtime validation,
+  defect/method rework, security cleanup, environment/authentication waiting,
+  and blocker documentation.
+- Reviewer interventions: published/confirmed the native template configuration;
+  removed the unexpected broad privilege; elevated `security_admin`; signed out
+  and back in to refresh the exact temporary scoped role; elevated again for
+  cleanup.
+- Silent defects: 1. Six production access mappings initially used display
+  labels rather than stable internal values; corrected before lifecycle testing.
+- Visible defects: 2. Employee Center submission generated prohibited
+  `GlideRecord.setValue` privilege `6097f502c3fe031068a35f2b2b0131d9`, which was
+  removed. Native synthetic form seeding persisted R3 decision fields but not
+  the three dictionary-read-only snapshot fields, including after exact temporary
+  `rob_admin` grant `715c71c2c332431068a35f2b2b0131f1`; the grant was removed.
+- Runtime evidence: production template
+  `f99c3c0ac372031068a35f2b2b013138` is published with two ordered participants,
+  26 body mappings, and two signature blocks. HRC0001037 through HRC0001040
+  created 0 Authorization Forms and 0 Access Details. Lifecycle initiation rules
+  remain inactive.
+- Security cleanup: temporary scoped roles 0; prohibited broad privileges 0;
+  final HR Access cross-scope inventory is the two approved reads only.
+- Build/deploy: not applicable to R4.3.1 Class C template/runtime configuration;
+  existing unstaged R4.3 source was preserved and not redeployed.
+- Regression evidence: R1 9/9, Wave 2 security 22/22, deployment configuration
+  16/16, R3 30/30, and R4 36/36 PASS after documentation close-out.
+- Count assertion result: FAIL/BLOCKED. Production template expected 1, actual 1;
+  successful New/denial/Amendment/Renewal runtime expected, actual 0; duplicate
+  forms/details 0; fulfillment tasks 0; broad privileges remaining 0;
+  temporary roles remaining 0; `R2-AGENCY-01` remains open.
+- Token accounting: not exposed by the session; not estimated.
+- Status: R4 BLOCKED; `R4-RUNTIME-01`, `R4-DESIGN-01`, and `R2-AGENCY-01`
+  remain OPEN. No commit/tag and Wave 5 was not started.

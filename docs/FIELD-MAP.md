@@ -297,3 +297,21 @@ Post-signature binding contract:
   Date/Time.
 - Signed PDF Generated Date/Time = the distinct final-generation event.
 - Native signing tasks/execution remain the authoritative signature evidence.
+
+### R4.3 lifecycle evidence additions
+
+The Authorization Form now has system-managed, audited references for the
+evaluated decision, employee and supervisor Document Tasks, native Document Task
+Execution, explicit supervisor outcome, Final Authorization Date, and the one
+authoritative final PDF attachment. These fields record native evidence; they do
+not implement a custom signature, approval, or document store. Reuse continues
+to link the case to the existing Authorization Form and needs a separately
+approved request-level attestation persistence/fulfillment-gate contract.
+
+R4.3.1 configured the Class C production template `ROB Form 1768 Authorization`
+(`f99c3c0ac372031068a35f2b2b013138`) with 26 body mappings and two signature
+blocks. The stable access mapping values are `fpps_wtts`, `eopf`,
+`usa_staffing`, `oas_datamart`, `human_capital_reports`, and `wpc`; ARM remains
+provisioning metadata only. This is configuration evidence, not completed
+lifecycle evidence, because the PDI cannot safely fixture-populate the three
+mandatory native-case snapshots while `R2-AGENCY-01` is open.

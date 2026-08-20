@@ -203,3 +203,46 @@ Build evidence is package-specific and must remain distinct from install, runtim
 - Result: `R4-PDI-01` RESOLVED; R4 is unblocked for production lifecycle
   implementation. R4 is not PASS, `R2-AGENCY-01` remains OPEN, and Wave 5 has
   not started.
+
+### R4.3 production lifecycle implementation checkpoint
+
+- Added Class A lifecycle, scope, native evidence, denial, final-PDF guard, and
+  activation/lineage source plus 10 governed Authorization Form evidence fields.
+- R4 source/unit: 36/36 PASS. Regression: R1 9/9, Wave 2 security 22/22,
+  deployment configuration 16/16, R3 30/30.
+- Normal and frozen-key builds PASS with exactly five unchanged TS11 warnings.
+  Generated keys contain intentional additions only; existing key mutations 0.
+- First normal install succeeded (`1794eba4c3368f1068a35f2b2b013159`).
+  After the OAuth alias was restored, the safe-trigger update installed normally
+  (`e7966fa0c3768f1068a35f2b2b0131f2`). No `--reinstall` was used.
+- Installed privilege set remains the two approved read grants only. The two
+  initiation rules are inactive. Production template count for the stable name
+  is 0, so controlled runtime lifecycle acceptance was not executed.
+- Status: R4 BLOCKED by `R4-RUNTIME-01` and `R4-DESIGN-01`; no commit/tag and no
+  Wave 5 work.
+
+### R4.3.1 production native template and runtime validation
+
+- Configured and published the Class C native template `ROB Form 1768
+  Authorization` (`f99c3c0ac372031068a35f2b2b013138`). Runtime reread confirmed
+  two ordered participants, 26 body mappings, two signature blocks, and corrected
+  stable internal access-item mappings. The template is not bound to ordinary
+  Employee Center intake.
+- A first Employee Center case (`HRC0001037`) reproduced the known R2 snapshot
+  boundary and generated one prohibited broad `GlideRecord.setValue` privilege
+  (`6097f502c3fe031068a35f2b2b0131d9`). It was removed exactly; final privilege
+  inventory contains only the approved `sn_hr_core_service` and `sys_user` reads.
+- Native synthetic form seeding persisted decision fields on HRC0001038 through
+  HRC0001040 but did not persist Position, Organization, or Supervisor snapshots.
+  An exact temporary `rob_admin` grant
+  (`715c71c2c332431068a35f2b2b0131f1`) did not override dictionary read-only
+  behavior and was removed. No global script, ACL bypass, or broad privilege was
+  used.
+- The four stopped synthetic cases created 0 Authorization Forms and 0 Access
+  Details. Initiation rules remain inactive. No deployment was applicable because
+  the production template is Class C and application source was not changed by
+  R4.3.1.
+- Fresh regression: R1 9/9, Wave 2 security 22/22, deployment configuration
+  16/16, R3 30/30, and R4 36/36 PASS.
+- Result: R4 BLOCKED; `R4-RUNTIME-01`, `R4-DESIGN-01`, and `R2-AGENCY-01`
+  remain OPEN. No commit/tag and no Wave 5 work.

@@ -694,3 +694,26 @@ Review:
 - [ ] Retention requirements
 - [ ] ATF behavior
 - [ ] Regulated-environment restrictions
+
+## R4.3 native production configuration required
+
+Before enabling either installed R4 lifecycle-initiation Business Rule, the
+platform owner must configure and validate production Document Templates for
+both native case subclasses, ordered employee and supervisor participants,
+explicit APPROVED/refused semantics, post-signature rendering from committed
+native evidence, and final PDF association only to the Authorization Form.
+The stable runtime template name is `ROB Form 1768 Authorization`.
+
+Current Australia evidence: one published Class C production template exists
+with that exact name (`f99c3c0ac372031068a35f2b2b013138`). It has the ordered
+Employee/Supervisor participant chain, 26 governed body mappings, and two
+signature blocks. The template is not bound to ordinary intake. Both initiation
+rules remain intentionally inactive because a controlled native-case fixture
+cannot safely persist the three dictionary-read-only snapshots in this PDI.
+Adding an exact temporary `rob_admin` assignment did not override dictionary
+read-only behavior; the assignment was removed. Do not use global script,
+broad cross-scope privilege, ACL bypass, or a parallel store to manufacture the
+fixture. Do not enable the initiation rules until `R2-AGENCY-01` is satisfied
+and controlled New, denial, Amendment, Renewal, idempotency, lineage,
+attachment-security, and Reuse-contract tests pass. No broad cross-scope
+privilege is permitted.

@@ -141,3 +141,15 @@ The approved post-signature design resolved the remaining PDI capability gap:
 
 `R4-PDI-01` is **RESOLVED** for native capability. R4 is unblocked for production
 lifecycle implementation, but R4 is not complete and `R2-AGENCY-01` remains OPEN.
+
+### R4.3 implementation classification
+
+| Artifact | Classification | Current result |
+|---|---|---|
+| Deterministic lifecycle/scope/signature/finalization services | Class A | Implemented; 36/36 source/unit tests PASS |
+| Authorization Form evidence fields and guarded Business Rules | Class A | Installed normally; initiation rules intentionally inactive |
+| Production native Document Templates, participants, launch, and post-signature rendering | Class C | PARTIAL: published production template `ROB Form 1768 Authorization` (`f99c3c0ac372031068a35f2b2b013138`) has two ordered participants, 26 body mappings, and two signature blocks; controlled launch/finalization remains blocked because the PDI cannot safely populate the three mandatory dictionary-read-only native-case snapshots while `R2-AGENCY-01` is open |
+| Reuse request-level attestation persistence contract | Class D pending design | OPEN; no duplicate form/detail workaround permitted |
+
+R4 remains BLOCKED until the Class B/C production path and Reuse evidence
+contract are completed and runtime-proven. `R2-AGENCY-01` remains OPEN.
