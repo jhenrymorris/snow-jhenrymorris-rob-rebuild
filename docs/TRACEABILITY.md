@@ -137,6 +137,20 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 | Reuse | `ReuseAttestationService.js`; audited case evidence fields on both native subclasses; no new form/details/PDF/supersession | M1 source/unit PASS — request-level contract frozen; `R4-DESIGN-01` RESOLVED; runtime remains blocked by `R2-AGENCY-01` |
 | R2 snapshots | `R2-AGENCY-01` | OPEN; unchanged. R4.3.1 native form seeding persisted decision fields but not the three dictionary-read-only snapshots; no bypass was accepted |
 
+## M4 Fulfillment Traceability
+
+| Requirement | Source / test | Status |
+|---|---|---|
+| AC-8 / W5-01, W5-04 Staffing grouping | `FulfillmentRoutingService`, `FulfillmentOrchestrationService`, TM-118 | Source/unit PASS |
+| AC-9 / W5-02, W5-05 Analytics grouping | Same services, TM-118 | Source/unit PASS |
+| AC-10 / W5-03 mixed split | Same services, TM-118 | Source/unit PASS |
+| AC-11 / W5-06-W5-08 WPC/OM/Exception | Routing/orchestration services, TM-119-TM-120 | Source/unit PASS; production OM fixture blocked |
+| AC-12 / W5-09 closure guard | `FulfillmentEvidenceService`, `FulfillmentClosureService`, TM-122-TM-123 | Source/unit PASS |
+| W5-10-W5-12 evidence/waiver | Evidence service and native HR Task fields, TM-122 | Source/unit PASS |
+| W5-15 overdue OM escalation | `FulfillmentEscalationService`, TM-124 | Source/unit foundation PASS; production notification Class C |
+| IDP-04-IDP-07 | Stable case/type key and existing-task checks, TM-121 | Source/unit PASS |
+| Production fulfillment runtime | Inactive Business Rules on both native case subclasses | BLOCKED BY M2/M3 |
+
 ## Wave 1 Batch 2 Implementation
 
 | Step | SDK artifact | Test reference | Status |

@@ -85,6 +85,20 @@ R0 records implementation deltas only. It does not change application metadata o
   and invalidates stale context before future fulfillment eligibility.
 - [ ] `R2-AGENCY-01` remains OPEN; no R4 fixture closes it.
 
+## M4 - Fulfillment & Operations (Conditional Source / Unit)
+
+- [x] Implement metadata-driven Staffing/Analytics/OM routing with one native HR
+  Task per Parent Case + Task Type and repeat-safe planning.
+- [x] Implement missing-OM Exception Review, evidence/waiver validation,
+  item-specific Access Detail activation, parent closure guard, and
+  configuration-driven OM escalation foundations.
+- [x] Preserve zero direct external provisioning integrations and zero custom
+  fulfillment tables; keep both production orchestration entry points inactive.
+- [ ] Production fulfillment runtime and persona validation - BLOCKED BY M2/M3.
+- [ ] Renewal/expiration/lapse automation - PENDING runtime prerequisite; not
+  implemented in M4 source/unit foundation.
+- [ ] `R2-AGENCY-01` remains OPEN; M4 fixtures do not close it.
+
 ## R0 Boundary
 
 No item above is authorized for implementation in R0. Unsupported native capabilities must be recorded in Appendix L rather than replaced with custom request, task, approval, signature, PDF, attachment, or authentication architecture.

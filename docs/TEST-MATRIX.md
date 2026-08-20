@@ -152,3 +152,20 @@ W1-17: Attachment uploaded, downloaded, and removed
 | TM-114 | Production native template and launch | Stable-name production template count 1; published template has two ordered participants, 26 body mappings, and two signature blocks; initiation rules remain inactive | PARTIAL / BLOCKED — R4-RUNTIME-01 |
 | TM-115 | Reuse request-level attestation | Exactly one qualifying Active authorization; no form/details/PDF/supersession; APPROVED + signed native evidence gates future fulfillment; denial leaves authorization unchanged; stale context invalidates; repeat-safe | Local source/unit | PASS — `R4-DESIGN-01` RESOLVED; runtime remains blocked by `R2-AGENCY-01` |
 | TM-116 | Controlled New/denial/Amendment/Renewal runtime | Synthetic R3 decision fields persisted, but the three mandatory dictionary-read-only snapshots could not be populated through native UI even with an exact temporary `rob_admin` grant; grant removed; zero forms/details created | NOT RUN / BLOCKED by R2-AGENCY-01 and R4-RUNTIME-01 |
+
+## M4 Conditional Fulfillment Evidence
+
+| ID | Test | Evidence | Result |
+|---|---|---|---|
+| TM-117 | Hard gate and stopped-request guard | False gate, Denied, and Withdrawn fixtures create zero tasks | Local source/unit PASS |
+| TM-118 | Staffing/Analytics grouping | One team task per Parent Case + Task Type for single, multiple, and mixed items | Local source/unit PASS |
+| TM-119 | WPC routing | Analytics + OM; OM metadata remains ARM provisioning / OAS target | Local source/unit PASS |
+| TM-120 | Missing OM | One Exception Review, no OM completion, parent remains ineligible | Local source/unit PASS |
+| TM-121 | Task idempotency | Stable case/type keys suppress duplicate team, OM, and Exception work | Local source/unit PASS |
+| TM-122 | Evidence and item activation | Closed-only rejected; completion/waiver evidence required; unrelated details remain unchanged | Local source/unit PASS |
+| TM-123 | Parent closure and WPC guard | Incomplete required task/exception blocks closure; WPC waits Analytics + OM | Local source/unit PASS |
+| TM-124 | OM escalation foundation | Configuration-driven, retry-safe, privacy-safe plan retains open task/case | Local source/unit PASS |
+| TM-125 | Architecture guard | Native task only; inactive entry points; no direct provisioning integration | Local source/unit PASS |
+
+Focused M4 result: 26/26 PASS. Production fulfillment runtime and native persona
+validation remain **BLOCKED BY M2/M3** and are not represented as PASS.

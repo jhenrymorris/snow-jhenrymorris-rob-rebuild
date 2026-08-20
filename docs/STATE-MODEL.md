@@ -38,3 +38,20 @@ context remains unchanged. `denied` and `invalidated` keep that gate false.
 None of these states changes the existing Active Authorization Form or its
 Access Details. Reprocessing an unchanged completed attestation is idempotent;
 a changed context returns the case for decision re-evaluation/Exception.
+
+## M4 Fulfillment State Guards
+
+- A false fulfillment gate, Denied request, or Withdrawn request creates zero
+  fulfillment tasks.
+- A native HR Task is closure-satisfying only when it is closed and carries a
+  permitted outcome plus the required completion/waiver evidence and timestamp.
+- Staffing completion can activate only Staffing-dependent Access Details;
+  Analytics completion can activate only Analytics-dependent details.
+- Workforce Profile Charts remains Pending Fulfillment until both Analytics and
+  Operations Manager requirements are satisfied. Missing OM creates an
+  unresolved Exception Review requirement.
+- The parent case is closure-eligible only after all applicable details are
+  Active and no unresolved required task/exception remains.
+
+These are deterministic source/unit guards. Exact native HR Case/Task state
+mapping and production activation remain blocked by M2/M3.

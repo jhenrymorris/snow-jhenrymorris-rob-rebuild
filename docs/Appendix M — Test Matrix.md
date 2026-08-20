@@ -2496,3 +2496,16 @@ No wave or release shall be considered complete solely because code builds or me
 These are native capability tests, not production lifecycle acceptance and not
 evidence that `R2-AGENCY-01` is closed. They resolve `R4-PDI-01` and unblock R4
 production lifecycle implementation; they do not mark R4 PASS.
+
+## M4 Conditional Source/Unit Evidence
+
+W5-01 through W5-09, W5-10 through W5-12, W5-15, IDP-04 through IDP-07,
+FUL-PROHIB-01, and FUL-PROHIB-06 are covered by 26 deterministic local tests.
+The suite proves gate enforcement, team grouping, mixed requests, WPC
+Analytics-plus-OM routing, ARM/OAS separation, missing-OM Exception Review,
+retry safety, completion/waiver evidence, item-specific activation, parent
+closure, stopped-request guards, and privacy-safe/configuration-driven OM
+escalation planning.
+
+This is source/unit evidence only. Production HR Task creation, assignment,
+persona security, notification delivery, and closure remain BLOCKED BY M2/M3.

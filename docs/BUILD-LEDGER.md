@@ -270,3 +270,32 @@ Build evidence is package-specific and must remain distinct from install, runtim
 - `R4-DESIGN-01` RESOLVED and R4 design FROZEN. `R4-RUNTIME-01` remains
   BLOCKED BY `R2-AGENCY-01`; lifecycle initiation remains inactive and Wave 5
   was not started.
+
+## M4 - Fulfillment & Operations (Conditional Source / Unit)
+
+- Branch: `feature/05-fulfillment-orchestration`, created from M1 commit
+  `3483d1d`; starting tree clean and both R4 initiation rules inactive.
+- Added five Class A deterministic services for routing, task planning,
+  evidence, item/parent closure, and configuration-driven OM escalation.
+- Extended existing native `sn_hr_core_task` with the approved task types,
+  stable business key, authorization/access references, ARM/OAS metadata, and
+  completion/exception/waiver evidence. Added zero custom tables.
+- Added two Class A case entry-point Business Rules; both are installed inactive.
+  Production execution remains blocked by M2/M3.
+- Focused M4 tests: 26/26 PASS. Regression: R1 9/9, Wave 2 security
+  22/22, deployment configuration 16/16, R3 30/30, R4 52/52 PASS.
+- Normal and frozen-key SDK builds PASS with exactly the five pre-existing TS11
+  qualifier warnings. Generated-key review: intentional additions only;
+  existing-key mutations/deletions 0.
+- Two normal install attempts failed before an install context with SDK
+  `fetch failed`; OAuth was refreshed through the supported flow. A diagnostic
+  normal install (no `--reinstall`) then PASSed with rollback context
+  `0108e642c33e431068a35f2b2b013105`.
+- Installed verification: M4 rules 2/2 inactive; R4 rules 2/2 inactive; three
+  new fulfillment task choices reread by exact sys_id; production Staffing,
+  Analytics, and OM tasks 0; custom fulfillment tables 0; cross-scope inventory
+  unchanged at the two approved reads. The PDI Table API did not enumerate
+  augmented HR Task dictionaries through `sys_dictionary`; this is recorded as
+  an evidence limitation, not production runtime acceptance.
+- Result: M4 IN PROGRESS; fulfillment source/unit foundation PASS; production
+  runtime BLOCKED BY M2/M3; renewal/expiration/lapse PENDING; M5 not started.

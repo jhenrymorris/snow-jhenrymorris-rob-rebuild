@@ -282,3 +282,16 @@ alter the reused authorization or its details/PDF. A deterministic context key
 invalidates approval after a Supervisor, scope, decision, or authorization
 context change. No broad cross-scope privilege, temporary role, snapshot
 bypass, custom approval/signature table, or new business table is introduced.
+
+## 13. M4 Fulfillment Security Boundary
+
+M4 adds only application-owned fields to native `sn_hr_core_task`. Task type,
+business key, routing references, system/target metadata, completion timestamp,
+and waiver actor/time are system-managed. Native HR Task record security remains
+the outer boundary; final Wave 7 persona hardening is not claimed here.
+
+The deterministic source accepts no credentials and calls no external system.
+Fixture tests emit no real notifications. Overdue-OM output contains only task,
+parent, due date, and a secure record path; it excludes signed PDFs, Business
+Justification, signatures, and sensitive PII. Broad cross-scope privileges,
+temporary roles, direct integrations, and production task creation remain zero.

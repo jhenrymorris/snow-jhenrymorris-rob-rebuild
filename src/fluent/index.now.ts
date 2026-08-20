@@ -3,3 +3,4 @@
 // but this import makes the access-item ACL dependency auditable.
 import './security/rob-access-item-reference-acls.now'
 import './business-rules/rob-authorization-lifecycle.now'
+import './business-rules/rob-fulfillment-orchestration.now'

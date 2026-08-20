@@ -1568,3 +1568,17 @@ Production orchestration may be Class B or C depending on the agency-approved
 HR Core/Document Templates artifact. It must preserve the same readiness,
 evidence, denial, association, and privilege contracts; this classification does
 not authorize a source-first substitute or a custom signature/PDF table.
+
+## M4 Conditional Fulfillment Classification
+
+- Class A: deterministic fulfillment routing, orchestration, evidence, closure,
+  and escalation-plan services; scoped columns on native `sn_hr_core_task`; and
+  inactive case Business Rules.
+- Class C: assignment-group values, task form/layout, final supported native
+  state mappings, notification activation, and production persona/runtime proof.
+- Deferred/prohibited: direct external provisioning integrations, custom
+  fulfillment/evidence tables, and renewal/expiration/lapse automation before
+  its runtime prerequisites.
+
+An SDK build/install of inactive Class A artifacts is not production runtime
+acceptance. M4 production execution remains blocked by M2/M3.

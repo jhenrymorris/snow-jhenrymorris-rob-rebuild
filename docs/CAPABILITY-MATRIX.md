@@ -153,3 +153,17 @@ lifecycle implementation, but R4 is not complete and `R2-AGENCY-01` remains OPEN
 
 R4 remains BLOCKED until the Class B/C production path and Reuse evidence
 contract are completed and runtime-proven. `R2-AGENCY-01` remains OPEN.
+
+## M4 Conditional Fulfillment Classification
+
+| Artifact | Classification | Current result |
+|---|---|---|
+| Deterministic routing, orchestration, evidence, closure, and OM escalation services | Class A | Source/unit implemented; 26 focused tests PASS |
+| Application-owned fulfillment fields on native `sn_hr_core_task` | Class A | SDK-supported source; normal/frozen build evidence recorded in Build Ledger |
+| Payroll and Workforce Administration fulfillment entry points | Class A | Source-controlled and intentionally inactive while M3 is blocked |
+| Assignment groups, native HR Task form/layout, final state mapping, notifications | Class C | Environment configuration/runtime validation pending M2/M3 |
+| ARM/OAS/Staffing system integrations | Deferred/prohibited for MVP | No credentials, REST artifacts, spokes, or calls |
+
+M4 source/unit fulfillment is conditionally implemented. M4 production runtime
+is **BLOCKED BY M2/M3**; this classification does not close `R2-AGENCY-01` or
+authorize renewal/expiration/lapse automation.

@@ -336,3 +336,31 @@ frozen for M4 but no fulfillment behavior is implemented here.
 `R4-DESIGN-01` is RESOLVED. `R4-RUNTIME-01` remains BLOCKED BY
 `R2-AGENCY-01`; both production lifecycle initiation Business Rules remain
 inactive.
+
+## M4 Conditional Fulfillment Foundation
+
+M4 keeps authorization and fulfillment separate. A deterministic orchestration
+service consumes an already-approved fulfillment gate plus governed Access
+Detail routing snapshots. It groups work by native HR Task type, using the
+stable business key `Parent HR Case + ROB Task Type`, and plans at most one
+Staffing, one Analytics, one Operations Manager, and one unresolved-cycle
+Exception Review task per case.
+
+Staffing items share one Staffing task. Analytics items share one Analytics
+task. Workforce Profile Charts requires the Analytics task and a distinct
+Operations Manager ARM Role Assignment task; the latter records provisioning
+system `ARM` and target `OAS`. A missing Operations Manager produces one
+Exception Review task and cannot satisfy the WPC requirement.
+
+Task closure alone is not fulfillment evidence. A satisfying task requires a
+governed outcome, completion evidence, and completion timestamp; waiver and Not
+Required outcomes require their additional authorization evidence. Access
+Details activate independently only after their own task requirements pass, and
+the parent closure guard requires every applicable detail and unresolved
+exception to be satisfied.
+
+The two Class A case entry-point Business Rules are intentionally inactive.
+M4 source/unit validation uses synthetic gate and Operations Manager fixtures;
+production runtime remains blocked by M2/M3. No external provisioning API,
+custom fulfillment table, renewal scheduler, or production notification is
+introduced.

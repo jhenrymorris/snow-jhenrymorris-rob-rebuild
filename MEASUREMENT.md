@@ -1400,3 +1400,92 @@ Not exposed by session/tool — no estimate recorded.
 - `R2-AGENCY-01`: OPEN.
 - Both production lifecycle initiation Business Rules remain inactive.
 - M2, M3, M4, M5, and Wave 5: not started.
+
+## M4 - Fulfillment & Operations
+
+### Conditional Source / Unit Record
+
+- Measurement shape: `one-pass`.
+- Start timestamp: 2026-08-20 19:02:41 EDT.
+- End/install-verification timestamp: 2026-08-20 19:29:43 EDT.
+- Instrumented calendar span: 27 minutes 02 seconds.
+- Active session duration: not separately exposed. The continuous instrumented
+  span is reported without estimating authentication/environment wait time.
+- Branch: `feature/05-fulfillment-orchestration`.
+- Starting commit: `3483d1d`.
+- Target: Australia PDI `dev285962`; SDK 4.8.1.
+- Scope: conditional source/unit fulfillment only. M2/M3 blockers preserved;
+  production task generation and renewal/expiration/lapse excluded.
+- Token accounting: not exposed by the session/tool - no estimate recorded.
+
+#### One-pass step narrative
+
+| Step | Activity | Outcome | Classification | Evidence |
+|---:|---|---|---|---|
+| 1 | Baseline/governance/native-model inventory | Clean M1 descendant; R4 triggers inactive; approved native task/detail/config fields identified | `clean` | Git/source/PDI read-only queries |
+| 2 | Deterministic implementation | Five services, native HR Task fields, and two inactive entry points; zero integrations/custom tables | `clean` | Source diff |
+| 3 | Focused validation | M4 26/26 PASS | `clean` | `npm run test:m4` |
+| 4 | Regression/build gates | 155/155 tests; normal/frozen build PASS; five unchanged warnings | `clean` | npm/SDK output |
+| 5 | Targeted physical-field review | Wrong inactive Reuse adapter field identified and corrected before deployment | `method-rework` | Requested-items source assertion |
+| 6 | Deployment | Two pre-context transport failures; OAuth refresh; diagnostic normal install PASS without reinstall | `environment` | Rollback context `0108e642c33e431068a35f2b2b013105` |
+| 7 | Installed verification | M4/R4 rules inactive, zero production tasks/tables/privilege additions | `clean` | Read-only SDK queries |
+
+#### Reviewer interventions
+
+| # | Point in package | Intervention | Result |
+|---:|---|---|---|
+| 1 | Deployment authentication | User completed the ServiceNow OAuth sign-in requested by the supported SDK flow | `rob-pdi` credential refreshed; normal install resumed |
+
+#### Defects and environment friction
+
+- Silent defects: 1. Targeted physical-field review found
+  `x_2108496_hr_acces_requested_access_items` in the inactive Reuse adapter,
+  while the approved repository field is
+  `x_2108496_hr_acces_requested_items`. Corrected and regression-tested before
+  deployment; no runtime state was affected.
+- Visible product defects: None.
+- Environment friction: two `fetch failed` normal-install attempts created no
+  install context. OAuth refresh succeeded; a debug-logging invocation of the
+  same normal install path completed without `--reinstall`.
+
+#### Count assertion
+
+- Native HR Task models used: expected 1; actual 1 (`sn_hr_core_task`).
+- ROB fulfillment task types: expected 4; actual 4 in source (Staffing,
+  Analytics, OM ARM Assignment, Exception Review).
+- Inactive production M4 entry points: expected 2; actual 2 installed inactive.
+- Production fulfillment tasks created: expected 0; actual 0.
+- Custom fulfillment/evidence tables added: expected 0; actual 0.
+- Direct provisioning integrations/calls: expected 0; actual 0.
+- Broad cross-scope privileges added: expected 0; actual 0; installed inventory
+  remains the two approved reads only.
+- Temporary roles added/remaining: expected 0; actual 0. The queried Amos Linnan
+  membership is native `snc_internal`, not a temporary scoped role.
+- Existing generated-key mutations/deletions: expected 0; actual 0.
+- `R2-AGENCY-01` closed: expected no; actual no.
+- Result: PASS for conditional source/unit scope.
+
+#### Build / deployment evidence
+
+- Tests: R1 9/9; Wave 2 security 22/22; deployment configuration 16/16;
+  R3 30/30; R4 52/52; M4 26/26.
+- Normal SDK build: PASS.
+- Frozen-key build: PASS.
+- Warnings: exactly five unchanged TS11 reference-qualifier warnings.
+- Normal install: PASS; no `--reinstall`; rollback context
+  `0108e642c33e431068a35f2b2b013105`.
+- Installed source verification: both M4 rules and both R4 lifecycle rules
+  inactive; zero Staffing/Analytics/OM tasks; zero fulfillment tables; no broad
+  privilege addition. The Table API did not enumerate augmented task
+  dictionaries, while exact installed choice records and Business Rules did
+  reread successfully; production runtime is not claimed.
+
+#### Package result
+
+- M4: IN PROGRESS.
+- Fulfillment source/unit foundation: PASS.
+- Fulfillment production runtime: BLOCKED BY M2/M3.
+- Renewal/expiration/lapse: PENDING runtime prerequisite.
+- M2: BLOCKED-PLATFORM; `R2-AGENCY-01` OPEN.
+- M3: BLOCKED BY M2.
+- M5: NOT STARTED.

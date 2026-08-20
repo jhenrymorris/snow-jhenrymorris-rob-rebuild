@@ -717,3 +717,24 @@ fixture. Do not enable the initiation rules until `R2-AGENCY-01` is satisfied
 and controlled New, denial, Amendment, Renewal, idempotency, lineage,
 attachment-security, and Reuse-contract tests pass. No broad cross-scope
 privilege is permitted.
+
+## M4 Fulfillment Runtime Prerequisites
+
+The M4 source/unit foundation is installed only with both production
+fulfillment Business Rules inactive. Do not enable them until M2/M3 production
+gates are proven and the platform owner has completed these Class C items:
+
+- populate the active ROB Configuration Staffing, Analytics, OM escalation, and
+  Exception Review groups;
+- approve Operations Manager and Exception due/escalation day values;
+- place the application-owned fulfillment/evidence fields on the native HR Task
+  form for the correct personas;
+- map approved native HR Task states to Completed, Waived, Not Required, and
+  Failed/Exception without treating closed-only as completion;
+- validate field/persona access, audited waiver handling, secure task links, and
+  privacy-safe notification content;
+- verify the two orchestration rules remain inactive until a separately approved
+  production enablement and M3 gate handoff.
+
+No REST Message, IntegrationHub spoke, credential, direct provisioning action,
+custom task table, or renewal scheduler is part of M4.

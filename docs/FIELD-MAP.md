@@ -339,3 +339,32 @@ Supervisor, selected authorization, status/version/expiration, and requested
 scope used only for repeat safety and stale-attestation invalidation. It is not
 an end-user field or a substitute authorization artifact. Reuse adds no field
 to the Authorization Form or Authorized Access Detail.
+
+## 11. M4 Native HR Task Physical Fields
+
+The approved HR Task logical fields are implemented as application-owned
+columns on existing `sn_hr_core_task`; no custom task table is added.
+
+| Logical field | Physical field |
+|---|---|
+| Task Type | `x_2108496_hr_acces_rob_task_type` |
+| Stable business key | `x_2108496_hr_acces_fulfillment_business_key` |
+| Related Authorization | `x_2108496_hr_acces_related_authorization` |
+| Access Items | `x_2108496_hr_acces_rob_access_items` |
+| Provisioning System | `x_2108496_hr_acces_external_provisioning_system` |
+| Target System | `x_2108496_hr_acces_external_target_system` |
+| Fulfillment Outcome | `x_2108496_hr_acces_fulfillment_outcome` |
+| Completion Evidence | `x_2108496_hr_acces_completion_evidence` |
+| Provisioning Completed | `x_2108496_hr_acces_provisioning_completed` |
+| Completion Date/Time | `x_2108496_hr_acces_completion_timestamp` |
+| Exception Reason | `x_2108496_hr_acces_exception_reason` |
+| Formally Waived | `x_2108496_hr_acces_formally_waived` |
+| Waiver Reason | `x_2108496_hr_acces_waiver_reason` |
+| Waived By | `x_2108496_hr_acces_waived_by` |
+| Waiver Date/Time | `x_2108496_hr_acces_waiver_date_time` |
+
+Task Type values are `staffing_fulfillment`, `analytics_fulfillment`,
+`operations_manager_arm_assignment`, and `exception_review`. Assignment group,
+assigned user, state, due date, work notes, close notes, and parent remain native
+HR Task fields. Production form/list placement and environment groups remain
+Class C configuration.
