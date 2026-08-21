@@ -1707,3 +1707,72 @@ Not exposed by session/tool — no estimate recorded.
   metrics; not estimated.
 - Result: M2 BLOCKED-MANUAL-CONFIGURATION; `R2-AGENCY-01` OPEN; Australia SDK
   installer defect OPEN; M3 NOT READY / not started.
+
+#### M2 final runtime alignment and closeout attempt
+
+- Date: `2026-08-21`.
+- Shape: one-pass native reconciliation and controlled runtime validation.
+- Runtime/configuration work: reconciled both existing subclass intake rules
+  to the committed M2 resolver, removed all deprecated case-snapshot writes,
+  exposed the non-client-callable sandbox resolver to native catalog callers,
+  and verified both live qualifiers.
+- Qualifier evidence: Supervisor returned exactly the two active configured
+  group members; the inactive member and active nonmember returned no results.
+  Organization returned the configured root and two children; the unrelated
+  department returned no results.
+- Runtime evidence: controlled Payroll cases `HRC0001048` and `HRC0001049`
+  reached the reconciled rule. Exact HR Service caller reads were permitted,
+  after which Australia refused same-record `setValue` on `opened_by`,
+  `opened_for`, and `subject_person`. The attempt generated one prohibited
+  global `GlideRecord.setValue` Execute privilege, which was deleted by exact
+  sys_id; final scriptable privilege count is zero.
+- Safe state: both M2 intake validation rules inactive; both R4 and both M4
+  production entry points remain inactive; M3 not started.
+- Reviewer interventions: 1 — authorization for final M2 runtime alignment and
+  closeout. Silent defects: 0. Visible defects: 1 platform boundary. Full M2
+  runtime acceptance and regression were not run after the mandatory platform
+  stop. Duration/token accounting not exposed; not estimated.
+- Result: M2 BLOCKED-PLATFORM; `R2-AGENCY-01` OPEN; M3 NOT READY.
+
+#### M2 final identity ownership closure
+
+- Date: `2026-08-21`; shape: one-pass controlled native-intake proof, source
+  alignment, full regression, and closeout evidence.
+- Architecture decision: native HRSD owns and populates `opened_by`,
+  `opened_for`, and `subject_person`; HR Access validates that all three are
+  present and equal the authenticated user but never writes them.
+- Runtime evidence: ordinary synthetic employee Amos Linnan
+  (`56826bf03710200044e0bfc8bcbe5dca`) submitted Payroll case `HRC0001050`
+  (`f51c629ac3fe871068a35f2b2b01316f`) and Workforce Administration case
+  `HRC0001051` (`ed8c261ec3fe871068a35f2b2b013103`) through Employee Center.
+  Committed reread returned Amos for all three identity fields on both cases.
+- Negative evidence: neither production record producer exposes a requested-
+  for, `opened_for`, or `subject_person` input. Source tests prove supplied
+  mismatches and missing native identities are rejected before profile lookup,
+  without field overwrite, lifecycle, signature, or fulfillment work.
+- Security evidence: HR Access has only exact table Read privileges; broad
+  API/write privileges 0 and temporary roles 0. Three record-specific native
+  caller-access Read entries (two HR Service rule callers and one HR Profile
+  resolver caller) were restored after controlled script reconciliation.
+- Validation: M2 19/19, R1 9/9, Wave 2 security 22/22, deployment
+  configuration 16/16, R3 30/30, R4 52/52, and M4 26/26 PASS. Normal and
+  frozen-key builds PASS with five unchanged TS11 warnings and zero generated-
+  key diff.
+- Follow-on runtime result: after exact caller Reads were allowed, Payroll case
+  `HRC0001053` reached the non-identity gate initialization and Australia
+  refused `setValue` on application-owned field
+  `x_2108496_hr_acces_exception_review_required`. The generated broad
+  `GlideRecord.setValue` Execute privilege (`383f261ec3fe871068a35f2b2b013139`)
+  was removed through supported UI and verified absent.
+- Production guard: both M2 intake validation rules, both R4 entry points, and
+  both M4 entry points are inactive. M3 was not started.
+- Reviewer interventions: 1 - authorization of the final binary native
+  identity ownership test. Silent defects: 0. Visible defects: 1 - the broader
+  Australia same-record `GlideRecord.setValue` boundary also blocks the
+  application-owned intake gates. The Australia SDK installer defect remains
+  open with the verified manual metadata workaround.
+- Active duration and token accounting were not exposed as reliable metrics;
+  they were not estimated. Environment/authentication waiting was excluded.
+- Result: native HRSD identity ownership VERIFIED, but M2 BLOCKED-PLATFORM;
+  `R2-AGENCY-01` OPEN; platform-owner action is required for the application-
+  owned same-record gate fields; M3 NOT READY.

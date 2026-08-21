@@ -402,13 +402,9 @@ test('employee-facing dependencies remain portal-safe and self-only', () => {
         requesterSecurity,
         /suppliedSubjectPersonId !== authenticatedUserId/
     )
-    assert.match(
+    assert.doesNotMatch(
         requesterSecurity,
-        /current\.setValue\('opened_for', authenticatedUserId\)/
-    )
-    assert.match(
-        requesterSecurity,
-        /current\.setValue\('subject_person', authenticatedUserId\)/
+        /(?:setValue\(['"](?:opened_by|opened_for|subject_person)['"]|\.(?:opened_by|opened_for|subject_person)\s*=)/
     )
     assert.doesNotMatch(
         requesterSecurity,

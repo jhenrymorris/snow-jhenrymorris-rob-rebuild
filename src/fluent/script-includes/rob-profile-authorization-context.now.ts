@@ -5,7 +5,10 @@ export const robProfileAuthorizationContext = ScriptInclude({
     name: 'RobProfileAuthorizationContext',
     apiName: 'x_2108496_hr_acces.RobProfileAuthorizationContext',
     active: true,
-    accessibleFrom: 'package_private',
+    // Native catalog reference qualifiers execute outside this application
+    // scope. Keep the resolver server-only, but permit that sandbox caller to
+    // evaluate the two read-only qualifier methods.
+    accessibleFrom: 'public',
     sandboxCallable: true,
     description:
         'Resolves authoritative Position, Organization, and validated NSF Supervisor context without persisting immutable snapshots on native HR Cases.',

@@ -22,7 +22,12 @@ R0 records implementation deltas only. It does not change application metadata o
 - [x] Validate Employee Center and the two native HR Services.
 - [x] Validate server-side self-submission identity stamping (`src/fluent/server/requester-profile-snapshot.server.js` and the two Class B producer scripts).
 - [x] Validate active-reference requested access, category filtering, Business Justification, Employment Type, and conditional Access End Date.
-- [ ] **R2-AGENCY-01 — profile/form snapshot architecture.** APPROVED; source/unit PASS; BLOCKED-PLATFORM at Australia installation/runtime. Native-case snapshot persistence is no longer a product prerequisite. The replacement resolver, controls, and Authorization Form gate build and test, but repeated normal installs (`0.0.1` and `0.0.2`, never `--reinstall`) processed zero new metadata. Runtime acceptance and M3 readiness remain open.
+- [ ] **R2-AGENCY-01 — profile/form snapshot architecture.** Native HRSD
+  identity ownership is verified on both intake paths, and source/unit plus
+  regression pass. M2 remains BLOCKED-PLATFORM because Australia also refuses
+  `GlideRecord.setValue` on the application-owned native-case intake gate
+  fields. The Australia SDK installer defect remains open with the supported
+  manual metadata workaround verified. M3 is NOT READY.
 - [ ] **M2 controlled manual recovery.** Explicitly approved after the
   definitive Australia installer reproduction. Four primary M2 dictionary
   records were reconciled through supported native UI, but the first
@@ -73,7 +78,8 @@ R0 records implementation deltas only. It does not change application metadata o
   its original employee evidence/PDF. This item includes production
   Authorization Form data binding, repeated Access Detail rendering, and final
   Authorization Form-only attachment/security validation.
-- [ ] `R2-AGENCY-01` remains OPEN; no R4 fixture or capability evidence closes it.
+- [ ] `R2-AGENCY-01` remains OPEN; no R4 fixture or capability evidence closes
+  it.
 
 ## R4.3 open production dependencies
 
@@ -82,15 +88,17 @@ R0 records implementation deltas only. It does not change application metadata o
   PDF only to the Authorization Form, and complete controlled runtime evidence.
   The published production template now exists with two ordered participants,
   26 body mappings, and two signature blocks. Controlled runtime evidence is
-  remains blocked until the approved M2 metadata installs and validates.
-  Source lifecycle initiation remains disabled.
+  remains blocked until M2 completes. Source lifecycle initiation remains
+  disabled.
 - [x] `R4-DESIGN-01` — RESOLVED in M1. Reuse is a request-level native
   supervisor APPROVE + Sign attestation anchored to the current HR Case. It
   revalidates exactly one qualifying Active authorization, persists audited
   task/execution/outcome/signer/timestamp/context evidence, creates no Form,
   Detail, PDF, or supersession, leaves denial scoped to the current request,
   and invalidates stale context before future fulfillment eligibility.
-- [ ] `R2-AGENCY-01` architecture is approved and source-valid but remains BLOCKED-PLATFORM at installation/runtime.
+- [ ] `R2-AGENCY-01` architecture is source-valid but remains BLOCKED-PLATFORM
+  at runtime. The Australia SDK installer defect remains open with the manual
+  metadata workaround in place.
   The durable source checkpoint is `01f5035`. A single justified normal
   `0.0.2` to `0.0.3` retry used a verified package containing all 12 primary M2
   records, but rollback context `b59d76c2c372831068a35f2b2b013106` processed
@@ -104,8 +112,27 @@ R0 records implementation deltas only. It does not change application metadata o
   transition (rollback `0b4b911ac3fa471068a35f2b2b0131da`, BAK `BAK0002277`,
   upgrade history `3f4b9552c37e471068a35f2b2b01312c`) again presented only
   four `sys_db_object` records and none of the 12 M2 updates. The installer
-  defect is confirmed not resolved; stop installation experimentation and keep
-  M3 not ready.
+  defect is confirmed not resolved; stop installation experimentation. The
+  supported manual metadata workaround is verified, but M3 is not ready.
+
+### M2 final runtime alignment
+
+- [x] Reconciled the two existing subclass intake Business Rules in place; both
+  now contain the M2 resolver behavior and zero deprecated native-case snapshot
+  writes.
+- [x] Corrected both live catalog qualifiers by exposing the existing
+  non-client-callable, sandbox-enabled resolver to native catalog callers.
+  The Supervisor picker returns only the two active configured-group members;
+  the Organization picker returns only the configured root and descendants.
+- [ ] **M2-RUNTIME-02 — identity sub-gate resolved; runtime remains blocked.** Native HRSD
+  populated `opened_by`, `opened_for`, and `subject_person` with the
+  authenticated user on controlled Payroll `HRC0001050` and Workforce
+  Administration `HRC0001051` submissions. HR Access now validates required
+  equality and performs zero writes to those fields. Follow-on Payroll
+  `HRC0001053` then proved Australia also refuses `GlideRecord.setValue` on
+  application-owned native-case gate fields. The generated broad privilege was
+  removed; both M2 rules are inactive. M2 is BLOCKED-PLATFORM, `R2-AGENCY-01`
+  remains OPEN, and M3 is NOT READY.
 
 ## M4 - Fulfillment & Operations (Conditional Source / Unit)
 

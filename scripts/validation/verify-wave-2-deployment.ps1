@@ -233,12 +233,12 @@ foreach ($producerExpectation in $expectations.recordProducers) {
         if ($producerScript -notmatch 'authenticatedUserId\s*=\s*gs\.getUserID\(\)') {
             Add-Blocker "Record producer $($producerExpectation.name) does not derive the requester directly from gs.getUserID()."
         }
-        foreach ($identityField in @('opened_for', 'subject_person')) {
+        foreach ($identityField in @('opened_by', 'opened_for', 'subject_person')) {
             if (
-                $producerScript -notmatch
+                $producerScript -match
                     "current\.(?:setValue\('$identityField',\s*authenticatedUserId\)|$identityField\s*=\s*authenticatedUserId)"
             ) {
-                Add-Blocker "Record producer $($producerExpectation.name) does not set $identityField from the authenticated user."
+                Add-Blocker "Record producer $($producerExpectation.name) writes native HRSD identity field $identityField instead of validating it."
             }
         }
         $identityValidationIndex = $producerScript.IndexOf(

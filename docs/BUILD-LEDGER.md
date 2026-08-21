@@ -419,3 +419,33 @@ Build evidence is package-specific and must remain distinct from install, runtim
   production entry points activated 0.
 - Result: M2 BLOCKED-MANUAL-CONFIGURATION; `R2-AGENCY-01` OPEN; Australia SDK
   installer defect OPEN / partial manual recovery only; M3 NOT READY.
+
+### M2 final identity ownership closure
+
+- Date: `2026-08-21`.
+- No SDK install or `--reinstall` was run. The supported manual PDI metadata
+  workaround remains in place; the Australia SDK installer defect remains
+  open.
+- Source permanently removes HR Access writes to native `opened_by`,
+  `opened_for`, and `subject_person`. Missing or mismatched native identity now
+  rejects intake before profile resolution.
+- Controlled Employee Center evidence: Payroll `HRC0001050` /
+  `f51c629ac3fe871068a35f2b2b01316f` and Workforce Administration `HRC0001051`
+  / `ed8c261ec3fe871068a35f2b2b013103`. Both committed records contained Amos
+  Linnan (`56826bf03710200044e0bfc8bcbe5dca`) in all three native identity
+  fields before HR Access could write any such field.
+- Exact caller-access Reads are allowed only for the two M2 rule-to-HR-Service
+  calls and the resolver-to-HR-Profile call. Broad API/write privileges and
+  temporary roles remain 0.
+- Regression totals: M2 19/19; R1 9/9; Wave 2 security 22/22; deployment
+  configuration 16/16; R3 30/30; R4 52/52; M4 26/26.
+- Normal SDK build PASS; frozen-key SDK build PASS; five unchanged TS11
+  warnings; generated-key diff empty.
+- Follow-on Payroll `HRC0001053` proved a distinct blocker: Australia refused
+  `GlideRecord.setValue` on the application-owned native-case gate field
+  `x_2108496_hr_acces_exception_review_required`. The generated broad Execute
+  privilege `383f261ec3fe871068a35f2b2b013139` was deleted and verified absent.
+- Final safe state: both M2, both R4, and both M4 production rules inactive;
+  broad API/write privileges 0.
+- Result: native HRSD identity ownership VERIFIED; M2 BLOCKED-PLATFORM;
+  `R2-AGENCY-01` OPEN; M3 NOT READY.

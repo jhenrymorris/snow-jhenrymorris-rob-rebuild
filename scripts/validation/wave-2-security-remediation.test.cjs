@@ -456,7 +456,7 @@ test('requester profile lookup occurs only after identity authorization', () => 
     }
 })
 
-test('authenticated user is the sole requester source and fills blank identities', () => {
+test('native HRSD identity fields are required and never rewritten by HR Access', () => {
     const result = run(
         snapshotScript,
         baseCase({
@@ -465,12 +465,16 @@ test('authenticated user is the sole requester source and fills blank identities
             subject_person: '',
         })
     )
-    assert.equal(result.current.aborted, false)
-    assert.equal(result.current.getValue('opened_by'), 'requester')
-    assert.equal(result.current.getValue('opened_for'), 'requester')
-    assert.equal(result.current.getValue('subject_person'), 'requester')
+    assert.equal(result.current.aborted, true)
+    assert.equal(result.current.getValue('opened_by'), '')
+    assert.equal(result.current.getValue('opened_for'), '')
+    assert.equal(result.current.getValue('subject_person'), '')
     assert.match(snapshotScript, /var authenticatedUserId = gs\.getUserID\(\)/)
     assert.match(snapshotScript, /var requesterId = authenticatedUserId/)
+    assert.doesNotMatch(
+        snapshotScript,
+        /(?:setValue\(['"](?:opened_by|opened_for|subject_person)['"]|\.(?:opened_by|opened_for|subject_person)\s*=)/
+    )
     assert.doesNotMatch(
         snapshotScript,
         /(?:producer\.(?:opened_for|subject_person|requested_for)|current\.getValue\(['"](?:opened_for|subject_person|requested_for)['"]\))\s*\|\|\s*gs\.getUserID\(\)/

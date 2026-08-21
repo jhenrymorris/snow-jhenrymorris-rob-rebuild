@@ -758,6 +758,13 @@ compatibility. Do not populate, delete, expose for correction, or make them a
 lifecycle prerequisite. Both R4 lifecycle and both M4 fulfillment production
 entry points remain inactive until their separately authorized runtime gates.
 
+The native catalog qualifiers execute outside the application scope. The
+server-only `RobProfileAuthorizationContext` Script Include must therefore be
+**Accessible from: All application scopes**, remain non-client-callable, and
+remain sandbox enabled. This narrow exposure allows only the existing
+server-side qualifier/resolution API; it does not authorize native-case writes
+or broad GlideRecord access.
+
 Australia M2 install note: normal installs at `0.0.1` and supported patch
 upgrades to `0.0.2` and `0.0.3` completed but processed zero M2 metadata. Before
 the single `0.0.3` recovery install, the local package was verified to contain
@@ -786,3 +793,34 @@ upgrade history `3f4b9552c37e471068a35f2b2b01312c` again contained only four
 `sys_db_object` records and none of the 12 M2 updates. The platform blocker is
 therefore confirmed after the Patch 3 / ServiceNow IDE `4.4.2` update. Do not
 attempt further installation variants or begin M2 runtime configuration.
+
+### Final native HR Case identity ownership
+
+The supported manual metadata recovery and Class C configuration subsequently
+completed. Native HRSD is authoritative for `opened_by`, `opened_for`, and
+`subject_person` on both approved record producers. HR Access must not assign,
+`setValue`, or update those fields. The two M2 before-insert validation rules
+require the native values to be present and equal `gs.getUserID()` before any
+profile lookup; missing or mismatched identity is rejected as an invalid self-
+submission.
+
+Australia PDI evidence on 2026-08-21 verified this contract with ordinary
+synthetic user Amos Linnan on Payroll `HRC0001050` and Workforce Administration
+`HRC0001051`. Both committed records contained Amos in all three native fields.
+Neither catalog item exposes a requested-for/delegated identity input.
+
+The supported manual metadata workaround uses only exact table Reads plus
+three record-specific Restricted Caller Access Reads: each M2 validation rule
+to HR Service, and `RobProfileAuthorizationContext` to HR Profile. Do not add
+generic `GlideRecord` Execute, table Write, or identity-field write access.
+Both R4 and both M4 production entry points remain inactive until M3.
+
+The native identity ownership result does not close M2. A follow-on controlled
+Payroll submission reached the committed intake-gate initialization and
+Australia refused `GlideRecord.setValue` on the application-owned native-case
+field `x_2108496_hr_acces_exception_review_required`. The automatically
+generated broad Execute privilege was removed. Both M2 validation rules are
+inactive pending a supported HR Core/platform-owner execution boundary for
+those application-owned same-record gate fields. Do not substitute direct
+property assignment, Background Script, global Business Rule, broad API
+privilege, or ACL bypass. M3 is not ready.

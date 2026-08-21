@@ -22,7 +22,7 @@ in the packaged ZIP `/update/` stream.
 
 | # | Metadata table | Logical identity / source `$id` | Package sys_id | Source file | Internal name / label | Target / material properties | Manual path | Preflight / action | Verification |
 |---:|---|---|---|---|---|---|---|---|---|
-| 1 | `sys_script_include` | `rob-profile-authorization-context` | `fc05ae8aa83c4d2f8dd0927fe324f453` | `src/fluent/script-includes/rob-profile-authorization-context.now.ts`; body: `src/fluent/server/rob-profile-authorization-context.server.js` | `RobProfileAuthorizationContext`; API `x_2108496_hr_acces.RobProfileAuthorizationContext` | Active true; client callable false; mobile callable false; accessible from package private; sandbox callable true; caller access blank; description as below | System Definition → Script Includes | ABSENT — CREATE | Logical-name count 1; reopen and compare every property/body |
+| 1 | `sys_script_include` | `rob-profile-authorization-context` | `fc05ae8aa83c4d2f8dd0927fe324f453` | `src/fluent/script-includes/rob-profile-authorization-context.now.ts`; body: `src/fluent/server/rob-profile-authorization-context.server.js` | `RobProfileAuthorizationContext`; API `x_2108496_hr_acces.RobProfileAuthorizationContext` | Active true; client callable false; mobile callable false; accessible from all application scopes so native catalog sandbox qualifiers can invoke it; sandbox callable true; caller access blank; description as below | System Definition → Script Includes | ABSENT — CREATE | Logical-name count 1; reopen and compare every property/body |
 | 2 | `sys_dictionary` | implicit `Table.schema.approved_supervisors_group` | `42606cc272ac4e2299fb23e823bb27ef` | `src/fluent/tables/rob-configuration.now.ts` | `approved_supervisors_group`; Approved NSF Supervisors Group | Table `x_2108496_hr_acces_rob_config`; Reference; length 32; reference `sys_user_group`; cascade clear; mandatory false; read-only false; audit false; active true; default blank; qualifier blank/simple | System Definition → Dictionary | PRESENT BUT DIFFERENT: `be32768ac3be431068a35f2b2b01315f`; active false — UPDATE | Logical count 1; active true; exact reference/properties |
 | 3 | `sys_dictionary` | implicit `Table.schema.approved_organization_root` | `c40c243f9d7844689354d80f81bcfc0c` | `src/fluent/tables/rob-configuration.now.ts` | `approved_organization_root`; Approved NSF Organization Root | Table `x_2108496_hr_acces_rob_config`; Reference; length 32; reference `cmn_department`; cascade clear; mandatory false; read-only false; audit false; active true; default blank; qualifier blank/simple | System Definition → Dictionary | PRESENT BUT DIFFERENT: `f232768ac3be431068a35f2b2b013156`; active false — UPDATE | Logical count 1; active true; exact reference/properties |
 | 4 | `sys_dictionary` | implicit `Table.schema.allow_sys_user_title_fallback` | `2334582941e3439baa5ce462660b26c3` | `src/fluent/tables/rob-configuration.now.ts` | `allow_sys_user_title_fallback`; Allow sys_user Title Fallback | Table `x_2108496_hr_acces_rob_config`; Boolean; length 40; mandatory true; read-only false; audit false; active true; default `true`; qualifier simple | System Definition → Dictionary | PRESENT BUT DIFFERENT: `2e32768ac3be431068a35f2b2b01314b`; active false — UPDATE | Logical count 1; active/default/mandatory exact |
@@ -152,3 +152,35 @@ Manual recovery count at stop:
 Result: **M2 - BLOCKED-MANUAL-CONFIGURATION**. The Australia SDK installer
 defect remains open, and the supported manual UI cannot reproduce the exact
 committed read-only metadata at the first blocked UPDATE-only artifact.
+
+## Final identity ownership closure
+
+Date: 2026-08-21
+
+The supported `Client Script Modifiable` plus `Audit = true` reconciliation,
+manual 12/12 metadata recovery, three Class C values, and qualifier alignment
+superseded the intermediate stop above. The final remaining ownership boundary
+was resolved without another metadata workaround:
+
+- Native HRSD owns `opened_by`, `opened_for`, and `subject_person`.
+- HR Access requires all three native values to be present and equal the
+  authenticated user, and never writes them.
+- Payroll `HRC0001050` (`f51c629ac3fe871068a35f2b2b01316f`) and Workforce
+  Administration `HRC0001051` (`ed8c261ec3fe871068a35f2b2b013103`) each
+  committed all three fields as Amos Linnan
+  (`56826bf03710200044e0bfc8bcbe5dca`).
+- Both catalog items expose no delegated/requested-for identity input. Unit
+  evidence rejects mismatched or missing native identities before profile
+  lookup and performs zero identity writes.
+- Broad API/write privileges: 0. Temporary roles: 0. Custom business tables:
+  4. R4 entry points: 2 inactive. M4 entry points: 2 inactive.
+
+The binary identity-ownership gate passed, but follow-on Payroll `HRC0001053`
+proved that Australia also refuses `GlideRecord.setValue` on the application-
+owned native-case gate field
+`x_2108496_hr_acces_exception_review_required`. The generated broad Execute
+privilege `383f261ec3fe871068a35f2b2b013139` was removed and verified absent.
+
+Final result: **M2 BLOCKED-PLATFORM**; native HRSD identity ownership VERIFIED;
+`R2-AGENCY-01` OPEN; platform-owner action required for application-owned
+same-record gate fields. M3 is NOT READY.
