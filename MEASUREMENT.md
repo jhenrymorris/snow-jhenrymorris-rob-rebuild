@@ -1776,3 +1776,35 @@ Not exposed by session/tool — no estimate recorded.
 - Result: native HRSD identity ownership VERIFIED, but M2 BLOCKED-PLATFORM;
   `R2-AGENCY-01` OPEN; platform-owner action is required for the application-
   owned same-record gate fields; M3 NOT READY.
+
+#### M2 HR Core persistence bridge and final closeout
+
+- Date: `2026-08-21`; execution shape: source contract inspection, one HR
+  Core-owned Class C bridge configuration, exact caller authorization,
+  controlled Payroll/Workforce runtime reread, security cleanup, full
+  regression/build, and durable closeout.
+- Actual working interval: approximately `12:46` to `16:05` PDI/local time.
+  Environment/authentication waits and user sign-in history are recorded
+  separately from active engineering; token accounting was not exposed and was
+  not estimated.
+- Reviewer interventions: 1 - final approval for the narrowly allowlisted HR
+  Core bridge architecture. Silent defects: 0. Visible defects: 1 - the
+  separate legacy exception-task rule generated broad task-write APIs during
+  exception-path proof; both privileges were removed and the two unsafe task
+  entry rules were disabled.
+- Runtime evidence: Payroll `HRC0001056` and Workforce `HRC0001058` persisted
+  clear gate state with native Amos identity unchanged. Workforce
+  `HRC0001059` persisted `missing_operations_manager`, exception required, and
+  processing blocked through the HR Core bridge.
+- Security evidence: exact M2 Reads 5/5; one exact bridge Execute path; two
+  named caller restrictions; broad `setValue`, `update`, `insert`, and native-
+  case Write privileges 0; temporary roles 0; custom business tables 4.
+- Validation: M2 19/19; R1 9/9; Wave 2 security 22/22; deployment
+  configuration 16/16; R3 30/30; R4 52/52; M4 26/26. Normal and frozen-key
+  builds PASS; five unchanged TS11 warnings; generated-key diff empty.
+- Production guard: two M2 validation rules active; two legacy exception-task
+  entries inactive; R4 lifecycle 2 inactive; M4 fulfillment 2 inactive; M3 not
+  started.
+- Result: M2 COMPLETE; `R2-AGENCY-01` RESOLVED FOR PDI VALIDATION; native HRSD
+  identity ownership VERIFIED; HR Core persistence bridge VERIFIED; Australia
+  SDK installer defect OPEN / manual PDI workaround verified; M3 READY.

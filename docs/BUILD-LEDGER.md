@@ -449,3 +449,38 @@ Build evidence is package-specific and must remain distinct from install, runtim
   broad API/write privileges 0.
 - Result: native HRSD identity ownership VERIFIED; M2 BLOCKED-PLATFORM;
   `R2-AGENCY-01` OPEN; M3 NOT READY.
+
+### M2 HR Core persistence bridge and final closeout
+
+- Date: `2026-08-21`. No SDK install, deployment, `--reinstall`, Background
+  Script, direct metadata write, broad native-case Write, or new table was used.
+- Minimum persistence contract: only
+  `x_2108496_hr_acces_exception_review_required`,
+  `x_2108496_hr_acces_exception_reason`, and
+  `x_2108496_hr_acces_authorization_processing_blocked` are persisted through
+  HR Core. Native identity and deprecated case snapshots are excluded.
+- HR Core Script Include: `sn_hr_core.RobHrCasePersistenceBridge`, PDI sys_id
+  `a7feb29ac3b2c71068a35f2b2b01314b`; active, server-only, All application
+  scopes, Caller Restriction, protection None. One exact scope-level Execute
+  privilege (`848103dac336c71068a35f2b2b013166`) and two allowed rule-specific
+  caller records (`7d21c35ac336c71068a35f2b2b01310b`,
+  `a291c7dac336c71068a35f2b2b013166`) govern the path.
+- Runtime reread: Payroll `HRC0001056` / `df718f9ac336c71068a35f2b2b0131f8`
+  and Workforce `HRC0001058` / `86e1cf1ec336c71068a35f2b2b0131cb`
+  retained native Amos identity and cleared the gate. Workforce exception
+  `HRC0001059` / `0e6283dec336c71068a35f2b2b013115` persisted required=true,
+  reason=`missing_operations_manager`, blocked=true.
+- A separate legacy after-insert exception-task attempt generated prohibited
+  broad `GlideRecord.setValue` and `GlideRecord.insert` privileges. Both exact
+  records were deleted, final broad privilege query returned zero, and the two
+  unsupported exception-task entry rules are inactive. Their deterministic
+  source/unit logic is retained pending an approved native task persistence
+  path; this did not affect the proven case-gate bridge.
+- Regression: M2 19/19; R1 9/9; Wave 2 security 22/22; deployment
+  configuration 16/16; R3 30/30; R4 52/52; M4 26/26. Normal and frozen-key
+  builds PASS with five unchanged TS11 warnings and empty generated-key diff.
+- Final guard: M2 validation rules active; R4 lifecycle rules 2 inactive; M4
+  fulfillment rules 2 inactive; custom business tables 4; broad privileges 0.
+- Result: M2 COMPLETE; `R2-AGENCY-01` RESOLVED FOR PDI VALIDATION; Australia
+  SDK installer defect OPEN / manual workaround verified; M3 READY but not
+  started.

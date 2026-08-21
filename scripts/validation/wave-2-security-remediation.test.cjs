@@ -17,6 +17,10 @@ const taskScript = fs.readFileSync(
     path.join(root, 'src/fluent/server/create-supervisor-exception-task.server.js'),
     'utf8'
 )
+const hrCoreBridgeScript = fs.readFileSync(
+    path.join(root, 'manual/hr-core/RobHrCasePersistenceBridge.server.js'),
+    'utf8'
+)
 const aclSource = fs.readFileSync(
     path.join(
         root,
@@ -137,6 +141,12 @@ function record(values) {
         isValidField(field) {
             return Object.hasOwn(this.values, field)
         },
+        isValidRecord() {
+            return this.values.valid_record !== false
+        },
+        isNewRecord() {
+            return this.values.new_record === true
+        },
     }
 }
 
@@ -200,7 +210,7 @@ function glideRecordFactory(state) {
 
 function baseCase(overrides = {}) {
     return {
-        sys_id: 'case_sys_id',
+        sys_id: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
         sys_class_name: 'sn_hr_core_case_payroll',
         hr_service: 'staffing_service',
         opened_by: 'requester',
@@ -224,6 +234,7 @@ function run(script, currentValues, options = {}) {
         lookups: [],
         inserts: [],
         existingExceptionTask: Boolean(options.existingExceptionTask),
+        bridgeCalls: [],
     }
     const errors = []
     vm.runInNewContext(script, {
@@ -243,6 +254,23 @@ function run(script, currentValues, options = {}) {
                     supervisorId: 'manager',
                     errors: [],
                 }
+        },
+        sn_hr_core: {
+            RobHrCasePersistenceBridge: function RobHrCasePersistenceBridge() {
+                this.setRobIntakeGate = (caseRecord, required, reason) => {
+                    state.bridgeCalls.push({
+                        table: caseRecord.getTableName(),
+                        sysId: caseRecord.getUniqueValue(),
+                        required,
+                        reason,
+                    })
+                    if (options.bridgeResult === false) return false
+                    caseRecord.setValue(names.exception, required ? '1' : '0')
+                    caseRecord.setValue(names.reason, required ? reason : '')
+                    caseRecord.setValue(names.blocked, required ? '1' : '0')
+                    return true
+                }
+            },
         },
         gs: {
             addErrorMessage: (message) => errors.push(message),
@@ -270,6 +298,14 @@ test('both approved intake paths validate context without writing case snapshots
         assert.equal(result.current.getValue(names.organization), '')
         assert.equal(result.current.getValue(names.supervisor), '')
         assert.equal(result.current.getValue(names.blocked), '0')
+        assert.deepEqual(result.state.bridgeCalls, [
+            {
+                table: values.sys_class_name,
+                sysId: values.sys_id,
+                required: false,
+                reason: '',
+            },
+        ])
     }
 })
 
@@ -607,6 +643,52 @@ test('security scripts never recursively update or insert the parent case', () =
     assert.doesNotMatch(snapshotScript, /current\s*\.\s*(?:insert|update)\s*\(/)
     assert.doesNotMatch(correctionScript, /current\s*\.\s*(?:insert|update)\s*\(/)
     assert.doesNotMatch(taskScript, /new\s+GlideRecord\s*\(['"]sn_hr_core_case/)
+    assert.doesNotMatch(snapshotScript, /current\s*\.\s*setValue\s*\(/)
+    assert.match(
+        snapshotScript,
+        /new sn_hr_core\.RobHrCasePersistenceBridge\(\)\.setRobIntakeGate/
+    )
+
+    const context = {
+        Class: {
+            create: () =>
+                function BridgeClass() {
+                    if (this.initialize) this.initialize()
+                },
+        },
+    }
+    vm.runInNewContext(hrCoreBridgeScript, context)
+    const bridge = new context.RobHrCasePersistenceBridge()
+    const payroll = record(baseCase())
+    assert.equal(
+        bridge.setRobIntakeGate(
+            payroll,
+            true,
+            'missing_required_access_end_date'
+        ),
+        true
+    )
+    assert.equal(payroll.getValue(names.exception), '1')
+    assert.equal(payroll.getValue(names.blocked), '1')
+    assert.equal(payroll.getValue('opened_by'), 'requester')
+    assert.equal(
+        bridge.setRobIntakeGate(
+            record(baseCase({ sys_class_name: 'incident' })),
+            true,
+            'missing_required_access_end_date'
+        ),
+        false
+    )
+    assert.equal(
+        bridge.setRobIntakeGate(
+            record(baseCase({ sys_id: 'not-a-sys-id' })),
+            true,
+            'missing_required_access_end_date'
+        ),
+        false
+    )
+    assert.equal(bridge.setRobIntakeGate(payroll, 'true', ''), false)
+    assert.equal(bridge.setRobIntakeGate(payroll, true, 'arbitrary_reason'), false)
 })
 
 test('snapshot reads require a coherent self-submission and task type is immutable', () => {

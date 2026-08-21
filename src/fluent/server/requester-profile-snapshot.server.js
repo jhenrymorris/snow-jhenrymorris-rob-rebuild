@@ -3,17 +3,6 @@
     var employmentTypeField = 'x_2108496_hr_acces_employment_type'
     var accessEndDateField = 'x_2108496_hr_acces_access_end_date'
     var operationsManagerField = 'x_2108496_hr_acces_operations_manager'
-    var exceptionRequiredField =
-        'x_2108496_hr_acces_exception_review_required'
-    var exceptionReasonField = 'x_2108496_hr_acces_exception_reason'
-    var processingBlockedField =
-        'x_2108496_hr_acces_authorization_processing_blocked'
-    var employeeSignatureField =
-        'x_2108496_hr_acces_requires_employee_signature'
-    var supervisorSignatureField =
-        'x_2108496_hr_acces_requires_supervisor_signature'
-    var fulfillmentGateField =
-        'x_2108496_hr_acces_fulfillment_gate_complete'
     var requestRequirements = {
         requiresAccessEndDate: false,
         requiresOperationsManager: false,
@@ -214,20 +203,24 @@
     // The three legacy case snapshot fields intentionally remain untouched.
     // Final validated values become immutable historical evidence only when
     // copied to the governed ROB Authorization Form before signing.
-    current.setValue(exceptionRequiredField, '0')
-    current.setValue(exceptionReasonField, '')
-    current.setValue(processingBlockedField, '0')
-    current.setValue(employeeSignatureField, '0')
-    current.setValue(supervisorSignatureField, '0')
-    current.setValue(fulfillmentGateField, '0')
-
     function setPrerequisiteException(reason) {
-        current.setValue(exceptionRequiredField, '1')
-        current.setValue(exceptionReasonField, reason)
-        current.setValue(processingBlockedField, '1')
-        current.setValue(employeeSignatureField, '0')
-        current.setValue(supervisorSignatureField, '0')
-        current.setValue(fulfillmentGateField, '0')
+        return new sn_hr_core.RobHrCasePersistenceBridge().setRobIntakeGate(
+            current,
+            true,
+            reason
+        )
+    }
+
+    function clearPrerequisiteException() {
+        return new sn_hr_core.RobHrCasePersistenceBridge().setRobIntakeGate(
+            current,
+            false,
+            ''
+        )
+    }
+
+    function rejectPersistenceFailure() {
+        reject('The ROB intake gate could not be persisted by HR Core.')
     }
 
     var requiresEmploymentEndDate =
@@ -238,7 +231,9 @@
         (requiresEmploymentEndDate || requestRequirements.requiresAccessEndDate) &&
         !current.getValue(accessEndDateField)
     ) {
-        setPrerequisiteException('missing_required_access_end_date')
+        if (!setPrerequisiteException('missing_required_access_end_date')) {
+            rejectPersistenceFailure()
+        }
         return
     }
 
@@ -246,21 +241,31 @@
         var operationsManagerId = current.getValue(operationsManagerField)
 
         if (!operationsManagerId) {
-            setPrerequisiteException('missing_operations_manager')
+            if (!setPrerequisiteException('missing_operations_manager')) {
+                rejectPersistenceFailure()
+            }
             return
         }
 
         var operationsManager = new GlideRecord('sys_user')
 
         if (!operationsManager.get(operationsManagerId)) {
-            setPrerequisiteException('invalid_operations_manager')
+            if (!setPrerequisiteException('invalid_operations_manager')) {
+                rejectPersistenceFailure()
+            }
             return
         }
 
         if (!isActive(operationsManager)) {
-            setPrerequisiteException('inactive_operations_manager')
+            if (!setPrerequisiteException('inactive_operations_manager')) {
+                rejectPersistenceFailure()
+            }
             return
         }
+    }
+
+    if (!clearPrerequisiteException()) {
+        rejectPersistenceFailure()
     }
 
 })(current)

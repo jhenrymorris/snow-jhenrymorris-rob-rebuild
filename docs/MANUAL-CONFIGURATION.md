@@ -824,3 +824,27 @@ inactive pending a supported HR Core/platform-owner execution boundary for
 those application-owned same-record gate fields. Do not substitute direct
 property assignment, Background Script, global Business Rule, broad API
 privilege, or ACL bypass. M3 is not ready.
+
+### HR Core persistence bridge
+
+The preceding gate-field stop is superseded by the approved HR Core-owned
+bridge. Create and maintain exactly one `RobHrCasePersistenceBridge` Script
+Include in `sn_hr_core` using the reviewed source at
+`manual/hr-core/RobHrCasePersistenceBridge.server.js`. It is active,
+server-only, accessible from all scopes, Caller Restriction, protection None,
+and exposes only `setRobIntakeGate(caseRecord, required, reason)`.
+
+Allow one exact HR Access-to-bridge Execute privilege and the two named M2
+Business Rule callers. Do not allow generic `GlideRecord` APIs or table Write.
+The bridge accepts only Payroll or Workforce cases, strict booleans, and the
+fixed approved reason set, and it writes only the three coupled prerequisite-
+exception gate fields. Native identity and deprecated snapshot fields remain
+outside the contract.
+
+PDI evidence: bridge sys_id `a7feb29ac3b2c71068a35f2b2b01314b`; scope Execute
+sys_id `848103dac336c71068a35f2b2b013166`; caller records
+`7d21c35ac336c71068a35f2b2b01310b` and
+`a291c7dac336c71068a35f2b2b013166`. Keep the two R4 and two M4 production
+entry rules inactive until M3. The two legacy native HR-task exception entry
+rules also remain inactive because their unsupported task-write path generated
+broad privileges during the controlled test; no broad privilege remains.

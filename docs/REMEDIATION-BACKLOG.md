@@ -148,6 +148,23 @@ R0 records implementation deltas only. It does not change application metadata o
   implemented in M4 source/unit foundation.
 - [ ] `R2-AGENCY-01` remains OPEN; M4 fixtures do not close it.
 
+## M2 Final Closeout (Supersedes Earlier Open Entries)
+
+- [x] `R2-AGENCY-01` resolved for PDI validation on `2026-08-21` through the
+  approved ownership split: native HRSD identity, HR Access policy/context,
+  Authorization Form historical snapshots, and the narrowly allowlisted HR
+  Core `RobHrCasePersistenceBridge` for the three coupled case-gate fields.
+- [x] Manual recovery verified: primary metadata 12/12, Authorization Form
+  reconciliation 3/3, Class C values 3/3, exact M2 table Reads 5/5, one bridge
+  Execute path, and two named restricted callers.
+- [x] Broad `GlideRecord.setValue`, `update`, `insert`, and native-case Write
+  privileges are zero. The two legacy exception-task runtime entries are
+  inactive after their unsupported task-write path was observed; their unit
+  foundation remains for a later approved native task persistence decision.
+- [ ] Australia SDK installer defect remains OPEN. The supported manual PDI
+  workaround is verified and does not change the production source model.
+- [x] M3 is READY but was not started.
+
 ## R0 Boundary
 
 No item above is authorized for implementation in R0. Unsupported native capabilities must be recorded in Appendix L rather than replaced with custom request, task, approval, signature, PDF, attachment, or authentication architecture.

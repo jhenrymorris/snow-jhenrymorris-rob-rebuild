@@ -184,3 +184,36 @@ privilege `383f261ec3fe871068a35f2b2b013139` was removed and verified absent.
 Final result: **M2 BLOCKED-PLATFORM**; native HRSD identity ownership VERIFIED;
 `R2-AGENCY-01` OPEN; platform-owner action required for application-owned
 same-record gate fields. M3 is NOT READY.
+
+## HR Core bridge final recovery record
+
+Date: 2026-08-21
+
+| Artifact | Supported surface | PDI sys_id | Result |
+|---|---|---|---|
+| `RobHrCasePersistenceBridge` | Human Resources: Core > Script Includes | `a7feb29ac3b2c71068a35f2b2b01314b` | PASS |
+| HR Access scope Execute | Application Cross-Scope Access | `848103dac336c71068a35f2b2b013166` | PASS |
+| Payroll caller restriction | Restricted Caller Access | `7d21c35ac336c71068a35f2b2b01310b` | PASS |
+| Workforce caller restriction | Restricted Caller Access | `a291c7dac336c71068a35f2b2b013166` | PASS |
+
+The bridge source is reproduced exactly from
+`manual/hr-core/RobHrCasePersistenceBridge.server.js`. It accepts only a valid
+Payroll or Workforce current record, a strict boolean, and an approved reason;
+it writes only exception-required, exception-reason, and processing-blocked.
+
+Committed reread evidence:
+
+- Payroll `HRC0001056` (`df718f9ac336c71068a35f2b2b0131f8`): gate false,
+  Amos native identity unchanged.
+- Workforce `HRC0001058` (`86e1cf1ec336c71068a35f2b2b0131cb`): gate false,
+  Amos native identity unchanged.
+- Workforce `HRC0001059` (`0e6283dec336c71068a35f2b2b013115`): gate true,
+  `missing_operations_manager`, processing blocked true.
+
+The separate legacy exception-task rule generated two prohibited broad API
+privileges during the exception proof. Both were deleted through supported UI;
+the two task entry rules are inactive and final broad privilege count is zero.
+Primary manual metadata remains 12/12, Authorization Form reconciliation 3/3,
+and Class C values 3/3. Result: **M2 COMPLETE; R2-AGENCY-01 RESOLVED FOR PDI
+VALIDATION; Australia SDK installer defect OPEN / workaround verified; M3
+READY and not started.**
