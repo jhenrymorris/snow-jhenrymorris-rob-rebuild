@@ -345,3 +345,29 @@ Build evidence is package-specific and must remain distinct from install, runtim
   the resolver, four new dictionaries, two variables, and five intended Read
   privileges all absent. No runtime test was started. M2 remains
   BLOCKED-PLATFORM and M3 is not ready.
+
+### M2 post-plugin-update revalidation
+
+- Environmental delta: Australia PDI plugin update; current ServiceNow IDE is
+  `4.4.2`, IDE Platform is `1.0.0`, and Metadata Source Control is `1.0.0` on
+  Australia Patch 3. Application identity remains scope
+  `x_2108496_hr_acces`, sys_id `b0d63cedc2d34e0ca4c05d6eb7acf61e`, version
+  `0.0.3`; local SDK remains exactly `4.8.1`.
+- No application source, dependency, package identity, or generated-key change
+  preceded the test. Normal and frozen-key builds PASS with the same five TS11
+  warnings and zero generated-key mutation/deletion.
+- The `0.0.3` package again contains 498 `/update/` records. Each of the 12
+  primary M2 records is present exactly once in the build, package inventory,
+  and ZIP update stream with `INSERT_OR_UPDATE`.
+- Exactly one normal install completed without `--reinstall`: rollback context
+  `6fb41dd2c3fa471068a35f2b2b01310f`, BAK `BAK0002276`, upgrade history
+  `98c41d5ac3fa471068a35f2b2b0131e6`, blank installer error.
+- Server result is unchanged: only four `sys_db_object` records reached upgrade
+  history; all 12 M2 update names were absent. Direct reread returned resolver
+  0/1, dictionaries 0/4, variables 0/2, and exact Read privileges 0/5.
+- Runtime configuration, M2 functional acceptance, and regressions were not
+  started after the mandatory installation stop. Broad privileges and
+  temporary roles remain 0; all four R4/M4 production entry points remain
+  inactive.
+- Result: prior Australia SDK installer defect NOT RESOLVED BY PDI PLUGIN
+  UPDATE. M2 remains BLOCKED-PLATFORM; `R2-AGENCY-01` OPEN; M3 NOT READY.

@@ -770,3 +770,11 @@ therefore remain absent and these Class C values cannot yet be set. Do not use
 `--reinstall`, stable-ID replacement, or scoped Background updates as a
 workaround. The latter was tested once, created two broad API Execute
 privileges, and was fully cleaned up.
+
+Post-plugin-update revalidation on 2026-08-21 did not change this boundary.
+With ServiceNow IDE `4.4.2`, one normal same-version `0.0.3` install produced
+rollback context `6fb41dd2c3fa471068a35f2b2b01310f` and BAK `BAK0002276`, but
+upgrade history again contained only four `sys_db_object` records and none of
+the 12 M2 update names. Direct reread again returned 0/12 required M2 records.
+Do not configure the three Class C values or begin M2 runtime acceptance until
+the installer presents and persists the required metadata.

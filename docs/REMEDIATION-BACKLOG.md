@@ -86,7 +86,12 @@ R0 records implementation deltas only. It does not change application metadata o
   `0.0.2` to `0.0.3` retry used a verified package containing all 12 primary M2
   records, but rollback context `b59d76c2c372831068a35f2b2b013106` processed
   only app/table bootstrap records and post-install reread found all M2 targets
-  absent. No further install variant is authorized; M3 remains not ready.
+  absent. A separately authorized post-plugin-update normal `0.0.3` install
+  reproduced the defect: rollback context
+  `6fb41dd2c3fa471068a35f2b2b01310f`, BAK `BAK0002276`, and upgrade history
+  `98c41d5ac3fa471068a35f2b2b0131e6` again presented only four
+  `sys_db_object` records and none of the 12 M2 updates. The plugin update did
+  not resolve the platform blocker; M3 remains not ready.
 
 ## M4 - Fulfillment & Operations (Conditional Source / Unit)
 

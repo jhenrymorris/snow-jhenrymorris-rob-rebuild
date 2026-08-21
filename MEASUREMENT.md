@@ -1602,3 +1602,41 @@ Not exposed by session/tool — no estimate recorded.
   remaining 0; no R4/M4 production entry point was activated.
 - Result: M2 source/unit PASS; M2 install/runtime BLOCKED-PLATFORM; M2
   BLOCKED-PLATFORM; `R2-AGENCY-01` OPEN; M3 NOT READY.
+
+#### M2 post-plugin-update revalidation
+
+- Date: `2026-08-21`.
+- Shape: one-pass environment/install revalidation. The PDI plugin update was
+  the sole environmental change under test; the approved M2 source,
+  dependencies, package identity, and stable keys were unchanged.
+- Reviewer intervention: 1 — authorization to perform exactly one normal
+  post-plugin-update installation. No `--reinstall` was used.
+- Environment: Australia Patch 3 build
+  `glide-australia-02-11-2026__patch3-05-25-2026_06-12-2026_1106.zip`;
+  ServiceNow IDE `4.4.2`; IDE Platform `1.0.0`; Metadata Source Control
+  `1.0.0`; SDK `4.8.1`.
+- Build evidence: normal PASS; frozen-key PASS; exactly five unchanged TS11
+  warnings; generated-key mutation/deletion 0.
+- Package evidence: all 12 primary M2 records remained present exactly once in
+  `dist/app/update`, used `INSERT_OR_UPDATE`, appeared exactly once in
+  `package_inventory.csv`, and appeared exactly once in the ZIP `/update/`
+  stream. Total update records remained 498.
+- Install evidence: one normal same-version `0.0.3` install; rollback context
+  `6fb41dd2c3fa471068a35f2b2b01310f`; BAK `BAK0002276`; upgrade history
+  `98c41d5ac3fa471068a35f2b2b0131e6`; state recorded; error blank.
+- Upgrade result: only four `sys_db_object` records were presented. All 12 M2
+  logical update names were absent from `sys_upgrade_history_log`; upgrade
+  history reported summary/updated 4 and processed/applied/skipped 0.
+- Installed reread: resolver 0/1; new dictionaries 0/4; intake variables 0/2;
+  intended exact Read privileges 0/5. Runtime/configuration acceptance was not
+  started under the mandatory stop condition.
+- Security/activation: prohibited broad API/write privileges 0; known temporary
+  role assignment 0; direct provisioning source artifacts 0; both R4 and both
+  M4 production entry points remain inactive.
+- New silent defects: 0. New visible defects: 0; this run reproduced the
+  previously recorded visible Australia installer defect after the plugin
+  update.
+- Active duration and token accounting: not exposed as reliable session
+  metrics; not estimated.
+- Result: M2 BLOCKED-PLATFORM; prior installer defect NOT RESOLVED;
+  `R2-AGENCY-01` OPEN; M3 NOT READY / not started.
