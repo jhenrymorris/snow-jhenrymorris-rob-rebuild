@@ -758,10 +758,15 @@ compatibility. Do not populate, delete, expose for correction, or make them a
 lifecycle prerequisite. Both R4 lifecycle and both M4 fulfillment production
 entry points remain inactive until their separately authorized runtime gates.
 
-Australia M2 install note: normal installs at `0.0.1` and the supported patch
-upgrade to `0.0.2` completed but processed zero new metadata. The resolver,
-configuration dictionaries, variables, and exact read privileges therefore
-remain absent and these Class C values cannot yet be set. Do not use
+Australia M2 install note: normal installs at `0.0.1` and supported patch
+upgrades to `0.0.2` and `0.0.3` completed but processed zero M2 metadata. Before
+the single `0.0.3` recovery install, the local package was verified to contain
+all 12 primary M2 records and the existing Authorization Form snapshot-field
+updates, with the same sys_id/scope/package identity as the PDI. Rollback
+context `b59d76c2c372831068a35f2b2b013106` recorded only app/table bootstrap
+operations, and direct database reread found every required M2 artifact absent.
+The resolver, configuration dictionaries, variables, and exact read privileges
+therefore remain absent and these Class C values cannot yet be set. Do not use
 `--reinstall`, stable-ID replacement, or scoped Background updates as a
 workaround. The latter was tested once, created two broad API Execute
 privileges, and was fully cleaned up.

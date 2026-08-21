@@ -82,6 +82,11 @@ R0 records implementation deltas only. It does not change application metadata o
   Detail, PDF, or supersession, leaves denial scoped to the current request,
   and invalidates stale context before future fulfillment eligibility.
 - [ ] `R2-AGENCY-01` architecture is approved and source-valid but remains BLOCKED-PLATFORM at installation/runtime.
+  The durable source checkpoint is `01f5035`. A single justified normal
+  `0.0.2` to `0.0.3` retry used a verified package containing all 12 primary M2
+  records, but rollback context `b59d76c2c372831068a35f2b2b013106` processed
+  only app/table bootstrap records and post-install reread found all M2 targets
+  absent. No further install variant is authorized; M3 remains not ready.
 
 ## M4 - Fulfillment & Operations (Conditional Source / Unit)
 

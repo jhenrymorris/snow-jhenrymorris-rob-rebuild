@@ -1565,3 +1565,40 @@ Not exposed by session/tool — no estimate recorded.
 - M2: BLOCKED-PLATFORM.
 - `R2-AGENCY-01`: OPEN.
 - M3: NOT READY / not started.
+
+#### M2 installation recovery and durable checkpoint
+
+- Shape: one-pass environment/install recovery continuation.
+- Instrumented continuation start: `2026-08-20T20:54:09-04:00` (blocked
+  checkpoint commit timestamp; earlier pre-commit inventory time was not
+  exposed separately by the execution tooling).
+- Instrumented continuation end: `2026-08-20T21:03:52-04:00`.
+- Instrumented active duration: `00:09:43`; no authentication wait occurred.
+- Turn classification: environment/method-rework. The validated M2 foundation
+  was committed as `01f5035`, then only the packaging/install path was tested.
+- Reviewer interventions: 0. The approved architecture was unchanged.
+- New silent defects: 0.
+- New visible defects: 1. A fresh versioned normal upgrade (`0.0.2` to `0.0.3`)
+  completed without an installer error but again failed to install any of the
+  M2 application metadata.
+- Local package evidence: `target/hr_access_rob_authorization_0_0_3.zip`
+  contains all 12 primary M2 records: one resolver Script Include, three ROB
+  Configuration dictionaries, one Authorization Form evidence dictionary, two
+  intake variables, and five exact table-Read privileges. The existing
+  Authorization Form Position, Organization, and Supervisor dictionary updates
+  are also present. Local scope/sys_id/package identity matches the PDI.
+- Build evidence after the version-only packaging correction: normal PASS;
+  frozen-key PASS; five unchanged TS11 warnings; generated-key diff 0.
+- Install evidence: one controlled normal install, no `--reinstall`; rollback
+  context `b59d76c2c372831068a35f2b2b013106`, BAK `BAK0002045`, from
+  `x_2108496_hr_acces:0.0.2` to `x_2108496_hr_acces:0.0.3`, state Finished
+  recording, error blank. Its 18 rollback sequences contain only five
+  `sys_app` updates, twelve `sys_db_object` updates, and one `sys_trigger`
+  insert; no M2 metadata target class was processed.
+- Post-install database reread: resolver 0/1; new dictionaries 0/4; intake
+  variables 0/2; intended exact Read privileges 0/5. Runtime acceptance was
+  therefore not started.
+- Security close-out: broad API/write privileges remaining 0; temporary roles
+  remaining 0; no R4/M4 production entry point was activated.
+- Result: M2 source/unit PASS; M2 install/runtime BLOCKED-PLATFORM; M2
+  BLOCKED-PLATFORM; `R2-AGENCY-01` OPEN; M3 NOT READY.

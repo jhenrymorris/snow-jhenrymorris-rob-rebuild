@@ -181,5 +181,8 @@ renewal/expiration/lapse automation.
 
 The prior Class D native-case write requirement is superseded. The replacement
 architecture is Class A/C and source-valid, but `R2-AGENCY-01` remains OPEN
-because repeated normal Australia installs processed zero new metadata. This
-does not activate M3, R4, or M4 production entry points.
+because repeated normal Australia installs processed zero M2 metadata. A fresh
+`0.0.2` to `0.0.3` normal upgrade used a locally verified package containing all
+12 primary M2 records, yet post-install database reread found all 12 absent.
+This is classified BLOCKED-PLATFORM and does not activate M3, R4, or M4
+production entry points.

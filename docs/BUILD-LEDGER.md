@@ -333,3 +333,15 @@ Build evidence is package-specific and must remain distinct from install, runtim
   final broad privilege count is zero and the configuration remained unchanged.
 - Result: M2 BLOCKED-PLATFORM; approved source/unit foundation PASS;
   `R2-AGENCY-01` OPEN; M3 not started.
+- Durable blocked checkpoint: `01f5035` (`Preserve M2 profile authorization
+  foundation pending PDI install`). The local `0.0.3` package contains all 12
+  primary M2 metadata records plus the three existing Authorization Form
+  snapshot dictionary updates; local and PDI application sys_id/scope/package
+  identity match.
+- One controlled normal `0.0.2` to `0.0.3` retry completed without
+  `--reinstall` (rollback context `b59d76c2c372831068a35f2b2b013106`,
+  BAK `BAK0002045`, blank error). Its 18 rollback sequences were limited to
+  `sys_app`, `sys_db_object`, and one `sys_trigger`; post-install reread found
+  the resolver, four new dictionaries, two variables, and five intended Read
+  privileges all absent. No runtime test was started. M2 remains
+  BLOCKED-PLATFORM and M3 is not ready.
