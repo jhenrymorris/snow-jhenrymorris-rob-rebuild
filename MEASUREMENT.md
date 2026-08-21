@@ -1676,3 +1676,34 @@ Not exposed by session/tool — no estimate recorded.
   metrics; not estimated.
 - Result: prior Australia SDK installer defect CONFIRMED NOT RESOLVED; M2
   BLOCKED-PLATFORM; `R2-AGENCY-01` OPEN; M3 NOT READY.
+
+#### M2 controlled manual PDI recovery
+
+- Date: `2026-08-21`.
+- Shape: turn-by-turn native configuration recovery with user authentication
+  and `security_admin` elevation separated from active configuration work.
+- Reviewer intervention: 1 - explicit approval of the supported-native-UI
+  recovery exception after definitive Australia installer defect reproduction.
+- Configuration work: authoritative 12-record worksheet and three UPDATE-only
+  field worksheet completed; four primary M2 dictionaries reconciled and
+  verified by committed reread; no duplicate created.
+- Stop evidence: the elevated Table definition editor permitted the Position
+  Title `Audit` property to be saved, but the adjacent `Read only` property
+  remained protected with `Security prevents writing to this field`. The
+  normal Dictionary form offered three nonmatching modes and did not expose the
+  package value `instance_configured`. No substitute mode was selected.
+- Not started after stop: remaining two Authorization Form field updates,
+  resolver Script Include, intake variables, Read privileges, environment
+  values, runtime acceptance, regressions, and M3.
+- Security result: broad API/write privileges created 0; temporary metadata
+  roles created 0; duplicate metadata 0; new custom tables 0; production entry
+  points activated 0.
+- New silent defects: 0. New visible defects: 1 - the supported elevated native
+  UI cannot reproduce the exact committed read-only property at the first
+  UPDATE-only Authorization Form artifact.
+- Environment waiting: user authentication/elevation occurred outside active
+  configuration execution and is not included in an estimated duration.
+- Active duration and token accounting: not exposed as reliable session
+  metrics; not estimated.
+- Result: M2 BLOCKED-MANUAL-CONFIGURATION; `R2-AGENCY-01` OPEN; Australia SDK
+  installer defect OPEN; M3 NOT READY / not started.

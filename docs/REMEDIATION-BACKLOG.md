@@ -23,6 +23,15 @@ R0 records implementation deltas only. It does not change application metadata o
 - [x] Validate server-side self-submission identity stamping (`src/fluent/server/requester-profile-snapshot.server.js` and the two Class B producer scripts).
 - [x] Validate active-reference requested access, category filtering, Business Justification, Employment Type, and conditional Access End Date.
 - [ ] **R2-AGENCY-01 — profile/form snapshot architecture.** APPROVED; source/unit PASS; BLOCKED-PLATFORM at Australia installation/runtime. Native-case snapshot persistence is no longer a product prerequisite. The replacement resolver, controls, and Authorization Form gate build and test, but repeated normal installs (`0.0.1` and `0.0.2`, never `--reinstall`) processed zero new metadata. Runtime acceptance and M3 readiness remain open.
+- [ ] **M2 controlled manual recovery.** Explicitly approved after the
+  definitive Australia installer reproduction. Four primary M2 dictionary
+  records were reconciled through supported native UI, but the first
+  UPDATE-only Authorization Form field stopped recovery: with
+  `security_admin` elevated, ServiceNow still protected the underlying
+  `Read only` dictionary property and did not expose the committed
+  `instance_configured` value. Status: BLOCKED-MANUAL-CONFIGURATION. Do not
+  substitute another read-only mode, use Background Scripts, or create
+  replacement fields. See `docs/M2-MANUAL-RECOVERY-WORKSHEET.md`.
 - Validate WPC/Operations Manager prerequisites and exception handling.
 - Perform Australia PDI runtime, attachment-security, and impersonation testing.
 

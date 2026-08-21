@@ -393,3 +393,29 @@ Build evidence is package-specific and must remain distinct from install, runtim
   regressions, and M3 were not started.
 - Result: prior Australia SDK installer defect CONFIRMED NOT RESOLVED on Patch
   3 / ServiceNow IDE `4.4.2`; M2 remains BLOCKED-PLATFORM and M3 NOT READY.
+
+### M2 controlled manual PDI recovery
+
+- Date: `2026-08-21`.
+- Authority: explicit manual PDI recovery exception after definitive Australia
+  SDK installer defect reproduction. Supported native ServiceNow configuration
+  surfaces only; no SDK install, `--reinstall`, Background Script, or direct
+  metadata write was used.
+- Worksheet: `docs/M2-MANUAL-RECOVERY-WORKSHEET.md` records all 12 primary
+  package identities, three UPDATE-only Authorization Form fields, exact source
+  properties, physical PDI sys_ids, and verification checks.
+- Applied: the four primary M2 dictionary records were reactivated/reconciled
+  and reread successfully. No duplicate was created.
+- Stop evidence: even with `security_admin` elevated, the supported Table
+  definition editor reported `Security prevents writing to this field` for the
+  existing Authorization Form `Read only` property. The normal Dictionary form
+  did not expose the committed `instance_configured` read-only option. Position
+  Title audit was saved as true before the protected read-only field blocked
+  progress; Organization and Supervisor reconciliation was not started.
+- Not started after the mandatory stop: Script Include 0/1, intake variables
+  0/2, exact Read privileges 0/5, Class C configuration, runtime acceptance,
+  regression, M3.
+- Security: broad API/write privileges 0; new custom tables 0; duplicates 0;
+  production entry points activated 0.
+- Result: M2 BLOCKED-MANUAL-CONFIGURATION; `R2-AGENCY-01` OPEN; Australia SDK
+  installer defect OPEN / partial manual recovery only; M3 NOT READY.
