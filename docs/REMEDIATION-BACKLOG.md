@@ -22,7 +22,7 @@ R0 records implementation deltas only. It does not change application metadata o
 - [x] Validate Employee Center and the two native HR Services.
 - [x] Validate server-side self-submission identity stamping (`src/fluent/server/requester-profile-snapshot.server.js` and the two Class B producer scripts).
 - [x] Validate active-reference requested access, category filtering, Business Justification, Employment Type, and conditional Access End Date.
-- [ ] **R2-AGENCY-01 — HR Core-owned profile snapshot population.** Status: OPEN — requires agency platform-owner implementation. Option B is approved, but the PDI remains Class D / blocked. Acceptance requires all three snapshots to persist on both native subclasses, authoritative profile derivation, no ordinary-client override, no broad cross-scope privilege, and a passing full persona/forgery matrix.
+- [ ] **R2-AGENCY-01 — profile/form snapshot architecture.** APPROVED; source/unit PASS; BLOCKED-PLATFORM at Australia installation/runtime. Native-case snapshot persistence is no longer a product prerequisite. The replacement resolver, controls, and Authorization Form gate build and test, but repeated normal installs (`0.0.1` and `0.0.2`, never `--reinstall`) processed zero new metadata. Runtime acceptance and M3 readiness remain open.
 - Validate WPC/Operations Manager prerequisites and exception handling.
 - Perform Australia PDI runtime, attachment-security, and impersonation testing.
 
@@ -73,17 +73,15 @@ R0 records implementation deltas only. It does not change application metadata o
   PDF only to the Authorization Form, and complete controlled runtime evidence.
   The published production template now exists with two ordered participants,
   26 body mappings, and two signature blocks. Controlled runtime evidence is
-  still blocked because the PDI cannot safely fixture-populate the three
-  mandatory dictionary-read-only native-case snapshots while
-  `R2-AGENCY-01` is open. Source lifecycle initiation remains disabled until
-  this passes. Status: BLOCKED BY `R2-AGENCY-01`.
+  remains blocked until the approved M2 metadata installs and validates.
+  Source lifecycle initiation remains disabled.
 - [x] `R4-DESIGN-01` — RESOLVED in M1. Reuse is a request-level native
   supervisor APPROVE + Sign attestation anchored to the current HR Case. It
   revalidates exactly one qualifying Active authorization, persists audited
   task/execution/outcome/signer/timestamp/context evidence, creates no Form,
   Detail, PDF, or supersession, leaves denial scoped to the current request,
   and invalidates stale context before future fulfillment eligibility.
-- [ ] `R2-AGENCY-01` remains OPEN; no R4 fixture closes it.
+- [ ] `R2-AGENCY-01` architecture is approved and source-valid but remains BLOCKED-PLATFORM at installation/runtime.
 
 ## M4 - Fulfillment & Operations (Conditional Source / Unit)
 

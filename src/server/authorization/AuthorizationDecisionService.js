@@ -115,13 +115,15 @@ function validate(context) {
         })
     }
 
-    if (!request.supervisorSnapshot) {
+    const authorizationContext = request.authorizationContext || {}
+
+    if (authorizationContext.valid !== true || !authorizationContext.supervisorId) {
         return exception('EX_MISSING_SUPERVISOR', { missing: 'supervisor' })
     }
 
-    if (!request.positionSnapshot || !request.organizationSnapshot) {
+    if (!authorizationContext.position || !authorizationContext.organization) {
         return exception('EX_MISSING_REQUIRED_DATA', {
-            missing: !request.positionSnapshot ? 'position' : 'organization',
+            missing: !authorizationContext.position ? 'position' : 'organization',
         })
     }
 

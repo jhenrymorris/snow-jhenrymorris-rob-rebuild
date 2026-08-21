@@ -68,16 +68,28 @@ export const x_2108496_hr_acces_rob_auth = Table({
             referenceTable: 'sys_user',
             mandatory: true,
             cascadeRule: 'none',
+            readOnly: true,
+            audit: true,
         }),
         organization: StringColumn({
             label: 'Organization',
             mandatory: true,
             maxLength: 255,
+            readOnly: true,
+            audit: true,
         }),
         position_title: StringColumn({
             label: 'Position Title',
             mandatory: true,
             maxLength: 255,
+            readOnly: true,
+            audit: true,
+        }),
+        profile_context_evidence: MultiLineTextColumn({
+            label: 'Profile Context Evidence',
+            readOnly: true,
+            audit: true,
+            maxLength: 4000,
         }),
         employment_type: ChoiceColumn({
             label: 'Employment Type',

@@ -13,6 +13,7 @@ export const defaultRobConfiguration = Record({
         renewal_reminder_2_days: 60,
         renewal_reminder_3_days: 30,
         lapse_notification_enabled: true,
+        allow_sys_user_title_fallback: true,
         notes: 'Synthetic PDI seed only: the agency annual recertification date and task timing values require business confirmation before production use.',
     },
 })

@@ -6,7 +6,9 @@
         "sn_hr_core": {
             "tables": [
                 "sn_hr_core_case",
-                "sn_hr_core_task"
+                "sn_hr_core_task",
+                "sn_hr_core_profile",
+                "sn_hr_core_position"
             ]
         },
         "sn_doc": {
@@ -20,7 +22,9 @@
             "tables": [
                 "sys_attachment",
                 "sys_user",
-                "sys_user_group"
+                "sys_user_group",
+                "sys_user_grmember",
+                "cmn_department"
             ]
         }
     }

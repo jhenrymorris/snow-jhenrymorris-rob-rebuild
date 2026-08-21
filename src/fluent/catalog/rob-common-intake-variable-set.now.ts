@@ -2,6 +2,7 @@ import {
     DateVariable,
     LabelVariable,
     MultiLineTextVariable,
+    ReferenceVariable,
     SelectBoxVariable,
     VariableSet,
 } from '@servicenow/sdk/core'
@@ -48,6 +49,32 @@ export const robCommonIntakeVariableSet = VariableSet({
             active: true,
             mandatory: true,
             mapToField: false,
+        }),
+        x_2108496_hr_acces_selected_supervisor: ReferenceVariable({
+            question: 'Supervisor (profile default; select only to correct)',
+            description:
+                'Leave blank to use your authoritative profile manager. Any correction is limited to active members of the configured NSF Supervisors group and is validated again on the server.',
+            referenceTable: 'sys_user',
+            order: 350,
+            active: true,
+            mandatory: false,
+            mapToField: false,
+            useReferenceQualifier: 'advanced',
+            referenceQual:
+                'javascript:new x_2108496_hr_acces.RobProfileAuthorizationContext().getSupervisorQualifier()',
+        }),
+        x_2108496_hr_acces_organization_fallback: ReferenceVariable({
+            question: 'Organization (only if profile organization is unavailable)',
+            description:
+                'Used only when authoritative profile and directory organization sources are unavailable. The selection is constrained to the configured NSF organization hierarchy and validated again on the server.',
+            referenceTable: 'cmn_department',
+            order: 360,
+            active: true,
+            mandatory: false,
+            mapToField: false,
+            useReferenceQualifier: 'advanced',
+            referenceQual:
+                'javascript:new x_2108496_hr_acces.RobProfileAuthorizationContext().getOrganizationQualifier()',
         }),
     },
 })

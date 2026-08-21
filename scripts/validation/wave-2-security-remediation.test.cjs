@@ -134,6 +134,9 @@ function record(values) {
         getRecordClassName() {
             return this.values.sys_class_name || 'sn_hr_core_case'
         },
+        isValidField(field) {
+            return Object.hasOwn(this.values, field)
+        },
     }
 }
 
@@ -230,6 +233,17 @@ function run(script, currentValues, options = {}) {
         GlideDateTime: function GlideDateTime() {
             this.getValue = () => '2026-07-21 12:00:00'
         },
+        RobProfileAuthorizationContext: function RobProfileAuthorizationContext() {
+            this.resolveFromCase = () =>
+                options.profileContext || {
+                    valid: true,
+                    position: 'Synthetic Analyst',
+                    organizationId: 'synthetic_department',
+                    organization: 'Synthetic Department',
+                    supervisorId: 'manager',
+                    errors: [],
+                }
+        },
         gs: {
             addErrorMessage: (message) => errors.push(message),
             getUserID: () => options.userId || 'requester',
@@ -241,7 +255,7 @@ function run(script, currentValues, options = {}) {
     return { current, errors, state }
 }
 
-test('both approved intake paths derive the requester snapshots', () => {
+test('both approved intake paths validate context without writing case snapshots', () => {
     for (const values of [
         baseCase(),
         baseCase({
@@ -252,12 +266,9 @@ test('both approved intake paths derive the requester snapshots', () => {
     ]) {
         const result = run(snapshotScript, values)
         assert.equal(result.current.aborted, false)
-        assert.equal(result.current.getValue(names.title), 'Synthetic Analyst')
-        assert.equal(
-            result.current.getValue(names.organization),
-            'synthetic_department'
-        )
-        assert.equal(result.current.getValue(names.supervisor), 'manager')
+        assert.equal(result.current.getValue(names.title), '')
+        assert.equal(result.current.getValue(names.organization), '')
+        assert.equal(result.current.getValue(names.supervisor), '')
         assert.equal(result.current.getValue(names.blocked), '0')
     }
 })
@@ -470,7 +481,7 @@ test('authenticated user is the sole requester source and fills blank identities
     )
 })
 
-test('missing supervisor records a stop and leaves every lifecycle gate closed', () => {
+test('unresolved validated context rejects intake before lifecycle preparation', () => {
     const result = run(
         snapshotScript,
         baseCase({
@@ -478,17 +489,22 @@ test('missing supervisor records a stop and leaves every lifecycle gate closed',
             opened_for: 'no_manager',
             subject_person: 'no_manager',
         }),
-        { userId: 'no_manager' }
+        {
+            userId: 'no_manager',
+            profileContext: {
+                valid: false,
+                position: 'Synthetic Specialist',
+                organization: 'Synthetic Department',
+                supervisorId: '',
+                errors: ['PROFILE_CONTEXT_SUPERVISOR_INVALID'],
+            },
+        }
     )
-    assert.equal(result.current.getValue(names.exception), '1')
-    assert.equal(result.current.getValue(names.reason), 'missing_supervisor')
-    assert.equal(result.current.getValue(names.blocked), '1')
-    assert.equal(result.current.getValue(names.employeeGate), '0')
-    assert.equal(result.current.getValue(names.supervisorGate), '0')
-    assert.equal(result.current.getValue(names.fulfillmentGate), '0')
+    assert.equal(result.current.aborted, true)
+    assert.match(result.errors[0], /could not be validated/)
 })
 
-test('snapshot processing preserves all existing producer mappings', () => {
+test('authorization-context validation preserves all existing producer mappings', () => {
     const values = baseCase()
     const result = run(snapshotScript, values)
     for (const field of preservedMappings) {
@@ -506,7 +522,7 @@ test('direct protected-field edits are rejected', () => {
     assert.equal(result.current.aborted, true)
 })
 
-test('controlled correction requires a new reason and re-derives audited values', () => {
+test('deprecated correction request cannot re-derive case snapshots', () => {
     const previous = baseCase({
         [names.title]: 'Old title',
         [names.supervisor]: 'old_manager',
@@ -525,18 +541,14 @@ test('controlled correction requires a new reason and re-derives audited values'
         hasRobAdmin: true,
         userId: 'rob_admin_user',
     })
-    assert.equal(result.current.aborted, false)
-    assert.equal(result.current.getValue(names.title), 'Synthetic Analyst')
-    assert.equal(result.current.getValue(names.supervisor), 'manager')
-    assert.equal(result.current.getValue(names.priorTitle), 'Old title')
-    assert.equal(result.current.getValue(names.priorSupervisor), 'old_manager')
-    assert.equal(result.current.getValue(names.correctedBy), 'rob_admin_user')
-    assert.equal(result.current.getValue(names.correctedAt), '2026-07-21 12:00:00')
-    assert.equal(result.current.getValue(names.blocked), '0')
-    assert.equal(result.current.getValue(names.fulfillmentGate), '0')
+    assert.equal(result.current.aborted, true)
+    assert.equal(
+        result.state.lookups.some(([table]) => table === 'sys_user'),
+        false
+    )
 })
 
-test('controlled correction rejects whitespace reasons and unrelated cases', () => {
+test('deprecated correction values are protected on supported and unrelated cases', () => {
     const previous = baseCase({
         [names.title]: 'Old title',
         [names.correctionReason]: 'Old reason',

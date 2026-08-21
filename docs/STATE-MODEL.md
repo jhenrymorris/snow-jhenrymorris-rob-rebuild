@@ -55,3 +55,17 @@ a changed context returns the case for decision re-evaluation/Exception.
 
 These are deterministic source/unit guards. Exact native HR Case/Task state
 mapping and production activation remain blocked by M2/M3.
+
+## M2 Authorization Context Gate
+
+New, Amendment, and Renewal may move from lifecycle preparation to Pending
+Employee Signature only after Position, Organization, and Supervisor resolve,
+the Supervisor passes active approved-group validation, and all three final
+values are copied to the governed Authorization Form. An unresolved or invalid
+value routes to the existing Exception/re-evaluation path and creates no
+signing work. Once copied, the Authorization Form values remain the historical
+context; live profile changes cannot redirect an in-flight supervisor stage.
+
+Reuse retains its M1 state model. It validates the current request Supervisor
+from the same resolver but never updates the historical context on the reused
+Authorization Form.

@@ -708,13 +708,11 @@ Current Australia evidence: one published Class C production template exists
 with that exact name (`f99c3c0ac372031068a35f2b2b013138`). It has the ordered
 Employee/Supervisor participant chain, 26 governed body mappings, and two
 signature blocks. The template is not bound to ordinary intake. Both initiation
-rules remain intentionally inactive because a controlled native-case fixture
-cannot safely persist the three dictionary-read-only snapshots in this PDI.
-Adding an exact temporary `rob_admin` assignment did not override dictionary
-read-only behavior; the assignment was removed. Do not use global script,
-broad cross-scope privilege, ACL bypass, or a parallel store to manufacture the
-fixture. Do not enable the initiation rules until `R2-AGENCY-01` is satisfied
-and controlled New, denial, Amendment, Renewal, idempotency, lineage,
+rules remain intentionally inactive. The blocked native-case fixture model is
+superseded by M2's approved profile/form snapshot architecture. Do not use
+global script, broad cross-scope privilege, ACL bypass, or a parallel store.
+Do not enable the initiation rules until controlled M3 New, denial, Amendment,
+Renewal, idempotency, lineage,
 attachment-security, and Reuse-contract tests pass. No broad cross-scope
 privilege is permitted.
 
@@ -738,3 +736,32 @@ gates are proven and the platform owner has completed these Class C items:
 
 No REST Message, IntegrationHub spoke, credential, direct provisioning action,
 custom task table, or renewal scheduler is part of M4.
+
+## M2 profile/form context environment configuration
+
+On the single active ROB Configuration record, platform owners must set:
+
+- **Approved NSF Supervisors Group** to the active production-equivalent NSF
+  Supervisors group;
+- **Approved NSF Organization Root** to the approved organization hierarchy
+  root used only for exceptional fallback selection;
+- **Allow sys_user Title Fallback** according to approved data-governance policy.
+
+The Australia PDI validation uses synthetic equivalents only. Do not hard-code
+their sys_ids in source. After configuration, verify the Supervisor variable
+shows only active configured-group members and the Organization fallback shows
+only configured-root records, then tamper-test both selections because the
+server resolver—not the qualifier—is authoritative.
+
+The three legacy case snapshot fields remain installed for backward
+compatibility. Do not populate, delete, expose for correction, or make them a
+lifecycle prerequisite. Both R4 lifecycle and both M4 fulfillment production
+entry points remain inactive until their separately authorized runtime gates.
+
+Australia M2 install note: normal installs at `0.0.1` and the supported patch
+upgrade to `0.0.2` completed but processed zero new metadata. The resolver,
+configuration dictionaries, variables, and exact read privileges therefore
+remain absent and these Class C values cannot yet be set. Do not use
+`--reinstall`, stable-ID replacement, or scoped Background updates as a
+workaround. The latter was tested once, created two broad API Execute
+privileges, and was fully cleaned up.

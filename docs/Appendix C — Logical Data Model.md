@@ -1729,3 +1729,14 @@ proof used a native supervisor Document Task as the synthetic association target
 Incomplete/refused executions produce no approved final PDF. Amendment and
 Renewal must create new independently retained artifacts rather than regenerate
 an existing attachment in place.
+
+## M2 approved profile/form snapshot revision
+
+The native HR Case remains the operational request but is no longer the
+immutable Position/Organization/Supervisor store. A deterministic server
+resolver reads the authenticated subject's authoritative profile/directory
+context and validates exceptional Organization/Supervisor selections. New,
+Amendment, and Renewal persist the final context on the existing ROB
+Authorization Form before signature. Reuse stores no new form and does not
+alter the reused form. The three legacy case snapshot columns remain protected
+compatibility metadata only; no fifth business table is introduced.

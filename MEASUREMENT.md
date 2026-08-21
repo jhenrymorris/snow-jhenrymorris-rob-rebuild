@@ -1489,3 +1489,79 @@ Not exposed by session/tool — no estimate recorded.
 - M2: BLOCKED-PLATFORM; `R2-AGENCY-01` OPEN.
 - M3: BLOCKED BY M2.
 - M5: NOT STARTED.
+
+### M2 — Approved Profile/Form Snapshot Architecture
+
+- Shape: one-pass implementation/build/deployment/runtime package.
+- Active session start: `2026-08-20T19:55:40.8781944-04:00`.
+- Active session end: `2026-08-20T20:28:26.3399868-04:00`.
+- Active duration / calendar span: `00:32:45.461`; no separate authentication
+  waiting interval was incurred.
+- Turn classification: implementation, source/unit review, build, normal
+  install, Class C configuration attempt, installed-runtime audit, security
+  cleanup, and blocked close-out.
+- Reviewer intervention: approved the profile lookup / Authorization Form
+  snapshot architecture that supersedes native-case snapshot persistence.
+- Silent defects: 2. The frozen security test harness lacked `isValidField` for
+  the retained integrity guard; fixed in the test double. Fluent rejected a
+  `for...of` privilege declaration; replaced by five explicit exact records.
+- Visible defects: 2. Normal Australia installation completed at same version
+  and again as `0.0.2`, but upgrade history processed zero new metadata; direct
+  reread confirmed the resolver/dictionaries absent. One scoped Background
+  configuration attempt auto-created broad API Execute privileges for
+  `GlideRecord.setValue` (`e9137e0ec3be431068a35f2b2b013137`) and
+  `GlideRecord.update` (`6913ba4ec3be431068a35f2b2b01315c`); both were
+  removed by exact sys_id and verified absent.
+- Environment waits: 0. OAuth/install operations completed within the active
+  session.
+- Token accounting: not exposed; no estimate recorded.
+
+#### Source/build evidence
+
+- M2 focused tests: 19/19 PASS.
+- Regression: R1 9/9; Wave 2 security 22/22; deployment configuration
+  16/16; R3 30/30; R4 52/52; M4 26/26 PASS.
+- Normal SDK build: PASS.
+- Frozen-key SDK build: PASS.
+- Warnings: exactly five unchanged TS11 reference-qualifier warnings.
+- Generated-key review: intentional M2 additions only; existing-key mutations
+  or deletions 0.
+
+#### Install/runtime evidence
+
+- Normal install only; `--reinstall` never used. Rollback contexts:
+  `8232f28ac3be431068a35f2b2b013184`,
+  `0e14fa02c3fe431068a35f2b2b0131bb`, and
+  `26f43ac2c3fe431068a35f2b2b013103` (plus diagnostic normal context
+  `9594b2c2c3fe431068a35f2b2b0131e1`).
+- Application version advanced through a normal upgrade to `0.0.2`, but the
+  upgrade processed zero new metadata. Resolver Script Include
+  `fc05ae8aa83c4d2f8dd0927fe324f453` and new dictionaries reread as absent.
+- Active configuration remained unchanged: approved supervisors group blank,
+  approved organization root blank, title-fallback flag false.
+- Installed inventory: four custom business tables, five functional roles,
+  two R4 lifecycle entry points inactive, two M4 entry points inactive, direct
+  provisioning integrations 0.
+
+#### Count assertion
+
+- Custom business tables: expected 4; actual 4.
+- Scoped functional roles: expected 5; actual 5.
+- New custom tables: expected 0; actual 0.
+- Broad privileges added/remaining: expected 0; actual 0 after exact cleanup.
+- Temporary roles remaining: expected 0; actual 0.
+- Client-authoritative Position/Organization values: expected 0; actual 0 in
+  source/unit; runtime not installed.
+- Unvalidated arbitrary Supervisors: expected 0; actual 0 in source/unit;
+  runtime not installed.
+- Production entry points active: expected 0; actual 0 (4/4 inactive).
+- Direct provisioning integrations: expected 0; actual 0.
+- Existing generated-key mutations/deletions: expected 0; actual 0.
+
+#### Package result
+
+- Approved architecture and source/unit foundation: PASS.
+- Australia installation/runtime acceptance: BLOCKED-PLATFORM.
+- M2: BLOCKED-PLATFORM.
+- `R2-AGENCY-01`: OPEN.
+- M3: NOT READY / not started.

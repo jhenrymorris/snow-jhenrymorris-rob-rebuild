@@ -59,11 +59,28 @@
     }
 
     var decision = current.getValue(decisionField)
-    if (decision === 'exception' || decision === 'reuse') {
+    if (decision === 'exception') {
         return
     }
-    if (!supportedDecisions[decision]) {
+    if (decision !== 'reuse' && !supportedDecisions[decision]) {
         fail('the R3 decision is missing or unsupported')
+        return
+    }
+
+    var subjectId =
+        current.getValue('subject_person') || current.getValue('opened_for')
+    var contextResolver = new RobProfileAuthorizationContext()
+    var profileContext = contextResolver.resolveFromCase(current)
+    if (!subjectId || !profileContext.valid) {
+        fail(
+            'validated profile context is incomplete: ' +
+                profileContext.errors.join(',')
+        )
+        return
+    }
+    if (decision === 'reuse') {
+        // The frozen M1 Reuse path consumes this validated current Supervisor
+        // without mutating the historical Authorization Form snapshots.
         return
     }
 
@@ -88,13 +105,9 @@
         return
     }
 
-    var subjectId =
-        current.getValue('subject_person') || current.getValue('opened_for')
-    var supervisorId = current.getValue(prefix + 'supervisor_snapshot')
-    var positionSnapshot = current.getValue(prefix + 'position_title')
-    var organizationSnapshot = current.getDisplayValue(
-        prefix + 'organization_snapshot'
-    )
+    var supervisorId = profileContext.supervisorId
+    var positionSnapshot = profileContext.position
+    var organizationSnapshot = profileContext.organization
     var employmentType = current.getValue(prefix + 'employment_type')
     var businessJustification = current.getValue('rich_description')
     var expirationDate = current.getValue(expirationField)
@@ -186,6 +199,10 @@
     authorization.setValue('supervisor', supervisorId)
     authorization.setValue('organization', organizationSnapshot)
     authorization.setValue('position_title', positionSnapshot)
+    authorization.setValue(
+        'profile_context_evidence',
+        contextResolver.evidenceText(profileContext)
+    )
     authorization.setValue('employment_type', employmentType)
     authorization.setValue(
         'access_end_date',

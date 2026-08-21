@@ -15,9 +15,9 @@ Legend:
 |---|---|---|---|---|
 | Requester | Native HR case `opened_by` or equivalent | Native | Logged-in user | Confirm exact field |
 | Subject Person | Native HR case `opened_for` or equivalent | Native | Logged-in user | Self-submission only |
-| Supervisor | `x_2108496_hr_acces_supervisor_snapshot` on both native subclasses | Scoped extension | HR Core-owned profile enrichment | Request snapshot; client values are not authoritative |
-| Position Title | `x_2108496_hr_acces_position_title` on both native subclasses | Scoped extension | HR Core-owned profile enrichment | Request snapshot; client values are not authoritative |
-| DIR/DIV / Organization | `x_2108496_hr_acces_organization_snapshot` on both native subclasses | Scoped extension | HR Core-owned profile enrichment | Request snapshot; client values are not authoritative |
+| Supervisor | Resolved context; final value stored in `x_2108496_hr_acces_rob_auth.supervisor` | Derived / governed snapshot | Active `sys_user.manager` default or constrained approved-supervisors selection | Server validates selected corrections for active group membership; client value is never authoritative |
+| Position Title | Resolved context; final value stored in `x_2108496_hr_acces_rob_auth.position_title` | Derived / governed snapshot | Active HR Profile Position, then configured `sys_user.title` fallback | Unresolved value blocks signing |
+| DIR/DIV / Organization | Resolved context; final value stored in `x_2108496_hr_acces_rob_auth.organization` | Derived / governed snapshot | HR Profile Position department, then user department, then approved controlled organization fallback | Manual fallback is exceptional and server validated |
 | Employment Type | ROB Employment Type | Scoped extension | Request | Aligned to Authorization Form |
 | Access End Date | ROB Access End Date | Scoped extension | Request | Conditionally required |
 | Request Category | ROB Request Category | Scoped extension | Intake item | Systems or Data/Reports |
@@ -368,3 +368,27 @@ Task Type values are `staffing_fulfillment`, `analytics_fulfillment`,
 assigned user, state, due date, work notes, close notes, and parent remain native
 HR Task fields. Production form/list placement and environment groups remain
 Class C configuration.
+
+## M2 Approved Profile/Form Snapshot Architecture
+
+The legacy native-case fields `x_2108496_hr_acces_position_title`,
+`x_2108496_hr_acces_organization_snapshot`, and
+`x_2108496_hr_acces_supervisor_snapshot` remain in metadata only for backward
+compatibility. Active processing does not populate or consume them, their
+former correction action is inactive, and their ACL/integrity protections
+remain.
+
+Position resolves from an active HR Profile Position, then from `sys_user.title`
+only when the active ROB Configuration permits that fallback. Organization
+resolves from the HR Position department, then `sys_user.department`; a manual
+fallback is accepted only when the automatic sources are absent and the chosen
+department is within the configured approved organization root. Supervisor
+defaults from `sys_user.manager`; any selected correction must be active and a
+current member of the configured approved-supervisors group. Server validation
+is authoritative for both reference variables.
+
+New, Amendment, and Renewal copy the final values to the read-only, audited
+Authorization Form `position_title`, `organization`, and `supervisor` fields
+before employee signing. `profile_context_evidence` records deterministic
+source/fallback evidence. Reuse resolves the current Supervisor for its
+request-level attestation and does not mutate the reused Authorization Form.

@@ -1,8 +1,5 @@
 (function executeRule(current) {
     var requestedItemsField = 'x_2108496_hr_acces_requested_items'
-    var positionTitleField = 'x_2108496_hr_acces_position_title'
-    var organizationField = 'x_2108496_hr_acces_organization_snapshot'
-    var supervisorField = 'x_2108496_hr_acces_supervisor_snapshot'
     var employmentTypeField = 'x_2108496_hr_acces_employment_type'
     var accessEndDateField = 'x_2108496_hr_acces_access_end_date'
     var operationsManagerField = 'x_2108496_hr_acces_operations_manager'
@@ -207,12 +204,17 @@
         return
     }
 
-    current.setValue(positionTitleField, requester.getValue('title') || '')
-    current.setValue(
-        organizationField,
-        requester.getValue('department') || ''
-    )
-    current.setValue(supervisorField, '')
+    var profileContext = new RobProfileAuthorizationContext().resolveFromCase(current)
+    if (!profileContext.valid) {
+        reject(
+            'Position, Organization, and Supervisor could not be validated for authorization. Resolve the profile context and submit again.'
+        )
+        return
+    }
+
+    // The three legacy case snapshot fields intentionally remain untouched.
+    // Final validated values become immutable historical evidence only when
+    // copied to the governed ROB Authorization Form before signing.
     current.setValue(exceptionRequiredField, '0')
     current.setValue(exceptionReasonField, '')
     current.setValue(processingBlockedField, '0')
@@ -220,26 +222,13 @@
     current.setValue(supervisorSignatureField, '0')
     current.setValue(fulfillmentGateField, '0')
 
-    var managerId = requester.getValue('manager')
-
     function setPrerequisiteException(reason) {
-        current.setValue(supervisorField, '')
         current.setValue(exceptionRequiredField, '1')
         current.setValue(exceptionReasonField, reason)
         current.setValue(processingBlockedField, '1')
         current.setValue(employeeSignatureField, '0')
         current.setValue(supervisorSignatureField, '0')
         current.setValue(fulfillmentGateField, '0')
-    }
-
-    if (!current.getValue(positionTitleField)) {
-        setPrerequisiteException('missing_position')
-        return
-    }
-
-    if (!current.getValue(organizationField)) {
-        setPrerequisiteException('missing_organization')
-        return
     }
 
     var requiresEmploymentEndDate =
@@ -275,29 +264,4 @@
         }
     }
 
-    if (!managerId) {
-        setPrerequisiteException('missing_supervisor')
-        return
-    }
-
-    if (managerId === requesterId) {
-        setPrerequisiteException('self_supervisor')
-        return
-    }
-
-    var manager = new GlideRecord('sys_user')
-
-    if (!manager.get(managerId)) {
-        setPrerequisiteException('invalid_supervisor')
-        return
-    }
-
-    var managerActive = manager.getValue('active')
-
-    if (managerActive !== '1' && managerActive !== 'true') {
-        setPrerequisiteException('inactive_supervisor')
-        return
-    }
-
-    current.setValue(supervisorField, managerId)
 })(current)

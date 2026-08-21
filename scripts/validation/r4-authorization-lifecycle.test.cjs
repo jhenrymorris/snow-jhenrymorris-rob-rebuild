@@ -22,9 +22,17 @@ function initiation(overrides = {}) {
         decisionClass: 'NEW',
         caseId: 'case_1',
         subjectId: 'employee_1',
+        authorizationContext: {
+            valid: true,
+            supervisorId: 'supervisor_1',
+            position: 'Synthetic Analyst',
+            organization: 'Synthetic Directorate',
+            evidence: 'Synthetic validated profile context.',
+        },
+        // ReuseAttestationService consumes the current request supervisor as a
+        // direct, already-validated input; lifecycle initiation derives this
+        // value from authorizationContext before invoking the service.
         supervisorId: 'supervisor_1',
-        positionSnapshot: 'Synthetic Analyst',
-        organizationSnapshot: 'Synthetic Directorate',
         employmentType: 'federal_employee',
         accessEndDate: '',
         businessJustification: 'Synthetic R4 validation.',
@@ -285,6 +293,10 @@ test('changed supervisor invalidates the prior Reuse attestation', () => {
     const completed = recordReuseSupervisorAction(approvedReuseAction())
     const result = beginReuseAttestation(
         reuseInput({
+            authorizationContext: {
+                ...initiation().authorizationContext,
+                supervisorId: 'supervisor_2',
+            },
             supervisorId: 'supervisor_2',
             existingReuseAttestation: persistedApprovedAttestation(completed.contextKey),
         })

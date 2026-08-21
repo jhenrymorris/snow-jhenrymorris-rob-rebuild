@@ -333,9 +333,10 @@ only the current request. A changed supervisor, scope, decision, or qualifying
 authorization context invalidates prior evidence. The fulfillment contract is
 frozen for M4 but no fulfillment behavior is implemented here.
 
-`R4-DESIGN-01` is RESOLVED. `R4-RUNTIME-01` remains BLOCKED BY
-`R2-AGENCY-01`; both production lifecycle initiation Business Rules remain
-inactive.
+`R4-DESIGN-01` is RESOLVED. The M2 profile/form architecture is approved and
+source-validated, but `R2-AGENCY-01` remains OPEN because normal Australia
+installation did not apply its new metadata. Both production lifecycle
+initiation Business Rules remain inactive.
 
 ## M4 Conditional Fulfillment Foundation
 
@@ -364,3 +365,21 @@ M4 source/unit validation uses synthetic gate and Operations Manager fixtures;
 production runtime remains blocked by M2/M3. No external provisioning API,
 custom fulfillment table, renewal scheduler, or production notification is
 introduced.
+
+## M2 Approved Profile Resolution and Authorization Snapshot Boundary
+
+`RobProfileAuthorizationContext` is the single deterministic server boundary.
+It reads the authenticated subject, active HR Profile/Position, directory
+department/title/manager, and the active ROB Configuration. It accepts the two
+optional native producer references only as candidates and independently
+validates the approved organization hierarchy and active supervisor-group
+membership. Five exact table Read privileges support those lookups; no case
+Write, broad API Execute, or ACL bypass is introduced.
+
+The three prior application-owned case snapshot columns remain compatibility
+metadata but are not prerequisites and are not read or written by R3/R4 active
+processing. New, Amendment, and Renewal must successfully resolve context and
+copy it to the governed Authorization Form before employee signing. Native
+supervisor routing then uses the form snapshot rather than recalculating a live
+manager. Reuse uses the current resolved Supervisor solely for the frozen
+case-level attestation contract and does not alter the reused form.

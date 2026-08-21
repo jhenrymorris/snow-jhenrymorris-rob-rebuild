@@ -1577,3 +1577,12 @@ All R4-PDI-01 native capability criteria are satisfied. Templates are
 non-published and unbound; the one-time generation action and unused helper were
 deleted; no RCA or broad privilege remains. `R4-PDI-01` is RESOLVED and R4 is
 unblocked for production lifecycle implementation. `R2-AGENCY-01` remains OPEN.
+
+## M2 approved architecture revision
+
+The PDI inability to persist the three application-owned fields on protected
+native HR Case subclasses remains valid historical evidence. The approved
+product architecture no longer requires that operation. Australia validation
+now targets authoritative profile resolution, constrained fallbacks, and
+committed snapshots on the governed ROB Authorization Form. No broad privilege
+or replacement table is required.

@@ -93,6 +93,21 @@ export const x_2108496_hr_acces_rob_config = Table({
             useReferenceQualifier: 'simple',
             cascadeRule: 'clear',
         }),
+        approved_supervisors_group: ReferenceColumn({
+            label: 'Approved NSF Supervisors Group',
+            referenceTable: 'sys_user_group',
+            cascadeRule: 'clear',
+        }),
+        approved_organization_root: ReferenceColumn({
+            label: 'Approved NSF Organization Root',
+            referenceTable: 'cmn_department',
+            cascadeRule: 'clear',
+        }),
+        allow_sys_user_title_fallback: BooleanColumn({
+            label: 'Allow sys_user Title Fallback',
+            mandatory: true,
+            default: true,
+        }),
         operations_manager_task_due_days: IntegerColumn({
             label: 'Operations Manager Task Due Days',
             min: 0,

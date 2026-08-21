@@ -12,6 +12,7 @@ function requireValue(value, label) {
 
 function initiate(input) {
     const decisionClass = String(input.decisionClass || '').toUpperCase()
+    const authorizationContext = input.authorizationContext || {}
 
     if (decisionClass === 'EXCEPTION') {
         return { action: 'exception', form: null, details: [] }
@@ -19,7 +20,13 @@ function initiate(input) {
 
     if (decisionClass === 'REUSE') {
         requireValue(input.relatedAuthorizationId, 'related authorization')
-        return beginReuseAttestation(input)
+        if (authorizationContext.valid !== true) {
+            throw new Error('Validated authorization context is required')
+        }
+        return beginReuseAttestation({
+            ...input,
+            supervisorId: authorizationContext.supervisorId,
+        })
     }
 
     if (!FORM_DECISIONS.has(decisionClass)) {
@@ -37,9 +44,6 @@ function initiate(input) {
     const required = [
         ['caseId', 'source case'],
         ['subjectId', 'subject'],
-        ['supervisorId', 'supervisor'],
-        ['positionSnapshot', 'position snapshot'],
-        ['organizationSnapshot', 'organization snapshot'],
         ['employmentType', 'employment type'],
         ['businessJustification', 'business justification'],
         ['formVersion', 'form version'],
@@ -48,6 +52,14 @@ function initiate(input) {
         ['expirationDate', 'expiration date'],
     ]
     for (const [field, label] of required) requireValue(input[field], label)
+    if (
+        authorizationContext.valid !== true ||
+        !authorizationContext.supervisorId ||
+        !authorizationContext.position ||
+        !authorizationContext.organization
+    ) {
+        throw new Error('Validated authorization context is required before signing')
+    }
 
     if (
         (decisionClass === 'AMENDMENT' || decisionClass === 'RENEWAL') &&
@@ -64,9 +76,10 @@ function initiate(input) {
         form: {
             sourceCaseId: input.caseId,
             subjectId: input.subjectId,
-            supervisorId: input.supervisorId,
-            positionSnapshot: input.positionSnapshot,
-            organizationSnapshot: input.organizationSnapshot,
+            supervisorId: authorizationContext.supervisorId,
+            positionSnapshot: authorizationContext.position,
+            organizationSnapshot: authorizationContext.organization,
+            profileContextEvidence: authorizationContext.evidence || '',
             employmentType: input.employmentType,
             accessEndDate: input.accessEndDate || '',
             businessJustification: input.businessJustification,

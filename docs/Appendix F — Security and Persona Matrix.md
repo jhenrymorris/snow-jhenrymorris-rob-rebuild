@@ -1788,3 +1788,14 @@ Signed Forms, authorization records, system-managed lifecycle fields, and histor
 
 R4.2.2 satisfied this contract with synthetic users and left zero new RCA,
 broad privilege, temporary role, published test template, or intake binding.
+
+## M2 profile/form context security addendum
+
+Employee-entered Position/Organization text is never authoritative. The
+selected Supervisor must be active and a current member of the configured NSF
+Supervisors population; the Organization fallback must be within the configured
+approved hierarchy and is accepted only when automatic sources are absent.
+Both controls are enforced server-side independent of client qualifiers.
+Authorization Form snapshots are system-managed, read-only, and audited. The
+resolver has exact table Read privileges only; broad API/case Write, temporary
+roles, ACL bypasses, and delegated submission remain prohibited.

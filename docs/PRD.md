@@ -1381,3 +1381,22 @@ The MVP product baseline is therefore:
 > **A native-HRSD, self-service Rules of Behavior authorization solution on ServiceNow Australia that uses native HR Cases and HR Tasks for transactional work, governed scoped records for authorization compliance, current ServiceNow document/signature capabilities for electronic authorization, configuration-driven decision and renewal logic, external notify-and-track fulfillment, strict PII minimization, complete audit traceability, and ServiceNow SDK/Codex-assisted source-controlled development without runtime dependence on AI tooling.**
 
 This PRD remains authoritative regardless of the specific implementation wave in which an individual requirement is delivered.
+
+## Approved M2 Profile/Form Snapshot Architecture
+
+The former requirement to persist immutable Position, Organization, and
+Supervisor snapshots on the native HR Case subclasses is superseded. Native HR
+Cases remain the operational intake records, while authoritative server-side
+profile resolution supplies the decision/lifecycle context. Position uses the
+active HR Profile Position with a configured `sys_user.title` fallback.
+Organization uses the authoritative profile/department source with a
+configured, server-validated organization fallback only when automatic data is
+unavailable. Supervisor defaults from the authoritative profile manager and
+may be corrected only to an active member of the configured NSF Supervisors
+population.
+
+Before New, Amendment, or Renewal can enter employee signing, all three values
+must resolve and be copied to the governed ROB Authorization Form. Those form
+values are the stable historical evidence and the Supervisor value fixes the
+native signer route for the in-flight authorization. Reuse retains its frozen
+request-level attestation model and does not rewrite historical form context.

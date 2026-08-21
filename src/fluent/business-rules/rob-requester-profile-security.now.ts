@@ -3,27 +3,27 @@ import { BusinessRule } from '@servicenow/sdk/core'
 const supportedCaseFilter =
     'sys_class_nameINsn_hr_core_case_payroll,sn_hr_core_case_workforce_admin'
 
-export const populateRequesterProfileSnapshotsBeforeInsert = BusinessRule({
+export const validatePayrollAuthorizationContextBeforeInsert = BusinessRule({
     $id: Now.ID['populate-requester-profile-snapshots-before-insert'],
-    name: 'ROB Validate Payroll Intake and Populate Requester Profile Snapshots',
+    name: 'ROB Validate Payroll Intake Authorization Context',
     table: 'sn_hr_core_case_payroll',
     when: 'before',
     action: ['insert'],
     order: 100,
     description:
-        'Validates approved Staffing HR-service provenance, access items, and self-submission identities before deriving requester profile snapshots.',
+        'Validates Staffing provenance, self-submission, and authoritative profile/supervisor context without persisting immutable snapshots on the native HR Case.',
     script: Now.include('../server/requester-profile-snapshot.server.js'),
 })
 
-export const populateWorkforceRequesterProfileSnapshotsBeforeInsert = BusinessRule({
+export const validateWorkforceAuthorizationContextBeforeInsert = BusinessRule({
     $id: Now.ID['populate-workforce-requester-profile-snapshots-before-insert'],
-    name: 'ROB Validate Workforce Intake and Populate Requester Profile Snapshots',
+    name: 'ROB Validate Workforce Intake Authorization Context',
     table: 'sn_hr_core_case_workforce_admin',
     when: 'before',
     action: ['insert'],
     order: 100,
     description:
-        'Validates approved Analytics HR-service provenance, access items, and self-submission identities before deriving requester profile snapshots.',
+        'Validates Analytics provenance, self-submission, and authoritative profile/supervisor context without persisting immutable snapshots on the native HR Case.',
     script: Now.include('../server/requester-profile-snapshot.server.js'),
 })
 
@@ -36,7 +36,7 @@ export const enforceRequesterProfileSecurityBeforeUpdate = BusinessRule({
     order: 90,
     filterCondition: supportedCaseFilter,
     description:
-        'Rejects direct protected-field changes and performs an audited, directory-derived correction only when a ROB administrator supplies a reason.',
+        'Protects deprecated native-case snapshot fields retained only for backward compatibility; the obsolete re-derivation path is disabled.',
     script: Now.include('../server/requester-profile-correction.server.js'),
 })
 

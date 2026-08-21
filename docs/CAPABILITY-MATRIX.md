@@ -148,11 +148,11 @@ lifecycle implementation, but R4 is not complete and `R2-AGENCY-01` remains OPEN
 |---|---|---|
 | Deterministic lifecycle/scope/signature/finalization services | Class A | Implemented; 36/36 source/unit tests PASS |
 | Authorization Form evidence fields and guarded Business Rules | Class A | Installed normally; initiation rules intentionally inactive |
-| Production native Document Templates, participants, launch, and post-signature rendering | Class C | PARTIAL: published production template `ROB Form 1768 Authorization` (`f99c3c0ac372031068a35f2b2b013138`) has two ordered participants, 26 body mappings, and two signature blocks; controlled launch/finalization remains blocked because the PDI cannot safely populate the three mandatory dictionary-read-only native-case snapshots while `R2-AGENCY-01` is open |
-| Reuse request-level attestation persistence contract | Class D pending design | OPEN; no duplicate form/detail workaround permitted |
+| Production native Document Templates, participants, launch, and post-signature rendering | Class C | Template capability configured; controlled launch/finalization remains blocked until the approved M2 metadata installs and validates |
+| Reuse request-level attestation persistence contract | Class A plus native Class C signing | RESOLVED in M1; no duplicate form/detail/PDF |
 
-R4 remains BLOCKED until the Class B/C production path and Reuse evidence
-contract are completed and runtime-proven. `R2-AGENCY-01` remains OPEN.
+R4 design is frozen. Production lifecycle runtime remains inactive pending M2/M3;
+`R2-AGENCY-01` remains open at the Australia install/runtime gate.
 
 ## M4 Conditional Fulfillment Classification
 
@@ -165,5 +165,21 @@ contract are completed and runtime-proven. `R2-AGENCY-01` remains OPEN.
 | ARM/OAS/Staffing system integrations | Deferred/prohibited for MVP | No credentials, REST artifacts, spokes, or calls |
 
 M4 source/unit fulfillment is conditionally implemented. M4 production runtime
-is **BLOCKED BY M2/M3**; this classification does not close `R2-AGENCY-01` or
-authorize renewal/expiration/lapse automation.
+is **BLOCKED BY M2/M3**; this classification does not authorize
+renewal/expiration/lapse automation.
+
+## M2 Approved Profile/Form Snapshot Classification
+
+| Artifact | Classification | Result |
+|---|---|---|
+| `RobProfileAuthorizationContext` and signing gate | Class A | SDK source; deterministic and server validated |
+| Exact profile/directory/group table Read privileges | Class A | Five exact table reads; no broad API or case Write |
+| Selected Supervisor and Organization fallback variables | Class A metadata | Optional candidates only; server validation remains authoritative |
+| Approved supervisors group and organization root values | Class C environment configuration | PDI uses documented synthetic equivalents; agency supplies NSF values |
+| Authorization Form context fields/evidence | Class A | Existing governed table; read-only/audited historical snapshot |
+| Legacy native-case snapshot fields | Compatibility metadata | Deprecated from active processing; retained and protected |
+
+The prior Class D native-case write requirement is superseded. The replacement
+architecture is Class A/C and source-valid, but `R2-AGENCY-01` remains OPEN
+because repeated normal Australia installs processed zero new metadata. This
+does not activate M3, R4, or M4 production entry points.

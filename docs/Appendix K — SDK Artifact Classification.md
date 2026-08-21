@@ -1582,3 +1582,14 @@ not authorize a source-first substitute or a custom signature/PDF table.
 
 An SDK build/install of inactive Class A artifacts is not production runtime
 acceptance. M4 production execution remains blocked by M2/M3.
+
+## M2 profile/form snapshot artifacts
+
+- Class A: profile context Script Include/server source, signing gate, exact
+  table Read privileges, optional reference variables, configuration schema,
+  Authorization Form evidence field, tests.
+- Class C: environment values for the approved supervisors group and approved
+  organization root.
+- Compatibility only: three legacy native-case snapshot fields and their
+  protections; they are not active prerequisites.
+- Superseded Class D: cross-scope persistence to protected native-case fields.

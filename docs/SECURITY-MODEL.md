@@ -231,9 +231,9 @@ wrong-category items aborts before requester profile access.
 For accepted ROB intake, `gs.getUserID()` is the only requester source. Any
 nonblank supplied `opened_by`, `opened_for`, or `subject_person` that differs
 from that session identity is rejected before `sys_user` profile access. The
-rule then sets all three case identities from the authenticated user and
-derives Position Title Snapshot and Supervisor Snapshot from that user's
-directory record; incoming snapshot and exception values are overwritten.
+rule then sets all three case identities from the authenticated user and calls
+the deterministic profile-context resolver. Incoming legacy case snapshot and
+exception values never become authoritative.
 
 Missing, invalid, inactive, or self-referential supervisors atomically set:
 
@@ -249,18 +249,13 @@ it is part of the idempotency discriminator. No signature, authorization, or
 fulfillment process may proceed while Authorization Processing Blocked is true.
 
 Direct edits to requested items after creation are rejected. Direct edits to
-snapshot, exception, gate, and correction-audit evidence are rejected by the
-before-update integrity rule even when the field ACL is otherwise satisfied.
-The ROB Admin-only **Re-derive ROB Requester Profile** action requires a
-nonblank new correction reason, revalidates active ROB HR Service provenance,
-and re-derives the current title and supervisor from the original requester's
-directory profile. It records the prior title, prior supervisor, correction
-actor, and authoritative date/time on audited fields. The action never accepts
-a caller-supplied replacement supervisor or title and never opens a lifecycle
-gate automatically.
+legacy snapshot, exception, gate, and correction-audit evidence are rejected by
+the before-update integrity rule even when a field ACL is otherwise satisfied.
+The former **Re-derive ROB Requester Profile** action is inactive; active
+processing does not correct or repopulate the legacy case snapshot fields.
 
-Field read ACLs require the native HR case record-read ACL first. Title and
-supervisor snapshots are limited to a subject whose three stored identities
+Field read ACLs require the native HR case record-read ACL first. Legacy title
+and supervisor fields remain limited to a subject whose three stored identities
 remain equal, the validated supervisor, ROB Admin, or Compliance Viewer.
 Internal exception, gate, and
 correction evidence is limited to ROB Admin and Compliance Viewer. These
@@ -295,3 +290,21 @@ Fixture tests emit no real notifications. Overdue-OM output contains only task,
 parent, due date, and a secure record path; it excludes signed PDFs, Business
 Justification, signatures, and sensitive PII. Broad cross-scope privileges,
 temporary roles, direct integrations, and production task creation remain zero.
+
+## 14. M2 profile/form context security contract
+
+Position and Organization are never accepted as authoritative employee-entered
+text. Supervisor and Organization fallback references are constrained in the
+UI and revalidated on the server. The authoritative manager default must be
+active. A requester-selected Supervisor correction must be active and a current
+member of the configured approved-supervisors group; Organization fallback is
+accepted only when automatic sources are absent and the record belongs to the
+configured approved hierarchy. Self-submission remains mandatory.
+
+The resolver receives exact Read privileges for HR Profile, HR Position,
+Department, User Group, and Group Membership. It receives no Create, Update,
+Delete, generic GlideRecord Execute, case-write, or attachment privilege.
+Authorization Form context fields are read-only and audited. Legacy case fields
+remain protected but are inactive compatibility metadata; the correction UI
+action is disabled. No temporary role, broad privilege, snapshot bypass, or
+new business table is part of this architecture.

@@ -421,7 +421,19 @@ test('employee-facing dependencies remain portal-safe and self-only', () => {
     assert.match(requesterSecurity, /Business Justification is required/)
     assert.match(requesterSecurity, /missing_required_access_end_date/)
     assert.match(requesterSecurity, /missing_operations_manager/)
-    assert.match(requesterSecurity, /x_2108496_hr_acces_organization_snapshot/)
+    assert.match(requesterSecurity, /new RobProfileAuthorizationContext\(\)/)
+    assert.doesNotMatch(
+        requesterSecurity,
+        /setValue\(['"]x_2108496_hr_acces_(?:position_title|organization_snapshot|supervisor_snapshot)/
+    )
+    assert.match(
+        commonVariables,
+        /x_2108496_hr_acces_selected_supervisor:\s*ReferenceVariable/
+    )
+    assert.match(
+        commonVariables,
+        /x_2108496_hr_acces_organization_fallback:\s*ReferenceVariable/
+    )
 })
 
 test('nested SDK query values retain raw and display values', () => {

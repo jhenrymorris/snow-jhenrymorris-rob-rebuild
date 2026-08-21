@@ -1,6 +1,6 @@
 {
     "name": "hr-access-rob-authorization",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "",
     "license": "UNLICENSED",
     "imports": {
@@ -18,6 +18,7 @@
       "test:r3": "node --test scripts/validation/r3-authorization-decision.test.cjs",
       "test:r4": "node --test scripts/validation/r4-authorization-lifecycle.test.cjs",
       "test:m4": "node --test scripts/validation/m4-fulfillment-orchestration.test.cjs",
+      "test:m2": "node --test scripts/validation/m2-profile-authorization-context.test.cjs",
       "verify:wave2:pdi": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validation/verify-wave-2-deployment.ps1 -Auth rob-pdi"
     },
     "devDependencies": {

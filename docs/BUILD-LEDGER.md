@@ -299,3 +299,37 @@ Build evidence is package-specific and must remain distinct from install, runtim
   an evidence limitation, not production runtime acceptance.
 - Result: M4 IN PROGRESS; fulfillment source/unit foundation PASS; production
   runtime BLOCKED BY M2/M3; renewal/expiration/lapse PENDING; M5 not started.
+
+## M2 — Approved Profile/Form Snapshot Architecture
+
+- Baseline: `feature/05-fulfillment-orchestration` at `69601bf`; clean tree;
+  R4 and M4 production entry points inactive.
+- Implemented one Class A server resolver with authoritative profile precedence,
+  configured title/organization fallbacks, and active supervisor-group
+  validation. Added two optional reference variables and three ROB
+  Configuration controls; no custom table.
+- Retained the three failed case snapshot fields as protected compatibility
+  metadata only. Disabled the obsolete correction UI and removed all active
+  R3/R4 read/write dependencies.
+- Authorization Form Position, Organization, and Supervisor are now read-only,
+  audited historical context populated before signing; deterministic source
+  evidence is stored with the form.
+- Tests: M2 19/19; R1 9/9; Wave 2 security 22/22; deployment configuration
+  16/16; R3 30/30; R4 52/52; M4 26/26 PASS.
+- Normal and frozen-key builds PASS with exactly five unchanged TS11 warnings.
+  Generated-key review contains only intentional M2 additions and zero existing
+  key mutation/deletion.
+- Three normal Australia installs completed without `--reinstall`; rollback
+  contexts include `8232f28ac3be431068a35f2b2b013184`,
+  `0e14fa02c3fe431068a35f2b2b0131bb`, and
+  `26f43ac2c3fe431068a35f2b2b013103`. The same-version packages and the
+  versioned `0.0.2` package processed zero new metadata. Direct installed
+  reread confirmed the resolver and new dictionaries absent, so runtime tests
+  could not execute.
+- One scoped Background attempt to populate the existing configuration row
+  produced unintended broad `GlideRecord.setValue` and `GlideRecord.update`
+  Execute privileges (`e9137e0ec3be431068a35f2b2b013137` and
+  `6913ba4ec3be431068a35f2b2b01315c`). Both were removed by exact sys_id;
+  final broad privilege count is zero and the configuration remained unchanged.
+- Result: M2 BLOCKED-PLATFORM; approved source/unit foundation PASS;
+  `R2-AGENCY-01` OPEN; M3 not started.

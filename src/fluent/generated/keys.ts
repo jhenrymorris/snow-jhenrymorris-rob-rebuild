@@ -205,6 +205,26 @@ declare global {
                         table: 'sys_script'
                         id: '8b77a7a68ced43e486c3f3972b8d37ea'
                     }
+                    'read-department': {
+                        table: 'sys_scope_privilege'
+                        id: '0f2374bcc70340378388f9951bc5918a'
+                    }
+                    'read-hr-position': {
+                        table: 'sys_scope_privilege'
+                        id: 'db6b41b372874f0996ca9faf0b1d2ae2'
+                    }
+                    'read-hr-profile': {
+                        table: 'sys_scope_privilege'
+                        id: '61321494139c4ed1bf903ba644b92a4e'
+                    }
+                    'read-user-group': {
+                        table: 'sys_scope_privilege'
+                        id: '8aaf09bbb5a6464791dc236298d404a9'
+                    }
+                    'read-user-group-membership': {
+                        table: 'sys_scope_privilege'
+                        id: '0b28721c615b438399f05253a14a212e'
+                    }
                     'rederive-requester-profile-snapshots': {
                         table: 'sys_ui_action'
                         id: 'ed5058ac65e3434a96851c97eb77ce4f'
@@ -312,6 +332,10 @@ declare global {
                     'rob-configuration-module': {
                         table: 'sys_app_module'
                         id: '076b51d7efb043dd9674c80e00f53139'
+                    }
+                    'rob-profile-authorization-context': {
+                        table: 'sys_script_include'
+                        id: 'fc05ae8aa83c4d2f8dd0927fe324f453'
                     }
                     'rob-require-access-end-date-for-time-limited-workers': {
                         table: 'catalog_ui_policy'
@@ -1431,6 +1455,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '12acfe312513402bbf6d7514e905c83f'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_config'
+                            element: 'approved_supervisors_group'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '131099cd66414309808fee8ced4b36ce'
                         key: {
@@ -2363,6 +2396,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '2334582941e3439baa5ce462660b26c3'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_config'
+                            element: 'allow_sys_user_title_fallback'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '2400c27d0e78499b954811c297557191'
                         key: {
@@ -2743,6 +2784,15 @@ declare global {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2108496_hr_acces_requested_items'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'item_option_new'
+                        id: '2c94ff7cb90146b38c0fd31243f13c52'
+                        key: {
+                            cat_item: 'NULL'
+                            variable_set: 'be7867ca16a44820af330aac92ae053d'
+                            name: 'x_2108496_hr_acces_organization_fallback'
                         }
                     },
                     {
@@ -3777,6 +3827,14 @@ declare global {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2108496_hr_acces_requires_employee_signature'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '42606cc272ac4e2299fb23e823bb27ef'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_config'
+                            element: 'approved_supervisors_group'
                         }
                     },
                     {
@@ -5501,6 +5559,15 @@ declare global {
                             }
                             element: 'supersedes_authorization_form'
                             position: '2'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '62646112fb4e4f449e23121661265236'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_config'
+                            element: 'approved_organization_root'
+                            language: 'en'
                         }
                     },
                     {
@@ -7659,6 +7726,15 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: '8fd60406bcb14c59989a784c41faf0a5'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_config'
+                            element: 'allow_sys_user_title_fallback'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: '900b9e8fd9584c6082f106b08e0e581c'
                         key: {
                             name: 'sn_hr_core_case_payroll'
@@ -7745,6 +7821,15 @@ declare global {
                             cat_item: 'NULL'
                             variable_set: '2759a814f7fd4df8a81a7f55e1431290'
                             name: 'x_2108496_hr_acces_operations_manager'
+                        }
+                    },
+                    {
+                        table: 'item_option_new'
+                        id: '91500736a21e4be3a8bde1b1f7c7d4bc'
+                        key: {
+                            cat_item: 'NULL'
+                            variable_set: 'be7867ca16a44820af330aac92ae053d'
+                            name: 'x_2108496_hr_acces_selected_supervisor'
                         }
                     },
                     {
@@ -8498,6 +8583,14 @@ declare global {
                             name: 'x_2108496_hr_acces_rob_access'
                             element: 'requires_access_end_date'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'a3766e7d56c7424a89f0fd4a1384dd7a'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'profile_context_evidence'
                         }
                     },
                     {
@@ -9319,6 +9412,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: 'b7629366298645d089280d1677337565'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_auth'
+                            element: 'profile_context_evidence'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: 'b79cd74975cb4acc92d46411ae646653'
                         key: {
@@ -9869,6 +9971,14 @@ declare global {
                             }
                             element: 'mid_cycle_grace_window_days'
                             position: '4'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'c40c243f9d7844689354d80f81bcfc0c'
+                        key: {
+                            name: 'x_2108496_hr_acces_rob_config'
+                            element: 'approved_organization_root'
                         }
                     },
                     {

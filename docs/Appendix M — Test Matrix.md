@@ -2509,3 +2509,13 @@ escalation planning.
 
 This is source/unit evidence only. Production HR Task creation, assignment,
 persona security, notification delivery, and closure remain BLOCKED BY M2/M3.
+
+## M2 approved profile/form snapshot tests
+
+The focused M2 suite covers primary/fallback Position and Organization,
+approved-root validation, manager default, active supervisor-group membership,
+client-tamper rejection, pre-signature Authorization Form copy, historical
+stability, fixed signer routing, missing-context stop, frozen Reuse behavior,
+legacy-field retirement, and no-table/no-broad-write guards. Source/unit result:
+19/19 PASS. Runtime evidence belongs to the current M2 ledger and must not be
+recast as native-case persistence proof.

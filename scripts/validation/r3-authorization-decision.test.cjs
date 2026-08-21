@@ -24,9 +24,12 @@ function baseContext() {
         ],
         request: {
             subjectId: 'synthetic_subject',
-            supervisorSnapshot: 'synthetic_supervisor',
-            positionSnapshot: 'Synthetic Analyst',
-            organizationSnapshot: 'synthetic_organization',
+            authorizationContext: {
+                valid: true,
+                supervisorId: 'synthetic_supervisor',
+                position: 'Synthetic Analyst',
+                organization: 'synthetic_organization',
+            },
             employmentType: 'federal_employee',
             requestedAccess: ['fpps_wtts'],
             businessJustification: 'Synthetic unit-test justification.',
@@ -211,7 +214,7 @@ test('incomplete active authorization history produces Exception', () => {
 
 test('missing supervisor produces Exception', () => {
     const context = baseContext()
-    context.request.supervisorSnapshot = ''
+    context.request.authorizationContext.supervisorId = ''
     assert.equal(evaluate(context).reasonCode, 'EX_MISSING_SUPERVISOR')
 })
 

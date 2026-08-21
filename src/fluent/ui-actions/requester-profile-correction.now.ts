@@ -6,7 +6,7 @@ export const rederiveRequesterProfileSnapshots = UiAction({
     name: 'Re-derive ROB Requester Profile',
     actionName: 'x_2108496_hr_acces_rederive_requester_profile',
     table: 'sn_hr_core_case',
-    active: true,
+    active: false,
     roles: [robAdminRole],
     condition:
         "gs.getUser().hasAssignedRole('x_2108496_hr_acces.rob_admin') && (current.getValue('sys_class_name') == 'sn_hr_core_case_payroll' || current.getValue('sys_class_name') == 'sn_hr_core_case_workforce_admin')",
@@ -26,7 +26,7 @@ export const rederiveRequesterProfileSnapshots = UiAction({
         showBannerButton: false,
         showSaveWithFormButton: false,
     },
-    hint: 'Re-derive title and supervisor from the requester directory profile after entering a new correction reason.',
+    hint: 'Deprecated: final validated profile context is snapshotted on the governed Authorization Form.',
     script: `current.setValue('x_2108496_hr_acces_snapshot_correction_requested', '1');
 current.update();
 action.setRedirectURL(current);`,

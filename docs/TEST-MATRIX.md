@@ -169,3 +169,22 @@ W1-17: Attachment uploaded, downloaded, and removed
 
 Focused M4 result: 26/26 PASS. Production fulfillment runtime and native persona
 validation remain **BLOCKED BY M2/M3** and are not represented as PASS.
+
+## M2 Approved Profile/Form Snapshot Evidence
+
+| ID | Test | Evidence | Result |
+|---|---|---|---|
+| TM-126 | Position precedence | HR Profile Position, configured user-title fallback, unresolved stop | M2 local PASS; PDI BLOCKED-INSTALL |
+| TM-127 | Organization precedence/fallback | Profile Position department, user department, approved-root descendant; outside root rejected | M2 local PASS; PDI BLOCKED-INSTALL |
+| TM-128 | Supervisor population/security | Manager default; active configured-group member accepted; inactive/nonmember/manipulation rejected | M2 local PASS; PDI BLOCKED-INSTALL |
+| TM-129 | Authorization Form snapshot gate | Position, Organization, Supervisor copied before signing; missing context blocks; signer route fixed to form Supervisor | M2 local PASS; PDI BLOCKED-INSTALL |
+| TM-130 | Historical stability and Reuse | Later profile changes do not mutate form; Reuse uses current Supervisor without changing reused form | M2 local PASS |
+| TM-131 | Legacy field retirement | Active decision/lifecycle source has no read/write dependency; metadata and protections retained; correction UI inactive | M2 local PASS |
+| TM-132 | M2 regressions | R1 9/9; Wave 2 security 22/22; deployment 16/16; R3 30/30; R4 52/52; M4 26/26 | PASS |
+
+Focused M2 source/unit result: 19/19 PASS. Australia runtime is BLOCKED because
+normal `0.0.1` and versioned `0.0.2` installs processed zero new metadata. The
+native-case persistence requirement in
+TM-86 through TM-96 is historical capability evidence and is superseded by
+TM-126 through TM-131; the failed fields remain compatibility metadata, not
+production prerequisites.

@@ -131,11 +131,11 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 | Requirement | Source / evidence | Status |
 |---|---|---|
 | New, Amendment, Renewal governed preparation | `AuthorizationLifecycleService.js`, `AuthorizationScopeService.js`, and guarded runtime scripts | Source/unit PASS; runtime BLOCKED |
-| Native employee and supervisor evidence | `SignatureExecutionService.js`, native-evidence handler, and production template `f99c3c0ac372031068a35f2b2b013138` | Source/unit PASS; template configured; controlled lifecycle runtime blocked by the unresolved native-case snapshot boundary |
+| Native employee and supervisor evidence | `SignatureExecutionService.js`, native-evidence handler, and production template `f99c3c0ac372031068a35f2b2b013138` | Source/unit PASS; template configured; controlled lifecycle runtime READY FOR M3 |
 | Denial and zero final PDF | Native-evidence handler and R4 suite | Source/unit PASS; production runtime not run |
 | Post-signature PDF activation/lineage | `AuthorizationFinalizationService.js` and PDF guard/finalization rules | Source/unit PASS; Authorization Form attachment runtime not run |
-| Reuse | `ReuseAttestationService.js`; audited case evidence fields on both native subclasses; no new form/details/PDF/supersession | M1 source/unit PASS — request-level contract frozen; `R4-DESIGN-01` RESOLVED; runtime remains blocked by `R2-AGENCY-01` |
-| R2 snapshots | `R2-AGENCY-01` | OPEN; unchanged. R4.3.1 native form seeding persisted decision fields but not the three dictionary-read-only snapshots; no bypass was accepted |
+| Reuse | `ReuseAttestationService.js`; audited case evidence fields on both native subclasses; no new form/details/PDF/supersession | M1 source/unit PASS — request-level contract frozen; `R4-DESIGN-01` RESOLVED; runtime is an M3 gate |
+| Profile/form snapshots | `RobProfileAuthorizationContext` and governed Authorization Form fields | Architecture/source PASS; `R2-AGENCY-01` OPEN/BLOCKED-PLATFORM because Australia did not install the new metadata |
 
 ## M4 Fulfillment Traceability
 
@@ -157,3 +157,15 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 |---|---|---|---|
 | Step 24 — ROB Authorization Form | `src/fluent/tables/rob-authorization-form.now.ts` | TM-65, TM-66, TM-72 | R1 PASS — form, numbering, labels, read-only version, states, and related list verified in Australia |
 | Step 25 — Authorized Access Detail | `src/fluent/tables/authorized-access-detail.now.ts` | TM-67, TM-68; Appendix M W1-05–W1-08, W1-18 | R1 PASS — exact managed lifecycle choices and zero broken references verified in Australia |
+
+## M2 Approved Profile/Form Snapshot Traceability
+
+| Requirement | Source / evidence | Status |
+|---|---|---|
+| Authoritative Position | `RobProfileAuthorizationContext`; HR Profile Position then configured user-title fallback | Source/unit PASS |
+| Authoritative Organization | Resolver; HR Position department, user department, then configured approved-root fallback | Source/unit PASS |
+| Constrained Supervisor | Resolver; manager default plus active configured-group validation | Source/security unit PASS |
+| Historical context | Authorization Form `position_title`, `organization`, `supervisor`, `profile_context_evidence` | Source/unit PASS; signing gate enforced |
+| Native-case dependency retirement | Lifecycle/decision source no longer reads the three legacy snapshot fields; former correction action inactive | Source/security PASS |
+| Reuse preservation | Existing `ReuseAttestationService`; current resolved Supervisor only; historical form unchanged | R4 52/52 PASS |
+| R2-AGENCY-01 | Approved architecture revision and M2 validation | Source/unit PASS; OPEN/BLOCKED-PLATFORM at Australia install/runtime; M3 not ready |
