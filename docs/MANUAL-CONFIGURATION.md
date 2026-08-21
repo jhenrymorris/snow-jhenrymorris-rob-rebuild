@@ -848,3 +848,21 @@ sys_id `848103dac336c71068a35f2b2b013166`; caller records
 entry rules inactive until M3. The two legacy native HR-task exception entry
 rules also remain inactive because their unsupported task-write path generated
 broad privileges during the controlled test; no broad privilege remains.
+
+## M3 production signing binding stop
+
+Do not activate the two R4 lifecycle initiation Business Rules while the
+published production template resolves its Supervisor participant from native
+case `assigned_to`. The intended production signer is the immutable Supervisor
+stored on the governed Authorization Form. Case assignment is not equivalent
+authorization evidence and HR Access is not permitted to write that protected
+native field.
+
+Before M3 can resume, the platform owner must approve and prove one supported
+native configuration that launches the ordered ServiceNow Sign execution from
+the governed lifecycle, resolves the supervisor from the Authorization Form
+snapshot, supports the frozen Reuse case-level attestation, and generates the
+post-signature Form 1768 PDF on the Authorization Form. Do not use a participant
+advanced script, change the template target, add a cross-scope privilege, or
+broaden `RobHrCasePersistenceBridge` without separate architecture/security
+approval and controlled proof.

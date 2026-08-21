@@ -165,6 +165,21 @@ R0 records implementation deltas only. It does not change application metadata o
   workaround is verified and does not change the production source model.
 - [x] M3 is READY but was not started.
 
+## M3 Production Runtime Blocker
+
+- [ ] Reconcile the two installed R4 initiation scripts from the pre-M2 case-
+  snapshot version to committed current source before activation.
+- [ ] Obtain platform-owner architecture/security approval for a supported
+  native Document Templates/ServiceNow Sign binding that routes Supervisor from
+  `x_2108496_hr_acces_rob_auth.supervisor`, launches and persists the frozen
+  Reuse attestation, and creates the post-signature PDF on the Authorization
+  Form without protected native-case writes or bridge expansion.
+- [x] Preserve both R4 lifecycle and both M4 fulfillment entry points inactive;
+  production M3/M4 artifact counts remain zero.
+- [x] Preserve broad API/native-case Write privileges at zero and the M2 bridge
+  at its three-field allowlist.
+- [ ] M3 remains BLOCKED-PLATFORM; M4 production runtime is not ready.
+
 ## R0 Boundary
 
 No item above is authorized for implementation in R0. Unsupported native capabilities must be recorded in Appendix L rather than replaced with custom request, task, approval, signature, PDF, attachment, or authentication architecture.

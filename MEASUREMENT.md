@@ -1808,3 +1808,32 @@ Not exposed by session/tool — no estimate recorded.
 - Result: M2 COMPLETE; `R2-AGENCY-01` RESOLVED FOR PDI VALIDATION; native HRSD
   identity ownership VERIFIED; HR Core persistence bridge VERIFIED; Australia
   SDK installer defect OPEN / manual PDI workaround verified; M3 READY.
+
+#### M3 production authorization runtime — platform/security stop
+
+- Date: `2026-08-21`; measurement shape: one-pass preflight and installed
+  production-binding review. Exact first-action timestamp, active duration, and
+  token accounting were not exposed and were not estimated.
+- Starting commit: `c325b13`; working tree clean; generated-key diff empty.
+- Preflight evidence: four custom business tables; exact M2 Reads 5/5; one
+  narrow bridge Execute path; broad API/native-case Write privileges 0;
+  temporary roles 0; both legacy exception-task rules and both M4 production
+  rules inactive.
+- Runtime stop: both R4 entry rules remain inactive. Their installed scripts are
+  pre-M2 and still read deprecated case snapshots. The published production
+  template resolves its Supervisor participant from native case `assigned_to`,
+  not the governed Authorization Form supervisor snapshot.
+- Security decision: HR Access cannot write `assigned_to`; the HR Core bridge
+  cannot be broadened; an advanced participant script or template-target
+  redesign would introduce a new unapproved security/association boundary.
+- Count assertion: production cases 0; Authorization Forms 0; Access Details 0;
+  Document Tasks 0; PDFs 0; fulfillment tasks 0; prohibited privileges 0.
+- Reviewer interventions: 1 — explicit M3 authorization and mandatory stop
+  criteria. Silent defects: 1 — the configured participant source could route
+  approval/signature to an HR fulfiller rather than the immutable supervisor
+  snapshot if activated. Visible defects: 0.
+- Regression/build execution: not applicable after the mandatory pre-activation
+  stop; no application source changed and no runtime acceptance occurred.
+- Result: M3 BLOCKED-PLATFORM; platform-owner-approved native production
+  signer launch/routing and post-signature finalization binding required. M4
+  production runtime not started.

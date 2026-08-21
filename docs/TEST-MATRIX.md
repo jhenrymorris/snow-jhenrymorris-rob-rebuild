@@ -182,9 +182,22 @@ validation remain **BLOCKED BY M2/M3** and are not represented as PASS.
 | TM-131 | Legacy field retirement | Active decision/lifecycle source has no read/write dependency; metadata and protections retained; correction UI inactive | M2 local PASS |
 | TM-132 | M2 regressions | R1 9/9; Wave 2 security 22/22; deployment 16/16; R3 30/30; R4 52/52; M4 26/26 | PASS |
 
-Focused M2 source/unit result: 19/19 PASS. Australia runtime is BLOCKED because
-normal `0.0.1` and versioned `0.0.2` installs processed zero new metadata. The
-native-case persistence requirement in
-TM-86 through TM-96 is historical capability evidence and is superseded by
-TM-126 through TM-131; the failed fields remain compatibility metadata, not
-production prerequisites.
+Focused M2 source/unit result: 19/19 PASS. Supported manual metadata recovery,
+Class C configuration, native identity proof, and the narrowly allowlisted HR
+Core bridge resolved `R2-AGENCY-01` for PDI validation. The Australia SDK
+installer defect remains open, but is no longer the M2 runtime gate. The native-
+case persistence requirement in TM-86 through TM-96 is historical capability
+evidence and is superseded by TM-126 through TM-131; the failed fields remain
+compatibility metadata, not production prerequisites.
+
+## M3 Production Authorization Runtime
+
+| ID | Test | Evidence | Result |
+|---|---|---|---|
+| TM-133 | M3 production preflight | Commit `c325b13`; four custom tables; exact M2 Reads 5/5; bridge Execute 1; broad writes 0; R4/M4 entry rules inactive | PASS |
+| TM-134 | Installed lifecycle-source reconciliation | Exact R4 rule records are installed but contain pre-M2 snapshot-dependent scripts | BLOCKED before activation |
+| TM-135 | Governed supervisor signer routing | Published template targets `sn_hr_core_case`; Supervisor participant reads `assigned_to` rather than Authorization Form `supervisor` | FAIL — security/architecture stop |
+| TM-136 | New/Denial/Amendment/Renewal/Reuse production runtime | No entry rule activated and no synthetic production lifecycle executed after TM-135 stop | NOT RUN / BLOCKED-PLATFORM |
+
+M3 created zero cases, Authorization Forms, Access Details, Document Tasks,
+PDFs, or fulfillment tasks. M4 production runtime remains not ready.

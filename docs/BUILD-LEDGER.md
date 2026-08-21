@@ -484,3 +484,22 @@ Build evidence is package-specific and must remain distinct from install, runtim
 - Result: M2 COMPLETE; `R2-AGENCY-01` RESOLVED FOR PDI VALIDATION; Australia
   SDK installer defect OPEN / manual workaround verified; M3 READY but not
   started.
+
+### M3 production authorization runtime preflight blocker
+
+- Baseline commit `c325b13` was clean with an empty generated-key diff.
+- Installed production initiation records
+  `2d7ed4c1f8fd48ef8fa20a7cb699f105` and
+  `65fb34e074784dd1a17feff394e2ab64` remain inactive. Their installed scripts
+  are the pre-M2 versions and consume deprecated case snapshots.
+- Published template `f99c3c0ac372031068a35f2b2b013138` remains bound to
+  `sn_hr_core_case`; Supervisor participant
+  `a235d582c3f6031068a35f2b2b01316b` resolves from `assigned_to`, not the
+  governed Authorization Form supervisor snapshot.
+- Activation stopped before creating runtime data. A safe correction requires
+  a new platform-owner-approved native signing binding or a newly reviewed
+  cross-scope participant design. The M2 bridge was not broadened.
+- No source build or regression rerun was required after this pre-activation
+  security stop. No SDK install/deployment was run. Production M3 artifact
+  counts are all zero and broad privilege count remains zero.
+- Result: M3 BLOCKED-PLATFORM; M4 production runtime not ready.

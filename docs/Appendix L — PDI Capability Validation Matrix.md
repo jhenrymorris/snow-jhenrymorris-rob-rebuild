@@ -1586,3 +1586,20 @@ product architecture no longer requires that operation. Australia validation
 now targets authoritative profile resolution, constrained fallbacks, and
 committed snapshots on the governed ROB Authorization Form. No broad privilege
 or replacement table is required.
+
+## M3 production signer-binding validation
+
+The published production Form 1768 template remains associated with
+`sn_hr_core_case`. Its Supervisor participant resolves from native case
+`assigned_to`, while the approved M2/R4 contract fixes the intended signer from
+the immutable Authorization Form `supervisor` snapshot. The committed lifecycle
+entry source does not launch a Document Task, the finalization handler consumes
+but does not generate the final PDF, and the installed Reuse entry returns
+without a native attestation execution.
+
+Activation was stopped before runtime data creation. Writing `assigned_to`
+would violate the verified M2 native-case boundary; broadening the HR Core
+bridge is prohibited; participant advanced script or a template-target change
+would introduce a new unapproved security/association design. Classification:
+M3 BLOCKED-PLATFORM pending platform-owner approval and proof of a supported
+native production signing/finalization binding.

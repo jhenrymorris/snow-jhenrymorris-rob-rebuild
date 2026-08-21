@@ -168,4 +168,14 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 | Historical context | Authorization Form `position_title`, `organization`, `supervisor`, `profile_context_evidence` | Source/unit PASS; signing gate enforced |
 | Native-case dependency retirement | Lifecycle/decision source no longer reads the three legacy snapshot fields; former correction action inactive | Source/security PASS |
 | Reuse preservation | Existing `ReuseAttestationService`; current resolved Supervisor only; historical form unchanged | R4 52/52 PASS |
-| R2-AGENCY-01 | Approved architecture revision and M2 validation | Source/unit PASS; OPEN/BLOCKED-PLATFORM at Australia install/runtime; M3 not ready |
+| R2-AGENCY-01 | Approved architecture revision, supported manual metadata recovery, HR Core bridge, and PDI validation | RESOLVED FOR PDI VALIDATION; Australia SDK installer defect remains open; M3 preflight is separately blocked by production signing binding |
+
+## M3 Production Authorization Runtime
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| Production lifecycle entry | Exact Payroll/Workforce records exist but installed scripts are pre-M2 and inactive | BLOCKED before activation |
+| Governed supervisor routing | Template `f99c3c0ac372031068a35f2b2b013138` Supervisor participant uses native case `assigned_to`, not Authorization Form `supervisor` | BLOCKED-PLATFORM / security review required |
+| Post-signature finalization | Evidence-capture and attachment-finalization rules exist; automatic governed signing launch/PDF generation binding is not configured | BLOCKED |
+| Five production paths | New, Denial, Amendment, Renewal, and Reuse were not executed after the mandatory signer-route stop | NOT RUN |
+| M4 readiness | M4 entry rules remain inactive and no fulfillment task was created | NOT READY |
