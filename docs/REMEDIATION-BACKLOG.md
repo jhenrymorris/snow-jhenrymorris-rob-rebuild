@@ -91,7 +91,12 @@ R0 records implementation deltas only. It does not change application metadata o
   `6fb41dd2c3fa471068a35f2b2b01310f`, BAK `BAK0002276`, and upgrade history
   `98c41d5ac3fa471068a35f2b2b0131e6` again presented only four
   `sys_db_object` records and none of the 12 M2 updates. The plugin update did
-  not resolve the platform blocker; M3 remains not ready.
+  not resolve the platform blocker. A final genuine `0.0.3` to `0.0.4`
+  transition (rollback `0b4b911ac3fa471068a35f2b2b0131da`, BAK `BAK0002277`,
+  upgrade history `3f4b9552c37e471068a35f2b2b01312c`) again presented only
+  four `sys_db_object` records and none of the 12 M2 updates. The installer
+  defect is confirmed not resolved; stop installation experimentation and keep
+  M3 not ready.
 
 ## M4 - Fulfillment & Operations (Conditional Source / Unit)
 

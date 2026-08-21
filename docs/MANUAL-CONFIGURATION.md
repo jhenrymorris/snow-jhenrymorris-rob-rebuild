@@ -778,3 +778,11 @@ upgrade history again contained only four `sys_db_object` records and none of
 the 12 M2 update names. Direct reread again returned 0/12 required M2 records.
 Do not configure the three Class C values or begin M2 runtime acceptance until
 the installer presents and persists the required metadata.
+
+A definitive genuine version transition was then executed once with only the
+package version advanced. Australia recognized `0.0.3` to `0.0.4` under
+rollback context `0b4b911ac3fa471068a35f2b2b0131da` / BAK `BAK0002277`, but
+upgrade history `3f4b9552c37e471068a35f2b2b01312c` again contained only four
+`sys_db_object` records and none of the 12 M2 updates. The platform blocker is
+therefore confirmed after the Patch 3 / ServiceNow IDE `4.4.2` update. Do not
+attempt further installation variants or begin M2 runtime configuration.

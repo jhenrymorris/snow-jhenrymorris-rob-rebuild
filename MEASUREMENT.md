@@ -1640,3 +1640,39 @@ Not exposed by session/tool — no estimate recorded.
   metrics; not estimated.
 - Result: M2 BLOCKED-PLATFORM; prior installer defect NOT RESOLVED;
   `R2-AGENCY-01` OPEN; M3 NOT READY / not started.
+
+#### M2 definitive post-plugin version-transition validation
+
+- Date: `2026-08-21`.
+- Shape: one-pass environment/install validation. The sole application change
+  was package version `0.0.3` to `0.0.4`; M2 functional source,
+  `now.config.json`, dependencies, architecture, and generated keys were
+  unchanged.
+- Environment: Australia Patch 3 build
+  `glide-australia-02-11-2026__patch3-05-25-2026_06-12-2026_1106.zip`;
+  ServiceNow IDE `4.4.2`; IDE Platform `1.0.0`; Metadata Source Control
+  `1.0.0`; SDK `4.8.1`.
+- Build evidence: normal PASS; frozen-key PASS; exactly five unchanged TS11
+  warnings; existing-key mutation/deletion 0.
+- Package evidence: the `0.0.4` package retained 498 update records. All 12
+  primary M2 records were present exactly once in `dist/app/update`, used
+  `INSERT_OR_UPDATE`, and appeared exactly once in both package inventory and
+  the ZIP `/update/` stream.
+- Install evidence: one normal versioned install, no `--reinstall`; recognized
+  transition `0.0.3` to `0.0.4`; rollback context
+  `0b4b911ac3fa471068a35f2b2b0131da`; BAK `BAK0002277`; upgrade history
+  `3f4b9552c37e471068a35f2b2b01312c`; state recorded; installer error blank.
+- Upgrade result: summary/updated 4; processed/applied/skipped 0. Upgrade logs
+  again contained only the four `sys_db_object` records. Searches by all 12 M2
+  sys_ids/logical update names returned no records, so all 12 were absent from
+  the upgrade processor.
+- Mandatory stop: installed reread, environment-value configuration, M2
+  runtime acceptance, and regression suites were not started after the 12
+  records were proven absent. M3 was not started.
+- Reviewer interventions: 1 — explicit authorization for this single genuine
+  version-transition test. New silent defects 0; new visible defects 0; the
+  existing Australia installer defect was definitively reproduced.
+- Active duration and token accounting: not exposed as reliable session
+  metrics; not estimated.
+- Result: prior Australia SDK installer defect CONFIRMED NOT RESOLVED; M2
+  BLOCKED-PLATFORM; `R2-AGENCY-01` OPEN; M3 NOT READY.

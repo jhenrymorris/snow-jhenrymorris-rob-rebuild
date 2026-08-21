@@ -371,3 +371,25 @@ Build evidence is package-specific and must remain distinct from install, runtim
   inactive.
 - Result: prior Australia SDK installer defect NOT RESOLVED BY PDI PLUGIN
   UPDATE. M2 remains BLOCKED-PLATFORM; `R2-AGENCY-01` OPEN; M3 NOT READY.
+
+### M2 definitive `0.0.3` to `0.0.4` installer validation
+
+- Changed only the application package version in `package.json`; functional
+  source, dependencies, `now.config.json`, architecture, and generated keys
+  were unchanged.
+- Normal and frozen-key builds PASS with exactly five unchanged TS11 warnings
+  and zero existing-key mutation/deletion. The `0.0.4` package contains the
+  same 498 update records as the validated `0.0.3` stream; each of the 12 M2
+  records is present exactly once in the build, inventory, and ZIP update
+  stream with `INSERT_OR_UPDATE`.
+- Exactly one normal versioned install completed without `--reinstall`. The PDI
+  recognized `0.0.3` to `0.0.4`; rollback context
+  `0b4b911ac3fa471068a35f2b2b0131da`, BAK `BAK0002277`, upgrade history
+  `3f4b9552c37e471068a35f2b2b01312c`, error blank.
+- The upgrade processor again recorded only four `sys_db_object` updates and
+  zero processed/applied/skipped changes. All 12 M2 sys_ids/logical update
+  names were absent from upgrade history.
+- Per the mandatory stop condition, database reread, M2 runtime acceptance,
+  regressions, and M3 were not started.
+- Result: prior Australia SDK installer defect CONFIRMED NOT RESOLVED on Patch
+  3 / ServiceNow IDE `4.4.2`; M2 remains BLOCKED-PLATFORM and M3 NOT READY.
