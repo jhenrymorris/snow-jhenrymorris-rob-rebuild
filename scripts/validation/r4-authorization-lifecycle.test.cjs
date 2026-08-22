@@ -529,9 +529,40 @@ test('runtime scripts create no fulfillment, renewal, ARM, or OAS work', () => {
 })
 
 test('runtime launch is limited to a stable production template name', () => {
-    const source = fs.readFileSync(path.join(root, 'src/fluent/server/authorization-signature-evidence.server.js'), 'utf8')
-    assert.match(source, /ROB Form 1768 Authorization/)
+    const evidenceSource = fs.readFileSync(path.join(root, 'src/fluent/server/authorization-signature-evidence.server.js'), 'utf8')
+    const initiationSource = fs.readFileSync(path.join(root, 'src/fluent/server/authorization-lifecycle-initiation.server.js'), 'utf8')
+    assert.match(evidenceSource, /ROB Form 1768 Authorization/)
+    assert.match(initiationSource, /ROB Form 1768 Authorization/)
+    assert.match(initiationSource, /GenerateDocumentAPI\(\)\.initiateDocumentTasks/)
+    assert.doesNotMatch(initiationSource, /assigned_to/)
+    const source = evidenceSource + initiationSource
     assert.doesNotMatch(source, /41103ca0|bbd3e8e0|c34e242c|e4f117e8/)
+})
+
+test('post-signature final PDF fills and flattens the governed Form 1768 on Authorization Form', () => {
+    const source = fs.readFileSync(
+        path.join(root, 'src/fluent/server/authorization-signature-evidence.server.js'),
+        'utf8'
+    )
+    assert.match(source, /fillDocumentFieldsAndFlatten/)
+    assert.match(source, /x_2108496_hr_acces_rob_auth/)
+    assert.match(source, /FlattenType:\s*'fully_flatten'/)
+    assert.match(source, /Employee Signature Date\/Time/)
+    assert.match(source, /Supervisor Signature Date\/Time/)
+    assert.match(source, /Generated Date\/Time/)
+    assert.doesNotMatch(source, /GlideSysAttachment|assigned_to/)
+})
+
+test('Reuse launch uses a distinct native attestation template and creates no governed form', () => {
+    const source = fs.readFileSync(
+        path.join(root, 'src/fluent/server/authorization-lifecycle-initiation.server.js'),
+        'utf8'
+    )
+    assert.match(source, /ROB Reuse Supervisor Attestation/)
+    assert.match(source, /ROB-Reuse-Supervisor-Attestation-/)
+    assert.match(source, /new GlideRecord\('sn_doc_task'\)/)
+    assert.match(source, /addQuery\('parent', current\.getUniqueValue\(\)\)/)
+    assert.match(source, /addQuery\('document_template', template\.getUniqueValue\(\)\)/)
 })
 
 test('production lifecycle initiation remains disabled until native signing configuration passes', () => {

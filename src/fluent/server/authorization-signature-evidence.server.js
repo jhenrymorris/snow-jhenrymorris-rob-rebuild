@@ -4,6 +4,118 @@
     function isTrue(value) {
         return value === '1' || value === 'true'
     }
+
+    function checkbox(value) {
+        return value ? 'Yes' : 'Off'
+    }
+
+    function localDate(dateTimeValue) {
+        return new GlideDateTime(dateTimeValue)
+            .getLocalDate()
+            .getByFormat('yyyy-MM-dd')
+    }
+
+    function finalPdfFieldMap(authorization, generatedAt) {
+        var fieldMap = {}
+        var employmentType = authorization.getValue('employment_type')
+        var endDate = authorization.getValue('access_end_date') || ''
+        var sourceCase = authorization.source_hrsd_case.getRefRecord()
+
+        fieldMap['Employee Name'] = authorization.getDisplayValue('subject_person')
+        fieldMap['Position Title'] = authorization.getValue('position_title')
+        fieldMap['Directorate/Office'] = authorization.getValue('organization')
+        fieldMap.Federal = checkbox(employmentType === 'federal_employee')
+        fieldMap.Contractor = checkbox(employmentType === 'contractor')
+        fieldMap.IPA = checkbox(employmentType === 'ipa')
+        fieldMap['Auditor/Investigator'] = checkbox(
+            employmentType === 'auditor_investigator'
+        )
+        fieldMap['Contractor End Date'] =
+            employmentType === 'contractor' ? endDate : ''
+        fieldMap['Auditor End Date'] =
+            employmentType === 'auditor_investigator' ? endDate : ''
+        fieldMap.Justification = authorization.getValue('business_justification')
+
+        var selectedMappings = {}
+        var details = new GlideRecord('x_2108496_hr_acces_auth_detail')
+        details.addQuery(
+            'rob_authorization_form',
+            authorization.getUniqueValue()
+        )
+        details.query()
+        while (details.next()) {
+            var accessItem = details.access_item.getRefRecord()
+            if (accessItem.isValidRecord()) {
+                selectedMappings[accessItem.getValue('form_1768_mapping')] = true
+            }
+        }
+        fieldMap['FPPS/WTTS'] = checkbox(selectedMappings.fpps_wtts)
+        fieldMap.eOPF = checkbox(selectedMappings.eopf)
+        fieldMap['USA Staffing'] = checkbox(selectedMappings.usa_staffing)
+        fieldMap['OAS/DataMart'] = checkbox(selectedMappings.oas_datamart)
+        fieldMap['Human Capital Reports'] = checkbox(
+            selectedMappings.human_capital_reports
+        )
+        fieldMap['Workforce Profile Charts'] = checkbox(selectedMappings.wpc)
+
+        var employeeSignedAt = authorization.getValue(
+            'employee_signature_date_time'
+        )
+        var supervisorSignedAt = authorization.getValue(
+            'supervisor_signature_date_time'
+        )
+        var finalDate = localDate(supervisorSignedAt)
+        fieldMap['Employee Signature'] =
+            'Signed electronically by ' +
+            authorization.getDisplayValue('employee_signer')
+        fieldMap['Supervisor Signature'] =
+            'Signed electronically by ' +
+            authorization.getDisplayValue('supervisor_signer')
+        fieldMap.Date = finalDate
+        fieldMap['Authorization Number'] = authorization.getValue('number')
+        fieldMap['HR Case Number'] = sourceCase.isValidRecord()
+            ? sourceCase.getValue('number')
+            : ''
+        fieldMap['Form Version'] = authorization.getValue('form_version')
+        fieldMap['Employee Signature Date/Time'] = employeeSignedAt
+        fieldMap['Supervisor Signature Date/Time'] = supervisorSignedAt
+        fieldMap['Effective Date'] = finalDate
+        fieldMap['Expiration Date'] = authorization.getValue('expiration_date')
+        fieldMap['Decision Type'] = authorization.getDisplayValue(
+            'authorization_action'
+        )
+        fieldMap['Generated Date/Time'] = generatedAt
+        return fieldMap
+    }
+
+    function generateFinalPdf(authorization, template) {
+        if (authorization.getValue('final_pdf_attachment')) return true
+        var documentId = template.getValue('document')
+        if (!documentId) {
+            gs.error('ROB production template has no fillable source PDF.')
+            return false
+        }
+
+        var generatedAt = gs.nowDateTime()
+        var flatten = { FlattenType: 'fully_flatten' }
+        var result = new sn_pdfgeneratorutils.PDFGenerationAPI()
+            .fillDocumentFieldsAndFlatten(
+                finalPdfFieldMap(authorization, generatedAt),
+                documentId,
+                'x_2108496_hr_acces_rob_auth',
+                authorization.getUniqueValue(),
+                'ROB-Form-1768-' + authorization.getValue('number'),
+                flatten
+            )
+        if (!result || String(result.status) !== 'success') {
+            gs.error(
+                'ROB final Form 1768 generation failed: ' +
+                    (result ? result.message : 'no response')
+            )
+            return false
+        }
+        return true
+    }
     var template = current.document_template.getRefRecord()
 
     if (!template.isValidRecord() || template.getValue('name') !== productionTemplateName) {
@@ -125,5 +237,9 @@
         current.getUniqueValue()
     )
     authorization.setValue('document_task_execution', executionId)
-    authorization.update()
+    if (!authorization.update()) {
+        gs.error('ROB supervisor evidence could not be persisted.')
+        return
+    }
+    generateFinalPdf(authorization, template)
 })(current)

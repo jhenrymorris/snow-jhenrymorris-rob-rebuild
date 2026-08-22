@@ -503,3 +503,24 @@ Build evidence is package-specific and must remain distinct from install, runtim
   security stop. No SDK install/deployment was run. Production M3 artifact
   counts are all zero and broad privilege count remains zero.
 - Result: M3 BLOCKED-PLATFORM; M4 production runtime not ready.
+
+### M3 governed signer binding and native-launch security stop
+
+- Governed Supervisor routing was configured through the native advanced
+  participant mechanism; `assigned_to` is no longer a signer dependency.
+- Source adds ordered signing initiation, post-signature finalization, and
+  frozen Reuse attestation support. A published synthetic Reuse template was
+  configured as Class C native metadata.
+- Controlled case `HRC0001061` created governed form `ROBA0001005` and one
+  pending Access Detail. Native signing stopped before Document Task creation
+  because `sn_doc_pdf_template` read requires protected Document Templates
+  Restricted Caller Access.
+- Generated RCA `bcd68e66c3728b1068a35f2b2b0131ba` is Denied. Generated
+  broad setValue/insert/update privileges were removed by exact sys_id; final
+  broad privilege count is zero.
+- No SDK installation or deployment was run. R4 and M4 production entry rules
+  are inactive. M3 remains BLOCKED-PLATFORM and M4 runtime is not ready.
+- Closeout regressions PASS: M2 19/19; R1 9/9; Wave 2 security 22/22;
+  deployment configuration 16/16; R3 30/30; R4 54/54; M4 26/26.
+  Normal and frozen-key SDK builds PASS with the five unchanged TS11 warnings.
+  Generated-key diff is empty.

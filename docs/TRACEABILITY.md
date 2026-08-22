@@ -179,3 +179,14 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 | Post-signature finalization | Evidence-capture and attachment-finalization rules exist; automatic governed signing launch/PDF generation binding is not configured | BLOCKED |
 | Five production paths | New, Denial, Amendment, Renewal, and Reuse were not executed after the mandatory signer-route stop | NOT RUN |
 | M4 readiness | M4 entry rules remain inactive and no fulfillment task was created | NOT READY |
+
+### M3 governed signer binding follow-up
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| Governed Supervisor routing | Participant `a235d582c3f6031068a35f2b2b01316b` advanced resolver reads associated Authorization Form Supervisor; no `assigned_to` | Configuration/source PASS |
+| Production signing launch | Controlled `HRC0001061`; Document Templates read fenced before task creation; RCA `bcd68e66c3728b1068a35f2b2b0131ba` denied | BLOCKED-PLATFORM |
+| Post-signature finalization | Deterministic source exists; runtime not reached because native signing launch was fenced | Source PASS / runtime BLOCKED |
+| Reuse attestation | Published native template and governed participant configured; production runtime not reached | Configuration PASS / runtime BLOCKED |
+| Security | Generated broad setValue/insert/update privileges removed; no new caller access approved; R4/M4 rules inactive | Cleanup PASS |
+| M3/M4 status | Remaining lifecycle scenarios stopped at mandatory security boundary | M3 BLOCKED-PLATFORM; M4 NOT READY |

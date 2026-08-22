@@ -866,3 +866,21 @@ post-signature Form 1768 PDF on the Authorization Form. Do not use a participant
 advanced script, change the template target, add a cross-scope privilege, or
 broaden `RobHrCasePersistenceBridge` without separate architecture/security
 approval and controlled proof.
+
+### 2026-08-22 governed binding result
+
+The `assigned_to` issue above is superseded for signer selection. Supervisor
+participant `a235d582c3f6031068a35f2b2b01316b` now uses the supported native
+advanced participant surface to return the active Supervisor stored on the
+associated governed Authorization Form. Template target remains the native HR
+case because the installed target selector does not expose the custom
+Authorization Form table. Do not revert the participant to `assigned_to`.
+
+Production activation remains prohibited for a different platform boundary.
+At runtime, HR Access was denied read access to protected
+`sn_doc_pdf_template` metadata and ServiceNow generated Restricted Caller
+Access record `bcd68e66c3728b1068a35f2b2b0131ba`. It is explicitly Denied and
+must not be approved without a separate platform-owner/security decision.
+The runtime also generated broad GlideRecord setValue/insert/update privileges;
+all were removed. Do not recreate them, do not broaden the M2 bridge, and do
+not activate the R4 rules while this caller boundary remains unresolved.

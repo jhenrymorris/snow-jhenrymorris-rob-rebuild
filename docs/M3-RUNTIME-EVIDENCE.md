@@ -89,3 +89,58 @@ activate. Resulting production artifacts from M3: cases 0, Authorization Forms
 **M3 — BLOCKED-PLATFORM.** A platform-owner-approved native production
 Document Templates/ServiceNow Sign binding is required. M4 production runtime
 is not ready and was not started.
+
+## 2026-08-22 Governed Signer Binding and Controlled Runtime Stop
+
+The prior `assigned_to` blocker was resolved in native configuration without
+changing the M2 ownership boundary. Production template
+`f99c3c0ac372031068a35f2b2b013138` retains the native-case signing source, and
+Supervisor participant `a235d582c3f6031068a35f2b2b01316b` now uses a
+server-side advanced participant resolver that reads the associated governed
+Authorization Form `supervisor`. The resolver performs no case write and has
+no `assigned_to` dependency. Direct Authorization Form targeting was not
+supported by the installed template table selector.
+
+The production source now includes ordered native-signing initiation,
+post-signature final PDF generation, and the frozen Reuse supervisor
+attestation. Reuse template `4b8f852ec3f24b1068a35f2b2b01318a` is published
+with one governed Supervisor participant. These are source/configuration
+results, not production-runtime acceptance.
+
+### Controlled New evidence
+
+- Native case: `HRC0001061` / `92c60266c3728b1068a35f2b2b01313d`.
+- Synthetic identity: Amos Linnan
+  (`56826bf03710200044e0bfc8bcbe5dca`); native self-submission validation
+  correctly rejected the administrator-session mismatch.
+- Decision fixture: New / `NEW_NO_PRIOR_FORM`, USA Staffing.
+- Governed Authorization Form: `ROBA0001005` /
+  `f8d68e66c3728b1068a35f2b2b0131b2`, state Pending Employee Signature.
+- Authorized Access Detail: `bcd68e66c3728b1068a35f2b2b0131b3`, state
+  Pending Authorization.
+- Document Tasks: 0. Final governed PDFs: 0. Fulfillment tasks: 0.
+
+The launch was fenced before native signing creation. System logs
+`38d68e66c3728b1068a35f2b2b0131bc` and
+`b4d68e66c3728b1068a35f2b2b0131bc` record that HR Access read access to
+`sn_doc_pdf_template` was denied and requires Document Templates Restricted
+Caller Access. Generated RCA record `bcd68e66c3728b1068a35f2b2b0131ba`
+was not approved and is explicitly Denied. Because its target is protected
+store metadata, it remains as denied audit evidence.
+
+The same transaction generated prohibited broad API privileges for
+`GlideRecord.setValue` (`b8d68e66c3728b1068a35f2b2b0131a9`),
+`GlideRecord.insert` (`b0d68e66c3728b1068a35f2b2b0131af`), and
+`GlideRecord.update` (`38d68e66c3728b1068a35f2b2b0131b5`). Each was
+removed by exact sys_id. Committed reread confirmed all three absent, no broad
+native-case Write privilege, and no approved new restricted caller path.
+
+Both R4 entry rules were restored to inactive/update-only and their installed
+scripts were restored to committed source. Both M4 rules remain inactive.
+New did not reach signing, so Denial, Amendment, Renewal, and Reuse production
+runtime were not attempted after the mandatory security stop.
+
+**M3 — BLOCKED-PLATFORM.** Governed Supervisor binding is configured, but the
+production native-signing launch requires a new protected Document Templates
+caller boundary that this package explicitly may not approve. Platform-owner /
+ServiceNow action is required. M4 production runtime is not ready.

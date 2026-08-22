@@ -180,6 +180,23 @@ R0 records implementation deltas only. It does not change application metadata o
   at its three-field allowlist.
 - [ ] M3 remains BLOCKED-PLATFORM; M4 production runtime is not ready.
 
+### 2026-08-22 M3 blocker refinement
+
+- [x] Replace Supervisor `assigned_to` participant routing with a governed
+  Authorization Form Supervisor advanced resolver; no protected case write.
+- [x] Add production signing initiation, post-signature finalization, and
+  frozen Reuse native-attestation source/configuration foundations.
+- [x] Run one controlled New fixture and preserve its governed form/detail as
+  synthetic blocker evidence.
+- [x] Deny generated Document Templates RCA
+  `bcd68e66c3728b1068a35f2b2b0131ba` and remove generated broad
+  setValue/insert/update privileges 3/3.
+- [ ] Platform owner/ServiceNow must provide or approve a least-privilege
+  supported production launch boundary for reading native Document Templates
+  metadata. No new RCA was approved in M3.
+- [ ] M3 remains BLOCKED-PLATFORM; Denial, Amendment, Renewal, and Reuse
+  production runtime remain unexecuted; M4 production runtime is not ready.
+
 ## R0 Boundary
 
 No item above is authorized for implementation in R0. Unsupported native capabilities must be recorded in Appendix L rather than replaced with custom request, task, approval, signature, PDF, attachment, or authentication architecture.

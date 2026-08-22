@@ -201,3 +201,18 @@ compatibility metadata, not production prerequisites.
 
 M3 created zero cases, Authorization Forms, Access Details, Document Tasks,
 PDFs, or fulfillment tasks. M4 production runtime remains not ready.
+
+### M3 governed signer binding follow-up
+
+| ID | Test | Evidence | Result |
+|---|---|---|---|
+| TM-137 | Governed Supervisor advanced resolver | Production Supervisor participant reads associated `rob_auth.supervisor`; `assigned_to` dependency 0 | PASS — configuration/source |
+| TM-138 | Controlled New launch | `HRC0001061` created `ROBA0001005` and one pending USA Staffing detail | PARTIAL — stopped before signing |
+| TM-139 | Native Document Templates caller boundary | Logs `38d68e66c3728b1068a35f2b2b0131bc` / `b4d68e66c3728b1068a35f2b2b0131bc`; RCA `bcd68e66c3728b1068a35f2b2b0131ba` denied | BLOCKED-PLATFORM |
+| TM-140 | Security cleanup | Generated setValue/insert/update privileges deleted 3/3; broad writes 0; R4/M4 rules inactive | PASS |
+| TM-141 | Remaining lifecycle runtime | Denial, Amendment, Renewal, and Reuse not attempted after mandatory security stop | NOT RUN / BLOCKED-PLATFORM |
+
+The earlier zero-artifact statement applies only to the preflight run. The
+follow-up intentionally retained one synthetic case, one governed Authorization
+Form, and one pending Access Detail as blocker evidence; it created zero
+Document Tasks, final PDFs, or fulfillment tasks.

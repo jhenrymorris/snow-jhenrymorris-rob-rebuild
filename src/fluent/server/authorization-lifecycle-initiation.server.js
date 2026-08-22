@@ -19,6 +19,51 @@
         gs.error('ROB lifecycle initiation stopped: ' + message)
     }
 
+    function publishedTemplate(templateName) {
+        var template = new GlideRecord('sn_doc_pdf_template')
+        template.addQuery('name', templateName)
+        template.addQuery('table', 'sn_hr_core_case')
+        template.addQuery('state', 'published')
+        template.addQuery('active', true)
+        template.setLimit(2)
+        template.query()
+        if (!template.next()) return null
+
+        var templateId = template.getUniqueValue()
+        if (template.next() || !template.get(templateId)) return null
+        return template
+    }
+
+    function initiateNativeSigning(templateName, outputName) {
+        var template = publishedTemplate(templateName)
+        if (!template) {
+            fail('exactly one published production signing template is required')
+            return false
+        }
+
+        var existingTask = new GlideRecord('sn_doc_task')
+        existingTask.addQuery('parent', current.getUniqueValue())
+        existingTask.addQuery('document_template', template.getUniqueValue())
+        existingTask.setLimit(1)
+        existingTask.query()
+        if (existingTask.next()) {
+            return true
+        }
+
+        var initiated = new sn_doc.GenerateDocumentAPI().initiateDocumentTasks(
+            current,
+            '',
+            template.getUniqueValue(),
+            outputName,
+            ''
+        )
+        if (!initiated) {
+            fail('native document signing tasks could not be initiated')
+            return false
+        }
+        return true
+    }
+
     function listValues(value) {
         var result = []
         var seen = {}
@@ -81,6 +126,12 @@
     if (decision === 'reuse') {
         // The frozen M1 Reuse path consumes this validated current Supervisor
         // without mutating the historical Authorization Form snapshots.
+        // Runtime attestation uses its own native template so that no new
+        // governed Form 1768 PDF or Authorization Form is produced.
+        initiateNativeSigning(
+            'ROB Reuse Supervisor Attestation',
+            'ROB-Reuse-Supervisor-Attestation-' + current.getValue('number')
+        )
         return
     }
 
@@ -301,6 +352,13 @@
 
     if (authorization.get(authorizationId)) {
         authorization.setValue('status', 'pending_employee_signature')
-        authorization.update()
+        if (!authorization.update()) {
+            fail('the Authorization Form signing gate could not be persisted')
+            return
+        }
+        initiateNativeSigning(
+            'ROB Form 1768 Authorization',
+            'ROB-Form-1768-Signing-' + authorization.getValue('number')
+        )
     }
 })(current, previous)
