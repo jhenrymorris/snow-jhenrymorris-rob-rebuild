@@ -8,7 +8,8 @@ const { initiate } = require('../../src/server/authorization/AuthorizationLifecy
 const { completeScope } = require('../../src/server/authorization/AuthorizationScopeService')
 const {
     recordEmployeeSignature,
-    recordSupervisorAction,
+    recordSupervisorDecision,
+    recordSupervisorSignature,
 } = require('../../src/server/authorization/SignatureExecutionService')
 const { finalize } = require('../../src/server/authorization/AuthorizationFinalizationService')
 const {
@@ -401,49 +402,60 @@ test('employee signature advances only to supervisor pending', () => {
     assert.equal(result.status, 'pending_supervisor_approval_signature')
 })
 
-test('supervisor signer must match the governed supervisor', () => {
+test('supervisor approver must match the governed supervisor', () => {
     assert.throws(
-        () => recordSupervisorAction({
-            supervisorId: 'supervisor_1', signerId: 'employee_1', outcome: 'APPROVED',
-            signatureComplete: true, completedAt: '2026-08-16 12:20:00',
-            documentTaskId: 'task_2', documentTaskExecutionId: 'execution_1',
+        () => recordSupervisorDecision({
+            supervisorId: 'supervisor_1', approverId: 'employee_1', outcome: 'APPROVED',
+            decidedAt: '2026-08-16 12:20:00',
         }),
         /does not match/
     )
 })
 
-test('approval without supervisor signature remains invalid', () => {
-    assert.throws(
-        () => recordSupervisorAction({
-            supervisorId: 'supervisor_1', signerId: 'supervisor_1', outcome: 'APPROVED',
-            signatureComplete: false, completedAt: '2026-08-16 12:20:00',
-            documentTaskId: 'task_2', documentTaskExecutionId: 'execution_1',
-        }),
-        /both required/
-    )
-})
-
-test('approved supervisor action persists outcome, identity, task, and timestamp', () => {
-    const result = recordSupervisorAction({
-        supervisorId: 'supervisor_1', signerId: 'supervisor_1', outcome: 'APPROVED',
-        signatureComplete: true, completedAt: '2026-08-16 12:20:00',
-        documentTaskId: 'task_2', documentTaskExecutionId: 'execution_1',
+test('approved supervisor decision persists evidence and launches signature', () => {
+    const result = recordSupervisorDecision({
+        supervisorId: 'supervisor_1', approverId: 'supervisor_1', outcome: 'APPROVED',
+        decidedAt: '2026-08-16 12:20:00',
     })
     assert.equal(result.supervisorApprovalOutcome, 'approved')
     assert.equal(result.supervisorApprovalComplete, true)
-    assert.equal(result.supervisorSignatureComplete, true)
-    assert.equal(result.supervisorDocumentTaskId, 'task_2')
+    assert.equal(result.supervisorSignatureComplete, false)
+    assert.equal(result.launchSupervisorSignature, true)
 })
 
-test('supervisor denial produces Denied and no signature completion', () => {
-    const result = recordSupervisorAction({
-        supervisorId: 'supervisor_1', signerId: 'supervisor_1', outcome: 'REFUSED',
-        signatureComplete: false, completedAt: '2026-08-16 12:20:00',
-        documentTaskId: 'task_2', documentTaskExecutionId: 'execution_1',
+test('supervisor denial produces Denied and creates no signature task', () => {
+    const result = recordSupervisorDecision({
+        supervisorId: 'supervisor_1', approverId: 'supervisor_1', outcome: 'DENIED',
+        decidedAt: '2026-08-16 12:20:00',
     })
     assert.equal(result.status, 'denied')
     assert.equal(result.supervisorApprovalOutcome, 'denied')
     assert.equal(result.supervisorSignatureComplete, false)
+    assert.equal(result.supervisorDocumentTaskId, '')
+    assert.equal(result.launchSupervisorSignature, false)
+})
+
+test('supervisor signature requires prior explicit approval', () => {
+    assert.throws(
+        () => recordSupervisorSignature({
+            supervisorId: 'supervisor_1', signerId: 'supervisor_1',
+            supervisorApprovalComplete: false, supervisorApprovalOutcome: 'denied',
+            signatureComplete: true, completedAt: '2026-08-16 12:25:00',
+            documentTaskId: 'task_2', documentTaskExecutionId: 'execution_1',
+        }),
+        /prior explicit approval/
+    )
+})
+
+test('approved supervisor signature persists separately from decision', () => {
+    const result = recordSupervisorSignature({
+        supervisorId: 'supervisor_1', signerId: 'supervisor_1',
+        supervisorApprovalComplete: true, supervisorApprovalOutcome: 'approved',
+        signatureComplete: true, completedAt: '2026-08-16 12:25:00',
+        documentTaskId: 'task_2', documentTaskExecutionId: 'execution_1',
+    })
+    assert.equal(result.supervisorSignatureComplete, true)
+    assert.equal(result.supervisorDocumentTaskId, 'task_2')
 })
 
 test('finalization waits for employee signature evidence', () => {
@@ -522,6 +534,7 @@ test('runtime scripts create no fulfillment, renewal, ARM, or OAS work', () => {
     const files = [
         'src/fluent/server/authorization-lifecycle-initiation.server.js',
         'src/fluent/server/authorization-signature-evidence.server.js',
+        'src/fluent/server/supervisor-approval-evidence.server.js',
         'src/fluent/server/authorization-finalization.server.js',
     ]
     const source = files.map((file) => fs.readFileSync(path.join(root, file), 'utf8')).join('\n')
@@ -531,8 +544,10 @@ test('runtime scripts create no fulfillment, renewal, ARM, or OAS work', () => {
 test('runtime launch is limited to a stable production template name', () => {
     const evidenceSource = fs.readFileSync(path.join(root, 'src/fluent/server/authorization-signature-evidence.server.js'), 'utf8')
     const initiationSource = fs.readFileSync(path.join(root, 'src/fluent/server/authorization-lifecycle-initiation.server.js'), 'utf8')
-    assert.match(evidenceSource, /ROB Form 1768 Authorization/)
-    assert.match(initiationSource, /ROB Form 1768 Authorization/)
+    assert.match(evidenceSource, /ROB Form 1768 Employee Signature/)
+    assert.match(initiationSource, /ROB Form 1768 Employee Signature/)
+    assert.match(evidenceSource, /ROB Reuse Supervisor Attestation/)
+    assert.match(initiationSource, /sysapproval_approver/)
     assert.match(initiationSource, /GenerateDocumentAPI\(\)\.initiateDocumentTasks/)
     assert.doesNotMatch(initiationSource, /assigned_to/)
     const source = evidenceSource + initiationSource
@@ -550,23 +565,49 @@ test('post-signature final PDF fills and flattens the governed Form 1768 on Auth
     assert.match(source, /Employee Signature Date\/Time/)
     assert.match(source, /Supervisor Signature Date\/Time/)
     assert.match(source, /Generated Date\/Time/)
-    assert.match(source, /if \(state !== '3'\)/)
+    assert.match(source, /supervisor_approval_outcome.*approved/s)
     assert.doesNotMatch(source, /current\.getValue\('body'\).*APPROVED/)
     assert.match(source, /new GlideDateTime\(\)\.getValue\(\)/)
     assert.doesNotMatch(source, /gs\.nowDateTime\(\)/)
     assert.doesNotMatch(source, /GlideSysAttachment|assigned_to/)
 })
 
-test('Reuse launch uses a distinct native attestation template and creates no governed form', () => {
+test('Reuse begins with a native decision and creates no governed form', () => {
     const source = fs.readFileSync(
         path.join(root, 'src/fluent/server/authorization-lifecycle-initiation.server.js'),
         'utf8'
     )
+    assert.match(source, /new GlideRecord\('sysapproval_approver'\)/)
+    assert.match(source, /setValue\('state', 'requested'\)/)
+    assert.match(source, /requestSupervisorDecision/)
+})
+
+test('native decision branches denial from approved supervisor signing', () => {
+    const source = fs.readFileSync(
+        path.join(root, 'src/fluent/server/supervisor-approval-evidence.server.js'),
+        'utf8'
+    )
+    assert.match(source, /state === 'rejected'/)
+    assert.match(source, /status', 'denied'/)
+    assert.match(source, /state.*approved/s)
+    assert.match(source, /launchSupervisorSignature/)
     assert.match(source, /ROB Reuse Supervisor Attestation/)
-    assert.match(source, /ROB-Reuse-Supervisor-Attestation-/)
-    assert.match(source, /new GlideRecord\('sn_doc_task'\)/)
-    assert.match(source, /addQuery\('parent', current\.getUniqueValue\(\)\)/)
-    assert.match(source, /addQuery\('document_template', template\.getUniqueValue\(\)\)/)
+    assert.match(source, /employee_signature_complete/)
+    assert.match(source, /sn_hr_core_case_payroll/)
+    assert.match(source, /sn_hr_core_case_workforce_admin/)
+    assert.doesNotMatch(source, /new GlideRecord\('sn_hr_core_case'\)/)
+    assert.doesNotMatch(source, /assigned_to/)
+})
+
+test('native approval response remains inactive until a safe persistence boundary exists', () => {
+    const source = fs.readFileSync(
+        path.join(root, 'src/fluent/business-rules/rob-authorization-lifecycle.now.ts'),
+        'utf8'
+    )
+    assert.match(
+        source,
+        /captureSupervisorApprovalDecision[\s\S]*?name:\s*'ROB Capture Native Supervisor Approval Decision'[\s\S]*?active:\s*false/
+    )
 })
 
 test('production lifecycle initiation remains disabled until native signing configuration passes', () => {

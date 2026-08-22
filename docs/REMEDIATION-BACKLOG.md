@@ -217,3 +217,18 @@ R0 records implementation deltas only. It does not change application metadata o
 ## R0 Boundary
 
 No item above is authorized for implementation in R0. Unsupported native capabilities must be recorded in Appendix L rather than replaced with custom request, task, approval, signature, PDF, attachment, or authentication architecture.
+
+## M3 Separate Supervisor Decision Boundary
+
+- [x] Native `sysapproval_approver` persists governed Supervisor Rejected
+  identity, timestamp, relationship, and required comment separately from PDF
+  Fill.
+- [x] Controlled rejection denied `ROBA0001015` and its pending detail with no
+  approved final PDF or new signing/fulfillment task.
+- [x] Generated broad `GlideRecord.setValue` / `GlideRecord.update` privileges
+  and the unapproved broad HR Case Read RCA were removed by exact sys_id.
+- [ ] Platform owner must provide/approve a native Flow or HRSD response
+  boundary that updates the scoped Authorization Form without generic
+  GlideRecord Execute privileges.
+- [ ] M3 remains BLOCKED-PLATFORM; all production entry points remain inactive
+  and M4 runtime is not ready.

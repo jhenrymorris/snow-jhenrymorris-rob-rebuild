@@ -202,3 +202,19 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 | Remaining lifecycle paths | Amendment, Renewal, and Reuse stopped after mandatory denial capability failure | NOT RUN |
 | Security and activation | Generated broad privileges removed; both R4 and both M4 entry rules inactive | PASS |
 | M3/M4 status | Platform-owner/ServiceNow action required for denial contract | M3 BLOCKED-PLATFORM; M4 NOT READY |
+
+### M3 separate supervisor decision traceability
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| Explicit governed Supervisor decision | Native approval `0db9cb6ac332cb1068a35f2b2b013146`; approver Robyn; Rejected with persisted decision time/comment | PASS |
+| Denied authorization outcome | Synthetic `ROBA0001015` and its one detail Denied; no approved PDF, supervisor signature, activation, or fulfillment | FUNCTIONAL PASS |
+| Approved branch preserves signature requirement | Source launches the separate Supervisor PDF signature only after native Approved; prior production New remains runtime PASS | SOURCE PASS / PRIOR RUNTIME PASS |
+| Production-safe response persistence | Scoped response created generic `GlideRecord.setValue` and `GlideRecord.update` privileges | BLOCKED-PLATFORM |
+| Safe closeout | Generated privileges and abstract HR Case RCA removed; approval response, both R4 entry rules, and both M4 rules inactive | PASS |
+| Remaining paths | Amendment, Renewal, and Reuse not resumed after the security stop | NOT RUN |
+
+The required next boundary is platform-owner-approved native Flow/HRSD
+orchestration for the approval response. PDF-task denial workarounds,
+`assigned_to` manipulation, bridge expansion, and generic GlideRecord access
+remain prohibited.

@@ -1904,3 +1904,21 @@ Not exposed by session/tool — no estimate recorded.
   approval/signature stage cannot execute denial through the installed native
   PDF-template participant. Amendment, Renewal, and Reuse were not continued
   after this mandatory platform stop; M4 production runtime is not ready.
+
+#### M3 separate supervisor decision and response-persistence stop
+
+- Shape: runtime/configuration/security validation plus focused source/unit
+  changes; no SDK installation or deployment.
+- Duration: not exposed by the execution environment.
+- Turns: one continued M3 execution chain.
+- Reviewer interventions: 1 — approved separation of Supervisor decision from
+  mandatory approval signature.
+- Visible defects: 1 — scoped response generated prohibited generic
+  GlideRecord Execute privileges; both were removed immediately.
+- Silent defects: 1 — initial handler queried abstract HR Case before denial;
+  its unapproved RCA was removed and the denial path narrowed.
+- Result: native Rejected decision proved, but production-safe persistence did
+  not. M3 BLOCKED-PLATFORM; M4 production runtime NOT READY.
+- Validation: M2 19/19, R1 9/9, Wave 2 security 22/22, deployment 16/16,
+  R3 30/30, R4 57/57, and M4 26/26 PASS; normal and frozen-key builds PASS;
+  five unchanged TS11 warnings; existing generated-key changes 0.

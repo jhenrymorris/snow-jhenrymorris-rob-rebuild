@@ -227,3 +227,19 @@ Document Tasks, final PDFs, or fulfillment tasks.
 | TM-145 | Supervisor denial/refusal | Native PDF Fill offers Save/Submit only; Review does not sign; no supported persisted Deny/Refuse action | BLOCKED-PLATFORM |
 | TM-146 | Amendment, Renewal, Reuse | Not executed after mandatory TM-145 stop | NOT RUN / BLOCKED-PLATFORM |
 | TM-147 | Security cleanup and safe state | All generated broad privileges removed; post-13:30 generated privilege count 0; R4/M4 rules inactive | PASS |
+
+### M3 separate supervisor decision and persistence boundary
+
+| ID | Test | Evidence | Result |
+|---|---|---|---|
+| TM-148 | Native supervisor decision | `sysapproval_approver` `0db9cb6ac332cb1068a35f2b2b013146` routed to governed Supervisor Robyn and persisted Rejected with timestamp/comment | PASS |
+| TM-149 | Denial branch behavior | `ROBA0001015` and its pending detail became Denied; supervisor signature task 0; approved final PDF 0; fulfillment 0 | FUNCTIONAL PASS / NOT PRODUCTION-SAFE |
+| TM-150 | Scoped response persistence | HR Access response generated prohibited generic `GlideRecord.setValue` and `GlideRecord.update` Execute privileges | BLOCKED-PLATFORM |
+| TM-151 | Security cleanup | Both generic privileges and the unapproved abstract HR Case Read RCA were removed; response and production entry rules inactive | PASS |
+| TM-152 | Amendment, Renewal, Reuse continuation | Not run after the mandatory scoped-persistence security stop | NOT RUN / BLOCKED-PLATFORM |
+
+The native approval record proves that decision and PDF signature can be
+separate. It does not prove a production-safe response path: a platform-owner-
+approved Flow/HRSD boundary is still required to persist the Global approval
+response into the scoped governed Authorization Form without generic
+GlideRecord privileges.

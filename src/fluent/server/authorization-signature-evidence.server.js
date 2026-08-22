@@ -1,5 +1,6 @@
 (function executeRule(current) {
-    var productionTemplateName = 'ROB Form 1768 Authorization'
+    var employeeTemplateName = 'ROB Form 1768 Employee Signature'
+    var supervisorTemplateName = 'ROB Reuse Supervisor Attestation'
 
     function isTrue(value) {
         return value === '1' || value === 'true'
@@ -88,8 +89,58 @@
         return fieldMap
     }
 
-    function generateFinalPdf(authorization, template) {
+    function finalPdfTemplate() {
+        var template = new GlideRecord('sn_doc_pdf_template')
+        template.addQuery('name', employeeTemplateName)
+        template.addQuery('table', 'sn_hr_core_case')
+        template.addQuery('state', 'published')
+        template.addQuery('active', true)
+        template.setLimit(2)
+        template.query()
+        if (!template.next()) return null
+        var templateId = template.getUniqueValue()
+        if (template.next() || !template.get(templateId)) return null
+        return template
+    }
+
+    function requestSupervisorDecision(authorization, sourceCaseId) {
+        var existing = new GlideRecord('sysapproval_approver')
+        existing.addQuery('sysapproval', sourceCaseId)
+        existing.addQuery('source_table', 'x_2108496_hr_acces_rob_auth')
+        existing.addQuery('document_id', authorization.getUniqueValue())
+        existing.addQuery('approver', authorization.getValue('supervisor'))
+        existing.setLimit(2)
+        existing.query()
+        if (existing.next()) {
+            var existingId = existing.getUniqueValue()
+            if (existing.next()) {
+                gs.error('ROB duplicate native supervisor decisions exist.')
+                return false
+            }
+            return Boolean(existingId)
+        }
+
+        var approval = new GlideRecord('sysapproval_approver')
+        approval.initialize()
+        approval.setValue('sysapproval', sourceCaseId)
+        approval.setValue('source_table', 'x_2108496_hr_acces_rob_auth')
+        approval.setValue('document_id', authorization.getUniqueValue())
+        approval.setValue('approver', authorization.getValue('supervisor'))
+        approval.setValue('state', 'requested')
+        if (!approval.insert()) {
+            gs.error('ROB native supervisor decision could not be requested.')
+            return false
+        }
+        return true
+    }
+
+    function generateFinalPdf(authorization) {
         if (authorization.getValue('final_pdf_attachment')) return true
+        var template = finalPdfTemplate()
+        if (!template) {
+            gs.error('ROB exact published final Form 1768 template is missing.')
+            return false
+        }
         var documentId = template.getValue('document')
         if (!documentId) {
             gs.error('ROB production template has no fillable source PDF.')
@@ -117,8 +168,14 @@
         return true
     }
     var template = current.document_template.getRefRecord()
+    var templateName = template.isValidRecord()
+        ? template.getValue('name')
+        : ''
 
-    if (!template.isValidRecord() || template.getValue('name') !== productionTemplateName) {
+    if (
+        templateName !== employeeTemplateName &&
+        templateName !== supervisorTemplateName
+    ) {
         return
     }
 
@@ -144,8 +201,7 @@
     var signerId = current.getValue('closed_by')
     var completedAt = current.getValue('closed_at')
     var executionId = current.getValue('document_task_execution')
-    var previousTaskId = current.getValue('previous_task')
-    var isEmployeeStage = !previousTaskId
+    var isEmployeeStage = templateName === employeeTemplateName
 
     if (isEmployeeStage) {
         if (
@@ -173,7 +229,11 @@
             'status',
             'pending_supervisor_approval_signature'
         )
-        authorization.update()
+        if (!authorization.update()) {
+            gs.error('ROB employee signature evidence could not be persisted.')
+            return
+        }
+        requestSupervisorDecision(authorization, sourceCaseId)
         return
     }
 
@@ -182,43 +242,6 @@
         return
     }
 
-    if (state === '7') {
-        authorization.setValue('supervisor_approval_complete', '0')
-        authorization.setValue('supervisor_approval_outcome', 'denied')
-        authorization.setValue('supervisor_approver', signerId)
-        authorization.setValue('supervisor_approval_date_time', completedAt)
-        authorization.setValue('supervisor_signature_complete', '0')
-        authorization.setValue('supervisor_signer', signerId)
-        authorization.setValue('supervisor_signature_date_time', completedAt)
-        authorization.setValue(
-            'supervisor_document_task',
-            current.getUniqueValue()
-        )
-        authorization.setValue('document_task_execution', executionId)
-        authorization.setValue('status', 'denied')
-        authorization.update()
-
-        var deniedDetails = new GlideRecord(
-            'x_2108496_hr_acces_auth_detail'
-        )
-        deniedDetails.addQuery(
-            'rob_authorization_form',
-            authorization.getUniqueValue()
-        )
-        deniedDetails.addQuery('status', 'pending_authorization')
-        deniedDetails.query()
-        while (deniedDetails.next()) {
-            deniedDetails.setValue('status', 'denied')
-            deniedDetails.update()
-        }
-        return
-    }
-
-    // Native Document Templates persists the supervisor's explicit outcome in
-    // the completed task state: Closed (3) is the signed/approved submission,
-    // while Closed Rejected (7) is handled above as denial. PDF-template tasks
-    // persist their entered values in filled_fields and leave body empty, so
-    // body text is not authoritative approval evidence.
     if (state !== '3') {
         return
     }
@@ -229,11 +252,14 @@
     if (authorization.getValue('supervisor_document_task')) {
         return
     }
+    if (
+        !isTrue(authorization.getValue('supervisor_approval_complete')) ||
+        authorization.getValue('supervisor_approval_outcome') !== 'approved'
+    ) {
+        gs.error('ROB supervisor signature arrived without explicit approval.')
+        return
+    }
 
-    authorization.setValue('supervisor_approval_complete', '1')
-    authorization.setValue('supervisor_approval_outcome', 'approved')
-    authorization.setValue('supervisor_approver', signerId)
-    authorization.setValue('supervisor_approval_date_time', completedAt)
     authorization.setValue('supervisor_signature_complete', '1')
     authorization.setValue('supervisor_signer', signerId)
     authorization.setValue('supervisor_signature_date_time', completedAt)
@@ -246,5 +272,5 @@
         gs.error('ROB supervisor evidence could not be persisted.')
         return
     }
-    generateFinalPdf(authorization, template)
+    generateFinalPdf(authorization)
 })(current)

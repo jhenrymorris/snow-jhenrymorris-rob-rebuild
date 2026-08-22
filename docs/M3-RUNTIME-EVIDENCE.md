@@ -199,3 +199,34 @@ Write privileges are zero. No SDK installation/deployment occurred.
 **M3 — BLOCKED-PLATFORM.** Native PDF-template supervisor refusal requires a
 platform-owner/ServiceNow-supported combined deny-or-approve-and-sign path.
 M4 production runtime is not ready.
+
+## 2026-08-22 Separate Native Decision Validation and Security Stop
+
+Global `sysapproval_approver` proved the supported decision stage. Controlled
+decision `0db9cb6ac332cb1068a35f2b2b013146` linked `HRC0001084` /
+`e45bf6a6c37e8b1068a35f2b2b01317c` and `ROBA0001015` /
+`345b7aa6c37e8b1068a35f2b2b013157`, routed to governed supervisor Robyn
+Christophel (`52826bf03710200044e0bfc8bcbe5dbf`), and persisted Rejected with
+the required comment. During the controlled transaction the form and its one
+pending detail became Denied, approval identity/outcome/time persisted, final
+PDF remained empty, and no new supervisor signature or fulfillment launched.
+
+That transition is not production-safe: Australia automatically created
+prohibited Global `GlideRecord.setValue` and `GlideRecord.update` Execute
+privileges for the HR Access response rule. They were removed immediately by
+exact sys_ids `d9aacbaec332cb1068a35f2b2b0131d5` and
+`15aa4faec332cb1068a35f2b2b013137`. Unapproved abstract HR Case Read RCA
+`7bd9cfeac332cb1068a35f2b2b0131d7` was also removed. The two lifecycle rules,
+both M4 rules, and the provisional approval response rule are inactive.
+
+**M3 — BLOCKED-PLATFORM.** Native approval/denial exists, but a
+platform-owner-approved Flow/HRSD response boundary is required to persist it
+to the governed scoped Authorization Form without generic GlideRecord
+privileges. New remains previously proven PASS; Amendment, Renewal, and Reuse
+were not resumed after this security stop. M4 production runtime is not ready.
+
+Closeout source validation is green: M2 19/19, R1 9/9, Wave 2 security 22/22,
+deployment configuration 16/16, R3 30/30, R4 57/57, and M4 26/26. Normal and
+frozen-key SDK builds pass with the five unchanged TS11 warnings. The three
+new generated keys are additions; existing-key mutations/deletions are zero.
+No SDK installation or deployment was run.

@@ -17,6 +17,14 @@ declare global {
                         table: 'sys_script'
                         id: 'c60738c0cc414b6d9f539f0461757859'
                     }
+                    'capture-supervisor-approval-decision': {
+                        table: 'sys_script'
+                        id: 'f28ba2c6d29d49409476b50616699849'
+                    }
+                    'create-native-supervisor-approval': {
+                        table: 'sys_scope_privilege'
+                        id: '15147b6d6bc34adb80bb67318113b4de'
+                    }
                     'create-supervisor-exception-review-task-after-insert': {
                         table: 'sys_script'
                         id: 'dbf1f9645e35471bbaa426930f97b2d3'
@@ -216,6 +224,10 @@ declare global {
                     'read-hr-profile': {
                         table: 'sys_scope_privilege'
                         id: '61321494139c4ed1bf903ba644b92a4e'
+                    }
+                    'read-native-supervisor-approval': {
+                        table: 'sys_scope_privilege'
+                        id: 'fc66879ad2644674a4cbc11164e8b8f4'
                     }
                     'read-user-group': {
                         table: 'sys_scope_privilege'

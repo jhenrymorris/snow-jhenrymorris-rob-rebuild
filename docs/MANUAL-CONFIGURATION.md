@@ -903,3 +903,13 @@ persisted supervisor Deny/Refuse outcome while retaining signature semantics;
 the alternative Review action is not a signing action. Do not simulate denial
 by changing task state administratively. Platform-owner/ServiceNow direction
 is required for a supported combined Approve + Sign / Deny contract.
+
+### Separate native approval response boundary
+
+Do not enable `ROB Capture Native Supervisor Approval Decision` on Australia.
+Native `sysapproval_approver` provides the separate Approved/Rejected decision,
+but the HR Access response Business Rule generated prohibited generic
+`GlideRecord.setValue` and `GlideRecord.update` Execute privileges when it
+persisted the decision to the scoped Authorization Form. Those privileges were
+removed. Resume only with a platform-owner-approved Flow/HRSD execution
+boundary; do not restore PDF-task denial semantics.

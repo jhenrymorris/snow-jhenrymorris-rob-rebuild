@@ -551,3 +551,21 @@ Build evidence is package-specific and must remain distinct from install, runtim
   after caller restoration. No SDK install/deployment was run.
 - Result: M3 BLOCKED-PLATFORM; native PDF-template supervisor refusal requires
   platform-owner/ServiceNow action. M4 production runtime is not ready.
+
+### M3 separate supervisor decision security boundary
+
+- Native `sysapproval_approver` routing and Rejected evidence: PASS for
+  `HRC0001084` / `ROBA0001015`.
+- Denied form/detail, no final PDF, and no new supervisor signing/fulfillment:
+  PASS during the controlled transaction.
+- Production-safe response persistence: FAIL. Australia generated prohibited
+  generic `GlideRecord.setValue` and `GlideRecord.update` Execute privileges.
+  Both privileges and the unapproved abstract HR Case Read RCA were removed;
+  the response rule is inactive.
+- Result: M3 BLOCKED-PLATFORM; supported Flow/HRSD response orchestration is
+  required. No deployment or SDK installation was run.
+- Closeout validation: M2 19/19; R1 9/9; Wave 2 security 22/22;
+  deployment configuration 16/16; R3 30/30; R4 57/57; and M4 26/26 PASS.
+  Normal and frozen-key SDK builds PASS with the five unchanged TS11 warnings.
+  Generated keys contain three additions and zero existing-key mutations or
+  deletions.

@@ -43,6 +43,21 @@ export const captureAuthorizationSignatureEvidence = BusinessRule({
     script: Now.include('../server/authorization-signature-evidence.server.js'),
 })
 
+export const captureSupervisorApprovalDecision = BusinessRule({
+    $id: Now.ID['capture-supervisor-approval-decision'],
+    name: 'ROB Capture Native Supervisor Approval Decision',
+    active: false,
+    table: 'sysapproval_approver',
+    when: 'after',
+    action: ['update'],
+    order: 300,
+    filterCondition:
+        'stateINapproved,rejected^source_table=x_2108496_hr_acces_rob_auth^document_idISNOTEMPTY',
+    description:
+        'Persists the governed Supervisor native approval decision; rejection denies without signing, while approval launches the separate required native Supervisor signature.',
+    script: Now.include('../server/supervisor-approval-evidence.server.js'),
+})
+
 export const preventDuplicateFinalAuthorizationPdf = BusinessRule({
     $id: Now.ID['prevent-duplicate-final-authorization-pdf'],
     name: 'ROB Prevent Duplicate Final Authorization PDF',

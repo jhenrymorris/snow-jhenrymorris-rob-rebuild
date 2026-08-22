@@ -64,6 +64,45 @@
         return true
     }
 
+    function requestSupervisorDecision(authorizationId, supervisorId) {
+        if (!authorizationId || !supervisorId) {
+            fail('the governed supervisor decision context is incomplete')
+            return false
+        }
+
+        var existingApproval = new GlideRecord('sysapproval_approver')
+        existingApproval.addQuery('sysapproval', current.getUniqueValue())
+        existingApproval.addQuery(
+            'source_table',
+            'x_2108496_hr_acces_rob_auth'
+        )
+        existingApproval.addQuery('document_id', authorizationId)
+        existingApproval.addQuery('approver', supervisorId)
+        existingApproval.setLimit(2)
+        existingApproval.query()
+        if (existingApproval.next()) {
+            var existingApprovalId = existingApproval.getUniqueValue()
+            if (existingApproval.next()) {
+                fail('duplicate native supervisor decisions exist')
+                return false
+            }
+            return Boolean(existingApprovalId)
+        }
+
+        var approval = new GlideRecord('sysapproval_approver')
+        approval.initialize()
+        approval.setValue('sysapproval', current.getUniqueValue())
+        approval.setValue('source_table', 'x_2108496_hr_acces_rob_auth')
+        approval.setValue('document_id', authorizationId)
+        approval.setValue('approver', supervisorId)
+        approval.setValue('state', 'requested')
+        if (!approval.insert()) {
+            fail('the native supervisor decision could not be requested')
+            return false
+        }
+        return true
+    }
+
     function listValues(value) {
         var result = []
         var seen = {}
@@ -126,11 +165,19 @@
     if (decision === 'reuse') {
         // The frozen M1 Reuse path consumes this validated current Supervisor
         // without mutating the historical Authorization Form snapshots.
-        // Runtime attestation uses its own native template so that no new
-        // governed Form 1768 PDF or Authorization Form is produced.
-        initiateNativeSigning(
-            'ROB Reuse Supervisor Attestation',
-            'ROB-Reuse-Supervisor-Attestation-' + current.getValue('number')
+        // The native decision record anchors the current case to the reused
+        // Authorization Form. Approved decisions launch the supervisor-only
+        // attestation; denied decisions create no signing task or governed PDF.
+        var reusedAuthorizationId = current.getValue(
+            relatedAuthorizationField
+        )
+        if (!reusedAuthorizationId) {
+            fail('Reuse requires exactly one governed Authorization Form')
+            return
+        }
+        requestSupervisorDecision(
+            reusedAuthorizationId,
+            profileContext.supervisorId
         )
         return
     }
@@ -357,7 +404,7 @@
             return
         }
         initiateNativeSigning(
-            'ROB Form 1768 Authorization',
+            'ROB Form 1768 Employee Signature',
             'ROB-Form-1768-Signing-' + authorization.getValue('number')
         )
     }
