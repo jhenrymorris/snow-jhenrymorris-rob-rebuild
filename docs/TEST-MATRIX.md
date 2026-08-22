@@ -243,3 +243,15 @@ separate. It does not prove a production-safe response path: a platform-owner-
 approved Flow/HRSD boundary is still required to persist the Global approval
 response into the scoped governed Authorization Form without generic
 GlideRecord privileges.
+
+### M3 ROB-owned Flow orchestration
+
+| ID | Test | Evidence | Result |
+|---|---|---|---|
+| TM-153 | Required native Flow actions | Ask For Approval `bae0a1120b10030085c083eb37673a92`; Create Document Task `b4fd25d877441010195693df591061b4` | PASS |
+| TM-154 | ROB-owned Flow creation | Two clean Workflow Studio attempts; component-load errors and missing navigation context; Flow count remained 0 | BLOCKED-PLATFORM |
+| TM-155 | Runtime lifecycle continuation | No Flow existed, so Denial/New/Amendment/Renewal/Reuse were not executed | NOT RUN |
+| TM-156 | Safe-state preservation | Approval response, R4, and M4 rules inactive; broad GlideRecord privileges 0 | PASS |
+
+Direct metadata creation, Background Scripts, Global response logic, and bridge
+expansion were not used.

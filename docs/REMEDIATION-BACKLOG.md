@@ -232,3 +232,14 @@ No item above is authorized for implementation in R0. Unsupported native capabil
   GlideRecord Execute privileges.
 - [ ] M3 remains BLOCKED-PLATFORM; all production entry points remain inactive
   and M4 runtime is not ready.
+
+## M3 ROB-owned Flow Designer Boundary
+
+- [x] Confirm native Ask For Approval and Document Templates Create Document
+  Task actions are installed.
+- [x] Attempt Flow creation twice from clean signed-in Workflow Studio pages.
+- [x] Confirm zero HR Access ROB Authorization Flow records before and after.
+- [x] Preserve zero broad privileges and all R4/M4 entry rules inactive.
+- [ ] Platform owner/ServiceNow must repair Workflow Studio component loading
+  or deliver the ROB-owned Flow through the supported application channel.
+- [ ] M3 remains BLOCKED-PLATFORM; M4 runtime is not ready.

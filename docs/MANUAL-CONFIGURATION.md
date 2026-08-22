@@ -913,3 +913,18 @@ but the HR Access response Business Rule generated prohibited generic
 persisted the decision to the scoped Authorization Form. Those privileges were
 removed. Resume only with a platform-owner-approved Flow/HRSD execution
 boundary; do not restore PDF-task denial semantics.
+
+### ROB-owned Flow Designer orchestration stop
+
+The approved replacement is one HR Access ROB Authorization Flow operating on
+the governed Authorization Form: Ask For Approval routes to `supervisor`, the
+Rejected branch denies the form and pending details, and the Approved branch
+launches the governed Supervisor Document Task. Do not enable the provisional
+Global response rule.
+
+Australia Workflow Studio currently cannot create or open a Flow because its
+designer components fail to load and the page has no active navigation
+context. Resume only after platform repair or platform-owner delivery through
+the supported application configuration channel. Do not insert Flow metadata
+directly, use Background Scripts, expand the HR Core bridge, or approve generic
+GlideRecord privileges.

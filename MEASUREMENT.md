@@ -1922,3 +1922,23 @@ Not exposed by session/tool — no estimate recorded.
 - Validation: M2 19/19, R1 9/9, Wave 2 security 22/22, deployment 16/16,
   R3 30/30, R4 57/57, and M4 26/26 PASS; normal and frozen-key builds PASS;
   five unchanged TS11 warnings; existing generated-key changes 0.
+
+#### M3 ROB-owned Flow Designer platform stop
+
+- Shape: native action inventory, two controlled Workflow Studio creation
+  attempts, security reread, and durable blocker evidence; no SDK installation
+  or deployment.
+- Duration: not exposed by the execution environment.
+- Turns: one bounded M3 execution.
+- Reviewer interventions: 0.
+- Visible defects: 1 — Workflow Studio cannot initialize the component and
+  navigation context required to create/open a Flow.
+- Silent defects: 0 discovered.
+- Environment waits: Workflow Studio load waits occurred; duration was not
+  recorded separately.
+- Validation: M2 19/19, R1 9/9, Wave 2 security 22/22, deployment
+  configuration 16/16, R3 30/30, R4 57/57, and M4 26/26 PASS; normal and
+  frozen-key builds PASS with five unchanged TS11 warnings; generated-key
+  diff empty.
+- Result: Flow records 0/0, privileges added 0, runtime scenarios not run;
+  M3 BLOCKED-PLATFORM and M4 runtime NOT READY.

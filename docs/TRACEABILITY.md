@@ -218,3 +218,14 @@ The required next boundary is platform-owner-approved native Flow/HRSD
 orchestration for the approval response. PDF-task denial workarounds,
 `assigned_to` manipulation, bridge expansion, and generic GlideRecord access
 remain prohibited.
+
+### M3 ROB-owned Flow orchestration attempt
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| Native decision action | Installed Ask For Approval action and documented SDK output contract | CAPABILITY PRESENT |
+| Governed signing action | Installed Document Templates Create Document Task action | CAPABILITY PRESENT |
+| ROB-owned orchestration | Workflow Studio component-load/navigation failure; scoped Flow count 0 before/after | BLOCKED-PLATFORM |
+| Runtime scenarios | No production Flow; no lifecycle entry activation | NOT RUN |
+| Security | No new privileges; provisional response and R4/M4 entry rules inactive | PASS |
+| M4 readiness | Native approval response boundary remains unavailable | NOT READY |

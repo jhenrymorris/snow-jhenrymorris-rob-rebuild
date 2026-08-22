@@ -230,3 +230,37 @@ deployment configuration 16/16, R3 30/30, R4 57/57, and M4 26/26. Normal and
 frozen-key SDK builds pass with the five unchanged TS11 warnings. The three
 new generated keys are additions; existing-key mutations/deletions are zero.
 No SDK installation or deployment was run.
+
+## 2026-08-22 ROB-owned Flow orchestration attempt
+
+The installed action catalog contains native `Ask For Approval`
+(`bae0a1120b10030085c083eb37673a92`) and Document Templates `Create Document
+Task` (`b4fd25d877441010195693df591061b4`). SDK 4.8.1 also documents
+`action.core.askForApproval` as a blocking action that returns Approved or
+Rejected and can update the record in the same Flow context. The requested
+ROB-owned architecture is therefore well-defined without a Global response
+Business Rule.
+
+Runtime configuration could not be created. On two clean signed-in attempts,
+Australia Workflow Studio loaded the Flow list but its `New` control and flow
+links remained inert. The client recorded `Error loading component Object`,
+failed loads for `sn-conv-fa/index` and `sn-data-mapping-connected/index`, and
+`No current page in dataContext, skipping click handling`. The New control
+remained `aria-expanded=false`. Direct committed reread confirmed zero
+`sys_hub_flow` records in HR Access ROB Authorization before and after the
+attempt.
+
+No metadata-write substitute was used. The provisional Global approval rule,
+both R4 rules, and both M4 rules remain inactive; broad GlideRecord privileges
+remain zero. Denial, approved New reconfirmation, Amendment, Renewal, and Reuse
+were not executed because no ROB Flow existed to govern the decision response.
+
+Closeout source validation is green: M2 19/19, R1 9/9, Wave 2 security 22/22,
+deployment configuration 16/16, R3 30/30, R4 57/57, and M4 26/26. Normal and
+frozen-key SDK builds pass with the five unchanged TS11 warnings, and the
+generated-key diff is empty. No SDK installation or deployment was run.
+
+**M3 — BLOCKED-PLATFORM.** Australia Workflow Studio must be repaired or the
+platform owner must supply the supported ROB-owned Flow through the normal
+application configuration channel. Native approval response boundary remains
+unavailable; M4 runtime is not ready.

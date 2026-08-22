@@ -569,3 +569,19 @@ Build evidence is package-specific and must remain distinct from install, runtim
   Normal and frozen-key SDK builds PASS with the five unchanged TS11 warnings.
   Generated keys contain three additions and zero existing-key mutations or
   deletions.
+
+### M3 ROB-owned Flow configuration platform stop
+
+- SDK/native capability inventory: Ask For Approval and Create Document Task
+  actions PRESENT.
+- HR Access ROB Authorization Flow records before/after: 0/0.
+- Workflow Studio: Flow list loads, but creation/navigation does not; required
+  components fail and the page reports no current navigation context.
+- PDI mutations: 0 Flow records, 0 privileges, 0 production lifecycle records.
+- Safe state: provisional approval response, two R4, and two M4 rules inactive;
+  broad GlideRecord privileges 0; exact M2 Reads 5/5; HR Core bridge Execute 1.
+- Closeout validation: M2 19/19; R1 9/9; Wave 2 security 22/22;
+  deployment configuration 16/16; R3 30/30; R4 57/57; and M4 26/26 PASS.
+  Normal and frozen-key SDK builds PASS with the five unchanged TS11 warnings;
+  generated-key diff is empty.
+- Result: M3 BLOCKED-PLATFORM; no SDK deployment/installation was run.
