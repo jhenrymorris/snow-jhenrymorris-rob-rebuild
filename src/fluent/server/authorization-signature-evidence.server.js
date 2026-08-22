@@ -96,7 +96,7 @@
             return false
         }
 
-        var generatedAt = gs.nowDateTime()
+        var generatedAt = new GlideDateTime().getValue()
         var flatten = { FlattenType: 'fully_flatten' }
         var result = new sn_pdfgeneratorutils.PDFGenerationAPI()
             .fillDocumentFieldsAndFlatten(
@@ -214,7 +214,12 @@
         return
     }
 
-    if (state !== '3' || String(current.getValue('body') || '').indexOf('APPROVED') < 0) {
+    // Native Document Templates persists the supervisor's explicit outcome in
+    // the completed task state: Closed (3) is the signed/approved submission,
+    // while Closed Rejected (7) is handled above as denial. PDF-template tasks
+    // persist their entered values in filled_fields and leave body empty, so
+    // body text is not authoritative approval evidence.
+    if (state !== '3') {
         return
     }
     if (!isTrue(authorization.getValue('employee_signature_complete'))) {

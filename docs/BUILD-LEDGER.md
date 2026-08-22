@@ -524,3 +524,30 @@ Build evidence is package-specific and must remain distinct from install, runtim
   deployment configuration 16/16; R3 30/30; R4 54/54; M4 26/26.
   Normal and frozen-key SDK builds PASS with the five unchanged TS11 warnings.
   Generated-key diff is empty.
+
+### M3 Document Templates RCA recovery and Denial stop
+
+- The exact Payroll and Workforce lifecycle callers were frozen, temporarily
+  enabled, and used to generate caller-specific Document Templates Reads for
+  `sn_doc_pdf_template` and `sn_doc_task`. Both intake paths then created native
+  ordered Document Tasks with the governed Authorization Form supervisor.
+- Production New runtime passed on `HRC0001083` / `ROBA0001014`: employee task
+  `DOCT0001018`, supervisor task `DOCT0001019`, persisted approved outcome and
+  distinct timestamps, Active authorization, and governed PDF attachment
+  `ffea3266c37e8b1068a35f2b2b01312d` (1,143,162 bytes).
+- Source/runtime corrections replaced the non-authoritative task-body
+  `APPROVED` check with the native terminal outcome (`Closed` approved versus
+  `Closed Rejected` denied) and replaced fenced `gs.nowDateTime()` with scoped
+  `new GlideDateTime().getValue()`.
+- Denial fixture `HRC0001084` / `ROBA0001015` completed employee task
+  `DOCT0001020` and routed supervisor task `DOCT0001021` to Robyn. The installed
+  native PDF Fill participant exposes Save/Submit only; it cannot persist a
+  supervisor refusal. Changing the participant to Review removes the required
+  supervisor signature, so the frozen combined stage cannot be completed.
+- Safe closeout restored both lifecycle rules inactive/update-only; both M4
+  rules remained inactive. All generated post-`13:30` scope privileges were
+  removed, including broad GlideRecord operations and temporary
+  Document/PDF/attachment access. All four caller RCA records are Invalidated
+  after caller restoration. No SDK install/deployment was run.
+- Result: M3 BLOCKED-PLATFORM; native PDF-template supervisor refusal requires
+  platform-owner/ServiceNow action. M4 production runtime is not ready.

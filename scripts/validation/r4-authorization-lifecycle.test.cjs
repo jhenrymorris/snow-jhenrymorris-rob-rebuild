@@ -550,6 +550,10 @@ test('post-signature final PDF fills and flattens the governed Form 1768 on Auth
     assert.match(source, /Employee Signature Date\/Time/)
     assert.match(source, /Supervisor Signature Date\/Time/)
     assert.match(source, /Generated Date\/Time/)
+    assert.match(source, /if \(state !== '3'\)/)
+    assert.doesNotMatch(source, /current\.getValue\('body'\).*APPROVED/)
+    assert.match(source, /new GlideDateTime\(\)\.getValue\(\)/)
+    assert.doesNotMatch(source, /gs\.nowDateTime\(\)/)
     assert.doesNotMatch(source, /GlideSysAttachment|assigned_to/)
 })
 

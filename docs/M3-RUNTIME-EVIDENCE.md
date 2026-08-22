@@ -144,3 +144,58 @@ runtime were not attempted after the mandatory security stop.
 production native-signing launch requires a new protected Document Templates
 caller boundary that this package explicitly may not approve. Platform-owner /
 ServiceNow action is required. M4 production runtime is not ready.
+
+## 2026-08-22 RCA Recovery, New PASS, and Denial Stop
+
+The exact production callers were held unchanged while ServiceNow generated
+caller-specific Document Templates records. Payroll PDF Template Read
+`bcd68e66c3728b1068a35f2b2b0131ba` and Document Task Read
+`2b44f6aac3fa8b1068a35f2b2b01316a` were allowed. Workforce equivalents were
+`0d4672a2c33e8b1068a35f2b2b01316e` and
+`1596f6e2c33e8b1068a35f2b2b013140`. Payroll then created `DOCT0001013`, and
+Workforce created `DOCT0001014`, proving parity. Restoring the callers to their
+committed inactive/update-only state invalidated all four records.
+
+### Successful New evidence
+
+- Case: `HRC0001083` / `858a32e2c37e8b1068a35f2b2b01312c`.
+- Authorization Form: `ROBA0001014` /
+  `dd8af2e2c37e8b1068a35f2b2b0131b3`.
+- Employee: Amos Linnan / `56826bf03710200044e0bfc8bcbe5dca`;
+  task `DOCT0001018` / `658a76e2c37e8b1068a35f2b2b013165`;
+  signed `2026-08-22 14:05:57`.
+- Supervisor: Robyn Christophel / `52826bf03710200044e0bfc8bcbe5dbf`;
+  task `DOCT0001019` / `fbca3a26c37e8b1068a35f2b2b013100`;
+  approved and signed `2026-08-22 14:06:28`.
+- Final PDF: `ffea3266c37e8b1068a35f2b2b01312d`,
+  `ROB-Form-1768-ROBA0001014`, `application/pdf`, 1,143,162 bytes, attached to
+  the Authorization Form at `2026-08-22 14:06:31`.
+- Final state: Active. Final Authorization Date and Effective Date are both
+  `2026-08-22`, derived from the persisted supervisor signature timestamp.
+
+Two ordinary defects were corrected before the passing fixture. Native PDF
+Fill tasks persist approval as terminal task state and leave `body` empty, so
+`Closed (3)` is the signed/approved outcome and `Closed Rejected (7)` is the
+denial branch. Australia also fences `gs.nowDateTime()` in scope; finalization
+now uses `new GlideDateTime().getValue()`.
+
+### Mandatory Denial stop
+
+Denial fixture `HRC0001084` / `e45bf6a6c37e8b1068a35f2b2b01317c`
+created `ROBA0001015` / `345b7aa6c37e8b1068a35f2b2b013157`.
+Amos completed `DOCT0001020`; supervisor task `DOCT0001021` routed correctly
+to Robyn. The installed native Document Task PDF widget exposes only Save and
+Submit for a Fill participant. The participant configuration exposes Fill or
+Review; Review supplies a review outcome but not the required supervisor
+signature. Therefore the intended supervisor cannot execute a persisted
+refusal while preserving the frozen combined approval/signature contract.
+
+No denial was fabricated and no administrator state edit was used. Amendment,
+Renewal, and Reuse were stopped after this mandatory capability boundary.
+Both R4 and both M4 entry rules are inactive. All generated scope privileges
+from the controlled execution were removed; broad GlideRecord and native-case
+Write privileges are zero. No SDK installation/deployment occurred.
+
+**M3 — BLOCKED-PLATFORM.** Native PDF-template supervisor refusal requires a
+platform-owner/ServiceNow-supported combined deny-or-approve-and-sign path.
+M4 production runtime is not ready.

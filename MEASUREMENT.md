@@ -1867,3 +1867,40 @@ Not exposed by session/tool — no estimate recorded.
   deployment configuration 16/16, R3 30/30, R4 54/54, and M4 26/26 PASS.
   Normal and frozen-key builds PASS with five unchanged TS11 warnings;
   generated-key changes 0. No SDK install/deployment was run.
+
+#### M3 Document Templates RCA recovery and production-runtime stop
+
+- Date: `2026-08-22`; measured wall-clock window: `13:33:47` through
+  `14:12:29` PDI time (`00:38:42`). Execution shape: caller freeze, two
+  caller-specific RCA chains, Payroll/Workforce native-launch proof, one
+  completed production New lifecycle, one Denial attempt, security cleanup,
+  and safe-state restoration. Turns: one. Reviewer interventions: 0 during
+  execution of this package. Authentication/environment waiting was included
+  in the wall-clock window and was not estimated separately.
+- RCA evidence: Payroll callers generated PDF Template Read
+  `bcd68e66c3728b1068a35f2b2b0131ba` and Document Task Read
+  `2b44f6aac3fa8b1068a35f2b2b01316a`; Workforce generated corresponding Reads
+  `0d4672a2c33e8b1068a35f2b2b01316e` and
+  `1596f6e2c33e8b1068a35f2b2b013140`. Each exact caller/resource operation was
+  allowed during validation. Restoring the entry rules to committed inactive
+  state correctly invalidated all four RCA records.
+- Runtime proof: Payroll `HRC0001072` / `ROBA0001009` created ordered native
+  tasks `DOCT0001013` and `DOCT0001015`; Workforce `HRC0001081` /
+  `ROBA0001012` created `DOCT0001014`. Corrected New fixture `HRC0001083` /
+  `ROBA0001014` completed employee task `DOCT0001018`, supervisor task
+  `DOCT0001019`, persisted approved supervisor evidence, generated PDF
+  `ffea3266c37e8b1068a35f2b2b01312d`, and became Active.
+- Silent defects corrected: 2. PDF-template tasks persist approval in terminal
+  native state rather than `body`, and scoped runtime requires
+  `new GlideDateTime().getValue()` rather than `gs.nowDateTime()`.
+- Visible defects: 2. Controlled inserts repeatedly generated prohibited broad
+  GlideRecord tracking privileges, all removed; the native PDF Fill task has
+  no intended-supervisor Deny/Refuse action. It exposes only Save/Submit, while
+  Review would remove the required supervisor signature.
+- Closeout: all post-`13:30` generated scope privileges removed; broad
+  setValue/update/insert and native-case Write privileges 0; both R4 and both
+  M4 production entry rules inactive; no SDK installation/deployment.
+- Result: M3 BLOCKED-PLATFORM. New passes, but the frozen combined supervisor
+  approval/signature stage cannot execute denial through the installed native
+  PDF-template participant. Amendment, Renewal, and Reuse were not continued
+  after this mandatory platform stop; M4 production runtime is not ready.

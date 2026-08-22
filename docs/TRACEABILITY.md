@@ -190,3 +190,15 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 | Reuse attestation | Published native template and governed participant configured; production runtime not reached | Configuration PASS / runtime BLOCKED |
 | Security | Generated broad setValue/insert/update privileges removed; no new caller access approved; R4/M4 rules inactive | Cleanup PASS |
 | M3/M4 status | Remaining lifecycle scenarios stopped at mandatory security boundary | M3 BLOCKED-PLATFORM; M4 NOT READY |
+
+### M3 RCA recovery and native denial boundary
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| Narrow Document Templates caller access | Exact Payroll and Workforce PDF Template Read plus Document Task Read RCAs; caller-specific only | PASS |
+| Governed Supervisor signing | `ROBA0001014`; supervisor task `DOCT0001019` assigned to snapshotted Robyn, not case `assigned_to` | PASS |
+| Post-signature finalization | PDF `ffea3266c37e8b1068a35f2b2b01312d` generated after supervisor completion and attached only to the Authorization Form | PASS |
+| Supervisor denial/refusal | Native PDF Fill action set has no supported persisted Deny/Refuse action; Review does not supply signature semantics | BLOCKED-PLATFORM |
+| Remaining lifecycle paths | Amendment, Renewal, and Reuse stopped after mandatory denial capability failure | NOT RUN |
+| Security and activation | Generated broad privileges removed; both R4 and both M4 entry rules inactive | PASS |
+| M3/M4 status | Platform-owner/ServiceNow action required for denial contract | M3 BLOCKED-PLATFORM; M4 NOT READY |

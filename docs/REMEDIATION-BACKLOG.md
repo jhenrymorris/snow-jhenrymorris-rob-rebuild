@@ -197,6 +197,23 @@ R0 records implementation deltas only. It does not change application metadata o
 - [ ] M3 remains BLOCKED-PLATFORM; Denial, Amendment, Renewal, and Reuse
   production runtime remain unexecuted; M4 production runtime is not ready.
 
+### 2026-08-22 M3 RCA recovery and denial stop
+
+- [x] Approve exact caller-specific PDF Template Read and Document Task Read
+  access for both controlled lifecycle callers; no broad Document Templates
+  access retained.
+- [x] Prove Payroll and Workforce native Document Task launch.
+- [x] Prove one production New authorization through governed Supervisor
+  signing, post-signature PDF generation, and Active state (`ROBA0001014`).
+- [x] Remove all automatically generated broad GlideRecord privileges and
+  restore both R4 and both M4 production entry points inactive.
+- [ ] Platform owner/ServiceNow must provide a supported native supervisor
+  denial/refusal action that persists the decision and cannot produce an
+  approved final PDF. PDF Fill currently exposes Save/Submit only; Review is
+  not a signing action.
+- [ ] M3 remains BLOCKED-PLATFORM; Amendment, Renewal, and Reuse were not run
+  after the mandatory Denial stop. M4 production runtime is not ready.
+
 ## R0 Boundary
 
 No item above is authorized for implementation in R0. Unsupported native capabilities must be recorded in Appendix L rather than replaced with custom request, task, approval, signature, PDF, attachment, or authentication architecture.

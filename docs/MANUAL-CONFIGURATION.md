@@ -884,3 +884,22 @@ must not be approved without a separate platform-owner/security decision.
 The runtime also generated broad GlideRecord setValue/insert/update privileges;
 all were removed. Do not recreate them, do not broaden the M2 bridge, and do
 not activate the R4 rules while this caller boundary remains unresolved.
+
+### 2026-08-22 RCA recovery and native denial boundary
+
+The prior Document Templates caller boundary was recovered with exact,
+caller-specific Restricted Caller Access only. Payroll Business Rule
+`2d7ed4c1f8fd48ef8fa20a7cb699f105` and Workforce Business Rule
+`65fb34e074784dd1a17feff394e2ab64` each received one PDF Template Read and
+one Document Task Read approval. No PDF Template create, update, or delete
+access and no generic API access was retained. Restoring the lifecycle rules
+to inactive invalidated those temporary caller approvals.
+
+Controlled New authorization `ROBA0001014` proved ordered employee and
+governed-supervisor signing plus post-signature PDF finalization. Production
+activation remains prohibited because the installed native PDF Fill
+participant UI exposes Save and Submit only. It provides no supported
+persisted supervisor Deny/Refuse outcome while retaining signature semantics;
+the alternative Review action is not a signing action. Do not simulate denial
+by changing task state administratively. Platform-owner/ServiceNow direction
+is required for a supported combined Approve + Sign / Deny contract.

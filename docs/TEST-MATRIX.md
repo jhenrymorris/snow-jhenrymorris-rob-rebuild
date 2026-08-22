@@ -216,3 +216,14 @@ The earlier zero-artifact statement applies only to the preflight run. The
 follow-up intentionally retained one synthetic case, one governed Authorization
 Form, and one pending Access Detail as blocker evidence; it created zero
 Document Tasks, final PDFs, or fulfillment tasks.
+
+### M3 Document Templates RCA recovery and production stop
+
+| ID | Test | Evidence | Result |
+|---|---|---|---|
+| TM-142 | Exact Document Templates RCA recovery | Payroll and Workforce each approved only caller-specific PDF Template Read and Document Task Read | PASS |
+| TM-143 | Payroll and Workforce native launch | Payroll `DOCT0001013`; Workforce `DOCT0001014`; governed Supervisor retained | PASS |
+| TM-144 | Production New lifecycle | `HRC0001083` / `ROBA0001014`; employee `DOCT0001018`; supervisor `DOCT0001019`; PDF `ffea3266c37e8b1068a35f2b2b01312d`; Active | PASS |
+| TM-145 | Supervisor denial/refusal | Native PDF Fill offers Save/Submit only; Review does not sign; no supported persisted Deny/Refuse action | BLOCKED-PLATFORM |
+| TM-146 | Amendment, Renewal, Reuse | Not executed after mandatory TM-145 stop | NOT RUN / BLOCKED-PLATFORM |
+| TM-147 | Security cleanup and safe state | All generated broad privileges removed; post-13:30 generated privilege count 0; R4/M4 rules inactive | PASS |
