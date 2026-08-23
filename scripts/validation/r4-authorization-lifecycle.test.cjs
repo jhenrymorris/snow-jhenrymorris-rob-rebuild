@@ -544,14 +544,31 @@ test('runtime scripts create no fulfillment, renewal, ARM, or OAS work', () => {
 test('runtime launch is limited to a stable production template name', () => {
     const evidenceSource = fs.readFileSync(path.join(root, 'src/fluent/server/authorization-signature-evidence.server.js'), 'utf8')
     const initiationSource = fs.readFileSync(path.join(root, 'src/fluent/server/authorization-lifecycle-initiation.server.js'), 'utf8')
-    assert.match(evidenceSource, /ROB Form 1768 Employee Signature/)
-    assert.match(initiationSource, /ROB Form 1768 Employee Signature/)
+    assert.match(evidenceSource, /ROB Form 1768 Authorization/)
+    assert.match(initiationSource, /ROB Form 1768 Authorization/)
     assert.match(evidenceSource, /ROB Reuse Supervisor Attestation/)
     assert.match(initiationSource, /sysapproval_approver/)
-    assert.match(initiationSource, /GenerateDocumentAPI\(\)\.initiateDocumentTasks/)
+    assert.match(initiationSource, /DocumentTaskUtils\(\)\.createDocumentTask/)
+    assert.match(initiationSource, /participant\.addQuery\('name', 'Employee'\)/)
+    assert.doesNotMatch(initiationSource, /GenerateDocumentAPI\(\)\.initiateDocumentTasks/)
+    assert.doesNotMatch(evidenceSource, /new GlideRecord\('sysapproval_approver'\)/)
+    assert.doesNotMatch(evidenceSource, /requestSupervisorDecision/)
     assert.doesNotMatch(initiationSource, /assigned_to/)
     const source = evidenceSource + initiationSource
     assert.doesNotMatch(source, /41103ca0|bbd3e8e0|c34e242c|e4f117e8/)
+})
+
+test('employee signature hands supervisor decision to the ROB-owned Flow', () => {
+    const source = fs.readFileSync(
+        path.join(root, 'src/fluent/server/authorization-signature-evidence.server.js'),
+        'utf8'
+    )
+    assert.match(source, /pending_supervisor_approval_signature/)
+    assert.match(source, /ROB-owned approval Flow/)
+    assert.match(source, /participantName === 'Employee'/)
+    assert.match(source, /participantName === 'Supervisor'/)
+    assert.doesNotMatch(source, /requestSupervisorDecision/)
+    assert.doesNotMatch(source, /new GlideRecord\('sysapproval_approver'\)/)
 })
 
 test('post-signature final PDF fills and flattens the governed Form 1768 on Authorization Form', () => {

@@ -928,3 +928,18 @@ context. Resume only after platform repair or platform-owner delivery through
 the supported application configuration channel. Do not insert Flow metadata
 directly, use Background Scripts, expand the HR Core bridge, or approve generic
 GlideRecord privileges.
+
+### ROB-owned Flow configured; R3 fixture prerequisite
+
+The previous Workflow Studio authoring stop is superseded. Published Flow
+`ROB Authorization Supervisor Approval` is owned by HR Access ROB
+Authorization and implements the governed Authorization Form approval branches.
+Do not re-enable the provisional Global approval-response rule.
+
+The two lifecycle entry rules remain inactive because a controlled case must
+first contain a committed R3 decision. The four R3 outputs are intentionally
+read-only; Australia blocks inline edit and excludes them from the supported
+record-template field picker. Do not change dictionary read-only properties,
+create a script fixture, or grant a temporary role to bypass this boundary.
+Resume runtime validation only through the approved R3 producer or a
+platform-owner-approved native fixture mechanism.

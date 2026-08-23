@@ -34,31 +34,52 @@
         return template
     }
 
-    function initiateNativeSigning(templateName, outputName) {
+    function employeeParticipant(template) {
+        var participant = new GlideRecord('sn_doc_participant')
+        participant.addQuery('document_template', template.getUniqueValue())
+        participant.addQuery('name', 'Employee')
+        participant.addQuery('action', 'fill')
+        participant.addQuery('order', 1)
+        participant.setLimit(2)
+        participant.query()
+        if (!participant.next()) return null
+
+        var participantId = participant.getUniqueValue()
+        if (participant.next() || !participant.get(participantId)) return null
+        return participant
+    }
+
+    function initiateEmployeeSigning(templateName) {
         var template = publishedTemplate(templateName)
         if (!template) {
             fail('exactly one published production signing template is required')
+            return false
+        }
+        var participant = employeeParticipant(template)
+        if (!participant) {
+            fail('exactly one production Employee signing participant is required')
             return false
         }
 
         var existingTask = new GlideRecord('sn_doc_task')
         existingTask.addQuery('parent', current.getUniqueValue())
         existingTask.addQuery('document_template', template.getUniqueValue())
+        existingTask.addQuery('participant', participant.getUniqueValue())
         existingTask.setLimit(1)
         existingTask.query()
         if (existingTask.next()) {
             return true
         }
 
-        var initiated = new sn_doc.GenerateDocumentAPI().initiateDocumentTasks(
-            current,
-            '',
+        var documentTaskId = new sn_doc.DocumentTaskUtils().createDocumentTask(
             template.getUniqueValue(),
-            outputName,
+            participant.getUniqueValue(),
+            current.getUniqueValue(),
+            '',
             ''
         )
-        if (!initiated) {
-            fail('native document signing tasks could not be initiated')
+        if (!documentTaskId) {
+            fail('the native Employee signing task could not be initiated')
             return false
         }
         return true
@@ -403,9 +424,6 @@
             fail('the Authorization Form signing gate could not be persisted')
             return
         }
-        initiateNativeSigning(
-            'ROB Form 1768 Employee Signature',
-            'ROB-Form-1768-Signing-' + authorization.getValue('number')
-        )
+        initiateEmployeeSigning('ROB Form 1768 Authorization')
     }
 })(current, previous)

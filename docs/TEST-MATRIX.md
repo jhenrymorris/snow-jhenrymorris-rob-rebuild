@@ -255,3 +255,14 @@ GlideRecord privileges.
 
 Direct metadata creation, Background Scripts, Global response logic, and bridge
 expansion were not used.
+
+### M3 ROB-owned Flow configured and fixture boundary
+
+| ID | Test | Evidence | Result |
+|---|---|---|---|
+| TM-157 | ROB-owned Flow publication | Flow `9fea8036c3fecb1068a35f2b2b013184` active/published in HR Access ROB Authorization | PASS |
+| TM-158 | Governed branches | Rejected denies form/details; Approved launches template `f99c3c0ac372031068a35f2b2b013138` participant `a235d582c3f6031068a35f2b2b01316b` | CONFIGURATION PASS |
+| TM-159 | Employee-first source alignment | Initial lifecycle creates only Employee Document Task; R4 focused suite 58/58 | PASS |
+| TM-160 | Controlled R3 fixture | Inline edit denied and native record-template picker excludes all four read-only R3 outputs | BLOCKED-PLATFORM |
+| TM-161 | Cleanup | Temporary role absent; no fixture template; both R4/M4 entry pairs inactive; broad GlideRecord privileges 0 | PASS |
+| TM-162 | Remaining runtime | Flow Denial, Amendment, Renewal, and Reuse not executed without committed R3 input | NOT RUN / BLOCKED-PLATFORM |

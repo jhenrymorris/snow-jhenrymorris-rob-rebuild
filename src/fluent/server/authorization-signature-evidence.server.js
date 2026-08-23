@@ -1,6 +1,6 @@
 (function executeRule(current) {
-    var employeeTemplateName = 'ROB Form 1768 Employee Signature'
-    var supervisorTemplateName = 'ROB Reuse Supervisor Attestation'
+    var authorizationTemplateName = 'ROB Form 1768 Authorization'
+    var reuseSupervisorTemplateName = 'ROB Reuse Supervisor Attestation'
 
     function isTrue(value) {
         return value === '1' || value === 'true'
@@ -91,7 +91,7 @@
 
     function finalPdfTemplate() {
         var template = new GlideRecord('sn_doc_pdf_template')
-        template.addQuery('name', employeeTemplateName)
+        template.addQuery('name', authorizationTemplateName)
         template.addQuery('table', 'sn_hr_core_case')
         template.addQuery('state', 'published')
         template.addQuery('active', true)
@@ -101,37 +101,6 @@
         var templateId = template.getUniqueValue()
         if (template.next() || !template.get(templateId)) return null
         return template
-    }
-
-    function requestSupervisorDecision(authorization, sourceCaseId) {
-        var existing = new GlideRecord('sysapproval_approver')
-        existing.addQuery('sysapproval', sourceCaseId)
-        existing.addQuery('source_table', 'x_2108496_hr_acces_rob_auth')
-        existing.addQuery('document_id', authorization.getUniqueValue())
-        existing.addQuery('approver', authorization.getValue('supervisor'))
-        existing.setLimit(2)
-        existing.query()
-        if (existing.next()) {
-            var existingId = existing.getUniqueValue()
-            if (existing.next()) {
-                gs.error('ROB duplicate native supervisor decisions exist.')
-                return false
-            }
-            return Boolean(existingId)
-        }
-
-        var approval = new GlideRecord('sysapproval_approver')
-        approval.initialize()
-        approval.setValue('sysapproval', sourceCaseId)
-        approval.setValue('source_table', 'x_2108496_hr_acces_rob_auth')
-        approval.setValue('document_id', authorization.getUniqueValue())
-        approval.setValue('approver', authorization.getValue('supervisor'))
-        approval.setValue('state', 'requested')
-        if (!approval.insert()) {
-            gs.error('ROB native supervisor decision could not be requested.')
-            return false
-        }
-        return true
     }
 
     function generateFinalPdf(authorization) {
@@ -173,8 +142,8 @@
         : ''
 
     if (
-        templateName !== employeeTemplateName &&
-        templateName !== supervisorTemplateName
+        templateName !== authorizationTemplateName &&
+        templateName !== reuseSupervisorTemplateName
     ) {
         return
     }
@@ -201,7 +170,24 @@
     var signerId = current.getValue('closed_by')
     var completedAt = current.getValue('closed_at')
     var executionId = current.getValue('document_task_execution')
-    var isEmployeeStage = templateName === employeeTemplateName
+    var participant = current.participant.getRefRecord()
+    var participantName = participant.isValidRecord()
+        ? participant.getValue('name')
+        : ''
+    var isEmployeeStage =
+        templateName === authorizationTemplateName &&
+        participantName === 'Employee'
+    var isSupervisorStage =
+        templateName === authorizationTemplateName &&
+        participantName === 'Supervisor'
+
+    if (
+        templateName === authorizationTemplateName &&
+        !isEmployeeStage &&
+        !isSupervisorStage
+    ) {
+        return
+    }
 
     if (isEmployeeStage) {
         if (
@@ -233,7 +219,9 @@
             gs.error('ROB employee signature evidence could not be persisted.')
             return
         }
-        requestSupervisorDecision(authorization, sourceCaseId)
+        // The ROB-owned approval Flow is triggered by this committed state
+        // transition. It creates the native supervisor approval and branches
+        // Denied versus Approved without a Global response Business Rule.
         return
     }
 

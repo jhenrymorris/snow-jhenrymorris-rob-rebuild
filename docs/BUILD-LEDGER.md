@@ -585,3 +585,25 @@ Build evidence is package-specific and must remain distinct from install, runtim
   Normal and frozen-key SDK builds PASS with the five unchanged TS11 warnings;
   generated-key diff is empty.
 - Result: M3 BLOCKED-PLATFORM; no SDK deployment/installation was run.
+
+### M3 ROB-owned approval Flow configuration and fixture boundary
+
+- Published ROB-owned Flow `9fea8036c3fecb1068a35f2b2b013184`: PASS.
+- Governed Supervisor routing, Rejected state transition, and Approved-only
+  Supervisor Document Task configuration: PASS by configuration review.
+- Source alignment: Employee-only initial Document Task plus Flow-owned
+  Supervisor stage; focused R4 suite 58/58 PASS.
+- Controlled Payroll case: `HRC0001086` /
+  `5df86472c3b60f1068a35f2b2b0131b2`; native identity reread PASS.
+- Runtime continuation: STOPPED before lifecycle activation because the four
+  R3 decision outputs are read-only and unavailable to both inline edit and
+  the supported record-template field picker. No fixture bypass was created.
+- Cleanup: temporary `rob_admin` assignment
+  `70c96836c3b60f1068a35f2b2b01318b` deleted and verified absent; both R4 and
+  both M4 entry rules inactive; broad GlideRecord privileges 0.
+- SDK installation/deployment: not run.
+- Regression/build: M2 19/19, R1 9/9, Wave 2 security 22/22, deployment
+  configuration 16/16, R3 30/30, R4 58/58, M4 26/26, normal build, and
+  frozen-key build all PASS; generated-key diff empty; five unchanged TS11
+  warnings only.
+- Result: M3 BLOCKED-PLATFORM; M4 runtime NOT READY.

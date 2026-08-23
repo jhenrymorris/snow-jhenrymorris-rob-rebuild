@@ -1942,3 +1942,24 @@ Not exposed by session/tool — no estimate recorded.
   diff empty.
 - Result: Flow records 0/0, privileges added 0, runtime scenarios not run;
   M3 BLOCKED-PLATFORM and M4 runtime NOT READY.
+
+#### M3 ROB-owned Flow configured; controlled fixture stop
+
+- Date: `2026-08-22`; duration not exposed by the execution environment.
+- Turns: one continued M3 execution chain.
+- Reviewer interventions: manual Workflow Studio construction and activation
+  of the ROB-owned approval Flow.
+- Silent defects: 0 discovered in the configured decision branches.
+- Visible defects: 1 — the supported case list and record-template editor both
+  exclude/prevent writes to the four read-only R3 decision outputs required by
+  the controlled fixture.
+- Environment waits: one sign-out/sign-in and role-cache refresh; duration not
+  recorded separately.
+- Cleanup: ineffective temporary role removed; no fixture template created;
+  both R4 and both M4 entry rules inactive; broad GlideRecord privileges 0.
+- Validation: M2 19/19, R1 9/9, Wave 2 security 22/22, deployment
+  configuration 16/16, R3 30/30, R4 58/58, and M4 26/26 PASS. Normal and
+  frozen-key builds PASS with five unchanged TS11 warnings; generated-key
+  diff empty. Runtime acceptance remained stopped at the fixture boundary.
+- Result: M3 BLOCKED-PLATFORM; ROB-owned approval Flow configured, M4 runtime
+  NOT READY.

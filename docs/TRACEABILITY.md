@@ -229,3 +229,14 @@ remain prohibited.
 | Runtime scenarios | No production Flow; no lifecycle entry activation | NOT RUN |
 | Security | No new privileges; provisional response and R4/M4 entry rules inactive | PASS |
 | M4 readiness | Native approval response boundary remains unavailable | NOT READY |
+
+### M3 ROB-owned Flow configured; R3 fixture boundary
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| ROB-owned approval response | Active/published Flow `9fea8036c3fecb1068a35f2b2b013184` in scope `x_2108496_hr_acces` | CONFIGURED |
+| Governed Supervisor | Ask For Approval and Supervisor Document Task derive from Authorization Form supervisor; `assigned_to` dependency 0 | PASS |
+| Rejected/Approved branching | Rejected denies form/pending details; Approved records evidence and launches signing | CONFIGURATION PASS |
+| Controlled R3 input | `HRC0001086` has correct native identity but no writable supported UI surface for the four read-only decision outputs | BLOCKED-PLATFORM |
+| Security cleanup | Temporary role 0; broad GlideRecord privileges 0; R4/M4 entry rules inactive | PASS |
+| M3/M4 status | Approval Flow exists but runtime cannot proceed without supported committed R3 decision input | M3 BLOCKED-PLATFORM; M4 NOT READY |

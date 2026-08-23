@@ -243,3 +243,18 @@ No item above is authorized for implementation in R0. Unsupported native capabil
 - [ ] Platform owner/ServiceNow must repair Workflow Studio component loading
   or deliver the ROB-owned Flow through the supported application channel.
 - [ ] M3 remains BLOCKED-PLATFORM; M4 runtime is not ready.
+
+## M3 Controlled R3 Fixture Boundary
+
+- [x] Configure and publish the ROB-owned Authorization Form approval Flow.
+- [x] Remove Supervisor launch from the initial lifecycle and retain the
+  Employee-first signing order in source/unit tests (R4 58/58).
+- [x] Verify `HRC0001086` native self-submission identity and preserve its
+  unmodified R3 decision fields.
+- [x] Remove the ineffective temporary `rob_admin` role assignment and verify
+  zero temporary roles and zero broad GlideRecord privileges.
+- [ ] Platform owner must provide the supported R3 runtime producer or an
+  approved native fixture mechanism for the read-only decision outputs. Inline
+  edit and the native record-template editor cannot populate them.
+- [ ] M3 remains BLOCKED-PLATFORM; the published approval Flow has not yet
+  completed Denial, Amendment, Renewal, or Reuse runtime acceptance.

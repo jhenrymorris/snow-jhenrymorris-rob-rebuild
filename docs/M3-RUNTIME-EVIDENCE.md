@@ -264,3 +264,47 @@ generated-key diff is empty. No SDK installation or deployment was run.
 platform owner must supply the supported ROB-owned Flow through the normal
 application configuration channel. Native approval response boundary remains
 unavailable; M4 runtime is not ready.
+
+## 2026-08-22 ROB-owned Flow configured; controlled-runtime fixture stop
+
+The prior Workflow Studio authoring finding is superseded. Flow
+`ROB Authorization Supervisor Approval`
+(`9fea8036c3fecb1068a35f2b2b013184`) is published and active in
+`x_2108496_hr_acces`. It operates on the governed Authorization Form, routes
+native `Ask For Approval` to `rob_auth.supervisor`, denies the form and pending
+details on Rejected, and creates the governed Supervisor Document Task only on
+Approved. The Supervisor task uses production template
+`f99c3c0ac372031068a35f2b2b013138`, participant
+`a235d582c3f6031068a35f2b2b01316b`, and the source HRSD Case sys_id as its
+parent. `assigned_to` is not used.
+
+Source was aligned so the lifecycle creates only the Employee Document Task;
+the Flow owns the later Supervisor approval/signature launch. Focused R4
+source/unit validation passes 58/58.
+
+Controlled case `HRC0001086` (`5df86472c3b60f1068a35f2b2b0131b2`)
+was created through normal Employee Center self-submission with committed
+native identity fields all equal to Amos Linnan. Before enabling the Payroll
+lifecycle entry rule, the approved New fixture outputs were required on the
+native case. ServiceNow correctly prevented manual list writes to the four
+read-only R3 outputs. Assigning `rob_admin` did not override dictionary
+read-only behavior; assignment `70c96836c3b60f1068a35f2b2b01318b` was
+removed and reread absent. The supported record-template editor also excludes
+all four read-only fields, so no template or case mutation was created.
+
+Safe closeout reread: Payroll and Workforce lifecycle entry rules inactive;
+M4 entry rules remain inactive; broad GlideRecord privileges zero; temporary
+roles zero. The published approval Flow cannot be exercised without a
+committed R3 decision, and this run did not weaken the R3 evidence boundary or
+create a script-based fixture bypass.
+
+Closeout validation passes: M2 19/19, R1 9/9, Wave 2 security 22/22,
+deployment configuration 16/16, R3 30/30, R4 58/58, and M4 26/26. Normal and
+frozen-key SDK builds pass with five unchanged TS11 warnings; generated-key
+diff is empty. No SDK installation or deployment was run.
+
+**M3 — BLOCKED-PLATFORM.** The ROB-owned approval architecture is configured,
+but Australia exposes no supported manual surface for seeding the read-only R3
+decision fixture required by this controlled runtime package. New remains
+previously proven; Denial through the new Flow, Amendment, Renewal, and Reuse
+were not executed. M4 production runtime is not ready.
