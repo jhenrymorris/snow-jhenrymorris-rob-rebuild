@@ -67,3 +67,42 @@ Legacy snapshot inputs are not reintroduced.
 4. Confirm the 15 hard diagnostics are absent and review any resulting source
    diff before installation.
 5. Only after Sync passes, run **Build and Install**. Do not use Reinstall.
+
+## 2026-08-23 install recovery outcome
+
+ServiceNow IDE Sync completed with zero hard diagnostics. IDE SDK 4.11.0 then
+reported a successful ordinary Build and Install, with rollback context
+`318f3a72c33a8f1068a35f2b2b01313c`. The live
+`AuthorizationDecisionService.js` module did not change.
+
+One final supported IDE command, **Fluent: Force Install Fluent App in
+Instance**, was executed against HR Access ROB Authorization without another
+sync, Reinstall, source regeneration, or generated-key edit. The command used
+application version `0.0.4`, reported success in 8.281 seconds, and exposed
+rollback context `00ae03bac3fa8f1068a35f2b2b013117`.
+
+Force Install was functionally ineffective. Before and after the command,
+exactly one matching `sys_module` record existed:
+
+| Property | Pre-Force Install | Post-Force Install |
+| --- | --- | --- |
+| `sys_id` | `1a197e45de33416ea795141a77307f5d` | unchanged |
+| Path | `x_2108496_hr_acces/hr-access-rob-authorization/0.0.1/src/server/authorization/AuthorizationDecisionService.js` | unchanged |
+| Updated (UTC) | `2026-08-16 12:01:57` | unchanged |
+| Updated by | `admin` | unchanged |
+| Content SHA-256 | `e8d8dc49f49ef8cd02e2c9bab18cf15633192e5e9657e59c8d5bd8b304f91a80` | unchanged |
+
+The post-install module still contains `supervisorSnapshot`,
+`positionSnapshot`, and `organizationSnapshot`. It still lacks
+`authorizationContext.valid`, `authorizationContext.supervisorId`,
+`authorizationContext.position`, and `authorizationContext.organization`.
+
+Native-form analysis classifies an in-place Content replacement as **B —
+Content protected/read-only**. On the normal ECMAScript Module form, the
+underlying `sys_module.content` element is disabled, Save is disabled,
+Replace/Replace All/Format are disabled, and no Update action exists. No field
+was modified and no manual replacement was attempted.
+
+Supported Fluent installation paths are exhausted. Reinstall, deletion,
+replacement-module creation, direct metadata scripts, Background Scripts, and
+generated-key edits were not used.

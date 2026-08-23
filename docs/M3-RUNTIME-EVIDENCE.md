@@ -382,3 +382,61 @@ was met before reconciliation.
 **M3 — BLOCKED-PLATFORM.** R3 live runtime reconciliation is unsupported on
 this PDI. The Australia SDK installer defect is a direct M3 blocker. M4 is not
 ready.
+
+## 2026-08-23 Force Install runtime reconciliation gate
+
+This gate used the synchronized, clean ServiceNow IDE workspace on
+`feature/05-fulfillment-orchestration`. Local HEAD and upstream were both
+compatibility commit `8b423fcf2f10483dee49b1fa85d4fa5267e91e27`.
+The committed and IDE source contained the post-M2 `authorizationContext`
+contract and no legacy snapshot references. No additional sync or source
+regeneration was performed.
+
+### Pre-install live fingerprint
+
+Exactly one `sys_module` path contained
+`AuthorizationDecisionService.js`. Record
+`1a197e45de33416ea795141a77307f5d` belonged to HR Access ROB Authorization,
+retained its `0.0.1` module path, was created and last updated at
+`2026-08-16 12:01:57` UTC by `admin`, and had Content SHA-256
+`e8d8dc49f49ef8cd02e2c9bab18cf15633192e5e9657e59c8d5bd8b304f91a80`.
+All three legacy snapshot inputs were present; every required
+`authorizationContext` input was absent.
+
+### Supported Force Install result
+
+The exact IDE command **Fluent: Force Install Fluent App in Instance** was run
+once for HR Access ROB Authorization. IDE SDK 4.11.0 deployed application
+version `0.0.4`, reported `Install completed successfully in 8281ms`, and
+created rollback context `00ae03bac3fa8f1068a35f2b2b013117`.
+
+Immediate read-only verification returned one matching module with the same
+sys_id, path, timestamp, updater, Content hash, and legacy contract. Therefore:
+
+**Force Install — FUNCTIONALLY FAILED.**
+
+The supported-path classification is now:
+
+- Local Now SDK install — failed to reconcile the module.
+- IDE ordinary Install — reported success but failed to reconcile the module
+  (rollback context `318f3a72c33a8f1068a35f2b2b01313c`).
+- IDE Force Install — reported success but failed to reconcile the module
+  (rollback context `00ae03bac3fa8f1068a35f2b2b013117`).
+
+### Native-form diagnostic classification
+
+Read-only inspection under the HR Access ROB Authorization application context
+confirmed the native ECMAScript Module form exposes the underlying
+`sys_module.content` field as disabled. Save, Replace, Replace All, Format, and
+syntax-check actions are disabled, and there is no Update action. This is
+classification **B — Content protected/read-only**. No attempt was made to
+type, save, replace, delete, recreate, or otherwise modify the record.
+
+No focused R3 runtime or wider M3 acceptance was executed because both the
+supported Force Install and native-form editability gates failed before a
+current runtime could exist. No broad privilege, generated-key edit, Reinstall,
+Background Script, direct metadata script, or replacement module was used.
+
+**M3 — BLOCKED-PLATFORM.** Fluent runtime reconciliation has exhausted the
+supported installation paths. Platform owner / ServiceNow action is required,
+and M4 is not ready.
