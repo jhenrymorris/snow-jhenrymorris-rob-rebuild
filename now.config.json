@@ -2,6 +2,11 @@
     "scope": "x_2108496_hr_acces",
     "scopeId": "b0d63cedc2d34e0ca4c05d6eb7acf61e",
     "name": "HR Access ROB Authorization",
+    "ignoreTransformTableList": [
+        "sys_db_object",
+        "sys_dictionary",
+        "sn_doc_pdf_template"
+    ],
     "dependencies": {
         "sn_hr_core": {
             "tables": [

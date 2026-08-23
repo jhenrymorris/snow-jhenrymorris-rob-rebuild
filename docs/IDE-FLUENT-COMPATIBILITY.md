@@ -1,0 +1,69 @@
+# IDE Fluent Compatibility Reconciliation
+
+## Scope
+
+This is a source-synchronization compatibility control for the ServiceNow IDE
+Fluent compiler. It does not change application runtime behavior. The cloned
+Fluent project remains authoritative for application-owned tables and fields.
+
+`now.config.json` excludes these instance metadata tables from reverse
+transformation during **Sync Changes**:
+
+- `sys_db_object`
+- `sys_dictionary`
+- `sn_doc_pdf_template`
+
+The application-owned table and field declarations remain in `src/fluent` and
+continue to participate in normal and frozen-key builds. Native Document
+Templates remain configured on the instance; they are not converted into
+unsupported Fluent attachment declarations.
+
+## Captured IDE diagnostics
+
+The Australia ServiceNow IDE used `@servicenow/sdk` 4.11.0 and reported 15 hard
+diagnostics. They reduce to three reverse-transform patterns:
+
+| Source produced by Sync Changes | Artifact | Diagnostic | Count |
+| --- | --- | --- | ---: |
+| `src/fluent/tables/rob-configuration.now.ts` | ROB Configuration table | In-scope table emitted with self-`augments` | 1 |
+| `src/fluent/tables/rob-configuration.now.ts` | `renewal_notification_copy_group` | `useReferenceQualifier: undefined` rejected with `exactOptionalPropertyTypes` | 2 |
+| Four `src/fluent/generated/other/sn-doc-pdf-template/*.now.ts` files | Native PDF templates | PDF passed to image-only `Now.attach` | 8 |
+| Same four generated PDF template files | Native PDF templates | Duplicate attachment property in an object literal | 4 |
+
+Total: 15 diagnostics.
+
+The four native PDF template records were:
+
+- `30c54baac3fe8b1068a35f2b2b013183` — `ROB-Form-1768-Authorization-Template.pdf`
+- `e43f28ecc3bacb1068a35f2b2b013105` — `rob-r42-capability-template.pdf`
+- `f99c3c0ac372031068a35f2b2b013138` — `ROB-Form-1768-Authorization-Template.pdf`
+- `4b8f852ec3f24b1068a35f2b2b01318a` — `ROB-Reuse-Supervisor-Attestation.pdf`
+
+## Preserved source contracts
+
+The committed `renewal_notification_copy_group` declaration remains explicit:
+
+- `referenceQual: 'active=true'`
+- `useReferenceQualifier: 'advanced'`
+
+The four assignment-group qualifiers and Workforce Operations Manager qualifier
+remain `simple` with their existing active-record qualifiers. The five known
+TS11 warnings under local SDK 4.8.1 are therefore unchanged.
+
+`AuthorizationDecisionService.js` remains on the post-M2 contract:
+
+- `authorizationContext.valid`
+- `authorizationContext.supervisorId`
+- `authorizationContext.position`
+- `authorizationContext.organization`
+
+Legacy snapshot inputs are not reintroduced.
+
+## Acceptance sequence
+
+1. Run local normal and frozen-key builds.
+2. Push this compatibility commit.
+3. In the ServiceNow IDE, update the source branch and run **Sync Changes**.
+4. Confirm the 15 hard diagnostics are absent and review any resulting source
+   diff before installation.
+5. Only after Sync passes, run **Build and Install**. Do not use Reinstall.
