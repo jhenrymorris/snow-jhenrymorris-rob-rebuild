@@ -943,3 +943,22 @@ record-template field picker. Do not change dictionary read-only properties,
 create a script fixture, or grant a temporary role to bypass this boundary.
 Resume runtime validation only through the approved R3 producer or a
 platform-owner-approved native fixture mechanism.
+
+### R3 live runtime reconciliation hard stop
+
+The fixture prerequisite above is superseded by inspection of the actual live
+R3 producer artifact. ECMAScript Module
+`1a197e45de33416ea795141a77307f5d` is the stable installed identity for
+`src/server/authorization/AuthorizationDecisionService.js`, but its PDI
+`content` still implements the retired `supervisorSnapshot`,
+`positionSnapshot`, and `organizationSnapshot` contract.
+
+Do not edit the `sys_module` record directly. Its native form exposes disabled
+content with no Save/Update action; legacy Studio does not surface the source
+file; current ServiceNow Studio directs Fluent source management to the
+ServiceNow IDE. Reconciliation therefore requires the normal supported SDK
+application installation path after the Australia installer defect is resolved
+and after installation is separately authorized. Do not use Background
+Scripts, direct metadata manipulation, `--reinstall`, a duplicate engine, or a
+fixture/workaround. Until then, leave the production lifecycle and M4 entry
+rules inactive.

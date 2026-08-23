@@ -1963,3 +1963,23 @@ Not exposed by session/tool — no estimate recorded.
   diff empty. Runtime acceptance remained stopped at the fixture boundary.
 - Result: M3 BLOCKED-PLATFORM; ROB-owned approval Flow configured, M4 runtime
   NOT READY.
+
+#### M3 R3 live runtime reconciliation gate
+
+- Date: `2026-08-22`; duration not exposed by the execution environment.
+- Shape: exact live `sys_module` query, repository/generated-key ownership
+  mapping, source-contract comparison, and read-only inspection of the native
+  module form, legacy Studio, and current ServiceNow Studio.
+- Reviewer interventions: 0.
+- Silent defects: 1 — live R3 still consumes the retired three-snapshot
+  contract while committed source consumes `authorizationContext.valid`,
+  `supervisorId`, `position`, and `organization`.
+- Visible defects: 1 — no supported in-instance editor can update the Fluent
+  ECMAScript Module; current Studio directs the source to ServiceNow IDE, whose
+  supported reconciliation requires the prohibited/defective SDK install path.
+- Mutations: PDI records 0; roles 0; privileges 0; generated-key changes 0;
+  fixture/workaround artifacts 0; SDK installs/deployments 0.
+- Acceptance: runtime scenarios and regression/build acceptance not run after
+  the mandatory reconciliation hard stop.
+- Result: M3 BLOCKED-PLATFORM; R3 live runtime reconciliation UNSUPPORTED ON
+  PDI; Australia SDK installer defect DIRECT M3 BLOCKER; M4 NOT READY.

@@ -308,3 +308,77 @@ but Australia exposes no supported manual surface for seeding the read-only R3
 decision fixture required by this controlled runtime package. New remains
 previously proven; Denial through the new Flow, Amendment, Renewal, and Reuse
 were not executed. M4 production runtime is not ready.
+
+## 2026-08-22 R3 live runtime reconciliation gate
+
+This gate supersedes the fixture-input investigation above. No fixture,
+replacement service, Flow, Action, Business Rule, table, or metadata bypass was
+created.
+
+### Installed artifact identity and provenance
+
+| Property | Committed PDI value |
+|---|---|
+| Table / type | `sys_module` / ECMAScript Module |
+| `sys_id` | `1a197e45de33416ea795141a77307f5d` |
+| Name / path | `x_2108496_hr_acces/hr-access-rob-authorization/0.0.1/src/server/authorization/AuthorizationDecisionService.js` |
+| Application / scope | HR Access ROB Authorization / `x_2108496_hr_acces` (`b0d63cedc2d34e0ca4c05d6eb7acf61e`) |
+| Active | Not applicable; `sys_module` exposes no Active field |
+| Source field | `content` |
+| `sys_package` | HR Access ROB Authorization (`b0d63cedc2d34e0ca4c05d6eb7acf61e`) |
+| `sys_update_name` | `sys_module_1a197e45de33416ea795141a77307f5d` |
+| Created | `2026-08-16 12:01:57` by `admin` |
+| Updated | `2026-08-16 12:01:57` by `admin` |
+| Update-version provenance | No `sys_update_version` row for the exact update name |
+
+The owning repository artifact is
+`src/server/authorization/AuthorizationDecisionService.js`. Stable generated
+key `src_server_authorization_AuthorizationDecisionService_js` maps to the same
+`sys_module` sys_id. The normal build output also retains that identity in
+`dist/app/update/sys_module_1a197e45de33416ea795141a77307f5d.xml`; no generated
+key was changed.
+
+### Installed-versus-committed contract
+
+The live `content` and committed source are behaviorally identical outside the
+R3 validation-context block. The exact drift is:
+
+| Contract element | Installed runtime | Committed source |
+|---|---:|---:|
+| `request.supervisorSnapshot` | referenced | absent |
+| `request.positionSnapshot` | referenced | absent |
+| `request.organizationSnapshot` | referenced | absent |
+| `request.authorizationContext.valid` | absent | required to equal `true` |
+| `request.authorizationContext.supervisorId` | absent | required |
+| `request.authorizationContext.position` | absent | required |
+| `request.authorizationContext.organization` | absent | required |
+
+Thus the installed artifact is the pre-M2 R3 contract and cannot consume the
+current `RobProfileAuthorizationContext` result. It would incorrectly block the
+approved current inputs and still depend on the retired snapshots.
+
+### Supported-editor determination
+
+Read-only native inspection found no supported in-place application-owned edit
+surface for this exact Fluent source module:
+
+- The native ECMAScript Module form shows `content` disabled and provides no
+  Save or Update action.
+- Legacy Studio does not surface `AuthorizationDecisionService` as an editable
+  application file.
+- Current ServiceNow Studio identifies the application as Fluent and states
+  that its source code must be managed through the ServiceNow IDE. It does not
+  provide an in-instance source editor for the module.
+
+The remaining mechanisms are an SDK application installation or direct
+`sys_module` metadata manipulation. Both are expressly prohibited by this gate;
+the former is also the open Australia installer-defect boundary. No PDI record
+was changed. Logical identity, package/scope ownership, installed content, and
+all system-managed/read-only R3 output fields remain untouched. The New,
+Denial, Amendment, Renewal, Reuse, and Exception acceptance scenarios and the
+full regression/build acceptance were not run because the hard-stop condition
+was met before reconciliation.
+
+**M3 — BLOCKED-PLATFORM.** R3 live runtime reconciliation is unsupported on
+this PDI. The Australia SDK installer defect is a direct M3 blocker. M4 is not
+ready.

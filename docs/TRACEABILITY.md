@@ -240,3 +240,14 @@ remain prohibited.
 | Controlled R3 input | `HRC0001086` has correct native identity but no writable supported UI surface for the four read-only decision outputs | BLOCKED-PLATFORM |
 | Security cleanup | Temporary role 0; broad GlideRecord privileges 0; R4/M4 entry rules inactive | PASS |
 | M3/M4 status | Approval Flow exists but runtime cannot proceed without supported committed R3 decision input | M3 BLOCKED-PLATFORM; M4 NOT READY |
+
+### M3 R3 live runtime reconciliation gate
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| Exact runtime identity | `sys_module` `1a197e45de33416ea795141a77307f5d`; generated key and repository source resolve to the same artifact | PASS |
+| Installed/committed comparison | Live uses three legacy snapshot inputs; committed source uses the four `authorizationContext` values | DRIFT CONFIRMED |
+| Supported native reconciliation | Module content disabled on native form; absent from legacy Studio; current Studio directs Fluent source to ServiceNow IDE | UNSUPPORTED ON PDI |
+| Identity/security preservation | No PDI write, metadata manipulation, install, reinstall, privilege, role, or generated-key change | PASS |
+| Runtime acceptance | Reconciliation prerequisite failed; New, Denial, Amendment, Renewal, Reuse, and Exception not executed in this gate | NOT RUN — HARD STOP |
+| M3/M4 status | Australia SDK installer defect prevents the only supported reconciliation path permitted by this package | M3 BLOCKED-PLATFORM; M4 NOT READY |
