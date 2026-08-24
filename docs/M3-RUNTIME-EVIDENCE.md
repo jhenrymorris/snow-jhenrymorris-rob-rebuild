@@ -440,3 +440,34 @@ Background Script, direct metadata script, or replacement module was used.
 **M3 — BLOCKED-PLATFORM.** Fluent runtime reconciliation has exhausted the
 supported installation paths. Platform owner / ServiceNow action is required,
 and M4 is not ready.
+
+## 2026-08-24 clean-PDI Fluent bootstrap and Force Install gate
+
+To distinguish the stale-module condition on `dev285962` from application
+bootstrap behavior, the current Fluent repository was cloned into a clean IDE
+workspace on `dev437065`. Source Control was clean on
+`feature/05-fulfillment-orchestration` at
+`7e0d53bbef989417b354ab624929aec6fdb19573`.
+
+IDE SDK 4.11.0 compiled application version `0.0.4` successfully in 11.444
+seconds. The generated package included the correct application sys_id and
+scope. Ordinary Install failed before creating the application with
+`Unable to install application as application was null`. The one permitted
+Force Install attempt failed with the identical error.
+
+Post-attempt read-only queries found zero matching `sys_app` records, zero
+matching `sys_scope` records, and zero `sys_module` paths containing
+`AuthorizationDecisionService.js`. No partial ROB installation exists on
+`dev437065`. Consequently, the PDI-only in-place Content diagnostic cannot be
+performed on this instance because there is no logical module record to edit;
+deletion, recreation, replacement-module creation, and direct metadata
+creation remain prohibited.
+
+No application record, module, role, privilege, generated key, fixture,
+Business Rule, Flow, table, or production lifecycle record was created or
+modified by the failed attempts. Reinstall and local SDK deployment were not
+used.
+
+**M3 — BLOCKED-PLATFORM.** Fluent application bootstrap and runtime
+reconciliation have exhausted the supported IDE installation paths on the
+clean PDI. M4 is not ready.

@@ -106,3 +106,44 @@ was modified and no manual replacement was attempted.
 Supported Fluent installation paths are exhausted. Reinstall, deletion,
 replacement-module creation, direct metadata scripts, Background Scripts, and
 generated-key edits were not used.
+
+## 2026-08-24 clean-PDI application bootstrap result
+
+The current `feature/05-fulfillment-orchestration` source was cloned into a
+clean ServiceNow IDE workspace on `dev437065`. The authoritative source and
+upstream were synchronized at commit `7e0d53bbef989417b354ab624929aec6fdb19573`.
+The root configuration retained application sys_id
+`b0d63cedc2d34e0ca4c05d6eb7acf61e`, scope `x_2108496_hr_acces`, and version
+`0.0.4`.
+
+IDE SDK 4.11.0 built the application successfully in 11.444 seconds. The
+generated package contained the correct `sys_app` identity. Ordinary **Build
+and Install** then failed before package installation with:
+
+```text
+Unable to install application as application was null
+```
+
+The exact **Fluent: Force Install Fluent App in Instance** command was then run
+once against the current workspace application. It reached the same deploy
+path and failed with the same null-application error. No Reinstall was used.
+
+Immediate read-only verification on `dev437065` returned:
+
+| Artifact | Matching count |
+| --- | ---: |
+| `sys_app` for the ROB sys_id/scope | 0 |
+| `sys_scope` for the ROB sys_id/scope | 0 |
+| `sys_module` path containing `AuthorizationDecisionService.js` | 0 |
+
+The source, compiler, and generated application identity are valid; the IDE
+failed to create or resolve the parent application record required by the
+installer. Because no live module exists on this clean PDI, an in-place native
+form Content replacement is not applicable. Copying the traditional `main`
+branch application export, creating a new application identity, committing
+build output, or editing dependency scope identities would not be an
+equivalent Fluent deployment and was not attempted.
+
+**M3 — BLOCKED-PLATFORM.** Ordinary and Force Install cannot bootstrap the
+Fluent application on the clean Australia PDI. Supported installation paths
+are exhausted for this gate, and M4 is not ready.
