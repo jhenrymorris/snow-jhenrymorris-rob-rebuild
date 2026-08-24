@@ -32,5 +32,9 @@
                 "cmn_department"
             ]
         }
-    }
+    },
+    "licensing": {
+        "enforceLicense": "none"
+    },
+    "description": "IDE-native rebuild of the governed ROB authorization application."
 }

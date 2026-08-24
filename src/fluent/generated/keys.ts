@@ -610,6 +610,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '018f2c33e33c4c16a4194ba99430f77d'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -636,10 +637,22 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '0249a1b3787345dca035ba1e855fe3d7'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
                             value: 'inactive_supervisor'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '02dbd1b6200547ca828eb0939d51348c'
+                        key: {
+                            name: 'sn_hr_core_task'
+                            element: 'x_2166123_rob_auth_external_provisioning_system'
+                            value: 'usa_staffing'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -667,6 +680,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '02fb7be736eb4866babdda6ed2c00877'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -691,11 +705,33 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '042539a22b2d4031a191b46456be9759'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_existing_authorization_status'
+                            value: 'denied'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '0443a574ed8c4db98d366150debde2ae'
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'reminder_3_sent_date_time'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '045c4dd4c10e44a3b9a6c46192b63a06'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'invalid_operations_manager'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -713,11 +749,34 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '04902e5463bf4789b4ee52951d4bfe0b'
+                        key: {
+                            name: 'x_2166123_rob_auth_auth_detail'
+                            element: 'status'
+                            value: 'pending_authorization'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '04bebb037d084020b985d9ac1b0ab74b'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_decision_reason'
                             value: 'NEW_NO_CURRENT_FORM'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '04c9d109e67f4bd9ac53e2460024fb60'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'external_target_system'
+                            value: 'oas'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -777,6 +836,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '0505ef74d78d40a8b60e53c7526ff81e'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_rob_task_type'
@@ -847,12 +907,34 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '05e82c6fd7114427875d4db9153320ee'
+                        key: {
+                            name: 'sn_hr_core_task'
+                            element: 'x_2166123_rob_auth_external_target_system'
+                            value: 'not_applicable'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '05fa021a84724185b6418de9af88de1e'
                         key: {
                             name: 'x_2166123_rob_auth_rob_config'
                             element: 'NULL'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '064590efe158464888740c39de04e816'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_INCOMPLETE_AUTHORIZATION_HISTORY'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -880,6 +962,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '06a54a8560c341638af7996ce5cef058'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'employment_type'
@@ -941,7 +1024,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '074e690c4121424dac09ae43695ed99c'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_authorization_path'
+                            value: 'new'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '0771d449139a49b5b1c8064fc43836fa'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_external_provisioning_system'
@@ -1003,6 +1098,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '089293a5145649b0917e004cf3c5c164'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -1034,6 +1130,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '08ccb91feab64e3eb6915a5c7e9c7650'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -1096,6 +1193,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '09cfba90f3e8465e8b45ba4de9821df4'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_external_provisioning_system'
@@ -1113,6 +1211,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '0a3d023b2e5a466db9212d641e0e39c9'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_employment_type'
@@ -1128,12 +1227,34 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '0b80d6de257e4dfe9dfd20da616e6170'
+                        key: {
+                            name: 'x_2166123_rob_auth_auth_detail'
+                            element: 'status'
+                            value: 'denied'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '0b9aa6780aa24bb2afdae9c5ac0ddf29'
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'supervisor'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '0bcf10b67f9d4a9da6dd466f3d2ac297'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_INVALID_CONFIG'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -1253,6 +1374,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '0f4fbe635679455f89f8e8051131a690'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'invalid_supervisor'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '0f63eac8721b4756832092330e85d7fb'
                         key: {
@@ -1279,6 +1411,28 @@ declare global {
                                     name: 'x_2166123_rob_auth.rob_admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '10684afe3f574942af20791b4aa6562f'
+                        key: {
+                            name: 'sn_hr_core_task'
+                            element: 'x_2166123_rob_auth_rob_task_type'
+                            value: 'exception_review'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '111ba6bec6e249a39181492a86b7f51e'
+                        key: {
+                            name: 'sn_hr_core_task'
+                            element: 'x_2166123_rob_auth_fulfillment_outcome'
+                            value: 'waived'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -1421,6 +1575,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '1379fa4bb78b4b9984a6bf88ddaca8b0'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -1474,6 +1629,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '1419b28e71214096aaa08ef4d4d5c397'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'AMD_POSITION_ROLE_CHANGE'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '14572050f9f54d3f9a9897d7e5f7c353'
                         key: {
@@ -1498,6 +1664,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '14b393e49c3a4e9199477e6daf70a8bf'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_existing_authorization_status'
@@ -1515,6 +1682,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '15539d468d1d46a4a7962a4c55ba12eb'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -1561,10 +1729,32 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '168b757265514d63994c1ab9f7b91e91'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_existing_authorization_status'
+                            value: 'none'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_db_object'
                         id: '16efacf10095409fbe6a74c7a15fcaa1'
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '172a1954bbb74ac8b3a262bece89c21f'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'REN_OBSOLETE_VERSION'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -1579,6 +1769,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '17679cb3ec684ab1a3298fffca548bb2'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_authorization_path'
@@ -1628,6 +1819,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '17a3626269a142faa1b51e913c01a909'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_MISSING_SUPERVISOR'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '184f1b2367944ad498a881a423f9bf0b'
                         key: {
@@ -1646,7 +1848,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '18a093fa803c49b0931431ed71eef788'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'inactive_operations_manager'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '18e63e35fc7e48cbad4c4e7d0e02193b'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_rob_task_type'
@@ -1664,6 +1878,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '1971152fb88e414d902b4de6cfba8876'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_existing_authorization_status'
@@ -1685,6 +1900,17 @@ declare global {
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_reuse_supervisor_decision'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '1a5e527e287d4dafb284086a4331ea0e'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_INVALID_ACCESS_ITEM'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -1736,6 +1962,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '1b2952f6b9a04d02b44a3631e8aab242'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -1753,6 +1980,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '1b62ce7401854d2584b65ae2dce071af'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -1813,6 +2041,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '1bfd4e09d86447378c90c26d188664de'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'invalid_supervisor'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '1c641f670fcb4715b678ff907de99759'
                         key: {
@@ -1848,6 +2087,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '1cf6fecb7739425ba243945408e36b92'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_existing_authorization_status'
@@ -1873,6 +2113,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '1e2e2af6f4f044b380b73bda9e3ca39d'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_external_target_system'
@@ -1890,6 +2131,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '1e894de344234ee39e84e1789c5f825b'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'external_target_system'
@@ -1899,6 +2141,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '1ec6cb7bbd6b44b998df59c087f70f0b'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -1908,6 +2151,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '1eed0432655b4efd847455c58a97fe2f'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_employment_type'
@@ -1920,6 +2164,17 @@ declare global {
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_proposed_expiration_date'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '1f1507783a60499c9e309b8ccffa7229'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'form_1768_mapping'
+                            value: 'usa_staffing'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -1951,10 +2206,22 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '20157ed6935a413ba6bc628b7ec61dfd'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'authorization_action'
                             value: 'renewal'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '2084a6a2b98c4b1ea3d731ca99393f7a'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'access_category'
+                            value: 'workforce_profile_chart'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -1988,12 +2255,34 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '2138d6d3226b45089449db3d6c943969'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'AMD_JUSTIFICATION_CHANGE'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '2155e30a4cd446aca5c6f1843068e2ae'
                         key: {
                             name: 'x_2166123_rob_auth_auth_detail'
                             element: 'rob_authorization_form'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '2180fcbca6594a7093f0f8915e6efea5'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_authorization_path'
+                            value: 'reuse'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -2021,6 +2310,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '225801d252b54892be2ad67f278084f4'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'status'
@@ -2030,6 +2320,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '2262b224ccb24204bf34becd987d3205'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'status'
@@ -2038,7 +2329,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '22643f24055e480083ff36cca6483740'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_existing_authorization_status'
+                            value: 'lapsed'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '226a27e3e021461d9aa011ca2d51d870'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -2056,6 +2359,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '22b7aab660524b67ae1d9082a3fa00aa'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -2110,6 +2414,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '244cd8e6836d4a5598ad06e13c48fcf3'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'external_provisioning_system'
+                            value: 'not_applicable'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '245e748e1ce54e9f95a24138f1810378'
                         key: {
@@ -2150,7 +2465,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '24fe15df43b54bb8945fecd2d5a4396d'
+                        key: {
+                            name: 'sn_hr_core_task'
+                            element: 'x_2166123_rob_auth_external_provisioning_system'
+                            value: 'fpps_wtts'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '25855d2940354bf5972e68aab46ac88f'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -2260,6 +2587,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '268078c861704ec9a7746b3bbebf383e'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -2330,6 +2658,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '27580d2703ea45e69e56c6a65af7e3bb'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_employment_type'
+                            value: 'auditor_investigator'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '27aac00d2ba44fc3ac108596df306fd2'
                         key: {
@@ -2369,6 +2708,17 @@ declare global {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_proposed_expiration_date'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '28d3ffbc8eff4741808b1017b5b6e632'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_authorization_path'
+                            value: 'reuse'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -2428,6 +2778,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '294206ce7aeb4e20820362734536b88d'
+                        key: {
+                            name: 'x_2166123_rob_auth_auth_detail'
+                            element: 'status'
+                            value: 'lapsed'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '294e14a2a07646b9976e9c37b52c9122'
                         key: {
@@ -2448,6 +2809,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '2986e970b094464baac9fcc496585e35'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_external_target_system'
@@ -2542,6 +2904,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '2b7254445106475585a5f01d9cf27286'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_MISSING_END_DATE'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '2b734728f6ec4ceb804e4c25ffb887e1'
                         key: {
@@ -2553,6 +2926,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '2b86f1204f1849f2b24f7e550fbf0a89'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -2562,6 +2936,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '2b9ea71a5df845d19417bddc413a5391'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_existing_authorization_status'
@@ -2629,6 +3004,17 @@ declare global {
                                     name: 'x_2166123_rob_auth.rob_admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '2d7db94d479b41abb701c46344549438'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'NEW_NO_CURRENT_FORM'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -2830,6 +3216,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '3144f396fdd948dc89b116b9c845d9b4'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_employment_type'
@@ -2856,6 +3243,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '3170a934c13a41ca8e491739a10e6176'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -2878,6 +3266,17 @@ declare global {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'supervisor_approver'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '32c2366ade754ea38fe2a73ed7629714'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'external_target_system'
+                            value: 'not_applicable'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -2919,6 +3318,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '3320ca74ef8a49b994d8a92d9d9765c8'
+                        key: {
+                            name: 'sn_hr_core_task'
+                            element: 'x_2166123_rob_auth_fulfillment_outcome'
+                            value: 'provisioning_completed'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '3330502475ee48f4becc52a704ea9c85'
                         key: {
@@ -2951,6 +3361,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '345fe3f2e58c4c1585ff2da05cd9d9e2'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -2960,6 +3371,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '3493f427368e42b9b8ea991abeca067e'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -2968,7 +3380,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '3495bf5d1ab2426581df46fbf82a732b'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_auth'
+                            element: 'authorization_action'
+                            value: 'amendment'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '353845c2809c44bf80bb10d33d362f05'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -2978,6 +3402,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '35b2c31a0b5147efa32787463ae018d6'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_fulfillment_outcome'
@@ -3029,6 +3454,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '363cfb8196e04770b29f716203631b87'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -3045,6 +3471,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '386bd456619b48e4bffff85e569a49b5'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_UNRESOLVED_ANNUAL_RENEWAL_RULE'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '38980ef4e70f444a937ed980667a169f'
                         key: {
@@ -3055,10 +3492,22 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '38a74b0692e541d29d76a4d516dd6ea7'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'external_target_system'
                             value: 'oas'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '38f1ddaafdb44a25b6f4a71f425d3c33'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_existing_authorization_status'
+                            value: 'expired'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -3081,6 +3530,17 @@ declare global {
                             }
                             element: 'authorized_start_date'
                             position: '2'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '39478dbb160649ac8c2d7ca1c9879121'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'default_fulfillment_team'
+                            value: 'analytics'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -3125,6 +3585,39 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '3a1ea791f2394487bef8c807d7b83bc8'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'AMD_JUSTIFICATION_CHANGE'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '3a462ae6385f43568698d3bc78f4639c'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_MISSING_REQUIRED_DATA'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '3b00fa5aeea64504810a9af8b849ddfd'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_auth'
+                            element: 'status'
+                            value: 'obsolete_version'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '3b8e2bae40a64ad9abdca3a8eec4c363'
                         key: {
@@ -3139,7 +3632,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '3b9d435f0ef54928aac0aba7a0bc939c'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_auth'
+                            element: 'status'
+                            value: 'lapsed'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '3c04367b6b094dea9f48230e3eebf1a5'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_auth_detail'
                             element: 'status'
@@ -3171,10 +3676,22 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '3ca4e351635545bbbea0ca7deb5a003c'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'form_1768_mapping'
                             value: 'usa_staffing'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '3cb0a26ed19c4bb590826fd157c9ecba'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_existing_authorization_status'
+                            value: 'active'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -3183,6 +3700,17 @@ declare global {
                         key: {
                             name: 'x_2166123_rob_auth_rob_config'
                             element: 'current_accepted_form_version'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '3d36b8aba138420b87b3d24b1247aac7'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_employment_type'
+                            value: 'auditor_investigator'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -3245,10 +3773,22 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '3e62d5907a1a4d53b757791654f4342e'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_existing_authorization_status'
                             value: 'revoked'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '3ebdb72931d340868cf229c42e064138'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_auth'
+                            element: 'status'
+                            value: 'pending_employee_signature'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -3263,6 +3803,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '3ed3d2423cc24279ab1642d2f4f8a787'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -3292,6 +3833,17 @@ declare global {
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'final_pdf_attachment'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '3f198e1fb5d742b2a1bd39292b503610'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_existing_authorization_status'
+                            value: 'denied'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -3340,6 +3892,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '404063ba39584bef8a5f952d7de6f636'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_existing_authorization_status'
@@ -3401,6 +3954,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '40f03456dcf34d13bf0b6214d1910996'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'AMD_POSITION_ROLE_CHANGE'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '40f1f77bd48845fe8b67fcfc632ac907'
                         key: {
@@ -3440,6 +4004,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '41ed75eed0e746fe9cc180d9ac466ee3'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_auth_detail'
                             element: 'status'
@@ -3449,6 +4014,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '42336d10a1e54030baea791af23b34e0'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_employment_type'
@@ -3559,6 +4125,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '434b57fb2d4b43ba804a50f568a882e1'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -3593,6 +4160,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '43ea348a24154dea8149420d8ab14d8f'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_authorization_path'
@@ -3667,6 +4235,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '450e2318700c49bbbdbe92e809541ba7'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -3679,6 +4248,17 @@ declare global {
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_requires_supervisor_signature'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '45291b4c26874c879e17d966ce984d23'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'external_provisioning_system'
+                            value: 'eopf'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -3721,12 +4301,34 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '458e4422d7e74c88b37b8b51410b763b'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_reuse_attestation_status'
+                            value: 'denied'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '45d1e9d0787c4e5aba41b385bfda039d'
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'supervisor_document_task'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '45ff5c994240473ebf61d429bbf8e221'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_INCOMPLETE_AUTHORIZATION_HISTORY'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -3806,7 +4408,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '46f5a95aa99b40ceb9b8234b1190bdbe'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'AMD_NO_COVERAGE_ACTIVE_FORM'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '471257325563497fb1d40832c552f450'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'supervisor_approval_outcome'
@@ -3853,6 +4467,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '4746c3fbad38451bb7508a3a95ba59df'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'self_supervisor'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '4798cbba889a45eeb2efa94b57156905'
                         key: {
@@ -3875,6 +4500,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '47ea38545e324a1699fec49264c35839'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_INVALID_ACCESS_ITEM'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '47fa7d571f0247de8a4f37e57c4fa13a'
+                        key: {
+                            name: 'x_2166123_rob_auth_auth_detail'
+                            element: 'status'
+                            value: 'pending_fulfillment'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '48185ab627d740309d833eea73986199'
                         key: {
@@ -3893,10 +4540,22 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '4921f8035d794397b8feca07ddac8789'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'authorization_action'
                             value: 'new'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '493411d27fe8494ab0463c8af8e498ce'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'external_target_system'
+                            value: 'eopf'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -3914,7 +4573,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '4a4c3f734c7b4c93807062be136d0550'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'missing_organization'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '4a512d2ca10c4d138e0848710e747fa6'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_external_provisioning_system'
@@ -3941,6 +4612,28 @@ declare global {
                             }
                             element: 'agency_annual_recertification_date'
                             position: '2'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '4a7b633b766e40ecaef2e0e5f642c55e'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_existing_authorization_status'
+                            value: 'superseded'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '4ae11681a6ea467b898af6a2f59c5079'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'form_1768_mapping'
+                            value: 'human_capital_reports'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -4015,6 +4708,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '4c27257ee1cb4e7dbae40f4d1bbe614c'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_existing_authorization_status'
+                            value: 'obsolete_version'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_choice_set'
                         id: '4c429b332b314245bb0c859df6621150'
                         key: {
@@ -4073,6 +4777,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '4de4922e79bb4f32875bbf0063c2ef95'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_existing_authorization_status'
+                            value: 'revoked'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '4de7b2fada2d486a8af289517cbd2744'
+                        key: {
+                            name: 'sn_hr_core_task'
+                            element: 'x_2166123_rob_auth_external_provisioning_system'
+                            value: 'eopf'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '4dee6b2ca7cf456dae174b82d2cdf112'
                         key: {
@@ -4111,6 +4837,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '4e1ccbf5f1054acea0d87075d6b8699f'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -4153,6 +4880,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '4f3ae275b8014c2c9f567b35cda9c376'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_authorization_path'
@@ -4175,6 +4903,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '4f6283ad49c444d5bccb86ddc24ca7e4'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_auth_detail'
                             element: 'status'
@@ -4222,6 +4951,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '4fcd6da447344fc18d68efcec5c71291'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -4286,6 +5016,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '51722c1fc99645c9a3565f2deeabe29c'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_authorization_path'
+                            value: 'exception'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '517cae16bc49483398b3c7370433e352'
                         key: {
@@ -4295,7 +5036,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '51b9f4a0f31a4cf385539bce993234e6'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'missing_operations_manager'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '51bd6464749f4413ac13308f33f70ccc'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -4304,7 +5057,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '52105785c73b4e1c82f8f0178d859829'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'external_provisioning_system'
+                            value: 'usa_staffing'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '521ec27663b943a38a6acddf3f225cf4'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_auth_detail'
                             element: 'status'
@@ -4325,6 +5090,17 @@ declare global {
                         key: {
                             category: 'x_2166123_rob_auth_auth_detail'
                             prefix: 'ROBD'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '53aafb5e1b034117b0bec68f67a80123'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_auth'
+                            element: 'employment_type'
+                            value: 'other_time_limited'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -4367,6 +5143,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '549a90c7bdb54ba29250adbee95cdc0e'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_auth'
+                            element: 'status'
+                            value: 'revoked'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '54a31fdb442344a4b47f56e81f11b4b2'
                         key: {
@@ -4391,6 +5178,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '55597b307549443b9babab08562901c6'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_existing_authorization_status'
@@ -4400,6 +5188,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '56a2c20bae0c4ff2bbe32647d56828dc'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -4425,6 +5214,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '56e0d6bc8ff44b36a7cbc0aa2e4de23e'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_employment_type'
+                            value: 'contractor'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '56ed2ecaf91540268fb1d4416e527a0e'
                         key: {
@@ -4435,6 +5235,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '56f2f61841a44afcac85fbcc2211cb4c'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_fulfillment_outcome'
@@ -4444,6 +5245,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '56fa681a33d5498bb6be7b61b720f94c'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -4465,6 +5267,28 @@ declare global {
                             name: 'x_2166123_rob_auth_auth_detail'
                             element: 'operations_manager_task_required_snapshot'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '57e746fad19b405597746a2d4aed070a'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_employment_type'
+                            value: 'ipa'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '57fa32a57bec4961bdf88fc0cadf4056'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_CONFLICTING_ACTIVE_FORMS'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -4503,7 +5327,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '5866f7c5da934d558936ee8b3a9ef39e'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_auth'
+                            element: 'status'
+                            value: 'draft'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '58736d1c4f6d45b4b461954ab6a42508'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'external_target_system'
@@ -4556,7 +5392,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '58e3ebe4edef45ad8064260e4effe124'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_existing_authorization_status'
+                            value: 'active'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '591308be350948cbbba73afa0aded399'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_existing_authorization_status'
@@ -4566,6 +5414,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '594efee88dcd4781b086a689b66c4419'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_reuse_attestation_status'
@@ -4639,6 +5488,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '59cad62983744a3ab43a888e2dcf226f'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'form_1768_mapping'
+                            value: 'wpc'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '59f64551dc4f4e9193a8469a16a1b01c'
                         key: {
@@ -4679,6 +5539,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '5a9d3732c1164733bae1b780a4224c43'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'form_1768_mapping'
@@ -4688,6 +5549,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '5ae5e13c5b4049ce8dba7e5615cf105b'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'external_provisioning_system'
@@ -4717,11 +5579,33 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '5cbc6e12e04f4437beae55d827e077ba'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'AMD_MULTIPLE_MATERIAL_CHANGES'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '5cecf36c515741dfa3e429e349880b3d'
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'business_justification'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '5d94c776a1e54d008e6bf7bd0092c1dd'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_reuse_supervisor_decision'
+                            value: 'denied'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -4781,6 +5665,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '5e57d40e61474ecc9a6f1e935f425ae7'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -4802,7 +5687,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '5ee1e3f635674720a3787b8d4a2a3b10'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_existing_authorization_status'
+                            value: 'superseded'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '5f8a7c93f8bc4492b24a0c059a577e58'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'default_fulfillment_team'
@@ -4824,6 +5721,28 @@ declare global {
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_reuse_attestation_status'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '5fbb2ad90adf40bfbd71039cb381e17e'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_auth'
+                            element: 'employment_type'
+                            value: 'ipa'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '5fbdbfcdd0fd4f1fb3839386c495d2fd'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_existing_authorization_status'
+                            value: 'expired'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -4880,6 +5799,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '60dbb012bb0247ec9bd5bbc87d897bd9'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_authorization_path'
+                            value: 'new'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '60f3d1357d5943179df27333278a29b1'
                         key: {
@@ -4889,7 +5819,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '61278c5e7fe34accaf18bc4a0096e40c'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_authorization_path'
+                            value: 'renewal'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '617af697d1f24c83ab8b6c4855ec460e'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_external_target_system'
@@ -4898,7 +5840,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '61dbea5f613347a095370a695d8b7284'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_auth'
+                            element: 'authorization_action'
+                            value: 'renewal'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '62366bf977054656859d0a501d7c814b'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -4959,6 +5913,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '6301f2c7b32d46d5b969762cd54791f1'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_auth_detail'
                             element: 'status'
@@ -4976,7 +5931,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '631c1d34544c475d824413e44d35dcf5'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'form_1768_mapping'
+                            value: 'fpps_wtts'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '639e4147ae944612bb33b0e2303ffa48'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'external_target_system'
@@ -5001,6 +5968,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '63ee65f9298945b39ec0cca8bb617d4c'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_reuse_supervisor_decision'
@@ -5010,6 +5978,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '648a5e845794476c8978d1ebe536164b'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -5029,6 +5998,17 @@ declare global {
                                 }
                             }
                             sys_domain: 'global'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '6570e2a37a804ad0bea75f40385fc80c'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_auth'
+                            element: 'authorization_action'
+                            value: 'new'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -5071,6 +6051,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '65e353792ddb464a8dcd3f0a87b70a52'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'AMD_MULTIPLE_MATERIAL_CHANGES'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '65f4866feeb94447aac5ae743e28c57f'
                         key: {
@@ -5089,6 +6080,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '66385dcdb165496da5aa982d214fb6ba'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'external_provisioning_system'
@@ -5101,6 +6093,17 @@ declare global {
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_decision_reason'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '669c344de6184acb88fb863c9ea3b12f'
+                        key: {
+                            name: 'x_2166123_rob_auth_auth_detail'
+                            element: 'status'
+                            value: 'superseded'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -5174,7 +6177,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '6856908f579349bc9b1752960abc99df'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'NEW_PRIOR_REVOKED'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '68c038a628f64c079687ed2c864f2ea9'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -5206,10 +6221,33 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '6937c244ad23494abf09e0c30669ffea'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_authorization_path'
                             value: 'renewal'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '6967d56ddfb84b8289b3fc61181c678d'
+                        key: {
+                            name: 'sn_hr_core_task'
+                            element: 'x_2166123_rob_auth_fulfillment_outcome'
+                            value: 'not_required'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '69857cacf9e14418bdfc52e4e3ce33ca'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'external_provisioning_system'
+                            value: 'arm'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -5219,6 +6257,28 @@ declare global {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'decision_evidence'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '6a48b34fd2af4f4e960765a8e51f7674'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'missing_required_access_end_date'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '6a7707e8049e45448c5848619c51b46e'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_reuse_supervisor_decision'
+                            value: 'denied'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -5233,6 +6293,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '6c17135c86bf43c89afcdecd6af52200'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -5267,6 +6328,17 @@ declare global {
                             }
                             element: '.split'
                             position: '3'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '6d96582c72354c9b91382f4860c1cb65'
+                        key: {
+                            name: 'x_2166123_rob_auth_auth_detail'
+                            element: 'status'
+                            value: 'expired'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -5312,6 +6384,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '6e8d71154ad4419db27e83083810c454'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -5352,6 +6425,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '6ea830a191ec43bf9a8cebd83f56a039'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -5395,6 +6469,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '6f819bfc2bd24225982a68a7738d7465'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -5417,6 +6492,28 @@ declare global {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_external_target_system'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '70663b4f0cab4fae9b5a410f83466cb0'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_DUPLICATE_OPEN_CASE'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '706dc494e9ba4fdb9915bbe3bd9bd3ed'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'AMD_PARTIAL_COVERAGE'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -5454,7 +6551,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '710dca89b6d84e6f92be6c60c2e30de9'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'default_fulfillment_team'
+                            value: 'staffing'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '71105f4f91b447db94117b04adebc7c1'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -5521,6 +6630,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '71bd544001114f259dd235d4a9d88819'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'status'
@@ -5530,10 +6640,22 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '721454c3e65f46d48ffd259f7abc1e29'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'employment_type'
                             value: 'ipa'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '72d0d4fa3fa6492ea342b64e29a30ad1'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_employment_type'
+                            value: 'ipa'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -5624,6 +6746,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '74c8cdbcc85c4c5eab19c18bb678435c'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'missing_supervisor'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '74e3d22a0cf54504ace00c8842a6704f'
                         key: {
@@ -5652,6 +6785,17 @@ declare global {
                                     name: 'x_2166123_rob_auth.rob_admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '753adf0f2c6541648973f43972009914'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_AMBIGUOUS_MATERIAL_CHANGE'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -5731,6 +6875,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '76f17cbf01934aa8ab032650e612b1d8'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -5747,7 +6892,30 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '77920643b33e4398893ef80771d2aacd'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_employment_type'
+                            value: 'federal_employee'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '7826bfba52164b7c8c97ffdd86e1d9bf'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'REN_OBSOLETE_VERSION'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '782900190f674bad9b131375d5e9a586'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'external_provisioning_system'
@@ -5774,10 +6942,22 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '7848f99656ef455ea32be1a30c94ada7'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_decision_reason'
                             value: 'AMD_POSITION_ROLE_CHANGE'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '7850d9c3255c48e9bbf90554fcea383f'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_reuse_attestation_status'
+                            value: 'pending'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -5816,6 +6996,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '78697140dc7b48059f9a8f83771369d6'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'form_1768_mapping'
@@ -5854,6 +7035,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '78b9961466584a33b42ab35a1beb3932'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'AMD_ORG_CHANGE'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '78e863b2dffd4f9c95959405fbc7973e'
                         key: {
@@ -5873,6 +7065,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '791fd95f05dd4c97814390516b619b79'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -5930,7 +7123,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '7a07318147e64f08ba4bd1b5c8bcab8b'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_MISSING_END_DATE'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '7a07d42a515f4121b5919b8a71c225e0'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'employment_type'
@@ -5962,11 +7167,33 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '7aece0c4773b46249359ad02dc425099'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'REN_LAPSED'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '7b517391e24847fd9d3fc3d1aae86aec'
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'profile_context_evidence'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '7b92b092cdda49b59c5890c25de76805'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_auth'
+                            element: 'supervisor_approval_outcome'
+                            value: 'approved'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -5995,6 +7222,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '7be81fbedb9a4e08ae6e57fb9774c9c5'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'AMD_PARTIAL_COVERAGE'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '7bf7f9d344534f80b6ab73ebeac32985'
                         key: {
@@ -6006,10 +7244,22 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '7c7dc61c95844cb3a0416079f1959ae3'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_existing_authorization_status'
                             value: 'superseded'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '7cd8d9cc80e54cf589273a32bb071af5'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'external_target_system'
+                            value: 'fpps_wtts'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -6059,6 +7309,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '7df40c79de3a424ab7f9b01fcdbd4f6d'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_reuse_supervisor_decision'
+                            value: 'approved'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '7e2f747b2d64488784ede7fba5f8c416'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_auth'
+                            element: 'supervisor_approval_outcome'
+                            value: 'denied'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '7e40bcb995ce44db9f74db2deb975c13'
                         key: {
@@ -6096,6 +7368,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '7e96f03dcf054b7c94e14ba3288511c3'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -6143,6 +7416,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '7fc10b6d2af9423fa787858e54fcbede'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'access_category'
+                            value: 'hr_system'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '7fd477b46a5d418c9c264328453f6b4a'
                         key: {
@@ -6167,6 +7451,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '7ff98c7a110a438c8aa901f323eeb214'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -6176,6 +7461,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '802a194df14845d09e9422127b8a9283'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -6188,6 +7474,39 @@ declare global {
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_reuse_attestation_context'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '80815a78e9e246788ff07b406012f1b2'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_auth'
+                            element: 'status'
+                            value: 'superseded'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '80818551306040bd8d3bd243630dd20d'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_auth'
+                            element: 'status'
+                            value: 'pending_supervisor_approval_signature'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '81000202725541a7af70cf598c49c4d2'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_authorization_path'
+                            value: 'amendment'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -6204,6 +7523,17 @@ declare global {
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_employment_type'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '8122e1f84797465caf04b05c35cc108d'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_authorization_path'
+                            value: 'amendment'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -6273,10 +7603,22 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '81f1bb291dce4eb1afef0db72136962f'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'access_category'
                             value: 'hr_system'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '8226b6f3a80341ed965f018a32a848f8'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'inactive_supervisor'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -6285,6 +7627,39 @@ declare global {
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_uncovered_access'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '8269daa9b6d049a49538a69a8052d12f'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'missing_required_access_end_date'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '827d101228b04eb99ed506f24c979366'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'external_provisioning_system'
+                            value: 'other'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '82a0ce8f87c9470b89f299ef528ff514'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'missing_organization'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -6345,6 +7720,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '8373b9be21a34975a1f1082c7b8a4035'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -6431,6 +7807,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '8531a7b5253b4cefbb22ccf2d974520b'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -6440,6 +7817,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '853d5edc1b594c9e9e5ab32bd41842c7'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_existing_authorization_status'
@@ -6484,6 +7862,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '86bbdf3574404d8498414b4e20ce012c'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'default_fulfillment_team'
@@ -6549,6 +7928,17 @@ declare global {
                             }
                             element: 'audit_notes'
                             position: '0'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '88462ad9daf74ea38b112e6d50fe7e53'
+                        key: {
+                            name: 'sn_hr_core_task'
+                            element: 'x_2166123_rob_auth_external_target_system'
+                            value: 'oas'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -6659,6 +8049,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '8b54ac5f293d44e5a5b8e3d82a97899e'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_reuse_attestation_status'
@@ -6668,6 +8059,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '8b92fa3e827b441e8114bfeec7153ebb'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_existing_authorization_status'
@@ -6677,6 +8069,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '8bd64814748e4984b4da953efcdc7691'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -6739,6 +8132,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '8cf88000fd044a7397da68783d370cd1'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'status'
@@ -6809,6 +8203,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '8d9afa0434b0488489d3c86b91950ca1'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_external_target_system'
@@ -6856,6 +8251,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '8e3cc9a6909b4183ae1cfb065d9aaf7b'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_auth_detail'
                             element: 'status'
@@ -6931,6 +8327,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '8f0a40ac3cfb4045aaeace5829fb88d8'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_existing_authorization_status'
@@ -6965,6 +8362,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '8f95242aaccd4dea841a8d7c86f6ea15'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_reuse_supervisor_decision'
@@ -6985,6 +8383,28 @@ declare global {
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'reminder_2_sent_date_time'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '90407e6307e443fbabedcd359d5e74c1'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_MISSING_REQUIRED_DATA'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '906d0ab889a84c75a3c6e4b7d24de2e1'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'external_target_system'
+                            value: 'usa_staffing'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -7011,6 +8431,17 @@ declare global {
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'active'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '9197d4cfbb2844d6b54b42bc394a6e1c'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'missing_position'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -7055,6 +8486,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '9276b38553dc4527b47cd66f46ad5f9a'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_authorization_path'
@@ -7081,6 +8513,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '932152c1ff5947e4a7fd5b268451d488'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -7123,6 +8556,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '938cb89220ce4a1ea9285d2ff19c0d67'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_external_target_system'
@@ -7139,6 +8573,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '9456f62c96f240b6a102ea47bb777ae2'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_reuse_attestation_status'
+                            value: 'approved'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '9464b32bf27f405db7855fbea3d8e8e0'
                         key: {
@@ -7150,6 +8595,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '94a2b362fdf1490e9d6a45bb1ba5232d'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_reuse_attestation_status'
@@ -7176,6 +8622,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '94cd90fcbe2e44bcbdf48e41147f7ec5'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_employment_type'
@@ -7214,7 +8661,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '958c379f7bf84c17bc0398932a38f196'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'self_supervisor'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '95e1301f56094ddfa969be5afea6b565'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -7232,6 +8691,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '9667baa620ca49179063b5ccdf0d22de'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'external_provisioning_system'
@@ -7311,6 +8771,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '9761cfb5a1614945a8e3f3c4daab2370'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_reuse_supervisor_decision'
@@ -7340,10 +8801,43 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '981058fc3f714b9391bb32462019bded'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_employment_type'
+                            value: 'federal_employee'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_db_object'
                         id: '982ff3c5b25b49a99219df98903e990f'
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '986004840aa6408d934af15b00516298'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_existing_authorization_status'
+                            value: 'none'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '98df99d5b9af445b86b10298004c16b9'
+                        key: {
+                            name: 'sn_hr_core_task'
+                            element: 'x_2166123_rob_auth_external_target_system'
+                            value: 'usa_staffing'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -7365,7 +8859,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '98f343695c114eb4bc44e3551836de72'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_auth'
+                            element: 'employment_type'
+                            value: 'auditor_investigator'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '9902fbcbe12845e3a2ee12432c338dc5'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_authorization_path'
@@ -7398,10 +8904,22 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '997b33a50f5642ae80880910c1c9d832'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
                             value: 'EX_MISSING_SUPERVISOR'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '9987a559dc1f4acc8d5ae88d23fa488c'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_reuse_attestation_status'
+                            value: 'invalidated'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -7416,6 +8934,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '99e7ef1f0b294b93967964a57e681574'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'employment_type'
@@ -7425,6 +8944,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '99e92ad919064f4ebea963cf2a6bccbd'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_employment_type'
@@ -7462,6 +8982,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '9a09ea5200c5405184679c8593a73b26'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_auth_detail'
                             element: 'status'
@@ -7480,6 +9001,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '9ac22df252d84c3aa0b59353a1484a53'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_fulfillment_outcome'
@@ -7489,6 +9011,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '9aca8a51475f41cca93d2698e497b012'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'form_1768_mapping'
@@ -7497,11 +9020,34 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '9b48bf852fef4d98a880dfebb5e983a9'
+                        key: {
+                            name: 'sn_hr_core_task'
+                            element: 'x_2166123_rob_auth_rob_task_type'
+                            value: 'operations_manager_arm_assignment'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '9b67318970f84ba6ad1e66ea4d715f57'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_fulfillment_outcome'
                             value: 'waived'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '9bd5b3fd9ee040d79ecb5c82d47a25dc'
+                        key: {
+                            name: 'sn_hr_core_task'
+                            element: 'x_2166123_rob_auth_rob_task_type'
+                            value: 'analytics_fulfillment'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -7577,6 +9123,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: '9d5b80bbc6fd42d98c0e4cf6d5c6df90'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'access_category'
@@ -7590,6 +9137,17 @@ declare global {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_existing_authorization_status'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '9e2b9af8dcc442d18496d11abcad5838'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_reuse_supervisor_decision'
+                            value: 'approved'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -7612,6 +9170,17 @@ declare global {
                             }
                             element: '.begin_split'
                             position: '0'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '9e81105a4af24442ace28e9cb855beaa'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'REN_ANNUAL_RECERTIFICATION'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -7712,6 +9281,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'a022d39b13a244fa802244e58552c704'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -7740,6 +9310,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'a0bbfb62d77c414d9be80012deaa06be'
+                        key: {
+                            name: 'x_2166123_rob_auth_auth_detail'
+                            element: 'status'
+                            value: 'active'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: 'a0f6c2e3d498401585f0cccd6930682f'
                         key: {
@@ -7751,6 +9332,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'a12a9141d0504b2ab5dbedec53fe96ce'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'supervisor_approval_outcome'
@@ -7917,6 +9499,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'a46a5239efcd4c128f0d3cbbead80125'
+                        key: {
+                            name: 'sn_hr_core_task'
+                            element: 'x_2166123_rob_auth_fulfillment_outcome'
+                            value: 'failed_exception'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: 'a46d8faa037e42ae9b10d63418f6bc76'
                         key: {
@@ -7959,6 +9552,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'a4b140a9e82442d6a02645bdb7e21b78'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'external_target_system'
@@ -8026,6 +9620,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'a5da3d42f64b426097ab841da27bf8ad'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'REN_EXPIRED'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: 'a60415a25c424ab78fc5c5f89b1d3224'
                         key: {
@@ -8085,10 +9690,22 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'a693c009d3eb4f90a878c9cfe487d488'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_decision_reason'
                             value: 'REN_ANNUAL_RECERTIFICATION'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'a6b81991b8764ed393d42f5281614c7c'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'REN_EXPIRED'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -8111,10 +9728,33 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'a727e05a142b41849e0cf43aff2a2c7a'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_external_target_system'
                             value: 'not_applicable'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'a729d3ae99464187bf2bb8008b0ab1df'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_auth'
+                            element: 'status'
+                            value: 'active'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'a72e54797b4042978d7154d959310c41'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'form_1768_mapping'
+                            value: 'eopf'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -8138,6 +9778,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'a7def999d96f4996b1db3be47d76f1e7'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_rob_task_type'
@@ -8193,6 +9834,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'a89b6d750282456a874b8e45e130f776'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'default_fulfillment_team'
@@ -8218,6 +9860,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'a8d544829254423789fb8526ca7b19f4'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'external_provisioning_system'
@@ -8420,6 +10063,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'ad7ce04daebc48a3b4d62b082ae0f53b'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_auth_detail'
                             element: 'status'
@@ -8446,6 +10090,17 @@ declare global {
                             }
                             element: 'source_hrsd_case'
                             position: '4'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'ad8a70edb8cc466e8934c0e8159fcc2e'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_existing_authorization_status'
+                            value: 'revoked'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -8480,7 +10135,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: 'aeae3f1e80f846d5bb083d8e9ff4d999'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'invalid_operations_manager'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: 'aedd681532ce462cadaf407a998293ee'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'form_1768_mapping'
@@ -8540,6 +10207,17 @@ declare global {
                                 }
                             }
                             sys_domain: 'global'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'afca8caf04ad467c9eb7bbeebeb1f97b'
+                        key: {
+                            name: 'sn_hr_core_task'
+                            element: 'x_2166123_rob_auth_external_target_system'
+                            value: 'eopf'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -8630,6 +10308,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'b1357312dd74471f8e411440e62dd518'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'access_category'
@@ -8638,7 +10317,30 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: 'b13b0a3bdd7a4442aeb18dde988e7ce3'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'default_fulfillment_team'
+                            value: 'mixed'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'b1c99d2fc462453eaa032f1828921087'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'NEW_PRIOR_REVOKED'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: 'b1ede9fbe90e436b80ac28b1acbe27da'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'access_category'
@@ -8648,6 +10350,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'b23c5916f5494dd7aca02f9bb77b6e0f'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'status'
@@ -8682,6 +10385,17 @@ declare global {
                                     name: 'x_2166123_rob_auth.rob_compliance_viewer'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'b3d90d54519e457ab7dd60bbc2778bf0'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_INVALID_CONFIG'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -8751,6 +10465,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'b49a3511bb1e459992079174a5ebecf6'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'REUSE_FULLY_COVERED'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: 'b4c6711507e94971b0f4788dcd89656a'
                         key: {
@@ -8765,11 +10490,45 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: 'b504c7a0d31547149bd0bc5f88586c34'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_MISSING_OM'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'b5133618957242268c6d7971219b9816'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'REN_ANNUAL_RECERTIFICATION'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: 'b52f758ce0604a72a3c537a07a2e7ce0'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_employment_type'
                             value: 'ipa'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'b681d0bc909e4355b819610f05cf0b57'
+                        key: {
+                            name: 'sn_hr_core_task'
+                            element: 'x_2166123_rob_auth_external_target_system'
+                            value: 'other'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -8909,6 +10668,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'b9d2543ac69e43849ef3d355d767ceb5'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -8951,6 +10711,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'bb030f5623734c40a4a102f73d3b62cf'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_reuse_attestation_status'
@@ -8973,6 +10734,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'bc0e5380090a4602885666cdf6a94b96'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_employment_type'
@@ -8991,6 +10753,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'bc6667bf9bb64667ae9bd1ef0f0b9edb'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -9101,11 +10864,34 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: 'bf0c2607baea44fdb00e9aaf414726d4'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'missing_position'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: 'bf87381873f24db0b419336a95ca0fb3'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_authorization_path'
                             value: 'amendment'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'bfefca19557d4acf96e0d988feb57263'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_CONFLICTING_ACTIVE_FORMS'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -9119,6 +10905,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'c08bbfbf5a264122b96fe30b18eb6f96'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_external_provisioning_system'
@@ -9184,6 +10971,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'c1a5d206a65c4d8f97ca5052aacf3888'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'status'
@@ -9230,6 +11018,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'c1fd095017204899a30bbefe0f519b0a'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'employment_type'
@@ -9297,6 +11086,28 @@ declare global {
                         key: {
                             name: 'x_2166123_rob_auth_rob_config'
                             element: 'operations_manager_escalation_days'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'c3d3a26a21744fc0abea59116dd4be0b'
+                        key: {
+                            name: 'sn_hr_core_task'
+                            element: 'x_2166123_rob_auth_external_target_system'
+                            value: 'fpps_wtts'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'c3f4a2a47f5b40c8941e3c5d3eead41b'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_existing_authorization_status'
+                            value: 'lapsed'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -9407,6 +11218,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'c5251c43062e48a3bd800705c93bf078'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_auth'
+                            element: 'status'
+                            value: 'denied'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: 'c5819c60d6f44bdaa2562d2e1f42ecd1'
                         key: {
@@ -9417,7 +11239,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: 'c5a55d86275245ffb42db43db6957972'
+                        key: {
+                            name: 'sn_hr_core_task'
+                            element: 'x_2166123_rob_auth_external_provisioning_system'
+                            value: 'not_applicable'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: 'c5de9f149bcb4c92a0064d76ceb877b7'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -9427,6 +11261,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'c68a38a5e27f4e9fb7a3abf890253a0a'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -9480,6 +11315,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'c73d295c49d04d13a768cc1fc5c342c7'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_existing_authorization_status'
@@ -9487,10 +11323,54 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'c783d6b0d4cf42e0856804ea78e946fd'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_reuse_attestation_status'
+                            value: 'pending'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'c794859a5d3f40d0ae9435f2a3b3d148'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_reuse_attestation_status'
+                            value: 'invalidated'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'c7a875e1301147b18cf1d888db68fca1'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'NEW_NO_PRIOR_FORM'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'ua_table_licensing_config'
                         id: 'c7e99950e1a74428b0e9200b4e3b9bb2'
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'c809de303d92489294c471040bdc96d7'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'form_1768_mapping'
+                            value: 'oas_datamart'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -9527,6 +11407,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'c9586399b37c40f085275009f2ef2f43'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -9569,7 +11450,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: 'caa8b610391746fba7baf305ddc461db'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'access_category'
+                            value: 'report'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: 'cae55665543d4ab18ab0917eb341465b'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_existing_authorization_status'
@@ -9640,6 +11533,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'cca2d16d1a41417fbd8856f1d8ce2e9b'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_external_provisioning_system'
@@ -9680,6 +11574,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'cceabb645921438cba65ff2b78212395'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'status'
@@ -9727,6 +11622,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'cd8025d3bb8d4e22a018dcd455d38939'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_reuse_attestation_status'
@@ -9806,6 +11702,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'cf59de3f60564d60ae8c239d7aa32f98'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'external_target_system'
@@ -9815,10 +11712,22 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'cf5aebe1a72c427bb5b72ca977043b48'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_rob_task_type'
                             value: 'analytics_fulfillment'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'cf5e983edaab438f8a585393d94f426b'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'NEW_NO_PRIOR_FORM'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -9885,6 +11794,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'd0a01f46c46342cb8b792f64d554c28d'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'external_provisioning_system'
@@ -9898,6 +11808,17 @@ declare global {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'employee_document_task'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'd0eb1934c26444f1a9f585d6995a50cf'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'access_category'
+                            value: 'human_capital_data'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -9916,6 +11837,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'd108d6c796aa45d888ae7048f2d88657'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -9925,6 +11847,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'd16413fa77c7470a8068d7a68a3da636'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -9958,10 +11881,22 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'd2e4734b55704a678622c623990ba9a3'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_reuse_supervisor_decision'
                             value: 'denied'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'd3263283ae35487bb32712849b2209b0'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_auth'
+                            element: 'status'
+                            value: 'expired'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -9996,12 +11931,45 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'd361464e37f84e1dba5e6398becede0a'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'missing_supervisor'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'd4ed0e3cec9847068e1602e83cb6d41b'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_MISSING_SUPERVISOR'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: 'd51d18f29997482696d444c417d6d92d'
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'position_title'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'd54386e420114863905d738643755685'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'AMD_ORG_CHANGE'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -10062,6 +12030,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'd5f098efb2f9404d95ed6393ae8ae4c2'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_existing_authorization_status'
@@ -10071,6 +12040,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'd61f4f536c404ea5bccd78b898ac5828'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_authorization_path'
@@ -10113,6 +12083,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'd70077389f0d44fa95bd2d996affa0d2'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_auth'
+                            element: 'employment_type'
+                            value: 'federal_employee'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: 'd72e9143b295441e9dd71c4128e89391'
                         key: {
@@ -10137,10 +12118,22 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'd79845ddf5424994b95f8b2b839d9fff'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
                             value: 'missing_position'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'd7e7eaeb37af4450815684939be01bae'
+                        key: {
+                            name: 'sn_hr_core_task'
+                            element: 'x_2166123_rob_auth_rob_task_type'
+                            value: 'staffing_fulfillment'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -10153,7 +12146,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: 'd82d55944367487589c68478418feab2'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_authorization_path'
+                            value: 'exception'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: 'd8867cb1b7a7402eaaf3098c8e0f0006'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -10166,6 +12171,17 @@ declare global {
                         key: {
                             name: 'x_2166123_rob_auth_auth_detail'
                             element: 'provisioning_system_snapshot'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'd8f4ba66adfa4bf982662d9dcae04552'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_existing_authorization_status'
+                            value: 'obsolete_version'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -10274,6 +12290,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'db87f48d44ce4b49abe8dd37c06aab0a'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -10344,7 +12361,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: 'dd103faad15449d38457a96c414eada0'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'REUSE_FULLY_COVERED'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: 'dd5b5c936eca4ac0b980e362ac9fbabb'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -10366,6 +12395,17 @@ declare global {
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'document_task_execution'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'ddaf53aff50b4093bf523a6695207644'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'external_target_system'
+                            value: 'other'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -10392,6 +12432,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'de315407f0334aa0afc4dced1ed3dc52'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_existing_authorization_status'
@@ -10409,6 +12450,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'dee1d886f3134d25b431dd6a6096ce0b'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'default_fulfillment_team'
@@ -10417,7 +12459,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: 'df0c545d21a549e7ad6c9029d99f509e'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_auth'
+                            element: 'employment_type'
+                            value: 'contractor'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: 'dfc7f3b227034657af69428a18ab9428'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -10512,7 +12566,30 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: 'e166fff09a2d425f935098a8fba482c7'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'inactive_supervisor'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'e1acee0170e340e48cb13f6f99659f7f'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'inactive_operations_manager'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: 'e1b5e0b55a6145aabf6f1871c871b5b7'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_reuse_attestation_status'
@@ -10531,6 +12608,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'e204bc4cfde6499c9868ab594f618224'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -10631,6 +12709,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'e439984af25b4f0fb21d8363a62a5392'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'missing_operations_manager'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_choice_set'
                         id: 'e442a5c5fa1e4ea092b8dec5bb15744e'
                         key: {
@@ -10664,6 +12753,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'e466e46f1d7742058d7fbb0f83bf3131'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_external_provisioning_system'
@@ -10688,6 +12778,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'e4e25939f7064f3a84e9a7f0a4f33034'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_decision_reason'
@@ -10717,6 +12808,17 @@ declare global {
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_snapshot_correction_reason'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'e5a91b179c84486b97677057b76994cf'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'default_fulfillment_team'
+                            value: 'exception_review'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -10798,6 +12900,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'e8c1cc54b522426bbfeed35dbdd430dc'
+                        key: {
+                            name: 'x_2166123_rob_auth_auth_detail'
+                            element: 'status'
+                            value: 'revoked'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: 'e9bcff3b36e545239c7a71f7246c9ed5'
                         key: {
@@ -10828,6 +12941,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'ea13e3b413e447c1942c11a10a6d133b'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_reuse_attestation_status'
+                            value: 'approved'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'ea51f39ce8014205aab1be96654e3cfb'
                         key: {
@@ -10851,6 +12975,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'eaaa8a1f2cb4402e800f2254a7fe39fc'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -10916,6 +13041,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'eb58374dcae94b41a41677d2961928f6'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_DUPLICATE_OPEN_CASE'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'eb654a935a154283ac516e1aee7810e0'
                         key: {
@@ -10939,6 +13075,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'ebe9fb153e4943b8a4cb43543ef9fb28'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_reuse_attestation_status'
@@ -11024,6 +13161,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'edcf51165da5435a95149c8f7800ae7e'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_authorization_path'
@@ -11079,6 +13217,17 @@ declare global {
                                     sys_domain: 'global'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'ee62eef364984cba9fb13916733ba0b2'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'NEW_NO_CURRENT_FORM'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -11179,6 +13328,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'f08ea86639074600be1f2084e8b7c21c'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'status'
@@ -11241,6 +13391,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'f145c94b6f214bf29cf3d3bf9aaada7f'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_reuse_attestation_status'
+                            value: 'denied'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: 'f14d0de0e8a64437ada5c7576f955730'
                         key: {
@@ -11292,6 +13453,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'f1e785d0a47b43d69c684755fb73d492'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_authorization_path'
+                            value: 'renewal'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: 'f2359169911040d28c39acaa310e35a3'
                         key: {
@@ -11324,6 +13496,17 @@ declare global {
                                     name: 'x_2166123_rob_auth.rob_admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'f26d1e335e284bc9a60dc32a8cb97d26'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_employment_type'
+                            value: 'contractor'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -11360,6 +13543,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'f2ea02c0dc8940dcba3de6751b6f85be'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -11402,6 +13586,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'f3310eaa31f24d33a06d30b31d91bb31'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_UNRESOLVED_ANNUAL_RENEWAL_RULE'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_ui_section'
                         id: 'f380fa7d18b74d82ab9b5a209214415b'
                         key: {
@@ -11419,6 +13614,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'f3b7362895e44f93b59bb2a31367185e'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'authorization_action'
@@ -11428,6 +13624,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'f3bbe2eed4164b60a346a071d865e261'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_exception_reason'
@@ -11485,7 +13682,19 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: 'f6894cb47a784900b0d38f21c14cf1f1'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'REN_LAPSED'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: 'f69b156976744485bec3565b36253050'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'status'
@@ -11504,10 +13713,33 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'f6d273d075674a9ab370ffb885de6ace'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_decision_reason'
                             value: 'NEW_PRIOR_REVOKED'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'f731b66769fc4b05a9468c65cd72db4f'
+                        key: {
+                            name: 'sn_hr_core_task'
+                            element: 'x_2166123_rob_auth_external_provisioning_system'
+                            value: 'arm'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'f77e6c4c3b054f798b5bd59361fdc6be'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_MISSING_OM'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -11556,11 +13788,34 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: 'fa3bcd0734de4587b2063ca60677a296'
+                        key: {
+                            name: 'sn_hr_core_case_workforce_admin'
+                            element: 'x_2166123_rob_auth_exception_reason'
+                            value: 'EX_AMBIGUOUS_MATERIAL_CHANGE'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: 'fa3cfd1b35cc46bda806dbf0c0127b55'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'status'
                             value: 'revoked'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'fa725994753e40b4815ef2c6384585ce'
+                        key: {
+                            name: 'sn_hr_core_task'
+                            element: 'x_2166123_rob_auth_external_provisioning_system'
+                            value: 'other'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -11610,6 +13865,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'fbb6d010e6bf45ed8c092401f8d6f0a2'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_reuse_attestation_status'
@@ -11638,6 +13894,28 @@ declare global {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_reuse_document_execution'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'fd17de21fecb4a3cb05ba0e977d55a3b'
+                        key: {
+                            name: 'sn_hr_core_case_payroll'
+                            element: 'x_2166123_rob_auth_decision_reason'
+                            value: 'AMD_NO_COVERAGE_ACTIVE_FORM'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'fd4d50d2cf9f42998ac7bfb6229cf2f4'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_access'
+                            element: 'external_provisioning_system'
+                            value: 'fpps_wtts'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -11687,6 +13965,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'fd841b681b914b698db33c50c7caf675'
+                        deleted: true
                         key: {
                             name: 'x_2166123_rob_auth_rob_access'
                             element: 'form_1768_mapping'
@@ -11696,6 +13975,7 @@ declare global {
                     {
                         table: 'sys_choice'
                         id: 'fd91bde50d5c4da4a57bdec644d63135'
+                        deleted: true
                         key: {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_authorization_path'
