@@ -1,17 +1,17 @@
 (function executeRule(current) {
-    if (current.getValue('x_2108496_hr_acces_fulfillment_gate_complete') !== '1') {
+    if (current.getValue('x_2166123_hr_acc_0_fulfillment_gate_complete') !== '1') {
         return
     }
 
-    var decision = current.getValue('x_2108496_hr_acces_authorization_path')
+    var decision = current.getValue('x_2166123_hr_acc_0_authorization_path')
     if (decision !== 'new' && decision !== 'reuse' && decision !== 'amendment' && decision !== 'renewal') {
         return
     }
 
     var caseId = current.getUniqueValue()
-    var details = new GlideRecord('x_2108496_hr_acces_auth_detail')
+    var details = new GlideRecord('x_2166123_hr_acc_0_auth_detail')
     if (decision === 'reuse') {
-        var reusedAuthorization = current.getValue('x_2108496_hr_acces_evaluated_authorization')
+        var reusedAuthorization = current.getValue('x_2166123_hr_acc_0_evaluated_authorization')
         if (!reusedAuthorization) {
             return
         }
@@ -19,7 +19,7 @@
         details.addQuery(
             'access_item',
             'IN',
-            current.getValue('x_2108496_hr_acces_requested_items')
+            current.getValue('x_2166123_hr_acc_0_requested_items')
         )
     } else {
         details.addQuery('source_hrsd_case', caseId)
@@ -67,7 +67,7 @@
     analyticsItems = unique(analyticsItems)
     operationsManagerItems = unique(operationsManagerItems)
 
-    var configuration = new GlideRecord('x_2108496_hr_acces_rob_config')
+    var configuration = new GlideRecord('x_2166123_hr_acc_0_rob_config')
     configuration.addQuery('active', true)
     configuration.setLimit(2)
     configuration.query()
@@ -94,7 +94,7 @@
         var businessKey = caseId + ':' + taskType
         var existing = new GlideRecord('sn_hr_core_task')
         existing.addQuery('parent', caseId)
-        existing.addQuery('x_2108496_hr_acces_rob_task_type', taskType)
+        existing.addQuery('x_2166123_hr_acc_0_rob_task_type', taskType)
         existing.setLimit(1)
         existing.query()
         if (existing.next()) return
@@ -102,22 +102,22 @@
         var task = new GlideRecord('sn_hr_core_task')
         task.initialize()
         task.setValue('parent', caseId)
-        task.setValue('x_2108496_hr_acces_rob_task_type', taskType)
-        task.setValue('x_2108496_hr_acces_fulfillment_business_key', businessKey)
-        task.setValue('x_2108496_hr_acces_related_authorization', authorizationId)
-        task.setValue('x_2108496_hr_acces_rob_access_items', accessItems.join(','))
+        task.setValue('x_2166123_hr_acc_0_rob_task_type', taskType)
+        task.setValue('x_2166123_hr_acc_0_fulfillment_business_key', businessKey)
+        task.setValue('x_2166123_hr_acc_0_related_authorization', authorizationId)
+        task.setValue('x_2166123_hr_acc_0_rob_access_items', accessItems.join(','))
         task.setValue('short_description', options.shortDescription)
         task.setValue('description', options.description)
         if (options.assignmentGroup) task.setValue('assignment_group', options.assignmentGroup)
         if (options.assignedTo) task.setValue('assigned_to', options.assignedTo)
         if (options.provisioningSystem) {
-            task.setValue('x_2108496_hr_acces_external_provisioning_system', options.provisioningSystem)
+            task.setValue('x_2166123_hr_acc_0_external_provisioning_system', options.provisioningSystem)
         }
         if (options.targetSystem) {
-            task.setValue('x_2108496_hr_acces_external_target_system', options.targetSystem)
+            task.setValue('x_2166123_hr_acc_0_external_target_system', options.targetSystem)
         }
         if (options.exceptionReason) {
-            task.setValue('x_2108496_hr_acces_exception_reason', options.exceptionReason)
+            task.setValue('x_2166123_hr_acc_0_exception_reason', options.exceptionReason)
         }
         addDueDate(task, options.dueDays)
         task.insert()
@@ -140,7 +140,7 @@
     }
 
     if (operationsManagerItems.length) {
-        var operationsManager = current.getValue('x_2108496_hr_acces_operations_manager')
+        var operationsManager = current.getValue('x_2166123_hr_acc_0_operations_manager')
         if (operationsManager) {
             ensureTask('operations_manager_arm_assignment', operationsManagerItems, {
                 shortDescription: 'Complete Operations Manager ARM role assignment',

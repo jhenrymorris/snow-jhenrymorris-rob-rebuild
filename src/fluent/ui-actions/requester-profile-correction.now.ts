@@ -4,12 +4,12 @@ import { robAdminRole } from '../roles/rob-roles.now'
 export const rederiveRequesterProfileSnapshots = UiAction({
     $id: Now.ID['rederive-requester-profile-snapshots'],
     name: 'Re-derive ROB Requester Profile',
-    actionName: 'x_2108496_hr_acces_rederive_requester_profile',
+    actionName: 'x_2166123_hr_acc_0_rederive_requester_profile',
     table: 'sn_hr_core_case',
     active: false,
     roles: [robAdminRole],
     condition:
-        "gs.getUser().hasAssignedRole('x_2108496_hr_acces.rob_admin') && (current.getValue('sys_class_name') == 'sn_hr_core_case_payroll' || current.getValue('sys_class_name') == 'sn_hr_core_case_workforce_admin')",
+        "gs.getUser().hasAssignedRole('x_2166123_hr_acc_0.rob_admin') && (current.getValue('sys_class_name') == 'sn_hr_core_case_payroll' || current.getValue('sys_class_name') == 'sn_hr_core_case_workforce_admin')",
     showInsert: false,
     showUpdate: true,
     form: {
@@ -27,7 +27,7 @@ export const rederiveRequesterProfileSnapshots = UiAction({
         showSaveWithFormButton: false,
     },
     hint: 'Deprecated: final validated profile context is snapshotted on the governed Authorization Form.',
-    script: `current.setValue('x_2108496_hr_acces_snapshot_correction_requested', '1');
+    script: `current.setValue('x_2166123_hr_acc_0_snapshot_correction_requested', '1');
 current.update();
 action.setRedirectURL(current);`,
 })

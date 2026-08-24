@@ -8,8 +8,8 @@ import {
     Table,
 } from '@servicenow/sdk/core'
 
-export const x_2108496_hr_acces_rob_access = Table({
-    name: 'x_2108496_hr_acces_rob_access',
+export const x_2166123_hr_acc_0_rob_access = Table({
+    name: 'x_2166123_hr_acc_0_rob_access',
     label: 'ROB Access Item Reference',
     display: 'name',
     extensible: false,

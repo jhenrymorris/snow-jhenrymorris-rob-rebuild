@@ -1,5 +1,5 @@
 (function executeRule(current, previous) {
-    var authorizationTable = 'x_2108496_hr_acces_rob_auth'
+    var authorizationTable = 'x_2166123_hr_acc_0_rob_auth'
     var supervisorTemplateName = 'ROB Reuse Supervisor Attestation'
 
     function isTerminalDecision(state) {
@@ -120,7 +120,7 @@
             return
         }
 
-        var details = new GlideRecord('x_2108496_hr_acces_auth_detail')
+        var details = new GlideRecord('x_2166123_hr_acc_0_auth_detail')
         details.addQuery(
             'rob_authorization_form',
             authorization.getUniqueValue()
@@ -141,10 +141,10 @@
     }
     if (
         isReuse &&
-        (relatedCase.getValue('x_2108496_hr_acces_authorization_path') !==
+        (relatedCase.getValue('x_2166123_hr_acc_0_authorization_path') !==
             'reuse' ||
             relatedCase.getValue(
-                'x_2108496_hr_acces_evaluated_authorization'
+                'x_2166123_hr_acc_0_evaluated_authorization'
             ) !== authorization.getUniqueValue())
     ) {
         fail('the Reuse decision no longer references this authorization')

@@ -2,7 +2,7 @@
     var exceptionTask = new GlideRecord('sn_hr_core_task')
     exceptionTask.addQuery('parent', current.getUniqueValue())
     exceptionTask.addQuery(
-        'x_2108496_hr_acces_rob_task_type',
+        'x_2166123_hr_acc_0_rob_task_type',
         'exception_review'
     )
     exceptionTask.setLimit(1)
@@ -13,7 +13,7 @@
     }
 
     var assignmentGroup = ''
-    var configuration = new GlideRecord('x_2108496_hr_acces_rob_config')
+    var configuration = new GlideRecord('x_2166123_hr_acc_0_rob_config')
     configuration.addQuery('active', true)
     configuration.setLimit(1)
     configuration.query()
@@ -27,7 +27,7 @@
     exceptionTask.initialize()
     exceptionTask.setValue('parent', current.getUniqueValue())
     exceptionTask.setValue(
-        'x_2108496_hr_acces_rob_task_type',
+        'x_2166123_hr_acc_0_rob_task_type',
         'exception_review'
     )
     exceptionTask.setValue(

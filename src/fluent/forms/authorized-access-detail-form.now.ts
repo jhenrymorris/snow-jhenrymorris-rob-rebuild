@@ -2,7 +2,7 @@ import { Form, default_view } from '@servicenow/sdk/core'
 import { robAdminRole, robComplianceViewerRole } from '../roles/rob-roles.now'
 
 export const authorizedAccessDetailForm = Form({
-    table: 'x_2108496_hr_acces_auth_detail', view: default_view,
+    table: 'x_2166123_hr_acc_0_auth_detail', view: default_view,
     roles: [robAdminRole, robComplianceViewerRole],
     sections: [
         { caption: 'Source Records', content: [{ layout: 'two-column', leftElements: [

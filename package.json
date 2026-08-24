@@ -1,5 +1,5 @@
 {
-    "name": "hr-access-rob-authorization",
+    "name": "hr-access-rob-authorization-rebuild",
     "version": "0.0.4",
     "description": "",
     "license": "UNLICENSED",
@@ -8,10 +8,10 @@
     },
     "scripts": {
       "build": "now-sdk build --errorOnConflict true",
-      "deploy": "now-sdk install --auth rob-pdi",
-      "deploy:open": "now-sdk install --auth rob-pdi --open-browser true",
-      "transform": "now-sdk transform --auth rob-pdi",
-      "types": "now-sdk dependencies --auth rob-pdi",
+      "deploy": "now-sdk install --auth pdi",
+      "deploy:open": "now-sdk install --auth pdi --open-browser true",
+      "transform": "now-sdk transform --auth pdi",
+      "types": "now-sdk dependencies --auth pdi",
       "test:r1": "node --test scripts/validation/r1-data-foundation.test.cjs",
       "test:security": "node --test scripts/validation/wave-2-security-remediation.test.cjs",
       "test:wave2-deployment": "node --test scripts/validation/wave-2-deployment-configuration.test.cjs",
@@ -19,7 +19,7 @@
       "test:r4": "node --test scripts/validation/r4-authorization-lifecycle.test.cjs",
       "test:m4": "node --test scripts/validation/m4-fulfillment-orchestration.test.cjs",
       "test:m2": "node --test scripts/validation/m2-profile-authorization-context.test.cjs",
-      "verify:wave2:pdi": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validation/verify-wave-2-deployment.ps1 -Auth rob-pdi"
+      "verify:wave2:pdi": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validation/verify-wave-2-deployment.ps1 -Auth pdi"
     },
     "devDependencies": {
         "@servicenow/glide": "27.0.5",

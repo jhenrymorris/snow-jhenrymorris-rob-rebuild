@@ -18,10 +18,10 @@ export const requireAccessEndDateForTimeLimitedWorkers = CatalogUiPolicy({
     appliesOnRequestedItems: false,
     appliesOnTargetRecord: false,
     catalogCondition:
-        'x_2108496_hr_acces_employment_typeINcontractor,auditor_investigator',
+        'x_2166123_hr_acc_0_employment_typeINcontractor,auditor_investigator',
     actions: [
         {
-            variableName: 'x_2108496_hr_acces_access_end_date',
+            variableName: 'x_2166123_hr_acc_0_access_end_date',
             visible: true,
             mandatory: true,
             cleared: false,

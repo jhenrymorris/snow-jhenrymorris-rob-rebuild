@@ -19,7 +19,7 @@ const {
 
 function baseTables() {
     return {
-        x_2108496_hr_acces_rob_config: [
+        x_2166123_hr_acc_0_rob_config: [
             {
                 sys_id: 'config_1',
                 active: '1',
@@ -412,9 +412,9 @@ test('legacy case fields remain metadata-only and correction action is inactive'
         'utf8'
     )
     for (const field of [
-        'x_2108496_hr_acces_position_title',
-        'x_2108496_hr_acces_organization_snapshot',
-        'x_2108496_hr_acces_supervisor_snapshot',
+        'x_2166123_hr_acc_0_position_title',
+        'x_2166123_hr_acc_0_organization_snapshot',
+        'x_2166123_hr_acc_0_supervisor_snapshot',
     ]) {
         assert.match(caseFields, new RegExp(`${field}:`))
     }

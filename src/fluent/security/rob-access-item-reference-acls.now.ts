@@ -1,7 +1,7 @@
 import { Acl } from '@servicenow/sdk/core'
 import { robAdminRole } from '../roles/rob-roles.now'
 
-const accessItemTable = 'x_2108496_hr_acces_rob_access'
+const accessItemTable = 'x_2166123_hr_acc_0_rob_access'
 export const activeAccessItemInternalRead = Acl({
     $id: Now.ID['rob-access-item-active-internal-read'],
     type: 'record',

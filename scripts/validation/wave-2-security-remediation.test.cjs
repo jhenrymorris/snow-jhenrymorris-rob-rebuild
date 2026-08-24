@@ -30,33 +30,33 @@ const aclSource = fs.readFileSync(
 )
 
 const names = {
-    items: 'x_2108496_hr_acces_requested_items',
-    title: 'x_2108496_hr_acces_position_title',
-    organization: 'x_2108496_hr_acces_organization_snapshot',
-    supervisor: 'x_2108496_hr_acces_supervisor_snapshot',
-    exception: 'x_2108496_hr_acces_exception_review_required',
-    reason: 'x_2108496_hr_acces_exception_reason',
-    blocked: 'x_2108496_hr_acces_authorization_processing_blocked',
-    employeeGate: 'x_2108496_hr_acces_requires_employee_signature',
-    supervisorGate: 'x_2108496_hr_acces_requires_supervisor_signature',
-    fulfillmentGate: 'x_2108496_hr_acces_fulfillment_gate_complete',
-    correctionRequested: 'x_2108496_hr_acces_snapshot_correction_requested',
-    correctionReason: 'x_2108496_hr_acces_snapshot_correction_reason',
-    priorTitle: 'x_2108496_hr_acces_prior_position_title',
-    priorOrganization: 'x_2108496_hr_acces_prior_organization_snapshot',
-    priorSupervisor: 'x_2108496_hr_acces_prior_supervisor_snapshot',
-    correctedBy: 'x_2108496_hr_acces_snapshot_corrected_by',
-    correctedAt: 'x_2108496_hr_acces_snapshot_corrected_at',
+    items: 'x_2166123_hr_acc_0_requested_items',
+    title: 'x_2166123_hr_acc_0_position_title',
+    organization: 'x_2166123_hr_acc_0_organization_snapshot',
+    supervisor: 'x_2166123_hr_acc_0_supervisor_snapshot',
+    exception: 'x_2166123_hr_acc_0_exception_review_required',
+    reason: 'x_2166123_hr_acc_0_exception_reason',
+    blocked: 'x_2166123_hr_acc_0_authorization_processing_blocked',
+    employeeGate: 'x_2166123_hr_acc_0_requires_employee_signature',
+    supervisorGate: 'x_2166123_hr_acc_0_requires_supervisor_signature',
+    fulfillmentGate: 'x_2166123_hr_acc_0_fulfillment_gate_complete',
+    correctionRequested: 'x_2166123_hr_acc_0_snapshot_correction_requested',
+    correctionReason: 'x_2166123_hr_acc_0_snapshot_correction_reason',
+    priorTitle: 'x_2166123_hr_acc_0_prior_position_title',
+    priorOrganization: 'x_2166123_hr_acc_0_prior_organization_snapshot',
+    priorSupervisor: 'x_2166123_hr_acc_0_prior_supervisor_snapshot',
+    correctedBy: 'x_2166123_hr_acc_0_snapshot_corrected_by',
+    correctedAt: 'x_2166123_hr_acc_0_snapshot_corrected_at',
 }
 
 const preservedMappings = [
     'hr_service',
     'short_description',
     'rich_description',
-    'x_2108496_hr_acces_employment_type',
-    'x_2108496_hr_acces_access_end_date',
+    'x_2166123_hr_acc_0_employment_type',
+    'x_2166123_hr_acc_0_access_end_date',
     names.items,
-    'x_2108496_hr_acces_operations_manager',
+    'x_2166123_hr_acc_0_operations_manager',
     'assignment_group',
 ]
 
@@ -176,14 +176,14 @@ function glideRecordFactory(state) {
             this.limit = limit
         }
         this.query = () => {
-            if (table === 'x_2108496_hr_acces_rob_access') {
+            if (table === 'x_2166123_hr_acc_0_rob_access') {
                 const ids = String(this.queryValues.sys_id || '').split(',')
                 this.results = ids
                     .map((id) => accessItems[id])
                     .filter((item) => item && item.active === '1')
             } else if (table === 'sn_hr_core_task') {
                 this.results = state.existingExceptionTask ? [{}] : []
-            } else if (table === 'x_2108496_hr_acces_rob_config') {
+            } else if (table === 'x_2166123_hr_acc_0_rob_config') {
                 this.results = [{ default_exception_review_group: 'exception_group' }]
             } else {
                 this.results = []
@@ -218,10 +218,10 @@ function baseCase(overrides = {}) {
         subject_person: 'requester',
         short_description: 'Request access to HR systems',
         rich_description: 'Synthetic justification',
-        x_2108496_hr_acces_employment_type: 'federal_employee',
-        x_2108496_hr_acces_access_end_date: '2027-09-30',
+        x_2166123_hr_acc_0_employment_type: 'federal_employee',
+        x_2166123_hr_acc_0_access_end_date: '2027-09-30',
         [names.items]: 'staffing_item',
-        x_2108496_hr_acces_operations_manager: '',
+        x_2166123_hr_acc_0_operations_manager: '',
         assignment_group: 'native_payroll_group',
         ...overrides,
     }
@@ -329,8 +329,8 @@ test('only the four approved employment types are accepted and IPA is not forced
         const result = run(
             snapshotScript,
             baseCase({
-                x_2108496_hr_acces_employment_type: employmentType,
-                x_2108496_hr_acces_access_end_date:
+                x_2166123_hr_acc_0_employment_type: employmentType,
+                x_2166123_hr_acc_0_access_end_date:
                     employmentType === 'ipa' || employmentType === 'federal_employee'
                         ? ''
                         : '2027-09-30',
@@ -345,7 +345,7 @@ test('only the four approved employment types are accepted and IPA is not forced
 
     const invalid = run(
         snapshotScript,
-        baseCase({ x_2108496_hr_acces_employment_type: 'other_time_limited' })
+        baseCase({ x_2166123_hr_acc_0_employment_type: 'other_time_limited' })
     )
     assert.equal(invalid.current.aborted, true)
 })
@@ -355,8 +355,8 @@ test('contractor and auditor requests without an end date are blocked for except
         const result = run(
             snapshotScript,
             baseCase({
-                x_2108496_hr_acces_employment_type: employmentType,
-                x_2108496_hr_acces_access_end_date: '',
+                x_2166123_hr_acc_0_employment_type: employmentType,
+                x_2166123_hr_acc_0_access_end_date: '',
             })
         )
         assert.equal(result.current.aborted, false)
@@ -373,7 +373,7 @@ test('WPC requires one active Operations Manager and remains Analytics-only', ()
         sys_class_name: 'sn_hr_core_case_workforce_admin',
         hr_service: 'analytics_service',
         [names.items]: 'wpc_item',
-        x_2108496_hr_acces_access_end_date: '',
+        x_2166123_hr_acc_0_access_end_date: '',
     })
     const missing = run(snapshotScript, baseWpc)
     assert.equal(missing.current.aborted, false)
@@ -382,7 +382,7 @@ test('WPC requires one active Operations Manager and remains Analytics-only', ()
 
     const valid = run(snapshotScript, {
         ...baseWpc,
-        x_2108496_hr_acces_operations_manager: 'operations_manager',
+        x_2166123_hr_acc_0_operations_manager: 'operations_manager',
     })
     assert.equal(valid.current.aborted, false)
     assert.equal(valid.current.getValue(names.blocked), '0')
@@ -630,7 +630,7 @@ test('supervisor exception task creation is idempotent and configuration-routed'
     assert.equal(first.state.inserts.length, 1)
     assert.equal(first.state.inserts[0].table, 'sn_hr_core_task')
     assert.equal(
-        first.state.inserts[0].x_2108496_hr_acces_rob_task_type,
+        first.state.inserts[0].x_2166123_hr_acc_0_rob_task_type,
         'exception_review'
     )
     assert.equal(first.state.inserts[0].assignment_group, 'exception_group')
@@ -696,6 +696,6 @@ test('snapshot reads require a coherent self-submission and task type is immutab
     assert.match(aclSource, /openedBy == subjectPerson/)
     assert.match(
         aclSource,
-        /\$id: Now\.ID\['hr-task-rob-task-type-write'\][\s\S]*?field: 'x_2108496_hr_acces_rob_task_type'[\s\S]*?script: 'return false;'/
+        /\$id: Now\.ID\['hr-task-rob-task-type-write'\][\s\S]*?field: 'x_2166123_hr_acc_0_rob_task_type'[\s\S]*?script: 'return false;'/
     )
 })

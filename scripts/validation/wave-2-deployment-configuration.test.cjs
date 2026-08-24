@@ -49,11 +49,11 @@ test('both requested-items variables are active mandatory list collectors', () =
         assert.match(source, /ListCollectorVariable\(\{/)
         assert.match(
             source,
-            /x_2108496_hr_acces_requested_items:\s*ListCollectorVariable/
+            /x_2166123_hr_acc_0_requested_items:\s*ListCollectorVariable/
         )
         assert.match(
             source,
-            /listTable:\s*x_2108496_hr_acces_rob_access\.name/
+            /listTable:\s*x_2166123_hr_acc_0_rob_access\.name/
         )
         assert.match(source, /active:\s*true/)
         assert.match(source, /mandatory:\s*true/)
@@ -82,7 +82,7 @@ test('access-item table uses name display and sys_id list-collector values', () 
 
 test('six starter access items and exact categories are source controlled', () => {
     assert.equal(
-        (accessItems.match(/table:\s*'x_2108496_hr_acces_rob_access'/g) || [])
+        (accessItems.match(/table:\s*'x_2166123_hr_acc_0_rob_access'/g) || [])
             .length,
         6
     )
@@ -333,19 +333,19 @@ test('all employee-facing case payload fields are SDK managed', () => {
     }
     assert.match(
         caseFields,
-        /x_2108496_hr_acces_employment_type:\s*ChoiceColumn/
+        /x_2166123_hr_acc_0_employment_type:\s*ChoiceColumn/
     )
     assert.match(
         caseFields,
-        /x_2108496_hr_acces_access_end_date:\s*DateColumn/
+        /x_2166123_hr_acc_0_access_end_date:\s*DateColumn/
     )
     assert.match(
         caseFields,
-        /x_2108496_hr_acces_operations_manager:\s*ReferenceColumn/
+        /x_2166123_hr_acc_0_operations_manager:\s*ReferenceColumn/
     )
     assert.match(
         caseFields,
-        /x_2108496_hr_acces_operations_manager:[\s\S]*?referenceTable:\s*'sys_user'[\s\S]*?referenceQual:\s*'active=true'/
+        /x_2166123_hr_acc_0_operations_manager:[\s\S]*?referenceTable:\s*'sys_user'[\s\S]*?referenceQual:\s*'active=true'/
     )
 })
 
@@ -361,12 +361,12 @@ test('employee-facing dependencies remain portal-safe and self-only', () => {
     assert.doesNotMatch(commonVariables, /other_time_limited:/)
     assert.match(
         commonVariables,
-        /x_2108496_hr_acces_business_justification:\s*MultiLineTextVariable/
+        /x_2166123_hr_acc_0_business_justification:\s*MultiLineTextVariable/
     )
     assert.match(commonVariables, /question:\s*'Business Justification'/)
     assert.match(
         analyticsVariables,
-        /x_2108496_hr_acces_operations_manager:\s*ReferenceVariable/
+        /x_2166123_hr_acc_0_operations_manager:\s*ReferenceVariable/
     )
     assert.match(
         commonPolicies,
@@ -420,15 +420,15 @@ test('employee-facing dependencies remain portal-safe and self-only', () => {
     assert.match(requesterSecurity, /new RobProfileAuthorizationContext\(\)/)
     assert.doesNotMatch(
         requesterSecurity,
-        /setValue\(['"]x_2108496_hr_acces_(?:position_title|organization_snapshot|supervisor_snapshot)/
+        /setValue\(['"]x_2166123_hr_acc_0_(?:position_title|organization_snapshot|supervisor_snapshot)/
     )
     assert.match(
         commonVariables,
-        /x_2108496_hr_acces_selected_supervisor:\s*ReferenceVariable/
+        /x_2166123_hr_acc_0_selected_supervisor:\s*ReferenceVariable/
     )
     assert.match(
         commonVariables,
-        /x_2108496_hr_acces_organization_fallback:\s*ReferenceVariable/
+        /x_2166123_hr_acc_0_organization_fallback:\s*ReferenceVariable/
     )
 })
 

@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string]$Auth = 'rob-pdi'
+    [string]$Auth = 'pdi'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -437,7 +437,7 @@ foreach ($producerExpectation in $expectations.recordProducers) {
 Write-Section 'Requested Access Items Variables'
 $requestedVariables = Invoke-ReadOnlyQuery `
     -Table 'item_option_new' `
-    -Query 'name=x_2108496_hr_acces_requested_items' `
+    -Query 'name=x_2166123_hr_acc_0_requested_items' `
     -Fields 'sys_id,name,question_text,type,list_table,reference,reference_qual,active,mandatory,variable_set,order'
 Show-Records $requestedVariables @(
     'sys_id', 'name', 'question_text', 'type', 'list_table', 'reference',
@@ -685,7 +685,7 @@ $caseFields = @($scopeDictionaries | Where-Object {
         'sn_hr_core_case_payroll',
         'sn_hr_core_case_workforce_admin'
     ) -and
-    (Get-RawValue $_ 'element').StartsWith('x_2108496_hr_acces_')
+    (Get-RawValue $_ 'element').StartsWith('x_2166123_hr_acc_0_')
 })
 Show-Records $caseFields @(
     'sys_id', 'name', 'element', 'column_label', 'internal_type', 'reference',
@@ -697,8 +697,8 @@ $scopeAcls = Invoke-ReadOnlyQuery `
     -Fields 'sys_id,name,operation,active,admin_overrides,condition,decision_type,script'
 $caseAcls = @($scopeAcls | Where-Object {
     $aclName = Get-RawValue $_ 'name'
-    $aclName.StartsWith('sn_hr_core_case_payroll.x_2108496_hr_acces_') -or
-    $aclName.StartsWith('sn_hr_core_case_workforce_admin.x_2108496_hr_acces_')
+    $aclName.StartsWith('sn_hr_core_case_payroll.x_2166123_hr_acc_0_') -or
+    $aclName.StartsWith('sn_hr_core_case_workforce_admin.x_2166123_hr_acc_0_')
 })
 Show-Records $caseAcls @(
     'sys_id', 'name', 'operation', 'active', 'admin_overrides', 'condition',
@@ -729,7 +729,7 @@ if ($caseAcls.Count -eq 0) {
 Write-Section 'HR Task ACL'
 $taskAcls = Invoke-ReadOnlyQuery `
     -Table 'sys_security_acl' `
-    -Query 'name=sn_hr_core_task.x_2108496_hr_acces_rob_task_type' `
+    -Query 'name=sn_hr_core_task.x_2166123_hr_acc_0_rob_task_type' `
     -Fields 'sys_id,name,operation,active,admin_overrides,condition,decision_type,script'
 Show-Records $taskAcls @(
     'sys_id', 'name', 'operation', 'active', 'admin_overrides', 'condition',
@@ -805,7 +805,7 @@ foreach ($producerExpectation in $expectations.recordProducers) {
     }
 }
 $configuration = Invoke-ReadOnlyQuery `
-    -Table 'x_2108496_hr_acces_rob_config' `
+    -Table 'x_2166123_hr_acc_0_rob_config' `
     -Query 'active=true' `
     -Fields 'sys_id,name,active,default_staffing_assignment_group,default_analytics_assignment_group,default_operations_manager_escalation_group,default_exception_review_group'
 Show-Records $configuration @(

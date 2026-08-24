@@ -51,7 +51,7 @@ export const createSupervisorExceptionReviewTaskAfterInsert = BusinessRule({
     action: ['insert'],
     order: 200,
     filterCondition:
-        'x_2108496_hr_acces_exception_review_required=true^x_2108496_hr_acces_authorization_processing_blocked=true',
+        'x_2166123_hr_acc_0_exception_review_required=true^x_2166123_hr_acc_0_authorization_processing_blocked=true',
     description:
         'Creates at most one native HR Exception Review task for an approved Staffing intake prerequisite exception.',
     script: Now.include('../server/create-supervisor-exception-task.server.js'),
@@ -66,7 +66,7 @@ export const createWorkforceExceptionReviewTaskAfterInsert = BusinessRule({
     action: ['insert'],
     order: 200,
     filterCondition:
-        'x_2108496_hr_acces_exception_review_required=true^x_2108496_hr_acces_authorization_processing_blocked=true',
+        'x_2166123_hr_acc_0_exception_review_required=true^x_2166123_hr_acc_0_authorization_processing_blocked=true',
     description:
         'Creates at most one native HR Exception Review task for an approved Analytics intake prerequisite exception.',
     script: Now.include('../server/create-supervisor-exception-task.server.js'),

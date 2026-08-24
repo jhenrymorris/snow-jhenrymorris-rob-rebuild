@@ -577,7 +577,7 @@ test('post-signature final PDF fills and flattens the governed Form 1768 on Auth
         'utf8'
     )
     assert.match(source, /fillDocumentFieldsAndFlatten/)
-    assert.match(source, /x_2108496_hr_acces_rob_auth/)
+    assert.match(source, /x_2166123_hr_acc_0_rob_auth/)
     assert.match(source, /FlattenType:\s*'fully_flatten'/)
     assert.match(source, /Employee Signature Date\/Time/)
     assert.match(source, /Supervisor Signature Date\/Time/)
@@ -648,5 +648,5 @@ test('Authorization Form has approved native evidence and final PDF references',
 test('R4 adds no custom business, signature, approval, or document table', () => {
     const source = fs.readFileSync(path.join(root, 'src/fluent/business-rules/rob-authorization-lifecycle.now.ts'), 'utf8')
     assert.doesNotMatch(source, /Table\s*\(/)
-    assert.doesNotMatch(source, /x_2108496_hr_acces_(signature|approval|pdf|document)/)
+    assert.doesNotMatch(source, /x_2166123_hr_acc_0_(signature|approval|pdf|document)/)
 })

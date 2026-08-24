@@ -11,7 +11,7 @@ RobProfileAuthorizationContext.prototype = {
     },
 
     _configuration: function () {
-        var configuration = new GlideRecord('x_2108496_hr_acces_rob_config')
+        var configuration = new GlideRecord('x_2166123_hr_acc_0_rob_config')
         configuration.addQuery('active', true)
         configuration.setLimit(2)
         configuration.query()
@@ -113,11 +113,11 @@ RobProfileAuthorizationContext.prototype = {
             subjectId,
             this._variableValue(
                 sourceCase,
-                'x_2108496_hr_acces_selected_supervisor'
+                'x_2166123_hr_acc_0_selected_supervisor'
             ),
             this._variableValue(
                 sourceCase,
-                'x_2108496_hr_acces_organization_fallback'
+                'x_2166123_hr_acc_0_organization_fallback'
             )
         )
     },

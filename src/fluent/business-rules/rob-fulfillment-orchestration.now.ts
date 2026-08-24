@@ -1,7 +1,7 @@
 import { BusinessRule } from '@servicenow/sdk/core'
 
 const fulfillmentFilter =
-    'x_2108496_hr_acces_fulfillment_gate_complete=true^x_2108496_hr_acces_authorization_processing_blocked=false^x_2108496_hr_acces_authorization_pathINnew,reuse,amendment,renewal'
+    'x_2166123_hr_acc_0_fulfillment_gate_complete=true^x_2166123_hr_acc_0_authorization_processing_blocked=false^x_2166123_hr_acc_0_authorization_pathINnew,reuse,amendment,renewal'
 
 export const orchestratePayrollFulfillment = BusinessRule({
     $id: Now.ID['orchestrate-payroll-fulfillment'],

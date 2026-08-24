@@ -25,28 +25,28 @@ const keys = read('src/fluent/generated/keys.ts')
 const relatedList = read('src/fluent/forms/rob-authorization-related-list.now.ts')
 
 test('R1 has exactly four scoped custom business tables', () => {
-    const declared = [...tableSources.matchAll(/name:\s*'(x_2108496_hr_acces_[^']+)'/g)]
+    const declared = [...tableSources.matchAll(/name:\s*'(x_2166123_hr_acc_0_[^']+)'/g)]
         .map((match) => match[1])
         .filter((name, index, values) => values.indexOf(name) === index)
 
     assert.deepEqual(declared.sort(), [
-        'x_2108496_hr_acces_auth_detail',
-        'x_2108496_hr_acces_rob_access',
-        'x_2108496_hr_acces_rob_auth',
-        'x_2108496_hr_acces_rob_config',
+        'x_2166123_hr_acc_0_auth_detail',
+        'x_2166123_hr_acc_0_rob_access',
+        'x_2166123_hr_acc_0_rob_auth',
+        'x_2166123_hr_acc_0_rob_config',
     ])
 })
 
 test('R1 has exactly five functional roles and no requester role', () => {
-    const roleNames = [...roles.matchAll(/name:\s*'(x_2108496_hr_acces\.[^']+)'/g)].map(
+    const roleNames = [...roles.matchAll(/name:\s*'(x_2166123_hr_acc_0\.[^']+)'/g)].map(
         (match) => match[1]
     )
     assert.deepEqual(roleNames.sort(), [
-        'x_2108496_hr_acces.rob_admin',
-        'x_2108496_hr_acces.rob_analytics_fulfiller',
-        'x_2108496_hr_acces.rob_compliance_viewer',
-        'x_2108496_hr_acces.rob_operations_manager',
-        'x_2108496_hr_acces.rob_staffing_fulfiller',
+        'x_2166123_hr_acc_0.rob_admin',
+        'x_2166123_hr_acc_0.rob_analytics_fulfiller',
+        'x_2166123_hr_acc_0.rob_compliance_viewer',
+        'x_2166123_hr_acc_0.rob_operations_manager',
+        'x_2166123_hr_acc_0.rob_staffing_fulfiller',
     ])
     assert.doesNotMatch(roles, /requester|subject/i)
 })
@@ -77,7 +77,7 @@ test('R1 configuration has the approved catalog and April 2026 version', () => {
 })
 
 test('R1 access catalog has exactly six migration-safe governed records', () => {
-    assert.equal((accessSeeds.match(/table:\s*'x_2108496_hr_acces_rob_access'/g) || []).length, 6)
+    assert.equal((accessSeeds.match(/table:\s*'x_2166123_hr_acc_0_rob_access'/g) || []).length, 6)
     for (const name of [
         'FPPS/WTTS',
         'eOPF',
@@ -183,13 +183,13 @@ test('R1 schema introduces no SSN field', () => {
 
 test('R1 preserves all existing governed seed IDs', () => {
     const expected = {
-        'default-rob-configuration': '5a2f47bb7a7b4054a1cda69422fffbaf',
-        'rob-access-item-fpps-wtts': '183e8d6e80fd4825bc0d0cb6b051facc',
-        'rob-access-item-eopf': '2f65b6a0129c49b98f1fca2b54d1e74f',
-        'rob-access-item-usa-staffing': '888b607ff5564df1b0f202346e83dbfb',
-        'rob-access-item-human-capital-data': '52f1f7b193a143fdafbebac07a15c763',
-        'rob-access-item-report-access': '088251b291f84df1a551e46128c4057e',
-        'rob-access-item-workforce-profile-charts': 'dc96577f31514e57a137b265f3c07d78',
+        'default-rob-configuration': '89a60ff18cf14a8f9c115577f446ea68',
+        'rob-access-item-fpps-wtts': 'd3fbf08ea77c42dfa0729a656c7d5011',
+        'rob-access-item-eopf': '293f36e2d3e842538bce04d7340fb455',
+        'rob-access-item-usa-staffing': '2fab05311fe149a1a76398af18d0fa40',
+        'rob-access-item-human-capital-data': 'bdaaf1d62f44414f8e231e6d78cae247',
+        'rob-access-item-report-access': '2ce743bf3ca14f149210e00b02eb0c61',
+        'rob-access-item-workforce-profile-charts': 'ab86563842864812a3390dbc21591407',
     }
     for (const [key, id] of Object.entries(expected)) {
         const pattern = new RegExp(`'${key}':\\s*\\{[\\s\\S]*?id:\\s*'${id}'`)

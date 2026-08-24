@@ -1,5 +1,5 @@
 import { ListCollectorVariable, VariableSet } from '@servicenow/sdk/core'
-import { x_2108496_hr_acces_rob_access } from '../tables/rob-access-item-reference.now'
+import { x_2166123_hr_acc_0_rob_access } from '../tables/rob-access-item-reference.now'
 
 export const robStaffingAccessVariableSet = VariableSet({
     $id: Now.ID['rob-staffing-access-variable-set'],
@@ -10,9 +10,9 @@ export const robStaffingAccessVariableSet = VariableSet({
     layout: 'normal',
     order: 200,
     variables: {
-        x_2108496_hr_acces_requested_items: ListCollectorVariable({
+        x_2166123_hr_acc_0_requested_items: ListCollectorVariable({
             question: 'Requested Access Items',
-            listTable: x_2108496_hr_acces_rob_access.name,
+            listTable: x_2166123_hr_acc_0_rob_access.name,
             referenceQual: 'active=true^access_category=hr_system',
             order: 100,
             active: true,

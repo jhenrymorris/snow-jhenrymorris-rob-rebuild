@@ -9,7 +9,7 @@ export const initiatePayrollAuthorizationLifecycle = BusinessRule({
     action: ['update'],
     order: 300,
     filterCondition:
-        'x_2108496_hr_acces_decision_evaluated_atISNOTEMPTY^x_2108496_hr_acces_authorization_processing_blocked=false^x_2108496_hr_acces_authorization_pathINnew,reuse,amendment,renewal,exception',
+        'x_2166123_hr_acc_0_decision_evaluated_atISNOTEMPTY^x_2166123_hr_acc_0_authorization_processing_blocked=false^x_2166123_hr_acc_0_authorization_pathINnew,reuse,amendment,renewal,exception',
     description:
         'Consumes a newly persisted deterministic R3 decision and idempotently prepares the governed R4 authorization lifecycle without creating fulfillment work.',
     script: Now.include('../server/authorization-lifecycle-initiation.server.js'),
@@ -24,7 +24,7 @@ export const initiateWorkforceAuthorizationLifecycle = BusinessRule({
     action: ['update'],
     order: 300,
     filterCondition:
-        'x_2108496_hr_acces_decision_evaluated_atISNOTEMPTY^x_2108496_hr_acces_authorization_processing_blocked=false^x_2108496_hr_acces_authorization_pathINnew,reuse,amendment,renewal,exception',
+        'x_2166123_hr_acc_0_decision_evaluated_atISNOTEMPTY^x_2166123_hr_acc_0_authorization_processing_blocked=false^x_2166123_hr_acc_0_authorization_pathINnew,reuse,amendment,renewal,exception',
     description:
         'Consumes a newly persisted deterministic R3 decision and idempotently prepares the governed R4 authorization lifecycle without creating fulfillment work.',
     script: Now.include('../server/authorization-lifecycle-initiation.server.js'),
@@ -52,7 +52,7 @@ export const captureSupervisorApprovalDecision = BusinessRule({
     action: ['update'],
     order: 300,
     filterCondition:
-        'stateINapproved,rejected^source_table=x_2108496_hr_acces_rob_auth^document_idISNOTEMPTY',
+        'stateINapproved,rejected^source_table=x_2166123_hr_acc_0_rob_auth^document_idISNOTEMPTY',
     description:
         'Persists the governed Supervisor native approval decision; rejection denies without signing, while approval launches the separate required native Supervisor signature.',
     script: Now.include('../server/supervisor-approval-evidence.server.js'),
@@ -66,7 +66,7 @@ export const preventDuplicateFinalAuthorizationPdf = BusinessRule({
     action: ['insert'],
     order: 90,
     filterCondition:
-        'table_name=x_2108496_hr_acces_rob_auth^content_type=application/pdf^file_nameSTARTSWITHROB-Form-1768-',
+        'table_name=x_2166123_hr_acc_0_rob_auth^content_type=application/pdf^file_nameSTARTSWITHROB-Form-1768-',
     description:
         'Prevents a second authoritative Form 1768 PDF from being attached to the same governed Authorization Form.',
     script: Now.include('../server/authorization-final-pdf-guard.server.js'),
@@ -80,7 +80,7 @@ export const finalizeAuthorizationAfterPdfAssociation = BusinessRule({
     action: ['insert'],
     order: 300,
     filterCondition:
-        'table_name=x_2108496_hr_acces_rob_auth^content_type=application/pdf^file_nameSTARTSWITHROB-Form-1768-',
+        'table_name=x_2166123_hr_acc_0_rob_auth^content_type=application/pdf^file_nameSTARTSWITHROB-Form-1768-',
     description:
         'Activates a fully signed authorization only after its distinct final Form 1768 PDF is associated with the governed Authorization Form, then supersedes any predecessor.',
     script: Now.include('../server/authorization-finalization.server.js'),

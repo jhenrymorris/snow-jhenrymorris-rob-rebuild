@@ -29,16 +29,21 @@ Content under `docs/archive/zurich-development/` is historical evidence only. Do
 
 ## 2. Application Identity
 
-- Application name: `HR Access ROB Authorization`
+- Application name: `HR Access ROB Authorization Rebuild`
 - Application type: Scoped
 - Target release: ServiceNow Australia
 - Development target: Personal Developer Instance
-- Authentication alias: `rob-pdi`
+- Authentication alias: `pdi`
 - SDK baseline: `4.8.1`
-- Scope: `x_2108496_hr_acces` (use the scope already defined in `now.config.json`)
+- Scope: `x_2166123_hr_acc_0` (use the scope already defined in `now.config.json`)
 - MVP submission model: Self-submission only
 
 Do not change the application scope after metadata creation begins.
+
+This identity applies only to the `codex/dev437-rebuild-identity` rebuild line
+targeting `dev437065`. The original `feature/05-fulfillment-orchestration`
+branch and the `dev285962` application remain separate and must not be changed
+as part of rebuild work.
 
 ---
 

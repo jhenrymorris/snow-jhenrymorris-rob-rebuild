@@ -2,7 +2,7 @@ import { Record } from '@servicenow/sdk/core'
 
 export const defaultRobConfiguration = Record({
     $id: Now.ID['default-rob-configuration'],
-    table: 'x_2108496_hr_acces_rob_config',
+    table: 'x_2166123_hr_acc_0_rob_config',
     data: {
         name: 'Default ROB Configuration',
         active: true,

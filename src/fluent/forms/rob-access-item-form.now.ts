@@ -2,7 +2,7 @@ import { Form, default_view } from '@servicenow/sdk/core'
 import { robAdminRole } from '../roles/rob-roles.now'
 
 export const robAccessItemForm = Form({
-    table: 'x_2108496_hr_acces_rob_access', view: default_view, roles: [robAdminRole],
+    table: 'x_2166123_hr_acc_0_rob_access', view: default_view, roles: [robAdminRole],
     sections: [
         { caption: 'Access Item', content: [
             { layout: 'two-column', leftElements: [{ field: 'name', type: 'table_field' }, { field: 'access_item_code', type: 'table_field' }, { field: 'access_category', type: 'table_field' }], rightElements: [{ field: 'active', type: 'table_field' }, { field: 'sort_order', type: 'table_field' }] },
