@@ -7,6 +7,9 @@ target/
 .jest_cache
 .claude/
 
+# Generated Fluent dependency manifests are not deployable applications.
+@types/servicenow/fluent/*/now.config.json
+
 # Generated Wave 2 orchestration artifacts
 orchestration/output/
 orchestration/prompts/
