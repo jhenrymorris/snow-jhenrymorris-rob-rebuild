@@ -41,6 +41,23 @@ unchanged.
   supported Fluent Build and Install path; no shell record will be fabricated.
 - No application source has been installed from the local SDK.
 
+## IDE source synchronization result
+
+- Final identity commit `3f3595d` is pushed to the isolated repository
+  `jhenrymorris/snow-jhenrymorris-rob-rebuild` on `main`.
+- The IDE Git extension has no supported `Add Remote` or repository-file import
+  command. Its supported `Git: Clone` binding operation returned HTTP 500.
+- Platform logs show `sn_glider.GliderGitRelay` requested the repository at
+  `2026-08-24 18:39:58` and then raised
+  `ECCResponseTimeoutException` after 30 seconds for ECC request
+  `5dbc4e1383fa43104f5193a6feaad3b7`.
+- `Git: Apply` is a stash operation, not a patch-file importer, so it cannot
+  load the committed source without the Git relay.
+- The incomplete local IDE checkout was removed from `ROB DEV437 REBUILD`
+  through `Workspaces: Remove Application from Workspace...`. The workspace is
+  empty again, and read-only verification still returns no `sys_scope` row for
+  `4aba8657837a43104f5193a6feaad3c5` / `x_2166123_rob_auth`.
+
 ## Source reconciliation
 
 - Executable Fluent source, server adapters, manual HR Core bridge source, and
@@ -67,6 +84,13 @@ unchanged.
 ## Installation boundary
 
 This record is source/build evidence only. It is not proof of installation or
-runtime behavior. Review and commit the branch diff, synchronize the separate
-GitHub repository into the IDE-created project, and obtain explicit install
-approval before Build and Install.
+runtime behavior. Build and Install was not run. The rebuild is blocked before
+source synchronization by the instance Git relay timeout; no manual source
+injection, SDK installation, or fabricated `sys_app`/`sys_scope` record was
+used.
+
+Current classification:
+
+- `M3 — BLOCKED-PLATFORM`
+- `ServiceNow IDE Git relay source synchronization — FAILED`
+- `M4 — NOT READY`

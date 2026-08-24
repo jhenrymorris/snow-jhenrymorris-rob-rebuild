@@ -2010,6 +2010,17 @@ Not exposed by session/tool — no estimate recorded.
   configuration 16/16, R3 30/30, R4 58/58, and M4 26/26 PASS. Normal and
   frozen-key builds PASS with the five unchanged TS11 warnings; `git diff
   --check` PASS.
-- Deployment: not executed. Separate Git remote exists; final identity commit,
-  IDE source synchronization, diff review, and explicit Build and Install
-  authorization remain required.
+- Deployment: not executed. The separate Git remote and final identity source
+  exist, but IDE source synchronization did not complete.
+- Final identity checkpoint: `3f3595d`, pushed to isolated repository `main`.
+- IDE synchronization: FAILED. Supported `Git: Clone` returned HTTP 500;
+  `sn_glider.GliderGitRelay` timed out after 30 seconds waiting for ECC request
+  `5dbc4e1383fa43104f5193a6feaad3b7` (`2026-08-24 18:39:58` through
+  `18:40:28`). The IDE exposes neither Add Remote nor repository-file import;
+  its `Git: Apply` command is stash-only.
+- Cleanup: incomplete V2 checkout removed from workspace through the supported
+  Remove Application command; workspace returned to empty and the reserved V2
+  identity has no `sys_scope` row. No Build and Install, SDK install, manual
+  metadata write, or generated-key edit occurred.
+- Result: M3 BLOCKED-PLATFORM; ServiceNow IDE Git relay source synchronization
+  FAILED; M4 NOT READY.
