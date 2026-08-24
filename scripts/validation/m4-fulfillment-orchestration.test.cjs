@@ -317,8 +317,8 @@ test('inactive production entry points and native HR Task metadata are source-co
         path.join(root, 'src/fluent/server/fulfillment-orchestration.server.js'),
         'utf8'
     )
-    assert.match(adapter, /x_2166123_hr_acc_0_requested_items/)
-    assert.doesNotMatch(adapter, /x_2166123_hr_acc_0_requested_access_items/)
+    assert.match(adapter, /x_2166123_rob_auth_requested_items/)
+    assert.doesNotMatch(adapter, /x_2166123_rob_auth_requested_access_items/)
 })
 
 test('M4 source contains no direct external provisioning integration artifacts', () => {
@@ -337,5 +337,5 @@ test('M4 adds no custom fulfillment table', () => {
         .filter((file) => file.endsWith('.now.ts'))
         .map((file) => fs.readFileSync(path.join(root, 'src/fluent/tables', file), 'utf8'))
         .join('\n')
-    assert.doesNotMatch(sourceFiles, /name:\s*['"]x_2166123_hr_acc_0_.*fulfill/i)
+    assert.doesNotMatch(sourceFiles, /name:\s*['"]x_2166123_rob_auth_.*fulfill/i)
 })

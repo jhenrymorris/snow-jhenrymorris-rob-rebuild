@@ -1,7 +1,7 @@
 {
-    "scope": "x_2166123_hr_acc_0",
-    "scopeId": "6d508ed7833643104f5193a6feaad372",
-    "name": "HR Access ROB Authorization Rebuild",
+    "scope": "x_2166123_rob_auth",
+    "scopeId": "4aba8657837a43104f5193a6feaad3c5",
+    "name": "HR Access ROB Authorization V2",
     "ignoreTransformTableList": [
         "sys_db_object",
         "sys_dictionary",

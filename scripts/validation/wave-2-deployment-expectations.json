@@ -1,9 +1,9 @@
 {
-  "scope": "x_2166123_hr_acc_0",
-  "scopeId": "6d508ed7833643104f5193a6feaad372",
+  "scope": "x_2166123_rob_auth",
+  "scopeId": "4aba8657837a43104f5193a6feaad3c5",
   "selfSubmissionSentence": "This request will be submitted for your own HR systems or data access.",
   "accessItemTable": {
-    "name": "x_2166123_hr_acc_0_rob_access",
+    "name": "x_2166123_rob_auth_rob_access",
     "displayField": "name",
     "valueField": "sys_id",
     "employeeRole": "snc_internal",
@@ -115,28 +115,28 @@
   },
   "caseFields": {
     "common": [
-      "x_2166123_hr_acc_0_employment_type",
-      "x_2166123_hr_acc_0_access_end_date",
-      "x_2166123_hr_acc_0_requested_items",
-      "x_2166123_hr_acc_0_position_title",
-      "x_2166123_hr_acc_0_organization_snapshot",
-      "x_2166123_hr_acc_0_supervisor_snapshot",
-      "x_2166123_hr_acc_0_exception_review_required",
-      "x_2166123_hr_acc_0_exception_reason",
-      "x_2166123_hr_acc_0_authorization_processing_blocked",
-      "x_2166123_hr_acc_0_requires_employee_signature",
-      "x_2166123_hr_acc_0_requires_supervisor_signature",
-      "x_2166123_hr_acc_0_fulfillment_gate_complete",
-      "x_2166123_hr_acc_0_snapshot_correction_requested",
-      "x_2166123_hr_acc_0_snapshot_correction_reason",
-      "x_2166123_hr_acc_0_prior_position_title",
-      "x_2166123_hr_acc_0_prior_organization_snapshot",
-      "x_2166123_hr_acc_0_prior_supervisor_snapshot",
-      "x_2166123_hr_acc_0_snapshot_corrected_by",
-      "x_2166123_hr_acc_0_snapshot_corrected_at"
+      "x_2166123_rob_auth_employment_type",
+      "x_2166123_rob_auth_access_end_date",
+      "x_2166123_rob_auth_requested_items",
+      "x_2166123_rob_auth_position_title",
+      "x_2166123_rob_auth_organization_snapshot",
+      "x_2166123_rob_auth_supervisor_snapshot",
+      "x_2166123_rob_auth_exception_review_required",
+      "x_2166123_rob_auth_exception_reason",
+      "x_2166123_rob_auth_authorization_processing_blocked",
+      "x_2166123_rob_auth_requires_employee_signature",
+      "x_2166123_rob_auth_requires_supervisor_signature",
+      "x_2166123_rob_auth_fulfillment_gate_complete",
+      "x_2166123_rob_auth_snapshot_correction_requested",
+      "x_2166123_rob_auth_snapshot_correction_reason",
+      "x_2166123_rob_auth_prior_position_title",
+      "x_2166123_rob_auth_prior_organization_snapshot",
+      "x_2166123_rob_auth_prior_supervisor_snapshot",
+      "x_2166123_rob_auth_snapshot_corrected_by",
+      "x_2166123_rob_auth_snapshot_corrected_at"
     ],
     "workforceOnly": [
-      "x_2166123_hr_acc_0_operations_manager"
+      "x_2166123_rob_auth_operations_manager"
     ]
   }
 }

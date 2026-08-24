@@ -2,7 +2,7 @@ import { Form, default_view } from '@servicenow/sdk/core'
 import { robAdminRole, robComplianceViewerRole } from '../roles/rob-roles.now'
 
 export const robAuthorizationForm = Form({
-    table: 'x_2166123_hr_acc_0_rob_auth', view: default_view,
+    table: 'x_2166123_rob_auth_rob_auth', view: default_view,
     roles: [robAdminRole, robComplianceViewerRole],
     sections: [
         {

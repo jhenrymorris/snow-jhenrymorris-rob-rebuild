@@ -38,7 +38,7 @@
         fieldMap.Justification = authorization.getValue('business_justification')
 
         var selectedMappings = {}
-        var details = new GlideRecord('x_2166123_hr_acc_0_auth_detail')
+        var details = new GlideRecord('x_2166123_rob_auth_auth_detail')
         details.addQuery(
             'rob_authorization_form',
             authorization.getUniqueValue()
@@ -122,7 +122,7 @@
             .fillDocumentFieldsAndFlatten(
                 finalPdfFieldMap(authorization, generatedAt),
                 documentId,
-                'x_2166123_hr_acc_0_rob_auth',
+                'x_2166123_rob_auth_rob_auth',
                 authorization.getUniqueValue(),
                 'ROB-Form-1768-' + authorization.getValue('number'),
                 flatten
@@ -153,7 +153,7 @@
         return
     }
 
-    var authorization = new GlideRecord('x_2166123_hr_acc_0_rob_auth')
+    var authorization = new GlideRecord('x_2166123_rob_auth_rob_auth')
     authorization.addQuery('source_hrsd_case', sourceCaseId)
     authorization.addQuery(
         'status',

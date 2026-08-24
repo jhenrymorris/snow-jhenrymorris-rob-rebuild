@@ -7,11 +7,11 @@ import {
     StringColumn,
     Table,
 } from '@servicenow/sdk/core'
-import { x_2166123_hr_acc_0_rob_access } from './rob-access-item-reference.now'
-import { x_2166123_hr_acc_0_rob_auth } from './rob-authorization-form.now'
+import { x_2166123_rob_auth_rob_access } from './rob-access-item-reference.now'
+import { x_2166123_rob_auth_rob_auth } from './rob-authorization-form.now'
 
-export const x_2166123_hr_acc_0_auth_detail = Table({
-    name: 'x_2166123_hr_acc_0_auth_detail',
+export const x_2166123_rob_auth_auth_detail = Table({
+    name: 'x_2166123_rob_auth_auth_detail',
     label: 'Authorized Access Detail',
     display: 'number',
     extensible: false,
@@ -68,7 +68,7 @@ export const x_2166123_hr_acc_0_auth_detail = Table({
         }),
         rob_authorization_form: ReferenceColumn({
             label: 'ROB Authorization Form',
-            referenceTable: x_2166123_hr_acc_0_rob_auth.name,
+            referenceTable: x_2166123_rob_auth_rob_auth.name,
             mandatory: true,
             cascadeRule: 'restrict',
             readOnly: true,
@@ -84,7 +84,7 @@ export const x_2166123_hr_acc_0_auth_detail = Table({
         }),
         access_item: ReferenceColumn({
             label: 'Access Item',
-            referenceTable: x_2166123_hr_acc_0_rob_access.name,
+            referenceTable: x_2166123_rob_auth_rob_access.name,
             mandatory: true,
             cascadeRule: 'restrict',
             readOnly: true,

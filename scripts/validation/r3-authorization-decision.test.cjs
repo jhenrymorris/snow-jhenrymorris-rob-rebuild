@@ -301,7 +301,7 @@ test('decision source contains no downstream record creation or task APIs', () =
     assert.doesNotMatch(sources, /GlideRecord|\.insert\(|\.update\(|sn_hr_core_task/)
     assert.doesNotMatch(
         sources,
-        /x_2166123_hr_acc_0_rob_auth|x_2166123_hr_acc_0_auth_detail/
+        /x_2166123_rob_auth_rob_auth|x_2166123_rob_auth_auth_detail/
     )
 })
 

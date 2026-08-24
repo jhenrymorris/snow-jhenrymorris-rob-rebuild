@@ -3,7 +3,7 @@ import { ScriptInclude } from '@servicenow/sdk/core'
 export const robProfileAuthorizationContext = ScriptInclude({
     $id: Now.ID['rob-profile-authorization-context'],
     name: 'RobProfileAuthorizationContext',
-    apiName: 'x_2166123_hr_acc_0.RobProfileAuthorizationContext',
+    apiName: 'x_2166123_rob_auth.RobProfileAuthorizationContext',
     active: true,
     // Native catalog reference qualifiers execute outside this application
     // scope. Keep the resolver server-only, but permit that sandbox caller to

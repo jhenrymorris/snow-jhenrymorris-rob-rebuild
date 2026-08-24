@@ -1,8 +1,8 @@
 (function executeRule(current) {
-    var requestedItemsField = 'x_2166123_hr_acc_0_requested_items'
-    var employmentTypeField = 'x_2166123_hr_acc_0_employment_type'
-    var accessEndDateField = 'x_2166123_hr_acc_0_access_end_date'
-    var operationsManagerField = 'x_2166123_hr_acc_0_operations_manager'
+    var requestedItemsField = 'x_2166123_rob_auth_requested_items'
+    var employmentTypeField = 'x_2166123_rob_auth_employment_type'
+    var accessEndDateField = 'x_2166123_rob_auth_access_end_date'
+    var operationsManagerField = 'x_2166123_rob_auth_operations_manager'
     var requestRequirements = {
         requiresAccessEndDate: false,
         requiresOperationsManager: false,
@@ -103,7 +103,7 @@
             return false
         }
 
-        var accessItem = new GlideRecord('x_2166123_hr_acc_0_rob_access')
+        var accessItem = new GlideRecord('x_2166123_rob_auth_rob_access')
         accessItem.addQuery('sys_id', 'IN', Object.keys(uniqueItemIds).join(','))
         accessItem.addQuery('active', true)
         accessItem.query()

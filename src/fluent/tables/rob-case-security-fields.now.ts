@@ -9,8 +9,8 @@ import {
     StringColumn,
     Table,
 } from '@servicenow/sdk/core'
-import { x_2166123_hr_acc_0_rob_access } from './rob-access-item-reference.now'
-import { x_2166123_hr_acc_0_rob_auth } from './rob-authorization-form.now'
+import { x_2166123_rob_auth_rob_access } from './rob-access-item-reference.now'
+import { x_2166123_rob_auth_rob_auth } from './rob-authorization-form.now'
 
 const supervisorExceptionChoices = {
     missing_supervisor: 'Missing supervisor',
@@ -61,7 +61,7 @@ const decisionReasonChoices = {
 }
 
 const caseSecuritySchema = {
-    x_2166123_hr_acc_0_authorization_path: ChoiceColumn({
+    x_2166123_rob_auth_authorization_path: ChoiceColumn({
         label: 'ROB Authorization Path',
         choices: {
             new: 'New', reuse: 'Reuse', amendment: 'Amendment',
@@ -70,19 +70,19 @@ const caseSecuritySchema = {
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_decision_reason: StringColumn({
+    x_2166123_rob_auth_decision_reason: StringColumn({
         label: 'ROB Decision Reason',
         maxLength: 80,
         choices: decisionReasonChoices,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_decision_evaluated_at: DateTimeColumn({
+    x_2166123_rob_auth_decision_evaluated_at: DateTimeColumn({
         label: 'ROB Decision Evaluated At',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_existing_authorization_status: ChoiceColumn({
+    x_2166123_rob_auth_existing_authorization_status: ChoiceColumn({
         label: 'ROB Existing Authorization Status',
         choices: {
             none: 'None', active: 'Active', expired: 'Expired',
@@ -92,127 +92,127 @@ const caseSecuritySchema = {
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_evaluated_authorization: ReferenceColumn({
+    x_2166123_rob_auth_evaluated_authorization: ReferenceColumn({
         label: 'ROB Evaluated Authorization',
-        referenceTable: x_2166123_hr_acc_0_rob_auth.name,
+        referenceTable: x_2166123_rob_auth_rob_auth.name,
         cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_covered_access: ListColumn({
+    x_2166123_rob_auth_covered_access: ListColumn({
         label: 'ROB Covered Access',
-        referenceTable: x_2166123_hr_acc_0_rob_access.name,
+        referenceTable: x_2166123_rob_auth_rob_access.name,
         maxLength: 1000,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_uncovered_access: ListColumn({
+    x_2166123_rob_auth_uncovered_access: ListColumn({
         label: 'ROB Uncovered Access',
-        referenceTable: x_2166123_hr_acc_0_rob_access.name,
+        referenceTable: x_2166123_rob_auth_rob_access.name,
         maxLength: 1000,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_proposed_expiration_date: DateColumn({
+    x_2166123_rob_auth_proposed_expiration_date: DateColumn({
         label: 'ROB Proposed Expiration Date',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_requires_supervisor_approval: BooleanColumn({
+    x_2166123_rob_auth_requires_supervisor_approval: BooleanColumn({
         label: 'ROB Requires Supervisor Approval',
         default: false,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_material_context_change: BooleanColumn({
+    x_2166123_rob_auth_material_context_change: BooleanColumn({
         label: 'ROB Material Context Change',
         default: false,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_renewal_reason: StringColumn({
+    x_2166123_rob_auth_renewal_reason: StringColumn({
         label: 'ROB Renewal Reason',
         maxLength: 80,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_duplicate_case: ReferenceColumn({
+    x_2166123_rob_auth_duplicate_case: ReferenceColumn({
         label: 'ROB Duplicate Case',
         referenceTable: 'sn_hr_core_case',
         cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_employment_type: ChoiceColumn({
+    x_2166123_rob_auth_employment_type: ChoiceColumn({
         label: 'Employment Type Snapshot',
         choices: employmentTypeChoices,
     }),
-    x_2166123_hr_acc_0_access_end_date: DateColumn({
+    x_2166123_rob_auth_access_end_date: DateColumn({
         label: 'Access End Date',
     }),
-    x_2166123_hr_acc_0_requested_items: ListColumn({
+    x_2166123_rob_auth_requested_items: ListColumn({
         label: 'ROB Requested Access Items',
-        referenceTable: x_2166123_hr_acc_0_rob_access.name,
+        referenceTable: x_2166123_rob_auth_rob_access.name,
         maxLength: 1000,
     }),
-    x_2166123_hr_acc_0_position_title: StringColumn({
+    x_2166123_rob_auth_position_title: StringColumn({
         label: 'Position Title Snapshot',
         maxLength: 160,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_organization_snapshot: ReferenceColumn({
+    x_2166123_rob_auth_organization_snapshot: ReferenceColumn({
         label: 'Organization / DIR-DIV Snapshot',
         referenceTable: 'cmn_department',
         cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_supervisor_snapshot: ReferenceColumn({
+    x_2166123_rob_auth_supervisor_snapshot: ReferenceColumn({
         label: 'Supervisor Snapshot',
         referenceTable: 'sys_user',
         cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_exception_review_required: BooleanColumn({
+    x_2166123_rob_auth_exception_review_required: BooleanColumn({
         label: 'ROB Exception Review Required',
         default: false,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_exception_reason: StringColumn({
+    x_2166123_rob_auth_exception_reason: StringColumn({
         label: 'ROB Exception Reason',
         maxLength: 80,
         choices: supervisorExceptionChoices,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_authorization_processing_blocked: BooleanColumn({
+    x_2166123_rob_auth_authorization_processing_blocked: BooleanColumn({
         label: 'ROB Authorization Processing Blocked',
         default: false,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_requires_employee_signature: BooleanColumn({
+    x_2166123_rob_auth_requires_employee_signature: BooleanColumn({
         label: 'ROB Requires Employee Signature',
         default: false,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_requires_supervisor_signature: BooleanColumn({
+    x_2166123_rob_auth_requires_supervisor_signature: BooleanColumn({
         label: 'ROB Requires Supervisor Signature',
         default: false,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_fulfillment_gate_complete: BooleanColumn({
+    x_2166123_rob_auth_fulfillment_gate_complete: BooleanColumn({
         label: 'ROB Fulfillment Gate Complete',
         default: false,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_reuse_attestation_status: ChoiceColumn({
+    x_2166123_rob_auth_reuse_attestation_status: ChoiceColumn({
         label: 'ROB Reuse Attestation Status',
         choices: {
             pending: 'Pending', approved: 'Approved', denied: 'Denied',
@@ -221,87 +221,87 @@ const caseSecuritySchema = {
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_reuse_supervisor_decision: ChoiceColumn({
+    x_2166123_rob_auth_reuse_supervisor_decision: ChoiceColumn({
         label: 'ROB Reuse Supervisor Decision',
         choices: { approved: 'Approved', denied: 'Denied' },
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_reuse_supervisor_signer: ReferenceColumn({
+    x_2166123_rob_auth_reuse_supervisor_signer: ReferenceColumn({
         label: 'ROB Reuse Supervisor Signer',
         referenceTable: 'sys_user',
         cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_reuse_supervisor_signature_at: DateTimeColumn({
+    x_2166123_rob_auth_reuse_supervisor_signature_at: DateTimeColumn({
         label: 'ROB Reuse Supervisor Signature At',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_reuse_document_task: ReferenceColumn({
+    x_2166123_rob_auth_reuse_document_task: ReferenceColumn({
         label: 'ROB Reuse Document Task',
         referenceTable: 'sn_doc_task',
         cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_reuse_document_execution: ReferenceColumn({
+    x_2166123_rob_auth_reuse_document_execution: ReferenceColumn({
         label: 'ROB Reuse Document Execution',
         referenceTable: 'sn_doc_task_execution',
         cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_reuse_attestation_completed_at: DateTimeColumn({
+    x_2166123_rob_auth_reuse_attestation_completed_at: DateTimeColumn({
         label: 'ROB Reuse Attestation Completed At',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_reuse_attestation_context: StringColumn({
+    x_2166123_rob_auth_reuse_attestation_context: StringColumn({
         label: 'ROB Reuse Attestation Context',
         maxLength: 1000,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_snapshot_correction_requested: BooleanColumn({
+    x_2166123_rob_auth_snapshot_correction_requested: BooleanColumn({
         label: 'ROB Snapshot Correction Requested',
         default: false,
         audit: true,
     }),
-    x_2166123_hr_acc_0_snapshot_correction_reason: StringColumn({
+    x_2166123_rob_auth_snapshot_correction_reason: StringColumn({
         label: 'ROB Snapshot Correction Reason',
         maxLength: 1000,
         audit: true,
     }),
-    x_2166123_hr_acc_0_prior_position_title: StringColumn({
+    x_2166123_rob_auth_prior_position_title: StringColumn({
         label: 'Prior Position Title Snapshot',
         maxLength: 160,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_prior_organization_snapshot: ReferenceColumn({
+    x_2166123_rob_auth_prior_organization_snapshot: ReferenceColumn({
         label: 'Prior Organization / DIR-DIV Snapshot',
         referenceTable: 'cmn_department',
         cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_prior_supervisor_snapshot: ReferenceColumn({
+    x_2166123_rob_auth_prior_supervisor_snapshot: ReferenceColumn({
         label: 'Prior Supervisor Snapshot',
         referenceTable: 'sys_user',
         cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_snapshot_corrected_by: ReferenceColumn({
+    x_2166123_rob_auth_snapshot_corrected_by: ReferenceColumn({
         label: 'ROB Snapshot Corrected By',
         referenceTable: 'sys_user',
         cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_snapshot_corrected_at: DateTimeColumn({
+    x_2166123_rob_auth_snapshot_corrected_at: DateTimeColumn({
         label: 'ROB Snapshot Corrected At',
         readOnly: true,
         audit: true,
@@ -309,7 +309,7 @@ const caseSecuritySchema = {
 }
 
 const workforceCaseSecuritySchema = {
-    x_2166123_hr_acc_0_authorization_path: ChoiceColumn({
+    x_2166123_rob_auth_authorization_path: ChoiceColumn({
         label: 'ROB Authorization Path',
         choices: {
             new: 'New', reuse: 'Reuse', amendment: 'Amendment',
@@ -318,19 +318,19 @@ const workforceCaseSecuritySchema = {
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_decision_reason: StringColumn({
+    x_2166123_rob_auth_decision_reason: StringColumn({
         label: 'ROB Decision Reason',
         maxLength: 80,
         choices: decisionReasonChoices,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_decision_evaluated_at: DateTimeColumn({
+    x_2166123_rob_auth_decision_evaluated_at: DateTimeColumn({
         label: 'ROB Decision Evaluated At',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_existing_authorization_status: ChoiceColumn({
+    x_2166123_rob_auth_existing_authorization_status: ChoiceColumn({
         label: 'ROB Existing Authorization Status',
         choices: {
             none: 'None', active: 'Active', expired: 'Expired',
@@ -340,134 +340,134 @@ const workforceCaseSecuritySchema = {
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_evaluated_authorization: ReferenceColumn({
+    x_2166123_rob_auth_evaluated_authorization: ReferenceColumn({
         label: 'ROB Evaluated Authorization',
-        referenceTable: x_2166123_hr_acc_0_rob_auth.name,
+        referenceTable: x_2166123_rob_auth_rob_auth.name,
         cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_covered_access: ListColumn({
+    x_2166123_rob_auth_covered_access: ListColumn({
         label: 'ROB Covered Access',
-        referenceTable: x_2166123_hr_acc_0_rob_access.name,
+        referenceTable: x_2166123_rob_auth_rob_access.name,
         maxLength: 1000,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_uncovered_access: ListColumn({
+    x_2166123_rob_auth_uncovered_access: ListColumn({
         label: 'ROB Uncovered Access',
-        referenceTable: x_2166123_hr_acc_0_rob_access.name,
+        referenceTable: x_2166123_rob_auth_rob_access.name,
         maxLength: 1000,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_proposed_expiration_date: DateColumn({
+    x_2166123_rob_auth_proposed_expiration_date: DateColumn({
         label: 'ROB Proposed Expiration Date',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_requires_supervisor_approval: BooleanColumn({
+    x_2166123_rob_auth_requires_supervisor_approval: BooleanColumn({
         label: 'ROB Requires Supervisor Approval',
         default: false,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_material_context_change: BooleanColumn({
+    x_2166123_rob_auth_material_context_change: BooleanColumn({
         label: 'ROB Material Context Change',
         default: false,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_renewal_reason: StringColumn({
+    x_2166123_rob_auth_renewal_reason: StringColumn({
         label: 'ROB Renewal Reason',
         maxLength: 80,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_duplicate_case: ReferenceColumn({
+    x_2166123_rob_auth_duplicate_case: ReferenceColumn({
         label: 'ROB Duplicate Case',
         referenceTable: 'sn_hr_core_case',
         cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_employment_type: ChoiceColumn({
+    x_2166123_rob_auth_employment_type: ChoiceColumn({
         label: 'Employment Type Snapshot',
         choices: employmentTypeChoices,
     }),
-    x_2166123_hr_acc_0_access_end_date: DateColumn({
+    x_2166123_rob_auth_access_end_date: DateColumn({
         label: 'Access End Date',
     }),
-    x_2166123_hr_acc_0_requested_items: ListColumn({
+    x_2166123_rob_auth_requested_items: ListColumn({
         label: 'ROB Requested Access Items',
-        referenceTable: x_2166123_hr_acc_0_rob_access.name,
+        referenceTable: x_2166123_rob_auth_rob_access.name,
         maxLength: 1000,
     }),
-    x_2166123_hr_acc_0_operations_manager: ReferenceColumn({
+    x_2166123_rob_auth_operations_manager: ReferenceColumn({
         label: 'Operations Manager',
         referenceTable: 'sys_user',
         referenceQual: 'active=true',
         useReferenceQualifier: 'simple',
         cascadeRule: 'clear',
     }),
-    x_2166123_hr_acc_0_position_title: StringColumn({
+    x_2166123_rob_auth_position_title: StringColumn({
         label: 'Position Title Snapshot',
         maxLength: 160,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_organization_snapshot: ReferenceColumn({
+    x_2166123_rob_auth_organization_snapshot: ReferenceColumn({
         label: 'Organization / DIR-DIV Snapshot',
         referenceTable: 'cmn_department',
         cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_supervisor_snapshot: ReferenceColumn({
+    x_2166123_rob_auth_supervisor_snapshot: ReferenceColumn({
         label: 'Supervisor Snapshot',
         referenceTable: 'sys_user',
         cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_exception_review_required: BooleanColumn({
+    x_2166123_rob_auth_exception_review_required: BooleanColumn({
         label: 'ROB Exception Review Required',
         default: false,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_exception_reason: StringColumn({
+    x_2166123_rob_auth_exception_reason: StringColumn({
         label: 'ROB Exception Reason',
         maxLength: 80,
         choices: supervisorExceptionChoices,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_authorization_processing_blocked: BooleanColumn({
+    x_2166123_rob_auth_authorization_processing_blocked: BooleanColumn({
         label: 'ROB Authorization Processing Blocked',
         default: false,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_requires_employee_signature: BooleanColumn({
+    x_2166123_rob_auth_requires_employee_signature: BooleanColumn({
         label: 'ROB Requires Employee Signature',
         default: false,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_requires_supervisor_signature: BooleanColumn({
+    x_2166123_rob_auth_requires_supervisor_signature: BooleanColumn({
         label: 'ROB Requires Supervisor Signature',
         default: false,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_fulfillment_gate_complete: BooleanColumn({
+    x_2166123_rob_auth_fulfillment_gate_complete: BooleanColumn({
         label: 'ROB Fulfillment Gate Complete',
         default: false,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_reuse_attestation_status: ChoiceColumn({
+    x_2166123_rob_auth_reuse_attestation_status: ChoiceColumn({
         label: 'ROB Reuse Attestation Status',
         choices: {
             pending: 'Pending', approved: 'Approved', denied: 'Denied',
@@ -476,87 +476,87 @@ const workforceCaseSecuritySchema = {
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_reuse_supervisor_decision: ChoiceColumn({
+    x_2166123_rob_auth_reuse_supervisor_decision: ChoiceColumn({
         label: 'ROB Reuse Supervisor Decision',
         choices: { approved: 'Approved', denied: 'Denied' },
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_reuse_supervisor_signer: ReferenceColumn({
+    x_2166123_rob_auth_reuse_supervisor_signer: ReferenceColumn({
         label: 'ROB Reuse Supervisor Signer',
         referenceTable: 'sys_user',
         cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_reuse_supervisor_signature_at: DateTimeColumn({
+    x_2166123_rob_auth_reuse_supervisor_signature_at: DateTimeColumn({
         label: 'ROB Reuse Supervisor Signature At',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_reuse_document_task: ReferenceColumn({
+    x_2166123_rob_auth_reuse_document_task: ReferenceColumn({
         label: 'ROB Reuse Document Task',
         referenceTable: 'sn_doc_task',
         cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_reuse_document_execution: ReferenceColumn({
+    x_2166123_rob_auth_reuse_document_execution: ReferenceColumn({
         label: 'ROB Reuse Document Execution',
         referenceTable: 'sn_doc_task_execution',
         cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_reuse_attestation_completed_at: DateTimeColumn({
+    x_2166123_rob_auth_reuse_attestation_completed_at: DateTimeColumn({
         label: 'ROB Reuse Attestation Completed At',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_reuse_attestation_context: StringColumn({
+    x_2166123_rob_auth_reuse_attestation_context: StringColumn({
         label: 'ROB Reuse Attestation Context',
         maxLength: 1000,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_snapshot_correction_requested: BooleanColumn({
+    x_2166123_rob_auth_snapshot_correction_requested: BooleanColumn({
         label: 'ROB Snapshot Correction Requested',
         default: false,
         audit: true,
     }),
-    x_2166123_hr_acc_0_snapshot_correction_reason: StringColumn({
+    x_2166123_rob_auth_snapshot_correction_reason: StringColumn({
         label: 'ROB Snapshot Correction Reason',
         maxLength: 1000,
         audit: true,
     }),
-    x_2166123_hr_acc_0_prior_position_title: StringColumn({
+    x_2166123_rob_auth_prior_position_title: StringColumn({
         label: 'Prior Position Title Snapshot',
         maxLength: 160,
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_prior_organization_snapshot: ReferenceColumn({
+    x_2166123_rob_auth_prior_organization_snapshot: ReferenceColumn({
         label: 'Prior Organization / DIR-DIV Snapshot',
         referenceTable: 'cmn_department',
         cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_prior_supervisor_snapshot: ReferenceColumn({
+    x_2166123_rob_auth_prior_supervisor_snapshot: ReferenceColumn({
         label: 'Prior Supervisor Snapshot',
         referenceTable: 'sys_user',
         cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_snapshot_corrected_by: ReferenceColumn({
+    x_2166123_rob_auth_snapshot_corrected_by: ReferenceColumn({
         label: 'ROB Snapshot Corrected By',
         referenceTable: 'sys_user',
         cascadeRule: 'clear',
         readOnly: true,
         audit: true,
     }),
-    x_2166123_hr_acc_0_snapshot_corrected_at: DateTimeColumn({
+    x_2166123_rob_auth_snapshot_corrected_at: DateTimeColumn({
         label: 'ROB Snapshot Corrected At',
         readOnly: true,
         audit: true,
@@ -576,7 +576,7 @@ export const sn_hr_core_case_workforce_admin = Table({
 export const sn_hr_core_task = Table({
     augments: 'sn_hr_core_task',
     schema: {
-        x_2166123_hr_acc_0_rob_task_type: StringColumn({
+        x_2166123_rob_auth_rob_task_type: StringColumn({
             label: 'ROB Task Type',
             maxLength: 40,
             choices: {
@@ -588,27 +588,27 @@ export const sn_hr_core_task = Table({
             readOnly: true,
             audit: true,
         }),
-        x_2166123_hr_acc_0_fulfillment_business_key: StringColumn({
+        x_2166123_rob_auth_fulfillment_business_key: StringColumn({
             label: 'ROB Fulfillment Business Key',
             maxLength: 100,
             readOnly: true,
             audit: true,
             unique: true,
         }),
-        x_2166123_hr_acc_0_related_authorization: ReferenceColumn({
+        x_2166123_rob_auth_related_authorization: ReferenceColumn({
             label: 'Related ROB Authorization Form',
-            referenceTable: x_2166123_hr_acc_0_rob_auth.name,
+            referenceTable: x_2166123_rob_auth_rob_auth.name,
             cascadeRule: 'clear',
             readOnly: true,
             audit: true,
         }),
-        x_2166123_hr_acc_0_rob_access_items: ListColumn({
+        x_2166123_rob_auth_rob_access_items: ListColumn({
             label: 'ROB Access Items',
-            referenceTable: x_2166123_hr_acc_0_rob_access.name,
+            referenceTable: x_2166123_rob_auth_rob_access.name,
             readOnly: true,
             audit: true,
         }),
-        x_2166123_hr_acc_0_external_provisioning_system: StringColumn({
+        x_2166123_rob_auth_external_provisioning_system: StringColumn({
             label: 'External Provisioning System',
             maxLength: 40,
             readOnly: true,
@@ -622,7 +622,7 @@ export const sn_hr_core_task = Table({
                 not_applicable: 'Not Applicable',
             },
         }),
-        x_2166123_hr_acc_0_external_target_system: StringColumn({
+        x_2166123_rob_auth_external_target_system: StringColumn({
             label: 'External Target System',
             maxLength: 80,
             readOnly: true,
@@ -636,7 +636,7 @@ export const sn_hr_core_task = Table({
                 not_applicable: 'Not Applicable',
             },
         }),
-        x_2166123_hr_acc_0_fulfillment_outcome: StringColumn({
+        x_2166123_rob_auth_fulfillment_outcome: StringColumn({
             label: 'ROB Fulfillment Outcome',
             maxLength: 40,
             audit: true,
@@ -647,45 +647,45 @@ export const sn_hr_core_task = Table({
                 failed_exception: 'Failed / Exception',
             },
         }),
-        x_2166123_hr_acc_0_completion_evidence: MultiLineTextColumn({
+        x_2166123_rob_auth_completion_evidence: MultiLineTextColumn({
             label: 'ROB Completion Evidence',
             maxLength: 4000,
             audit: true,
         }),
-        x_2166123_hr_acc_0_provisioning_completed: BooleanColumn({
+        x_2166123_rob_auth_provisioning_completed: BooleanColumn({
             label: 'ROB Provisioning Completed',
             default: false,
             audit: true,
         }),
-        x_2166123_hr_acc_0_completion_timestamp: DateTimeColumn({
+        x_2166123_rob_auth_completion_timestamp: DateTimeColumn({
             label: 'ROB Completion Date/Time',
             readOnly: true,
             audit: true,
         }),
-        x_2166123_hr_acc_0_exception_reason: MultiLineTextColumn({
+        x_2166123_rob_auth_exception_reason: MultiLineTextColumn({
             label: 'ROB Exception Reason',
             maxLength: 4000,
             audit: true,
         }),
-        x_2166123_hr_acc_0_formally_waived: BooleanColumn({
+        x_2166123_rob_auth_formally_waived: BooleanColumn({
             label: 'ROB Formally Waived',
             default: false,
             readOnly: true,
             audit: true,
         }),
-        x_2166123_hr_acc_0_waiver_reason: MultiLineTextColumn({
+        x_2166123_rob_auth_waiver_reason: MultiLineTextColumn({
             label: 'ROB Waiver Reason',
             maxLength: 4000,
             audit: true,
         }),
-        x_2166123_hr_acc_0_waived_by: ReferenceColumn({
+        x_2166123_rob_auth_waived_by: ReferenceColumn({
             label: 'ROB Waived By',
             referenceTable: 'sys_user',
             cascadeRule: 'clear',
             readOnly: true,
             audit: true,
         }),
-        x_2166123_hr_acc_0_waiver_date_time: DateTimeColumn({
+        x_2166123_rob_auth_waiver_date_time: DateTimeColumn({
             label: 'ROB Waiver Date/Time',
             readOnly: true,
             audit: true,

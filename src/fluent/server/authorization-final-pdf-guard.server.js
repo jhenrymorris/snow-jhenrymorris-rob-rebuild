@@ -1,5 +1,5 @@
 (function executeRule(current) {
-    var authorization = new GlideRecord('x_2166123_hr_acc_0_rob_auth')
+    var authorization = new GlideRecord('x_2166123_rob_auth_rob_auth')
     if (!authorization.get(current.getValue('table_sys_id'))) {
         current.setAbortAction(true)
         return
@@ -12,7 +12,7 @@
     }
 
     var existing = new GlideRecord('sys_attachment')
-    existing.addQuery('table_name', 'x_2166123_hr_acc_0_rob_auth')
+    existing.addQuery('table_name', 'x_2166123_rob_auth_rob_auth')
     existing.addQuery('table_sys_id', authorization.getUniqueValue())
     existing.addQuery('content_type', 'application/pdf')
     existing.addQuery('file_name', 'STARTSWITH', 'ROB-Form-1768-')

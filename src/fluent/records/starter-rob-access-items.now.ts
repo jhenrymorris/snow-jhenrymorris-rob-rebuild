@@ -2,7 +2,7 @@ import { Record } from '@servicenow/sdk/core'
 
 export const fppsWttsAccessItem = Record({
     $id: Now.ID['rob-access-item-fpps-wtts'],
-    table: 'x_2166123_hr_acc_0_rob_access',
+    table: 'x_2166123_rob_auth_rob_access',
     data: {
         name: 'FPPS/WTTS',
         active: true,
@@ -22,7 +22,7 @@ export const fppsWttsAccessItem = Record({
 
 export const eopfAccessItem = Record({
     $id: Now.ID['rob-access-item-eopf'],
-    table: 'x_2166123_hr_acc_0_rob_access',
+    table: 'x_2166123_rob_auth_rob_access',
     data: {
         name: 'eOPF',
         active: true,
@@ -42,7 +42,7 @@ export const eopfAccessItem = Record({
 
 export const usaStaffingAccessItem = Record({
     $id: Now.ID['rob-access-item-usa-staffing'],
-    table: 'x_2166123_hr_acc_0_rob_access',
+    table: 'x_2166123_rob_auth_rob_access',
     data: {
         name: 'USA Staffing',
         active: true,
@@ -62,7 +62,7 @@ export const usaStaffingAccessItem = Record({
 
 export const humanCapitalDataAccessItem = Record({
     $id: Now.ID['rob-access-item-human-capital-data'],
-    table: 'x_2166123_hr_acc_0_rob_access',
+    table: 'x_2166123_rob_auth_rob_access',
     data: {
         name: 'OAS/DataMart',
         active: true,
@@ -82,7 +82,7 @@ export const humanCapitalDataAccessItem = Record({
 
 export const reportAccessItem = Record({
     $id: Now.ID['rob-access-item-report-access'],
-    table: 'x_2166123_hr_acc_0_rob_access',
+    table: 'x_2166123_rob_auth_rob_access',
     data: {
         name: 'Human Capital Reports',
         active: true,
@@ -102,7 +102,7 @@ export const reportAccessItem = Record({
 
 export const workforceProfileChartsAccessItem = Record({
     $id: Now.ID['rob-access-item-workforce-profile-charts'],
-    table: 'x_2166123_hr_acc_0_rob_access',
+    table: 'x_2166123_rob_auth_rob_access',
     data: {
         name: 'Workforce Profile Charts',
         active: true,

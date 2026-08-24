@@ -9,8 +9,8 @@ import {
     Table,
 } from '@servicenow/sdk/core'
 
-export const x_2166123_hr_acc_0_rob_auth = Table({
-    name: 'x_2166123_hr_acc_0_rob_auth',
+export const x_2166123_rob_auth_rob_auth = Table({
+    name: 'x_2166123_rob_auth_rob_auth',
     label: 'ROB Authorization Form',
     display: 'number',
     extensible: false,
@@ -138,7 +138,7 @@ export const x_2166123_hr_acc_0_rob_auth = Table({
         }),
         evaluated_authorization: ReferenceColumn({
             label: 'Evaluated Authorization',
-            referenceTable: 'x_2166123_hr_acc_0_rob_auth',
+            referenceTable: 'x_2166123_rob_auth_rob_auth',
             cascadeRule: 'clear',
             readOnly: true,
             audit: true,
@@ -264,13 +264,13 @@ export const x_2166123_hr_acc_0_rob_auth = Table({
         }),
         supersedes_authorization_form: ReferenceColumn({
             label: 'Supersedes Authorization Form',
-            referenceTable: 'x_2166123_hr_acc_0_rob_auth',
+            referenceTable: 'x_2166123_rob_auth_rob_auth',
             cascadeRule: 'restrict',
             readOnly: true,
         }),
         superseded_by_authorization_form: ReferenceColumn({
             label: 'Superseded By Authorization Form',
-            referenceTable: 'x_2166123_hr_acc_0_rob_auth',
+            referenceTable: 'x_2166123_rob_auth_rob_auth',
             cascadeRule: 'restrict',
             readOnly: true,
         }),

@@ -54,15 +54,15 @@ RobHrCasePersistenceBridge.prototype = {
         }
 
         caseRecord.setValue(
-            'x_2166123_hr_acc_0_exception_review_required',
+            'x_2166123_rob_auth_exception_review_required',
             required ? '1' : '0'
         )
         caseRecord.setValue(
-            'x_2166123_hr_acc_0_exception_reason',
+            'x_2166123_rob_auth_exception_reason',
             required ? reason : ''
         )
         caseRecord.setValue(
-            'x_2166123_hr_acc_0_authorization_processing_blocked',
+            'x_2166123_rob_auth_authorization_processing_blocked',
             required ? '1' : '0'
         )
 

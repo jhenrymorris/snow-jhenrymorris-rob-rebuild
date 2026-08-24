@@ -1,15 +1,15 @@
 (function executeRule(current, previous) {
     var deprecatedFields = [
-        'x_2166123_hr_acc_0_position_title',
-        'x_2166123_hr_acc_0_organization_snapshot',
-        'x_2166123_hr_acc_0_supervisor_snapshot',
-        'x_2166123_hr_acc_0_snapshot_correction_requested',
-        'x_2166123_hr_acc_0_snapshot_correction_reason',
-        'x_2166123_hr_acc_0_prior_position_title',
-        'x_2166123_hr_acc_0_prior_organization_snapshot',
-        'x_2166123_hr_acc_0_prior_supervisor_snapshot',
-        'x_2166123_hr_acc_0_snapshot_corrected_by',
-        'x_2166123_hr_acc_0_snapshot_corrected_at',
+        'x_2166123_rob_auth_position_title',
+        'x_2166123_rob_auth_organization_snapshot',
+        'x_2166123_rob_auth_supervisor_snapshot',
+        'x_2166123_rob_auth_snapshot_correction_requested',
+        'x_2166123_rob_auth_snapshot_correction_reason',
+        'x_2166123_rob_auth_prior_position_title',
+        'x_2166123_rob_auth_prior_organization_snapshot',
+        'x_2166123_rob_auth_prior_supervisor_snapshot',
+        'x_2166123_rob_auth_snapshot_corrected_by',
+        'x_2166123_rob_auth_snapshot_corrected_at',
     ]
 
     for (var index = 0; index < deprecatedFields.length; index += 1) {

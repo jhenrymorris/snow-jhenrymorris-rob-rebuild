@@ -1,5 +1,5 @@
 (function executeRule(current, previous) {
-    var prefix = 'x_2166123_hr_acc_0_'
+    var prefix = 'x_2166123_rob_auth_'
     var decisionField = prefix + 'authorization_path'
     var decisionTimeField = prefix + 'decision_evaluated_at'
     var decisionReasonField = prefix + 'decision_reason'
@@ -95,7 +95,7 @@
         existingApproval.addQuery('sysapproval', current.getUniqueValue())
         existingApproval.addQuery(
             'source_table',
-            'x_2166123_hr_acc_0_rob_auth'
+            'x_2166123_rob_auth_rob_auth'
         )
         existingApproval.addQuery('document_id', authorizationId)
         existingApproval.addQuery('approver', supervisorId)
@@ -113,7 +113,7 @@
         var approval = new GlideRecord('sysapproval_approver')
         approval.initialize()
         approval.setValue('sysapproval', current.getUniqueValue())
-        approval.setValue('source_table', 'x_2166123_hr_acc_0_rob_auth')
+        approval.setValue('source_table', 'x_2166123_rob_auth_rob_auth')
         approval.setValue('document_id', authorizationId)
         approval.setValue('approver', supervisorId)
         approval.setValue('state', 'requested')
@@ -203,7 +203,7 @@
         return
     }
 
-    var existing = new GlideRecord('x_2166123_hr_acc_0_rob_auth')
+    var existing = new GlideRecord('x_2166123_rob_auth_rob_auth')
     existing.addQuery('source_hrsd_case', current.getUniqueValue())
     existing.setLimit(1)
     existing.query()
@@ -211,7 +211,7 @@
         return
     }
 
-    var configuration = new GlideRecord('x_2166123_hr_acc_0_rob_config')
+    var configuration = new GlideRecord('x_2166123_rob_auth_rob_config')
     configuration.addQuery('active', true)
     configuration.query()
     if (!configuration.next()) {
@@ -263,7 +263,7 @@
 
     if (decision === 'amendment' || decision === 'renewal') {
         var priorDetails = new GlideRecord(
-            'x_2166123_hr_acc_0_auth_detail'
+            'x_2166123_rob_auth_auth_detail'
         )
         priorDetails.addQuery('rob_authorization_form', priorAuthorizationId)
         priorDetails.addQuery('status', 'NOT IN', 'denied,revoked')
@@ -285,7 +285,7 @@
     var scopeRecords = []
     var scopeIndex
     for (scopeIndex = 0; scopeIndex < scopeIds.length; scopeIndex += 1) {
-        var accessItem = new GlideRecord('x_2166123_hr_acc_0_rob_access')
+        var accessItem = new GlideRecord('x_2166123_rob_auth_rob_access')
         if (!accessItem.get(scopeIds[scopeIndex])) {
             fail('an access item in the governed scope no longer exists')
             return
@@ -311,7 +311,7 @@
             employee.getValue('employee_number') || employee.getValue('user_name')
     }
 
-    var authorization = new GlideRecord('x_2166123_hr_acc_0_rob_auth')
+    var authorization = new GlideRecord('x_2166123_rob_auth_rob_auth')
     authorization.initialize()
     authorization.setValue('subject_person', subjectId)
     authorization.setValue('employee_id', employeeId)
@@ -365,7 +365,7 @@
     var createdDetailIds = []
     for (scopeIndex = 0; scopeIndex < scopeRecords.length; scopeIndex += 1) {
         var scopeRecord = scopeRecords[scopeIndex]
-        var detail = new GlideRecord('x_2166123_hr_acc_0_auth_detail')
+        var detail = new GlideRecord('x_2166123_rob_auth_auth_detail')
         detail.initialize()
         detail.setValue('source_hrsd_case', current.getUniqueValue())
         detail.setValue('rob_authorization_form', authorizationId)
@@ -403,7 +403,7 @@
                 cleanupIndex += 1
             ) {
                 var cleanupDetail = new GlideRecord(
-                    'x_2166123_hr_acc_0_auth_detail'
+                    'x_2166123_rob_auth_auth_detail'
                 )
                 if (cleanupDetail.get(createdDetailIds[cleanupIndex])) {
                     cleanupDetail.deleteRecord()

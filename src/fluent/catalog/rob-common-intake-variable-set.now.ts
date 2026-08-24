@@ -23,7 +23,7 @@ export const robCommonIntakeVariableSet = VariableSet({
             active: true,
             mapToField: false,
         }),
-        x_2166123_hr_acc_0_employment_type: SelectBoxVariable({
+        x_2166123_rob_auth_employment_type: SelectBoxVariable({
             question: 'Employment Type',
             order: 200,
             active: true,
@@ -36,21 +36,21 @@ export const robCommonIntakeVariableSet = VariableSet({
                 auditor_investigator: { label: 'Auditor / Investigator', sequence: 400 },
             },
         }),
-        x_2166123_hr_acc_0_access_end_date: DateVariable({
+        x_2166123_rob_auth_access_end_date: DateVariable({
             question: 'Access End Date',
             order: 300,
             active: true,
             mandatory: false,
             mapToField: false,
         }),
-        x_2166123_hr_acc_0_business_justification: MultiLineTextVariable({
+        x_2166123_rob_auth_business_justification: MultiLineTextVariable({
             question: 'Business Justification',
             order: 400,
             active: true,
             mandatory: true,
             mapToField: false,
         }),
-        x_2166123_hr_acc_0_selected_supervisor: ReferenceVariable({
+        x_2166123_rob_auth_selected_supervisor: ReferenceVariable({
             question: 'Supervisor (profile default; select only to correct)',
             description:
                 'Leave blank to use your authoritative profile manager. Any correction is limited to active members of the configured NSF Supervisors group and is validated again on the server.',
@@ -61,9 +61,9 @@ export const robCommonIntakeVariableSet = VariableSet({
             mapToField: false,
             useReferenceQualifier: 'advanced',
             referenceQual:
-                'javascript:new x_2166123_hr_acc_0.RobProfileAuthorizationContext().getSupervisorQualifier()',
+                'javascript:new x_2166123_rob_auth.RobProfileAuthorizationContext().getSupervisorQualifier()',
         }),
-        x_2166123_hr_acc_0_organization_fallback: ReferenceVariable({
+        x_2166123_rob_auth_organization_fallback: ReferenceVariable({
             question: 'Organization (only if profile organization is unavailable)',
             description:
                 'Used only when authoritative profile and directory organization sources are unavailable. The selection is constrained to the configured NSF organization hierarchy and validated again on the server.',
@@ -74,7 +74,7 @@ export const robCommonIntakeVariableSet = VariableSet({
             mapToField: false,
             useReferenceQualifier: 'advanced',
             referenceQual:
-                'javascript:new x_2166123_hr_acc_0.RobProfileAuthorizationContext().getOrganizationQualifier()',
+                'javascript:new x_2166123_rob_auth.RobProfileAuthorizationContext().getOrganizationQualifier()',
         }),
     },
 })

@@ -3,7 +3,7 @@
         return value === '1' || value === 'true'
     }
 
-    var authorization = new GlideRecord('x_2166123_hr_acc_0_rob_auth')
+    var authorization = new GlideRecord('x_2166123_rob_auth_rob_auth')
     if (!authorization.get(current.getValue('table_sys_id'))) {
         return
     }
@@ -52,7 +52,7 @@
         return
     }
 
-    var details = new GlideRecord('x_2166123_hr_acc_0_auth_detail')
+    var details = new GlideRecord('x_2166123_rob_auth_auth_detail')
     details.addQuery(
         'rob_authorization_form',
         authorization.getUniqueValue()
@@ -72,7 +72,7 @@
         return
     }
 
-    var predecessor = new GlideRecord('x_2166123_hr_acc_0_rob_auth')
+    var predecessor = new GlideRecord('x_2166123_rob_auth_rob_auth')
     if (!predecessor.get(predecessorId)) {
         authorization.setValue('status', previousStatus)
         authorization.update()
@@ -90,7 +90,7 @@
     }
 
     var predecessorDetails = new GlideRecord(
-        'x_2166123_hr_acc_0_auth_detail'
+        'x_2166123_rob_auth_auth_detail'
     )
     predecessorDetails.addQuery('rob_authorization_form', predecessorId)
     predecessorDetails.addQuery('status', 'NOT IN', 'denied,revoked')
