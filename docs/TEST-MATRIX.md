@@ -285,3 +285,8 @@ expansion were not used.
 | TM-174 | Deterministic unknown mapping | Adapter preserves unequal material context and annual-renewal disposition as `unknown`; engine returns the corresponding committed Exception | Source/R3 unit PASS |
 | TM-175 | Exception gate persistence | Exception sets review/block true, signature/approval requirements false, and fulfillment gate false | Focused test PASS |
 | TM-176 | Installed/runtime adapter acceptance | Reconcile HR Core bridge, install V2 callers, verify RCA and read-only outputs, then run New/Denial/Amendment/Renewal/Reuse/Exception | NOT RUN - install authorization required |
+| TM-177 | V2 current R3 live decision | `HRC0001009` persisted `New` / `NEW_NO_PRIOR_FORM` using current authorization context | PASS |
+| TM-178 | Retry-safe employee signing launch | `ROBA0001002`; native `DOCT0001001`; exact caller-specific Reads/Execute only | PASS to native task gate |
+| TM-179 | Native Fill Document | Synthetic employee invoked supported action; modal returned `Attachment Not Found` | BLOCKED-PLATFORM |
+| TM-180 | Governed template source/parent | Source PDF Preview succeeds, but supported Table selector excludes `x_2166123_rob_auth_rob_auth` | UNSUPPORTED |
+| TM-181 | Safe stop and local regression | Production template Published; duplicate inactive/Draft; M3/M4 lifecycle rules inactive; all required suites/builds pass | PASS |

@@ -2110,3 +2110,25 @@ Not exposed by session/tool — no estimate recorded.
 - No signing task, PDF, activation, lifecycle-rule activation, or fulfillment
   occurred. M3 is BLOCKED-PLATFORM on the native Document Templates source-table
   binding proven on dev437065; M4 remains inactive and not ready.
+
+#### V2 M3 native signing runtime hard stop
+
+- Date: `2026-08-25`.
+- Shape: one bounded supported native-runtime attempt; no M3.x workaround.
+- Runtime: `HRC0001009` classified `New`, `ROBA0001002` was created, and native
+  employee task `DOCT0001001` reached **Fill Document**. The modal returned
+  `Attachment Not Found`.
+- Capability evidence: the published source PDF exists, has three chunks, and
+  previews successfully; two participants and 28 mappings exist. The native
+  Table selector excludes the non-Task governed V2 Authorization Form, so the
+  required source/parent and final-PDF location cannot be configured without
+  changing architecture or table inheritance.
+- Cleanup: production template Published; accidental copy inactive/Draft after
+  supported cascade delete did not remove it; both M3 lifecycle rules inactive;
+  both M4 rules inactive.
+- Regression/build: M2 19/19, R1 9/9, Wave 2 security 22/22, deployment 16/16,
+  R3 30/30, focused R3 runtime 13/13, R4 58/58, M4 26/26, normal build, and
+  frozen-key build PASS. Generated-key diff empty.
+- Result: M3 BLOCKED-PLATFORM. The mismatch is application-wide on the clean
+  Australia V2 architecture, not the historical old-PDI installer defect.
+  M4 production runtime NOT READY.

@@ -148,11 +148,42 @@
         }
     }
 
+    function existingAuthorizationForCase() {
+        var authorization = new GlideRecord(
+            'x_2166123_rob_auth_rob_auth'
+        )
+        authorization.addQuery('source_hrsd_case', current.getUniqueValue())
+        authorization.setLimit(2)
+        authorization.query()
+        if (!authorization.next()) return null
+
+        var authorizationId = authorization.getUniqueValue()
+        if (authorization.next() || !authorization.get(authorizationId)) {
+            fail('duplicate governed Authorization Forms exist for the case')
+            return false
+        }
+        return authorization
+    }
+
+    function resumeEmployeeSigning(authorization) {
+        if (
+            authorization &&
+            supportedDecisions[current.getValue(decisionField)] &&
+            current.getValue(processingBlockedField) !== '1' &&
+            current.getValue(processingBlockedField) !== 'true' &&
+            authorization.getValue('status') === 'pending_employee_signature'
+        ) {
+            return initiateEmployeeSigning('ROB Form 1768 Authorization')
+        }
+        return false
+    }
+
     if (
         previous &&
         current.getValue(decisionTimeField) ===
         previous.getValue(decisionTimeField)
     ) {
+        resumeEmployeeSigning(existingAuthorizationForCase())
         return
     }
 
@@ -204,11 +235,12 @@
         return
     }
 
-    var existing = new GlideRecord('x_2166123_rob_auth_rob_auth')
-    existing.addQuery('source_hrsd_case', current.getUniqueValue())
-    existing.setLimit(1)
-    existing.query()
-    if (existing.next()) {
+    var existing = existingAuthorizationForCase()
+    if (existing === false) {
+        return
+    }
+    if (existing) {
+        resumeEmployeeSigning(existing)
         return
     }
 

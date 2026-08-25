@@ -283,3 +283,19 @@ No item above is authorized for implementation in R0. Unsupported native capabil
   not infer Reuse/Amendment/annual Renewal values.
 - [ ] M3 remains BLOCKED-PLATFORM; both M3 lifecycle entry rules and both M4
   rules remain inactive; M4 production runtime is not ready.
+
+## V2 native signing source/parent boundary
+
+- [x] Prove current R3 runtime with synthetic `New` on `HRC0001009`.
+- [x] Create one native employee Document Task through exact supported APIs
+  and caller records.
+- [x] Prove source PDF chunks, Preview, participants, and mappings exist.
+- [x] Prove the supported Table selector excludes the governed non-Task V2
+  Authorization Form.
+- [x] Restore production template Published, neutralize the accidental copy,
+  and deactivate both M3 lifecycle entry rules.
+- [ ] ServiceNow must support the governed Authorization Form as a native
+  Document Templates source/parent, or the application owner must explicitly
+  approve an architecture/data-integrity change. No M3.x workaround is
+  authorized.
+- [ ] M3 remains BLOCKED-PLATFORM; M4 remains inactive and NOT READY.

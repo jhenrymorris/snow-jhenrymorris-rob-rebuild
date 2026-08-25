@@ -277,3 +277,15 @@ remain prohibited.
 | Governed lifecycle | V2 Supervisor Approval Flow absent; both lifecycle initiation rules inactive | OPEN |
 | M4 boundary | Both ROB orchestration rules inactive | PASS / NOT STARTED |
 | Overall | Invocation/persistence restored; complete M3 lifecycle runtime not yet accepted | M3 OPEN; M4 NOT READY |
+
+## V2 native signing hard stop (2026-08-25)
+
+| Requirement | V2 evidence | Status |
+|---|---|---|
+| Current R3 decision invocation | `HRC0001009` -> `New`; `ROBA0001002` created | PASS |
+| Native employee signing task | `DOCT0001001`, governed employee participant, narrow caller records | PASS to launch gate |
+| Native signing UI | Employee **Fill Document** returned `Attachment Not Found` | BLOCKED-PLATFORM |
+| Governed source/parent | Published template is HR Case-bound; selector excludes non-Task Authorization Form | UNSUPPORTED |
+| Approved PDF storage | Final PDF only on Authorization Form cannot be configured through this path | BLOCKED-PLATFORM |
+| Security/safe state | Broad privileges 0; production template Published; copy inactive/Draft; M3/M4 entry rules inactive | PASS |
+| Overall | Architecture/data-integrity change required to proceed | M3 BLOCKED-PLATFORM; M4 NOT READY |

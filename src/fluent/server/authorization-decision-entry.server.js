@@ -119,6 +119,16 @@
         return listValues(access.join(','))
     }
 
+    function isDecisionHistoryStatus(status) {
+        return {
+            active: true,
+            expired: true,
+            lapsed: true,
+            revoked: true,
+            obsolete_version: true,
+        }[String(status || '')] === true
+    }
+
     function subjectAuthorizations(subjectId) {
         var records = []
         var authorization = new GlideRecord('x_2166123_rob_auth_rob_auth')
@@ -127,10 +137,13 @@
         authorization.query()
 
         while (authorization.next()) {
+            var authorizationStatus = String(
+                authorization.getValue('status') || ''
+            )
             records.push({
                 id: String(authorization.getUniqueValue() || ''),
                 subjectId: String(authorization.getValue('subject_person') || ''),
-                status: String(authorization.getValue('status') || ''),
+                status: authorizationStatus,
                 formVersion: String(authorization.getValue('form_version') || ''),
                 expirationDate: String(authorization.getValue('expiration_date') || ''),
                 organization: String(authorization.getValue('organization') || ''),
@@ -141,9 +154,7 @@
                 authorizedAccess: authorizationAccess(
                     authorization.getUniqueValue()
                 ),
-                applicable:
-                    authorization.getValue('status') !== 'superseded' &&
-                    authorization.getValue('status') !== 'denied',
+                applicable: isDecisionHistoryStatus(authorizationStatus),
             })
         }
 

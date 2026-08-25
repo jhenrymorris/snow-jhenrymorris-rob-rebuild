@@ -713,3 +713,46 @@ rules, and both M4 entry rules remain inactive. M4 is not ready.
   and frozen-key builds: PASS. Generated-key diff: empty. Live runtime retest
   remains pending installation of this correction and the matching supported
   native-form update to the existing HR Core bridge.
+
+## 2026-08-25 V2 native signing runtime hard stop
+
+The reconciled R3 path produced deterministic `New` on synthetic Payroll case
+`HRC0001009` and created governed Authorization Form `ROBA0001002`. The
+retry-safe lifecycle path created native employee Document Task `DOCT0001001`
+through `sn_doc.DocumentTaskUtils` after approving only exact caller Reads and
+Execute. The task was assigned to the synthetic employee and exposed the
+native **Fill Document** action.
+
+The supported employee action opened the native signing modal but returned
+`Attachment Not Found`. The published source PDF attachment exists (1,174,337
+bytes in three chunks), PDF Preview can process it, the template has two
+ordered participants, and 28 mappings are present. This is not a missing
+source-attachment condition.
+
+Production PDF Template `ROB Form 1768 Authorization`
+(`7119926383f247104f5193a6feaad318`) is Published and bound to
+`sn_hr_core_case`. Its supported Table selector offers Task-derived/native
+case tables but not governed table `x_2166123_rob_auth_rob_auth`. Native task
+creation can therefore be parented to the HR Case, but the required
+Authorization Form source/parent and final-PDF-only-on-Authorization-Form
+contract cannot be configured through the supported Australia UI.
+
+The original template was restored to Published. A native Copy could not be
+cascade-deleted through the supported form action, so it was neutralized as
+inactive Draft `[DISCARDED PDI COPY] ROB Form 1768 Authorization`
+(`ec9a80b783f687104f5193a6feaad34c`). Both M3 lifecycle entry Business Rules
+were returned inactive; both M4 entry rules remain inactive. No custom signing
+engine, direct metadata script, superclass change, broad privilege, or final
+PDF was introduced.
+
+**M3 — BLOCKED-PLATFORM.** Exact failing artifacts: native PDF Template
+`7119926383f247104f5193a6feaad318` and native Document Task `DOCT0001001`.
+Exact unsupported operation: bind the native template/task to the non-Task V2
+Authorization Form through a supported native editor while retaining the
+approved document and attachment architecture. Making the custom table
+Task-derived, substituting HR Case as the governed source, or adding custom
+signing/attachment logic would be an architecture/data-integrity change. This
+is an application-wide capability mismatch reproduced on the clean Australia
+PDI, not the closed old-PDI installer defect. New reached its native signing
+gate; Denial, Amendment, Renewal, Reuse, and Exception end-to-end acceptance
+were not executed after the mandatory stop. M4 production runtime is not ready.

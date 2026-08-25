@@ -51,6 +51,9 @@ function bridge() {
                 return '2026-08-25 12:00:00'
             }
         },
+        gs: {
+            error() {},
+        },
     }
     vm.runInNewContext(bridgeSource, context)
     return new context.RobHrCasePersistenceBridge()
@@ -170,6 +173,18 @@ test('organization context and governed reference use the resolved department id
 test('configuration and authorization scope extraction fail closed', () => {
     assert.match(adapter, /graceWindowValue\s*\?\s*Number\(graceWindowValue\)\s*:\s*-1/)
     assert.match(adapter, /detail\.addQuery\('status', 'NOT IN', 'denied,revoked'\)/)
+    assert.match(
+        adapter,
+        /function isDecisionHistoryStatus[\s\S]*active: true[\s\S]*expired: true[\s\S]*lapsed: true[\s\S]*revoked: true[\s\S]*obsolete_version: true/
+    )
+    assert.match(
+        adapter,
+        /applicable:\s*isDecisionHistoryStatus\(authorizationStatus\)/
+    )
+    assert.doesNotMatch(
+        adapter,
+        /authorization\.getValue\('status'\) !== 'superseded'/
+    )
 })
 
 test('downstream lifecycle accepts a decision persisted during insert or mapped-field update', () => {
@@ -178,6 +193,21 @@ test('downstream lifecycle accepts a decision persisted during insert or mapped-
         4
     )
     assert.match(lifecycle, /previous\s*&&[\s\S]*decisionTimeField/)
+})
+
+test('downstream lifecycle safely resumes a missing native employee signing task', () => {
+    assert.match(
+        lifecycle,
+        /function resumeEmployeeSigning\(authorization\)[\s\S]*pending_employee_signature[\s\S]*initiateEmployeeSigning/
+    )
+    assert.match(
+        lifecycle,
+        /previous\s*&&[\s\S]*decisionTimeField[\s\S]*resumeEmployeeSigning\(existingAuthorizationForCase\(\)\)/
+    )
+    assert.match(
+        lifecycle,
+        /existingAuthorizationForCase[\s\S]*setLimit\(2\)[\s\S]*duplicate governed Authorization Forms/
+    )
 })
 
 test('HR Core bridge persists the complete New output without changing HRSD identity', () => {

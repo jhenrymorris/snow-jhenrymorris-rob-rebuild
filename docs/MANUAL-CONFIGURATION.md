@@ -1002,3 +1002,18 @@ unequal material context as `unknown` and deliberately supplies
 `annualRenewalDue = unknown`; do not alter these values in the PDI or infer a
 disposition. Active/current authorization scenarios will block under the
 committed Exception rules until the governing mappings are approved.
+
+## V2 native Document Templates hard stop
+
+Do not reactivate the Payroll or Workforce lifecycle entry Business Rules on
+dev437065. The supported native PDF Template editor does not offer
+`x_2166123_rob_auth_rob_auth` because the governed Authorization Form is not
+Task-derived. An `sn_hr_core_case` template can create a native Document Task,
+but it cannot satisfy the approved Authorization-Form source/parent and final-
+PDF attachment contract.
+
+Do not change table inheritance, use HR Case as the final document repository,
+add a custom signing mechanism, directly manipulate metadata, or grant broader
+cross-scope access. Production template `7119926383f247104f5193a6feaad318`
+must remain Published. Accidental copy `ec9a80b783f687104f5193a6feaad34c`
+is intentionally inactive/Draft and is not a deployable production feature.

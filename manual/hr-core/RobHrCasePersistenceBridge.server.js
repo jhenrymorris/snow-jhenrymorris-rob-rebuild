@@ -70,6 +70,11 @@ RobHrCasePersistenceBridge.prototype = {
     },
 
     setRobDecision: function (caseRecord, decisionPayload) {
+        function reject(code) {
+            gs.error('ROB decision persistence rejected: ' + code)
+            return false
+        }
+
         var allowedTables = {
             sn_hr_core_case_payroll: true,
             sn_hr_core_case_workforce_admin: true,
@@ -147,21 +152,20 @@ RobHrCasePersistenceBridge.prototype = {
             !caseRecord ||
             typeof caseRecord.getTableName !== 'function' ||
             typeof caseRecord.getUniqueValue !== 'function' ||
-            typeof caseRecord.setValue !== 'function' ||
-            typeof decisionPayload !== 'string'
+            typeof caseRecord.setValue !== 'function'
         ) {
-            return false
+            return reject('invalid_case_record')
         }
 
         var decision
         try {
-            decision = JSON.parse(decisionPayload)
+            decision = JSON.parse(String(decisionPayload || ''))
         } catch (error) {
-            return false
+            return reject('invalid_json_payload')
         }
 
         if (!decision || typeof decision !== 'object') {
-            return false
+            return reject('invalid_decision_payload')
         }
 
         var tableName = String(caseRecord.getTableName() || '')
@@ -180,28 +184,55 @@ RobHrCasePersistenceBridge.prototype = {
         var expectedEmployeeSignature = !isException && !isReuse
         var expectedSupervisorGate = !isException
 
+        if (!allowedTables[tableName] || !validSysId(caseSysId, false)) {
+            return reject('invalid_case_identity')
+        }
+        if (!allowedDecisionClasses[decisionClass]) {
+            return reject('invalid_decision_class')
+        }
+        if (!allowedReasonCodes[reasonCode]) {
+            return reject('invalid_decision_reason')
+        }
+        if (!allowedStatuses[status]) {
+            return reject('invalid_existing_authorization_status')
+        }
         if (
-            !allowedTables[tableName] ||
-            !validSysId(caseSysId, false) ||
-            !allowedDecisionClasses[decisionClass] ||
-            !allowedReasonCodes[reasonCode] ||
-            !allowedStatuses[status] ||
             !validSysId(decision.relatedAuthorizationId, true) ||
-            !validSysId(decision.duplicateCaseId, true) ||
+            !validSysId(decision.duplicateCaseId, true)
+        ) {
+            return reject('invalid_decision_reference')
+        }
+        if (
             !validSysIdList(decision.coveredAccess || []) ||
-            !validSysIdList(decision.uncoveredAccess || []) ||
+            !validSysIdList(decision.uncoveredAccess || [])
+        ) {
+            return reject('invalid_access_list')
+        }
+        if (
             !allowedRenewalReasons[renewalReason] ||
             (decisionClass === 'RENEWAL' && !renewalReason) ||
-            (decisionClass !== 'RENEWAL' && renewalReason) ||
+            (decisionClass !== 'RENEWAL' && renewalReason)
+        ) {
+            return reject('invalid_renewal_reason')
+        }
+        if (
             (isException && proposedExpirationDate) ||
             (!isException &&
-                !/^\d{4}-\d{2}-\d{2}$/.test(proposedExpirationDate)) ||
+                !/^\d{4}-\d{2}-\d{2}$/.test(proposedExpirationDate))
+        ) {
+            return reject('invalid_proposed_expiration')
+        }
+        if (
             ((isReuse || isReplacement) &&
                 !String(decision.relatedAuthorizationId || '')) ||
             (reasonCode === 'EX_DUPLICATE_OPEN_CASE' &&
                 !String(decision.duplicateCaseId || '')) ||
             (reasonCode !== 'EX_DUPLICATE_OPEN_CASE' &&
-                String(decision.duplicateCaseId || '')) ||
+                String(decision.duplicateCaseId || ''))
+        ) {
+            return reject('invalid_decision_relationship')
+        }
+        if (
             typeof decision.materialContextChange !== 'boolean' ||
             (decisionClass !== 'AMENDMENT' &&
                 decision.materialContextChange === true) ||
@@ -210,7 +241,7 @@ RobHrCasePersistenceBridge.prototype = {
             decision.supervisorApprovalRequired !== expectedSupervisorGate ||
             decision.supervisorSignatureRequired !== expectedSupervisorGate
         ) {
-            return false
+            return reject('invalid_decision_flags')
         }
 
         var prefix = 'x_2166123_rob_auth_'

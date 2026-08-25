@@ -698,3 +698,20 @@ Build evidence is package-specific and must remain distinct from install, runtim
   runtime sys_id introduced.
 - Result: M3 BLOCKED-PLATFORM on the Document Templates source-table binding;
   proven on dev437065. M4 NOT READY.
+
+### V2 M3 final supported-path checkpoint
+
+- R3 live decision: synthetic Payroll `HRC0001009` classified `New`; governed
+  form `ROBA0001002` was created.
+- Native signing launch: `DOCT0001001` was created, but employee **Fill
+  Document** returned `Attachment Not Found`.
+- Root cause evidence: the source PDF exists and previews; the supported PDF
+  Template Table selector excludes the non-Task governed Authorization Form.
+- Safe state: production template Published; accidental copy inactive/Draft;
+  both M3 lifecycle entry rules inactive; both M4 rules inactive.
+- Regression: M2 19/19, R1 9/9, Wave 2 security 22/22, deployment 16/16,
+  R3 30/30, focused R3 runtime 13/13, R4 58/58, and M4 26/26 PASS.
+- Build: SDK 4.11.0 normal and frozen-key builds PASS; `git diff --check`
+  PASS; generated-key diff empty.
+- Result: M3 BLOCKED-PLATFORM. Proceeding requires an architecture/data-
+  integrity change. M4 NOT READY.
