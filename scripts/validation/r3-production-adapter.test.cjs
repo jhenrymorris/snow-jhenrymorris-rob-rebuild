@@ -109,6 +109,8 @@ test('one shared production adapter invokes the committed R3 module and narrow b
         adapter,
         /new sn_hr_core\.RobHrCasePersistenceBridge\(\)\.setRobDecision/
     )
+    assert.match(adapter, /JSON\.stringify\(decision\)/)
+    assert.doesNotMatch(adapter, /setAbortAction/)
     assert.doesNotMatch(adapter, /current\s*\.\s*(?:update|insert)\s*\(/)
 })
 
@@ -180,7 +182,7 @@ test('downstream lifecycle accepts a decision persisted during insert or mapped-
 
 test('HR Core bridge persists the complete New output without changing HRSD identity', () => {
     const record = caseRecord()
-    const result = bridge().setRobDecision(record, decision())
+    const result = bridge().setRobDecision(record, JSON.stringify(decision()))
     const prefix = 'x_2166123_rob_auth_'
 
     assert.equal(result, true)
@@ -201,7 +203,7 @@ test('HR Core bridge persists deterministic Exception blocking', () => {
     })
     const result = bridge().setRobDecision(
         record,
-        decision({
+        JSON.stringify(decision({
             decisionClass: 'EXCEPTION',
             reasonCode: 'EX_UNRESOLVED_ANNUAL_RENEWAL_RULE',
             uncoveredAccess: [],
@@ -209,7 +211,7 @@ test('HR Core bridge persists deterministic Exception blocking', () => {
             supervisorApprovalRequired: false,
             employeeSignatureRequired: false,
             supervisorSignatureRequired: false,
-        })
+        }))
     )
     const prefix = 'x_2166123_rob_auth_'
 
@@ -260,7 +262,10 @@ test('HR Core bridge accepts committed Reuse Amendment and Renewal outputs', () 
 
     for (const output of scenarios) {
         const record = caseRecord()
-        assert.equal(bridge().setRobDecision(record, output), true)
+        assert.equal(
+            bridge().setRobDecision(record, JSON.stringify(output)),
+            true
+        )
         assert.equal(
             record.getValue(prefix + 'authorization_path'),
             output.decisionClass.toLowerCase()
@@ -275,43 +280,55 @@ test('HR Core bridge rejects unsupported tables, malformed ids, and unknown outp
     assert.equal(
         persistenceBridge.setRobDecision(
             caseRecord({ sys_class_name: 'incident' }),
-            decision()
+            JSON.stringify(decision())
         ),
         false
     )
     assert.equal(
         persistenceBridge.setRobDecision(
             caseRecord({ sys_id: 'not-a-sys-id' }),
-            decision()
+            JSON.stringify(decision())
         ),
         false
     )
     assert.equal(
         persistenceBridge.setRobDecision(
             caseRecord(),
-            decision({ reasonCode: 'INFERRED_UNAPPROVED_REASON' })
+            JSON.stringify(
+                decision({ reasonCode: 'INFERRED_UNAPPROVED_REASON' })
+            )
         ),
         false
     )
     assert.equal(
         persistenceBridge.setRobDecision(
             caseRecord(),
-            decision({ supervisorApprovalRequired: false })
+            JSON.stringify(decision({ supervisorApprovalRequired: false }))
         ),
         false
     )
     assert.equal(
         persistenceBridge.setRobDecision(
             caseRecord(),
-            decision({ proposedExpirationDate: 'not-a-date' })
+            JSON.stringify(decision({ proposedExpirationDate: 'not-a-date' }))
         ),
         false
     )
     assert.equal(
         persistenceBridge.setRobDecision(
             caseRecord(),
-            decision({ renewalReason: 'Invented Renewal Rule' })
+            JSON.stringify(
+                decision({ renewalReason: 'Invented Renewal Rule' })
+            )
         ),
+        false
+    )
+    assert.equal(
+        persistenceBridge.setRobDecision(caseRecord(), '{not-json'),
+        false
+    )
+    assert.equal(
+        persistenceBridge.setRobDecision(caseRecord(), decision()),
         false
     )
 })

@@ -688,3 +688,28 @@ rules, and both M4 entry rules remain inactive. M4 is not ready.
   empty-input guard instead of the unreliable Glide-list encoded condition.
   This preserves exclusion of unrelated HR cases and introduces no new
   Business Rule, engine, table, field, or privilege.
+
+### V2 restricted-scope decision payload reconciliation — 2026-08-25
+
+- The supported Force Install completed for commit `d240492`; read-only live
+  inspection confirmed the corrected explicit requested-items guard in the
+  single Payroll evaluator. The exact five M3 Business Rules were restored to
+  Active and both M4 entry rules remain Inactive.
+- Force Install invalidated the two previously approved caller records. Only
+  the exact evaluator-to-HR-Core-bridge Execute record and the exact
+  lifecycle-to-PDF-Template Read record were restored to Allowed.
+- HRC0001009 then reached `setRobDecision`, but the HR Core bridge rejected the
+  complex cross-scope JavaScript object and the evaluator's fallback
+  `current.setAbortAction(true)` was separately refused by Australia's
+  cross-scope API policy.
+- The bounded compatibility correction passes the decision as JSON text and
+  parses and validates it inside the existing HR Core-owned bridge. The bridge
+  continues to accept only the two approved case classes, committed decision
+  classes/reasons, valid references, and allowlisted system-managed outputs.
+  The unsupported `setAbortAction` call is removed; a failed bridge remains
+  fail-closed because no decision output exists to satisfy the downstream
+  lifecycle rule.
+- Focused adapter tests: 12/12 PASS. R3 tests: 30/30 PASS. SDK 4.11.0 normal
+  and frozen-key builds: PASS. Generated-key diff: empty. Live runtime retest
+  remains pending installation of this correction and the matching supported
+  native-form update to the existing HR Core bridge.

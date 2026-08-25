@@ -69,7 +69,7 @@ RobHrCasePersistenceBridge.prototype = {
         return true
     },
 
-    setRobDecision: function (caseRecord, decision) {
+    setRobDecision: function (caseRecord, decisionPayload) {
         var allowedTables = {
             sn_hr_core_case_payroll: true,
             sn_hr_core_case_workforce_admin: true,
@@ -148,9 +148,19 @@ RobHrCasePersistenceBridge.prototype = {
             typeof caseRecord.getTableName !== 'function' ||
             typeof caseRecord.getUniqueValue !== 'function' ||
             typeof caseRecord.setValue !== 'function' ||
-            !decision ||
-            typeof decision !== 'object'
+            typeof decisionPayload !== 'string'
         ) {
+            return false
+        }
+
+        var decision
+        try {
+            decision = JSON.parse(decisionPayload)
+        } catch (error) {
+            return false
+        }
+
+        if (!decision || typeof decision !== 'object') {
             return false
         }
 

@@ -307,13 +307,12 @@
     var decision = decisionModule.evaluate(context)
     var persisted = new sn_hr_core.RobHrCasePersistenceBridge().setRobDecision(
         current,
-        decision
+        JSON.stringify(decision)
     )
 
     if (!persisted) {
         gs.addErrorMessage(
             'The ROB authorization decision could not be persisted by HR Core.'
         )
-        current.setAbortAction(true)
     }
 })(current)
