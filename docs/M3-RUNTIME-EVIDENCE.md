@@ -648,3 +648,10 @@ or a duplicate/custom signing mechanism would change the approved architecture
 and was not attempted. This boundary is proven on dev437065; broader
 Australia-instance scope has not been inferred. The Flow, both lifecycle
 rules, and both M4 entry rules remain inactive. M4 is not ready.
+### V2 record-producer decision-entry reconciliation — 2026-08-25
+
+- HRC0001006 was submitted from Employee Center after the corrected R3 module path was installed.
+- Native HRSD identity remained correct: `opened_by`, `opened_for`, and `subject_person` all resolved to the synthetic profile employee.
+- The producer persisted `x_2166123_rob_auth_requested_items`, but the insert-only evaluator did not observe the mapped value during its before-insert filter and no decision outputs were persisted.
+- The existing Payroll and Workforce evaluator rules were reconciled to run on insert and update. Their existing `decision_evaluated_at` / processing-blocked guard remains authoritative and prevents duplicate evaluation.
+- This is an in-place lifecycle compatibility correction; it adds no engine, table, Flow, privilege, or production-facing field.

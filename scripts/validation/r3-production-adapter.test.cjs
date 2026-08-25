@@ -105,7 +105,7 @@ test('one shared production adapter invokes the committed R3 module and narrow b
     assert.doesNotMatch(adapter, /current\s*\.\s*(?:update|insert)\s*\(/)
 })
 
-test('Payroll and Workforce entry rules are source-owned and inactive until native bootstrap', () => {
+test('Payroll and Workforce entry rules are source-owned, idempotent, and inactive until native bootstrap', () => {
     assert.match(
         businessRules,
         /evaluatePayrollAuthorizationDecision[\s\S]*?active: false[\s\S]*?table: 'sn_hr_core_case_payroll'[\s\S]*?filterCondition: 'x_2166123_rob_auth_requested_itemsISNOTEMPTY'/
@@ -114,7 +114,10 @@ test('Payroll and Workforce entry rules are source-owned and inactive until nati
         businessRules,
         /evaluateWorkforceAuthorizationDecision[\s\S]*?active: false[\s\S]*?table: 'sn_hr_core_case_workforce_admin'[\s\S]*?filterCondition: 'x_2166123_rob_auth_requested_itemsISNOTEMPTY'/
     )
-    assert.match(businessRules, /action: \['insert'\]/)
+    assert.equal(
+        (businessRules.match(/action: \['insert', 'update'\]/g) || []).length,
+        4
+    )
     assert.match(businessRules, /order: 150/)
 })
 
@@ -141,10 +144,10 @@ test('configuration and authorization scope extraction fail closed', () => {
     assert.match(adapter, /detail\.addQuery\('status', 'NOT IN', 'denied,revoked'\)/)
 })
 
-test('downstream lifecycle accepts the decision persisted during case insertion', () => {
+test('downstream lifecycle accepts a decision persisted during insert or mapped-field update', () => {
     assert.equal(
         (businessRules.match(/action: \['insert', 'update'\]/g) || []).length,
-        2
+        4
     )
     assert.match(lifecycle, /previous\s*&&[\s\S]*decisionTimeField/)
 })

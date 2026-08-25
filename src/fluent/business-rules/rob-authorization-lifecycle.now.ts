@@ -6,7 +6,7 @@ export const evaluatePayrollAuthorizationDecision = BusinessRule({
     active: false,
     table: 'sn_hr_core_case_payroll',
     when: 'before',
-    action: ['insert'],
+    action: ['insert', 'update'],
     order: 150,
     filterCondition: 'x_2166123_rob_auth_requested_itemsISNOTEMPTY',
     description:
@@ -20,7 +20,7 @@ export const evaluateWorkforceAuthorizationDecision = BusinessRule({
     active: false,
     table: 'sn_hr_core_case_workforce_admin',
     when: 'before',
-    action: ['insert'],
+    action: ['insert', 'update'],
     order: 150,
     filterCondition: 'x_2166123_rob_auth_requested_itemsISNOTEMPTY',
     description:
