@@ -12,6 +12,13 @@ const adapter = fs.readFileSync(
     ),
     'utf8'
 )
+const decisionService = fs.readFileSync(
+    path.join(
+        root,
+        'src/server/authorization/AuthorizationDecisionService.js'
+    ),
+    'utf8'
+)
 const businessRules = fs.readFileSync(
     path.join(
         root,
@@ -103,6 +110,21 @@ test('one shared production adapter invokes the committed R3 module and narrow b
         /new sn_hr_core\.RobHrCasePersistenceBridge\(\)\.setRobDecision/
     )
     assert.doesNotMatch(adapter, /current\s*\.\s*(?:update|insert)\s*\(/)
+})
+
+test('R3 runtime module dependencies use exact installed JavaScript paths', () => {
+    assert.match(
+        decisionService,
+        /require\(['"]\.\/AuthorizationRepository\.js['"]\)/
+    )
+    assert.match(
+        decisionService,
+        /require\(['"]\.\/ExpirationDateService\.js['"]\)/
+    )
+    assert.doesNotMatch(
+        decisionService,
+        /require\(['"]\.\/(?:AuthorizationRepository|ExpirationDateService)['"]\)/
+    )
 })
 
 test('Payroll and Workforce entry rules are source-owned, idempotent, and inactive until native bootstrap', () => {

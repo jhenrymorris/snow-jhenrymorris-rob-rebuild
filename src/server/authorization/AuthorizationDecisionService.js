@@ -4,8 +4,8 @@ const {
     compareAccess,
     normalizeSet,
     selectApplicableAuthorization,
-} = require('./AuthorizationRepository')
-const { calculateProposedExpiration } = require('./ExpirationDateService')
+} = require('./AuthorizationRepository.js')
+const { calculateProposedExpiration } = require('./ExpirationDateService.js')
 
 const DECISIONS = Object.freeze({
     NEW: 'NEW',

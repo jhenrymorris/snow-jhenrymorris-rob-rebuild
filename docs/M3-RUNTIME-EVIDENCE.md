@@ -655,3 +655,12 @@ rules, and both M4 entry rules remain inactive. M4 is not ready.
 - The producer persisted `x_2166123_rob_auth_requested_items`, but the insert-only evaluator did not observe the mapped value during its before-insert filter and no decision outputs were persisted.
 - The existing Payroll and Workforce evaluator rules were reconciled to run on insert and update. Their existing `decision_evaluated_at` / processing-blocked guard remains authoritative and prevents duplicate evaluation.
 - This is an in-place lifecycle compatibility correction; it adds no engine, table, Flow, privilege, or production-facing field.
+
+### V2 exact module-dependency reconciliation — 2026-08-25
+
+- The insert/update evaluator correction was installed successfully under rollback context `b96523ef837e47104f5193a6feaad3ad`.
+- A normal Ready-for-Work update on HRC0001006 reached the existing Payroll evaluator and failed at its load of the committed R3 module. System log `d0b62f6f83be47104f5193a6feaad31f` records the failure at evaluator line 303 before the HR Core bridge was invoked.
+- The installed R3 module and both of its dependency modules exist as single logical `sys_module` records under the V2 package `src/server/authorization` path.
+- `AuthorizationDecisionService.js` used extensionless relative dependency names even though the installed runtime records have exact `.js` paths. The dependencies were reconciled in place to `./AuthorizationRepository.js` and `./ExpirationDateService.js`.
+- The production adapter remains single and unchanged, no duplicate decision engine or persistence mechanism was introduced, and unknown DEC-MAP inputs remain fail-closed Exception inputs.
+- Focused adapter tests: 12/12 PASS. R3 tests: 30/30 PASS. SDK 4.11.0 normal and frozen-key builds: PASS. Generated-key diff: empty.
