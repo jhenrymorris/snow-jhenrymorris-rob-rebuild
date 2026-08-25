@@ -1,12 +1,38 @@
 import { BusinessRule } from '@servicenow/sdk/core'
 
+export const evaluatePayrollAuthorizationDecision = BusinessRule({
+    $id: Now.ID['evaluate-payroll-authorization-decision'],
+    name: 'ROB Evaluate Payroll Authorization Decision',
+    active: false,
+    table: 'sn_hr_core_case_payroll',
+    when: 'before',
+    action: ['insert'],
+    order: 150,
+    description:
+        'Builds the committed R3 context, invokes AuthorizationDecisionService.evaluate(), and persists only system-managed decision outputs through the narrow HR Core bridge.',
+    script: Now.include('../server/authorization-decision-entry.server.js'),
+})
+
+export const evaluateWorkforceAuthorizationDecision = BusinessRule({
+    $id: Now.ID['evaluate-workforce-authorization-decision'],
+    name: 'ROB Evaluate Workforce Authorization Decision',
+    active: false,
+    table: 'sn_hr_core_case_workforce_admin',
+    when: 'before',
+    action: ['insert'],
+    order: 150,
+    description:
+        'Builds the committed R3 context, invokes AuthorizationDecisionService.evaluate(), and persists only system-managed decision outputs through the narrow HR Core bridge.',
+    script: Now.include('../server/authorization-decision-entry.server.js'),
+})
+
 export const initiatePayrollAuthorizationLifecycle = BusinessRule({
     $id: Now.ID['initiate-payroll-authorization-lifecycle'],
     name: 'ROB Initiate Payroll Authorization Lifecycle',
     active: false,
     table: 'sn_hr_core_case_payroll',
     when: 'after',
-    action: ['update'],
+    action: ['insert', 'update'],
     order: 300,
     filterCondition:
         'x_2166123_rob_auth_decision_evaluated_atISNOTEMPTY^x_2166123_rob_auth_authorization_processing_blocked=false^x_2166123_rob_auth_authorization_pathINnew,reuse,amendment,renewal,exception',
@@ -21,7 +47,7 @@ export const initiateWorkforceAuthorizationLifecycle = BusinessRule({
     active: false,
     table: 'sn_hr_core_case_workforce_admin',
     when: 'after',
-    action: ['update'],
+    action: ['insert', 'update'],
     order: 300,
     filterCondition:
         'x_2166123_rob_auth_decision_evaluated_atISNOTEMPTY^x_2166123_rob_auth_authorization_processing_blocked=false^x_2166123_rob_auth_authorization_pathINnew,reuse,amendment,renewal,exception',

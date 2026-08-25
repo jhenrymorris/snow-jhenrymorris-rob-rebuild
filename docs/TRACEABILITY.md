@@ -103,8 +103,8 @@ Status values: Planned, In Development, Implemented, Tested, Accepted, Deferred.
 | Deterministic five-path decision | `AuthorizationDecisionService.js` | TM-97 / W3-01–W3-27 | Source/unit PASS |
 | Existing authorization selection and scope delta | `AuthorizationRepository.js` | TM-97 | Source/unit PASS |
 | Configuration-driven expiration and grace | `ExpirationDateService.js` | TM-97 | Source/unit PASS with synthetic configuration |
-| Decision output model on native subclasses | `rob-case-security-fields.now.ts` | TM-98 | Build validated; runtime persistence not activated |
-| No Wave 4+ side effects | pure source modules; no runtime trigger | TM-98 | Source/unit PASS |
+| Decision output model on native subclasses | `rob-case-security-fields.now.ts`; `authorization-decision-entry.server.js`; HR Core `RobHrCasePersistenceBridge.setRobDecision` | TM-98, TM-169 through TM-176 | Source/build validated; two production callers inactive; runtime persistence not yet installed/activated |
+| No Wave 4+ side effects | inactive R3 entry points; fulfillment gate forced false during decision persistence | TM-98, TM-169 through TM-176 | Source/unit PASS |
 | Native persisted snapshot-dependent evaluation | `R2-AGENCY-01` | TM-88–TM-96, TM-99 | BLOCKED-AGENCY; remains OPEN |
 
 ## Wave 4 Capability Gate

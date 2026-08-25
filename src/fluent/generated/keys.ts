@@ -41,6 +41,14 @@ declare global {
                         table: 'sys_script'
                         id: '9d32f30588e1496ab788ad44788ebe3f'
                     }
+                    'evaluate-payroll-authorization-decision': {
+                        table: 'sys_script'
+                        id: '5fc23b27a0fd4e14af71b4455896f263'
+                    }
+                    'evaluate-workforce-authorization-decision': {
+                        table: 'sys_script'
+                        id: '795fabaf203843a79117c1e346a57290'
+                    }
                     'finalize-authorization-after-pdf-association': {
                         table: 'sys_script'
                         id: '83e604091a62478ea011a10c577104f6'

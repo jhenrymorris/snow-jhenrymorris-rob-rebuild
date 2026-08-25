@@ -526,3 +526,46 @@ Exact unsupported operation: invoke the installed R3 module and atomically
 persist its system-managed outputs through an existing supported V2-owned
 runtime entry point. This is application-wide, not a stale-module or
 dev437065-specific install defect. M4 is not ready.
+
+## 2026-08-25 V2 R3 production adapter source correction
+
+The application owner confirmed that the missing invocation/persistence
+adapter previously belonged to the approved production architecture and
+authorized its restoration. The repository now contains one shared adapter,
+two inactive native-case entry Business Rules, and a narrow extension to the
+existing HR Core persistence bridge.
+
+Source evidence:
+
+- `authorization-decision-entry.server.js` invokes the existing built
+  `AuthorizationDecisionService.js`; no second decision engine exists.
+- The context uses `authorizationContext.valid`, `supervisorId`, `position`,
+  and `organization`; it does not read the three deprecated native-case
+  snapshot inputs.
+- The adapter reads the active ROB configuration, requested access,
+  authoritative M2 profile context, authorization history/details, and
+  duplicate open cases. It never writes HRSD identity fields.
+- Unequal material context is explicitly `unknown` under DEC-MAP-01/02, and
+  `annualRenewalDue` is explicitly `unknown` under DEC-MAP-03. These conditions
+  therefore remain deterministic Exception blocks and are not inferred.
+- `RobHrCasePersistenceBridge.setRobDecision` rejects unsupported tables,
+  fields, decision values, reason codes, and malformed references. It writes
+  only the complete system-managed R3 output/gate set on the supplied current
+  case and performs no standalone insert/update.
+- Payroll and Workforce evaluator rules are inactive before-insert rules.
+  Existing lifecycle entry rules now support the corresponding after-insert
+  transition and remain inactive.
+
+Validation evidence at this source checkpoint:
+
+- focused production-adapter/security tests: 11/11 PASS;
+- committed R3 decision suite: 30/30 PASS;
+- M2 focused suite: 19/19 PASS;
+- Wave 2 security suite: 22/22 PASS; and
+- explicit ServiceNow SDK 4.11.0 normal build: PASS.
+
+This is not runtime evidence. The changed bridge source must first be applied
+through the supported HR Core Script Include editor, the V2 source diff must
+be installed through ServiceNow IDE after explicit authorization, and both
+inactive evaluator rules must be reviewed before activation. M3 remains open;
+M4 production runtime remains inactive.

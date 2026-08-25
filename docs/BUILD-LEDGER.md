@@ -625,3 +625,37 @@ Build evidence is package-specific and must remain distinct from install, runtim
 - Result: M3 BLOCKED-PLATFORM. Completing the missing production boundary is
   an architecture/security change, not native Class C configuration. M4 is not
   ready.
+
+### V2 R3 production invocation/persistence source correction
+
+- Authorization: the application owner confirmed that the production
+  invocation/persistence adapter was part of the approved architecture and
+  directed its restoration.
+- Source: one shared server adapter now assembles the committed post-M2 R3
+  context and invokes the existing `AuthorizationDecisionService.evaluate()`
+  module. It does not create or duplicate a decision service.
+- Entry points: exactly two source-owned, inactive, before-insert Business
+  Rules cover Payroll and Workforce Administration. The existing downstream
+  lifecycle rules accept the decision persisted during insert and remain
+  inactive pending installation and runtime validation.
+- Persistence: the existing HR Core-owned
+  `RobHrCasePersistenceBridge` gains one strictly allowlisted
+  `setRobDecision` method. It accepts only the two approved case classes,
+  committed R3 decision classes/reasons, valid references, and the
+  system-managed R3 output fields. It does not expose arbitrary table/field
+  writes or call `GlideRecord.update`/`insert`.
+- Decision contract: `authorizationContext.valid`, `supervisorId`, `position`,
+  and `organization` are preserved; retired snapshot inputs remain absent.
+  Unequal material context remains `unknown` under DEC-MAP-01/02, and
+  DEC-MAP-03 is supplied as `unknown`. Applicable active-authority cases fail
+  closed to the corresponding committed Exception until those governing rules
+  are approved.
+- Deployment status: source correction only. The HR Core bridge manual source
+  must be reconciled before installing/activating the two V2 callers. No PDI
+  installation or runtime acceptance is claimed by this checkpoint.
+- Build baseline: the stale local 4.8.1 lock was reconciled to exact SDK
+  4.11.0, matching the installed V2/IDE compiler. Normal and frozen-key builds
+  PASS. Dependency installation reported 10 transitive audit advisories and
+  three unapproved optional/native install scripts; these are dependency-tool
+  findings, not Fluent build diagnostics, and no `npm audit fix` or script
+  approval was applied during this correction.

@@ -149,6 +149,7 @@
     }
 
     if (
+        previous &&
         current.getValue(decisionTimeField) ===
         previous.getValue(decisionTimeField)
     ) {
@@ -226,7 +227,8 @@
 
     var supervisorId = profileContext.supervisorId
     var positionSnapshot = profileContext.position
-    var organizationSnapshot = profileContext.organization
+    var organizationSnapshot =
+        profileContext.organizationId || profileContext.organization
     var employmentType = current.getValue(prefix + 'employment_type')
     var businessJustification = current.getValue('rich_description')
     var expirationDate = current.getValue(expirationField)

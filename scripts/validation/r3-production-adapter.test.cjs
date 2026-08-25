@@ -1,0 +1,297 @@
+const assert = require('node:assert/strict')
+const fs = require('node:fs')
+const path = require('node:path')
+const vm = require('node:vm')
+const { test } = require('node:test')
+
+const root = path.resolve(__dirname, '..', '..')
+const adapter = fs.readFileSync(
+    path.join(
+        root,
+        'src/fluent/server/authorization-decision-entry.server.js'
+    ),
+    'utf8'
+)
+const businessRules = fs.readFileSync(
+    path.join(
+        root,
+        'src/fluent/business-rules/rob-authorization-lifecycle.now.ts'
+    ),
+    'utf8'
+)
+const lifecycle = fs.readFileSync(
+    path.join(
+        root,
+        'src/fluent/server/authorization-lifecycle-initiation.server.js'
+    ),
+    'utf8'
+)
+const bridgeSource = fs.readFileSync(
+    path.join(root, 'manual/hr-core/RobHrCasePersistenceBridge.server.js'),
+    'utf8'
+)
+
+function bridge() {
+    const context = {
+        Class: {
+            create: () =>
+                function BridgeClass() {
+                    if (this.initialize) this.initialize()
+                },
+        },
+        GlideDateTime: class GlideDateTime {
+            getValue() {
+                return '2026-08-25 12:00:00'
+            }
+        },
+    }
+    vm.runInNewContext(bridgeSource, context)
+    return new context.RobHrCasePersistenceBridge()
+}
+
+function caseRecord(overrides = {}) {
+    const values = {
+        sys_id: '11111111111111111111111111111111',
+        sys_class_name: 'sn_hr_core_case_payroll',
+        opened_by: 'employee',
+        ...overrides,
+    }
+    return {
+        values,
+        getTableName() {
+            return values.sys_class_name
+        },
+        getUniqueValue() {
+            return values.sys_id
+        },
+        setValue(name, value) {
+            values[name] = String(value)
+        },
+        getValue(name) {
+            return values[name] || ''
+        },
+    }
+}
+
+function decision(overrides = {}) {
+    return {
+        decisionClass: 'NEW',
+        reasonCode: 'NEW_NO_PRIOR_FORM',
+        existingAuthorizationStatus: 'none',
+        relatedAuthorizationId: '',
+        coveredAccess: [],
+        uncoveredAccess: ['22222222222222222222222222222222'],
+        proposedExpirationDate: '2027-06-30',
+        supervisorApprovalRequired: true,
+        employeeSignatureRequired: true,
+        supervisorSignatureRequired: true,
+        materialContextChange: false,
+        renewalReason: '',
+        duplicateCaseId: '',
+        ...overrides,
+    }
+}
+
+test('one shared production adapter invokes the committed R3 module and narrow bridge', () => {
+    assert.match(
+        adapter,
+        /require\(\s*['"]\.\/dist\/modules\/server\/authorization\/AuthorizationDecisionService\.js['"]\s*\)/
+    )
+    assert.match(adapter, /decisionModule\.evaluate\(context\)/)
+    assert.match(
+        adapter,
+        /new sn_hr_core\.RobHrCasePersistenceBridge\(\)\.setRobDecision/
+    )
+    assert.doesNotMatch(adapter, /current\s*\.\s*(?:update|insert)\s*\(/)
+})
+
+test('Payroll and Workforce entry rules are source-owned and inactive until native bootstrap', () => {
+    assert.match(
+        businessRules,
+        /evaluatePayrollAuthorizationDecision[\s\S]*?active: false[\s\S]*?table: 'sn_hr_core_case_payroll'/
+    )
+    assert.match(
+        businessRules,
+        /evaluateWorkforceAuthorizationDecision[\s\S]*?active: false[\s\S]*?table: 'sn_hr_core_case_workforce_admin'/
+    )
+    assert.match(businessRules, /action: \['insert'\]/)
+    assert.match(businessRules, /order: 150/)
+})
+
+test('unknown DEC-MAP annual-renewal input remains unknown', () => {
+    assert.match(adapter, /annualRenewalDue: 'unknown'/)
+    assert.doesNotMatch(adapter, /annualRenewalDue:\s*(?:true|false)/)
+    assert.match(adapter, /DEC-MAP-01\/02/)
+    assert.doesNotMatch(adapter, /\?\s*'unchanged'\s*:\s*'changed'/)
+})
+
+test('organization context and governed reference use the resolved department id', () => {
+    assert.match(
+        adapter,
+        /organization:\s*String\(\s*profileContext\.organizationId\s*\|\|\s*profileContext\.organization/
+    )
+    assert.match(
+        lifecycle,
+        /organizationSnapshot\s*=\s*profileContext\.organizationId\s*\|\|\s*profileContext\.organization/
+    )
+})
+
+test('configuration and authorization scope extraction fail closed', () => {
+    assert.match(adapter, /graceWindowValue\s*\?\s*Number\(graceWindowValue\)\s*:\s*-1/)
+    assert.match(adapter, /detail\.addQuery\('status', 'NOT IN', 'denied,revoked'\)/)
+})
+
+test('downstream lifecycle accepts the decision persisted during case insertion', () => {
+    assert.equal(
+        (businessRules.match(/action: \['insert', 'update'\]/g) || []).length,
+        2
+    )
+    assert.match(lifecycle, /previous\s*&&[\s\S]*decisionTimeField/)
+})
+
+test('HR Core bridge persists the complete New output without changing HRSD identity', () => {
+    const record = caseRecord()
+    const result = bridge().setRobDecision(record, decision())
+    const prefix = 'x_2166123_rob_auth_'
+
+    assert.equal(result, true)
+    assert.equal(record.getValue(prefix + 'authorization_path'), 'new')
+    assert.equal(record.getValue(prefix + 'decision_reason'), 'NEW_NO_PRIOR_FORM')
+    assert.equal(record.getValue(prefix + 'decision_evaluated_at'), '2026-08-25 12:00:00')
+    assert.equal(record.getValue(prefix + 'uncovered_access'), '22222222222222222222222222222222')
+    assert.equal(record.getValue(prefix + 'requires_employee_signature'), '1')
+    assert.equal(record.getValue(prefix + 'requires_supervisor_approval'), '1')
+    assert.equal(record.getValue(prefix + 'requires_supervisor_signature'), '1')
+    assert.equal(record.getValue(prefix + 'authorization_processing_blocked'), '0')
+    assert.equal(record.getValue('opened_by'), 'employee')
+})
+
+test('HR Core bridge persists deterministic Exception blocking', () => {
+    const record = caseRecord({
+        sys_class_name: 'sn_hr_core_case_workforce_admin',
+    })
+    const result = bridge().setRobDecision(
+        record,
+        decision({
+            decisionClass: 'EXCEPTION',
+            reasonCode: 'EX_UNRESOLVED_ANNUAL_RENEWAL_RULE',
+            uncoveredAccess: [],
+            proposedExpirationDate: '',
+            supervisorApprovalRequired: false,
+            employeeSignatureRequired: false,
+            supervisorSignatureRequired: false,
+        })
+    )
+    const prefix = 'x_2166123_rob_auth_'
+
+    assert.equal(result, true)
+    assert.equal(record.getValue(prefix + 'authorization_path'), 'exception')
+    assert.equal(record.getValue(prefix + 'exception_review_required'), '1')
+    assert.equal(
+        record.getValue(prefix + 'exception_reason'),
+        'EX_UNRESOLVED_ANNUAL_RENEWAL_RULE'
+    )
+    assert.equal(record.getValue(prefix + 'authorization_processing_blocked'), '1')
+    assert.equal(record.getValue(prefix + 'fulfillment_gate_complete'), '0')
+})
+
+test('HR Core bridge accepts committed Reuse Amendment and Renewal outputs', () => {
+    const prefix = 'x_2166123_rob_auth_'
+    const relatedAuthorizationId = '33333333333333333333333333333333'
+    const coveredAccessId = '44444444444444444444444444444444'
+    const uncoveredAccessId = '55555555555555555555555555555555'
+    const scenarios = [
+        decision({
+            decisionClass: 'REUSE',
+            reasonCode: 'REUSE_FULLY_COVERED',
+            existingAuthorizationStatus: 'active',
+            relatedAuthorizationId,
+            coveredAccess: [coveredAccessId],
+            uncoveredAccess: [],
+            employeeSignatureRequired: false,
+        }),
+        decision({
+            decisionClass: 'AMENDMENT',
+            reasonCode: 'AMD_PARTIAL_COVERAGE',
+            existingAuthorizationStatus: 'active',
+            relatedAuthorizationId,
+            coveredAccess: [coveredAccessId],
+            uncoveredAccess: [uncoveredAccessId],
+        }),
+        decision({
+            decisionClass: 'RENEWAL',
+            reasonCode: 'REN_EXPIRED',
+            existingAuthorizationStatus: 'expired',
+            relatedAuthorizationId,
+            coveredAccess: [coveredAccessId],
+            uncoveredAccess: [],
+            renewalReason: 'Expired',
+        }),
+    ]
+
+    for (const output of scenarios) {
+        const record = caseRecord()
+        assert.equal(bridge().setRobDecision(record, output), true)
+        assert.equal(
+            record.getValue(prefix + 'authorization_path'),
+            output.decisionClass.toLowerCase()
+        )
+        assert.equal(record.getValue(prefix + 'evaluated_authorization'), relatedAuthorizationId)
+        assert.equal(record.getValue(prefix + 'fulfillment_gate_complete'), '0')
+    }
+})
+
+test('HR Core bridge rejects unsupported tables, malformed ids, and unknown outputs', () => {
+    const persistenceBridge = bridge()
+    assert.equal(
+        persistenceBridge.setRobDecision(
+            caseRecord({ sys_class_name: 'incident' }),
+            decision()
+        ),
+        false
+    )
+    assert.equal(
+        persistenceBridge.setRobDecision(
+            caseRecord({ sys_id: 'not-a-sys-id' }),
+            decision()
+        ),
+        false
+    )
+    assert.equal(
+        persistenceBridge.setRobDecision(
+            caseRecord(),
+            decision({ reasonCode: 'INFERRED_UNAPPROVED_REASON' })
+        ),
+        false
+    )
+    assert.equal(
+        persistenceBridge.setRobDecision(
+            caseRecord(),
+            decision({ supervisorApprovalRequired: false })
+        ),
+        false
+    )
+    assert.equal(
+        persistenceBridge.setRobDecision(
+            caseRecord(),
+            decision({ proposedExpirationDate: 'not-a-date' })
+        ),
+        false
+    )
+    assert.equal(
+        persistenceBridge.setRobDecision(
+            caseRecord(),
+            decision({ renewalReason: 'Invented Renewal Rule' })
+        ),
+        false
+    )
+})
+
+test('bridge allowlist excludes native identity and arbitrary field mutation', () => {
+    const decisionMethod = bridgeSource.split('setRobDecision: function')[1]
+    assert.doesNotMatch(decisionMethod, /setValue\(\s*['"]opened_by/)
+    assert.doesNotMatch(decisionMethod, /setValue\(\s*['"]opened_for/)
+    assert.doesNotMatch(decisionMethod, /setValue\(\s*['"]subject_person/)
+    assert.doesNotMatch(decisionMethod, /caseRecord\.update\s*\(/)
+    assert.doesNotMatch(decisionMethod, /new\s+GlideRecord\s*\(/)
+})

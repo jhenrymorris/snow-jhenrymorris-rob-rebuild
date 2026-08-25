@@ -2046,3 +2046,24 @@ Not exposed by session/tool — no estimate recorded.
   no M4 runtime, and no broad privilege.
 - Result: M3 BLOCKED-PLATFORM; R3 production invocation/persistence boundary
   requires an explicit architecture/security decision; M4 NOT READY.
+
+#### V2 R3 production adapter source correction
+
+- Date: `2026-08-25`.
+- Authorization: application owner confirmed the production
+  invocation/persistence adapter previously existed and directed correction.
+- Shape: one shared adapter, two inactive native-case entry Business Rules,
+  one strict method added to the existing HR Core bridge, and focused tests.
+- Architecture: existing `AuthorizationDecisionService.evaluate()` retained;
+  post-M2 authorization-context contract preserved; duplicate decision engine,
+  custom tables, editable output fields, broad writes, and M4 activation 0.
+- Fail-closed behavior: unequal material context remains `unknown` under
+  DEC-MAP-01/02 and annual renewal remains `unknown` under DEC-MAP-03; no
+  value is inferred.
+- Source validation: production-adapter tests 11/11, M2 19/19, Wave 2 security
+  22/22, and R3 30/30 PASS; SDK 4.11.0 normal/frozen builds PASS. The stale
+  local 4.8.1 lock was aligned to exact 4.11.0. NPM reported 10 transitive
+  audit advisories and three unapproved install scripts; no automatic audit
+  fix or script approval was performed.
+- Deployment/runtime: not run. HR Core bridge reconciliation, reviewed IDE
+  install, inactive-rule activation, and M3 runtime acceptance remain open.

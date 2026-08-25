@@ -272,3 +272,16 @@ expansion were not used.
 | TM-166 | V2 HR Core bridge scope | Only approved case classes, fields, and M2 reasons | PASS |
 | TM-167 | V2 R3 Exception persistence | Committed Exception codes persist through approved boundary | BLOCKED: no approved boundary |
 | TM-168 | Lifecycle safety at V2 blocker | M3/M4 rules inactive; signing/fulfillment 0 | PASS |
+
+### V2 R3 production invocation/persistence source correction
+
+| ID | Test | Evidence | Result |
+|---|---|---|---|
+| TM-169 | Single current R3 engine invocation | Shared adapter requires built `AuthorizationDecisionService.js` and calls `evaluate(context)`; no duplicate service | Source PASS |
+| TM-170 | Post-M2 input contract | Adapter supplies `authorizationContext.valid`, `supervisorId`, `position`, and `organization`; retired snapshot inputs absent | Source PASS |
+| TM-171 | Native case entry coverage | Exactly one inactive before-insert evaluator rule for Payroll and one for Workforce; existing lifecycle rules accept insert | Source/build PASS |
+| TM-172 | Narrow HR Core persistence | Existing bridge accepts only two case classes, committed decision/reason values, valid references, and system-managed R3 outputs | Focused test PASS |
+| TM-173 | Identity and arbitrary-write rejection | No write to `opened_by`, `opened_for`, or `subject_person`; no generic table/field input; no bridge insert/update | Focused test PASS |
+| TM-174 | Deterministic unknown mapping | Adapter preserves unequal material context and annual-renewal disposition as `unknown`; engine returns the corresponding committed Exception | Source/R3 unit PASS |
+| TM-175 | Exception gate persistence | Exception sets review/block true, signature/approval requirements false, and fulfillment gate false | Focused test PASS |
+| TM-176 | Installed/runtime adapter acceptance | Reconcile HR Core bridge, install V2 callers, verify RCA and read-only outputs, then run New/Denial/Amendment/Renewal/Reuse/Exception | NOT RUN - install authorization required |

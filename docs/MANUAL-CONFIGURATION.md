@@ -968,13 +968,37 @@ rules inactive.
 V2 dev437065 has the reviewed bridge installed as
 `sn_hr_core.RobHrCasePersistenceBridge` (`f058c4eb837ec3104f5193a6feaad3fb`)
 with Caller Restriction. V2 scope `x_2166123_rob_auth` has exactly one allowed
-Script Include Execute privilege (`fb1908ef837ec3104f5193a6feaad34a`). This
-bridge remains an M2 prerequisite-gate boundary only; it is not an R3 decision
-producer or general case writer.
+Script Include Execute privilege (`fb1908ef837ec3104f5193a6feaad34a`). The
+application owner subsequently confirmed that the missing production
+invocation/persistence adapter was approved architecture and authorized its
+restoration. The source correction adds a strictly allowlisted
+`setRobDecision` method to this same bridge and exactly two inactive V2
+Business Rules. It does not create a general case writer or a second decision
+engine.
 
-Do not activate the V2 M3 lifecycle entry rules until an approved production
-entry point invokes the existing `AuthorizationDecisionService.js` module and
-persists the complete system-managed R3 output set. The V2 install currently
-contains no invoking Business Rule, Script Include, Flow, or Action. Do not
-make the decision fields editable and do not silently expand the bridge to
-accept R3 Exception reason codes.
+Before installing or activating the V2 callers:
+
+1. In Human Resources: Core, open the existing
+   `RobHrCasePersistenceBridge` Script Include through its supported native
+   editor and replace its Script with the reviewed complete source in
+   `manual/hr-core/RobHrCasePersistenceBridge.server.js`.
+2. Preserve its record identity, API name, Caller Restriction, scope, active
+   state, and the single narrow V2 Execute privilege. Do not add generic
+   GlideRecord privileges or native HR Case Write.
+3. Build and install the reviewed V2 source through ServiceNow IDE. Do not use
+   Reinstall or local SDK deployment.
+4. Verify exactly one Payroll and one Workforce rule named `ROB Evaluate ...
+   Authorization Decision`, both inactive, and verify the existing lifecycle
+   rules also remain inactive.
+5. Confirm the R3 output dictionaries are still read-only and the adapter
+   contains the post-M2 authorization-context inputs with no deprecated
+   snapshot references.
+6. Activate the two evaluator rules only after the M2/Class C smoke gate and
+   bridge tests pass. Then activate the two existing lifecycle rules for M3;
+   leave both M4 entry rules inactive.
+
+DEC-MAP-01/02 and DEC-MAP-03 are still unresolved. The adapter preserves
+unequal material context as `unknown` and deliberately supplies
+`annualRenewalDue = unknown`; do not alter these values in the PDI or infer a
+disposition. Active/current authorization scenarios will block under the
+committed Exception rules until the governing mappings are approved.

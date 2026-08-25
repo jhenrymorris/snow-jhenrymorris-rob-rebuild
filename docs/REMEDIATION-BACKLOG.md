@@ -267,11 +267,19 @@ No item above is authorized for implementation in R0. Unsupported native capabil
 - [x] Confirm R3 decision outputs remain system-managed/read-only.
 - [x] Confirm installed V2 production callers: Business Rules 0, Script
   Includes 0, Flows 0, Actions 0.
-- [ ] Architecture/security owner must select a supported production entry
-  point that invokes the existing R3 module and persists its complete output
-  atomically without broad native-case Write or generic GlideRecord APIs.
-- [ ] The same decision must define how committed R3 Exception reason codes
-  are persisted. The existing bridge is intentionally limited to the four M2
-  prerequisite reasons and must not be broadened implicitly.
+- [x] Application owner confirmed the missing production adapter is approved
+  architecture and authorized its source restoration.
+- [x] Add exactly one shared V2 adapter and two inactive native-case Business
+  Rule entry points that invoke the existing R3 module without duplicating it.
+- [x] Extend the existing HR Core bridge with a strict R3 output/reason
+  allowlist and no generic GlideRecord or arbitrary-field interface.
+- [ ] Reconcile the reviewed bridge source in Human Resources: Core, then
+  install the V2 source through ServiceNow IDE after explicit diff approval.
+- [ ] Verify the installed module caller count, bridge method, read-only output
+  dictionaries, and any caller-specific RCA generated at first runtime.
+- [ ] Resolve DEC-MAP-01/02 and DEC-MAP-03 through approved governing rules.
+  Until then, unequal material context and annual-renewal disposition remain
+  unknown and deterministically block under the committed Exception rules; do
+  not infer Reuse/Amendment/annual Renewal values.
 - [ ] M3 remains BLOCKED-PLATFORM; both M3 lifecycle entry rules and both M4
   rules remain inactive; M4 production runtime is not ready.
