@@ -1839,6 +1839,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '18583c189a5b4cf78e27a304f1128e81'
+                        key: {
+                            sys_ui_section: {
+                                id: '4f6271d51dcb464f94c1038aca3f5c6c'
+                                key: {
+                                    name: 'x_2166123_rob_auth_rob_config'
+                                    caption: 'Profile and Context Policy'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.split'
+                            position: '3'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '187bfa7a72df4a7c9d213d4d1a364ba0'
                         key: {
@@ -3642,6 +3664,39 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_form_section'
+                        id: '3bb1ead0046e4fa1a1069393706a4323'
+                        key: {
+                            sys_ui_form: {
+                                id: 'eb044242f2cd4ceb9627842ee9298edd'
+                                key: {
+                                    name: 'x_2166123_rob_auth_rob_config'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            sys_ui_section: {
+                                id: '4f6271d51dcb464f94c1038aca3f5c6c'
+                                key: {
+                                    name: 'x_2166123_rob_auth_rob_config'
+                                    caption: 'Profile and Context Policy'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '3c04367b6b094dea9f48230e3eebf1a5'
                         deleted: true
@@ -4901,6 +4956,21 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_section'
+                        id: '4f6271d51dcb464f94c1038aca3f5c6c'
+                        key: {
+                            name: 'x_2166123_rob_auth_rob_config'
+                            caption: 'Profile and Context Policy'
+                            view: {
+                                id: 'Default view'
+                                key: {
+                                    name: 'NULL'
+                                }
+                            }
+                            sys_domain: 'global'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '4f6283ad49c444d5bccb86ddc24ca7e4'
                         deleted: true
@@ -6108,6 +6178,28 @@ declare global {
                     },
                     {
                         table: 'sys_ui_element'
+                        id: '672ce5ed28ed484fbabd87293201d466'
+                        key: {
+                            sys_ui_section: {
+                                id: '4f6271d51dcb464f94c1038aca3f5c6c'
+                                key: {
+                                    name: 'x_2166123_rob_auth_rob_config'
+                                    caption: 'Profile and Context Policy'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'approved_organization_root'
+                            position: '2'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
                         id: '67864d74203044bfb8ecf492fb190d53'
                         key: {
                             sys_ui_section: {
@@ -6173,6 +6265,28 @@ declare global {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_fulfillment_gate_complete'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '67dcd109b8f84fdabdfb69f7fb706dbd'
+                        key: {
+                            sys_ui_section: {
+                                id: '4f6271d51dcb464f94c1038aca3f5c6c'
+                                key: {
+                                    name: 'x_2166123_rob_auth_rob_config'
+                                    caption: 'Profile and Context Policy'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'allow_sys_user_title_fallback'
+                            position: '4'
                         }
                     },
                     {
@@ -7230,6 +7344,28 @@ declare global {
                             value: 'AMD_PARTIAL_COVERAGE'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '7be8a4d733ba4c8dbf53084316ff1f1e'
+                        key: {
+                            sys_ui_section: {
+                                id: '4f6271d51dcb464f94c1038aca3f5c6c'
+                                key: {
+                                    name: 'x_2166123_rob_auth_rob_config'
+                                    caption: 'Profile and Context Policy'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'approved_supervisors_group'
+                            position: '1'
                         }
                     },
                     {
@@ -11662,6 +11798,28 @@ declare global {
                     },
                     {
                         table: 'sys_ui_element'
+                        id: 'ce356ffd567f4d1182ae949e8173e49a'
+                        key: {
+                            sys_ui_section: {
+                                id: '4f6271d51dcb464f94c1038aca3f5c6c'
+                                key: {
+                                    name: 'x_2166123_rob_auth_rob_config'
+                                    caption: 'Profile and Context Policy'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.end_split'
+                            position: '5'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
                         id: 'ce7cbfaa3d914e55b96d2c6be201ffa8'
                         key: {
                             sys_ui_section: {
@@ -12368,6 +12526,28 @@ declare global {
                             value: 'REUSE_FULLY_COVERED'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'dd59d535660b427f917b12b2d50d4b81'
+                        key: {
+                            sys_ui_section: {
+                                id: '4f6271d51dcb464f94c1038aca3f5c6c'
+                                key: {
+                                    name: 'x_2166123_rob_auth_rob_config'
+                                    caption: 'Profile and Context Policy'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.begin_split'
+                            position: '0'
                         }
                     },
                     {
