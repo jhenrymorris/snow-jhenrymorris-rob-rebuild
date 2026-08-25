@@ -237,6 +237,11 @@
     var tableName = String(current.getTableName() || '')
     if (!supportedTables[tableName]) return
 
+    var requestedItems = String(
+        current.getValue(prefix + 'requested_items') || ''
+    )
+    if (!requestedItems.trim()) return
+
     if (
         isTrue(current.getValue(prefix + 'authorization_processing_blocked')) ||
         current.getValue(prefix + 'decision_evaluated_at')
@@ -246,9 +251,6 @@
 
     var subjectId = String(
         current.getValue('subject_person') || current.getValue('opened_for') || ''
-    )
-    var requestedItems = String(
-        current.getValue(prefix + 'requested_items') || ''
     )
     var accessContext = requestedAccessContext(requestedItems)
     var profileContext = new RobProfileAuthorizationContext().resolveFromCase(

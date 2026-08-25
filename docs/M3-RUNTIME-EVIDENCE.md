@@ -664,3 +664,27 @@ rules, and both M4 entry rules remain inactive. M4 is not ready.
 - `AuthorizationDecisionService.js` used extensionless relative dependency names even though the installed runtime records have exact `.js` paths. The dependencies were reconciled in place to `./AuthorizationRepository.js` and `./ExpirationDateService.js`.
 - The production adapter remains single and unchanged, no duplicate decision engine or persistence mechanism was introduced, and unknown DEC-MAP inputs remain fail-closed Exception inputs.
 - Focused adapter tests: 12/12 PASS. R3 tests: 30/30 PASS. SDK 4.11.0 normal and frozen-key builds: PASS. Generated-key diff: empty.
+
+### V2 persisted Glide-list entry reconciliation — 2026-08-25
+
+- Live HRC0001006 proved the reconciled R3 module and its exact `.js`
+  dependencies: the Payroll evaluator persisted `New`,
+  `NEW_NO_PRIOR_FORM`, the evaluation timestamp, the proposed expiration
+  date, and the committed employee/supervisor gate flags.
+- Caller-specific RCA `c9a07f2b833287104f5193a6feaad352` allows only
+  Payroll evaluator Business Rule `5fc23b27a0fd4e14af71b4455896f263`
+  to execute HR Core bridge `f058c4eb837ec3104f5193a6feaad3fb`.
+- Caller-specific RCA `2e217fab833287104f5193a6feaad34b` allows only
+  Payroll lifecycle Business Rule `b9973651027140a68e3f2d1ed1beabfc`
+  to read the Document Templates PDF Template table. No write, create, or
+  delete operation was approved.
+- Employee Center cases HRC0001007 and HRC0001008 preserved native HRSD
+  identity and deterministically blocked as `EX_DUPLICATE_OPEN_CASE`; both
+  were then cancelled through Employee Center after evidence capture.
+- HRC0001009 contains the governed requested-access Glide list, but the
+  `ISNOTEMPTY` encoded Business Rule condition did not match the persisted
+  value on either its insert follow-up or normal Ready-state update. The two
+  existing evaluator rules therefore now use their shared adapter's explicit
+  empty-input guard instead of the unreliable Glide-list encoded condition.
+  This preserves exclusion of unrelated HR cases and introduces no new
+  Business Rule, engine, table, field, or privilege.

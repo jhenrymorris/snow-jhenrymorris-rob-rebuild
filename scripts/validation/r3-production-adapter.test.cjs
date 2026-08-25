@@ -130,11 +130,15 @@ test('R3 runtime module dependencies use exact installed JavaScript paths', () =
 test('Payroll and Workforce entry rules are source-owned, idempotent, and inactive until native bootstrap', () => {
     assert.match(
         businessRules,
-        /evaluatePayrollAuthorizationDecision[\s\S]*?active: false[\s\S]*?table: 'sn_hr_core_case_payroll'[\s\S]*?filterCondition: 'x_2166123_rob_auth_requested_itemsISNOTEMPTY'/
+        /evaluatePayrollAuthorizationDecision[\s\S]*?active: false[\s\S]*?table: 'sn_hr_core_case_payroll'[\s\S]*?script: Now\.include\('\.\.\/server\/authorization-decision-entry\.server\.js'\)/
     )
     assert.match(
         businessRules,
-        /evaluateWorkforceAuthorizationDecision[\s\S]*?active: false[\s\S]*?table: 'sn_hr_core_case_workforce_admin'[\s\S]*?filterCondition: 'x_2166123_rob_auth_requested_itemsISNOTEMPTY'/
+        /evaluateWorkforceAuthorizationDecision[\s\S]*?active: false[\s\S]*?table: 'sn_hr_core_case_workforce_admin'[\s\S]*?script: Now\.include\('\.\.\/server\/authorization-decision-entry\.server\.js'\)/
+    )
+    assert.match(
+        adapter,
+        /var requestedItems = String\([\s\S]*?current\.getValue\(prefix \+ 'requested_items'\)[\s\S]*?if \(!requestedItems\.trim\(\)\) return/
     )
     assert.equal(
         (businessRules.match(/action: \['insert', 'update'\]/g) || []).length,

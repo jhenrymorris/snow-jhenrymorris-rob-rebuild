@@ -8,9 +8,8 @@ export const evaluatePayrollAuthorizationDecision = BusinessRule({
     when: 'before',
     action: ['insert', 'update'],
     order: 150,
-    filterCondition: 'x_2166123_rob_auth_requested_itemsISNOTEMPTY',
     description:
-        'Builds the committed R3 context, invokes AuthorizationDecisionService.evaluate(), and persists only system-managed decision outputs through the narrow HR Core bridge.',
+        'Builds the committed R3 context when governed requested access is present, invokes AuthorizationDecisionService.evaluate(), and persists only system-managed decision outputs through the narrow HR Core bridge.',
     script: Now.include('../server/authorization-decision-entry.server.js'),
 })
 
@@ -22,9 +21,8 @@ export const evaluateWorkforceAuthorizationDecision = BusinessRule({
     when: 'before',
     action: ['insert', 'update'],
     order: 150,
-    filterCondition: 'x_2166123_rob_auth_requested_itemsISNOTEMPTY',
     description:
-        'Builds the committed R3 context, invokes AuthorizationDecisionService.evaluate(), and persists only system-managed decision outputs through the narrow HR Core bridge.',
+        'Builds the committed R3 context when governed requested access is present, invokes AuthorizationDecisionService.evaluate(), and persists only system-managed decision outputs through the narrow HR Core bridge.',
     script: Now.include('../server/authorization-decision-entry.server.js'),
 })
 
