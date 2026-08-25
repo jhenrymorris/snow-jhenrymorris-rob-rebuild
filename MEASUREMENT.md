@@ -2094,3 +2094,19 @@ Not exposed by session/tool — no estimate recorded.
   PASS; generated-key diff empty; `git diff --check` PASS.
 - Result: R3 production invocation/persistence correction PASS. Full M3
   runtime acceptance remains open; M4 production runtime is not ready.
+
+#### V2 Supervisor approval Flow and native-template boundary
+
+- The governed V2 approval Flow `73105d6b833a07104f5193a6feaad363`
+  remains Draft/Inactive. The approved branch now uses native approval evidence
+  to persist approval complete, exact approved outcome, approver, and native
+  approval update time on the governed Authorization Form.
+- V2-scope Document Template count is 0. The supported native PDF Template form
+  does not offer `x_2166123_rob_auth_rob_auth` as a source table even though the
+  table exists (`fbb6439783be83104f5193a6feaad35f`).
+- The verified Form 1768 PDF remained two pages with 28 canonical fields and 28
+  widgets. No native template was submitted or published because changing the
+  governing source to an HR Case would be an architecture substitution.
+- No signing task, PDF, activation, lifecycle-rule activation, or fulfillment
+  occurred. M3 is BLOCKED-PLATFORM on the native Document Templates source-table
+  binding proven on dev437065; M4 remains inactive and not ready.

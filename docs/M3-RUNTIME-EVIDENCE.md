@@ -600,3 +600,36 @@ used.
 The focused adapter suite is 11/11 PASS; normal/frozen SDK 4.11.0 builds PASS;
 generated-key diff is empty. The invocation/persistence correction is live,
 but complete M3 runtime acceptance remains open and M4 remains not ready.
+
+## 2026-08-25 V2 Supervisor approval Flow and Document Templates stop
+
+The governed V2 Flow `ROB Authorization Supervisor Approval`
+(`sys_hub_flow` `73105d6b833a07104f5193a6feaad363`) remains Draft/Inactive.
+Supported Workflow Studio configuration completed through the approved branch:
+
+- native `Ask For Approval` routes to the Authorization Form Supervisor;
+- the Approved branch looks up the newest matching native
+  `sysapproval_approver` record by current Authorization Form, V2 source table,
+  Supervisor, and Approved state; and
+- the Authorization Form update persists approval-complete, the exact
+  `approved` outcome, native approver identity, and the approval record's
+  `sys_updated_on` timestamp. It does not advance Status or start fulfillment.
+
+The clean V2 scope contains zero `sn_doc_template` records. A supported native
+PDF Template creation attempt used the verified two-page April 2026 Form 1768
+artifact (28 AcroForm fields/widgets), but the native Template Table selector
+did not offer the installed V2 `ROB Authorization Form`
+(`x_2166123_rob_auth_rob_auth`, `sys_db_object`
+`fbb6439783be83104f5193a6feaad35f`). The selector offered supported native
+task/case tables only. No template record was submitted or published, and the
+incomplete `Create Document Task` Flow action was cancelled.
+
+**M3 — BLOCKED-PLATFORM.** Exact failing artifact: native Document Templates
+PDF Template source-table binding for the V2 Authorization Form. Exact failing
+operation: create the required current Document Template with the governed V2
+Authorization Form as its source through the supported native PDF Template
+form. Using a native HR Case target, hard-coded template/participant sys_ids,
+or a duplicate/custom signing mechanism would change the approved architecture
+and was not attempted. This boundary is proven on dev437065; broader
+Australia-instance scope has not been inferred. The Flow, both lifecycle
+rules, and both M4 entry rules remain inactive. M4 is not ready.

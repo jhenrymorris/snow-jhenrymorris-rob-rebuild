@@ -680,3 +680,21 @@ Build evidence is package-specific and must remain distinct from install, runtim
   inactive.
 - Result: invocation/persistence correction installed and safely active. Full
   M3 lifecycle runtime acceptance is not claimed.
+
+### V2 governed approval Flow / Document Templates platform stop
+
+- Flow: `73105d6b833a07104f5193a6feaad363`, Draft/Inactive.
+- Approved-path configuration: native approval lookup and system-managed
+  approval evidence persistence configured; Status, signing, PDF generation,
+  activation, and fulfillment are not advanced by the evidence update.
+- Native template inventory: V2-scope `sn_doc_template` count 0.
+- Supported attempt: native Document Templates > New > PDF Document Template.
+  The V2 `ROB Authorization Form` table exists but is absent from the Template
+  Table selector; only supported native task/case targets are offered.
+- Cleanup: no template submitted/published; incomplete Create Document Task
+  action cancelled; generated local PDF/QA outputs removed after validation.
+- Safety: Flow and M3 lifecycle rules inactive; M4 entry rules inactive; no
+  target-table substitution, new signing engine, broad privilege, or hard-coded
+  runtime sys_id introduced.
+- Result: M3 BLOCKED-PLATFORM on the Document Templates source-table binding;
+  proven on dev437065. M4 NOT READY.
