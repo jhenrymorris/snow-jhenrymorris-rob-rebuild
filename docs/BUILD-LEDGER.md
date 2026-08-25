@@ -659,3 +659,24 @@ Build evidence is package-specific and must remain distinct from install, runtim
   three unapproved optional/native install scripts; these are dependency-tool
   findings, not Fluent build diagnostics, and no `npm audit fix` or script
   approval was applied during this correction.
+
+### V2 R3 production adapter install and activation
+
+- Git: `d28b59d` plus ROB-only safety gate `bdd5cfd`, pushed to rebuild
+  repository `main`.
+- HR Core bridge `f058c4eb837ec3104f5193a6feaad3fb`: reconciled through
+  its native Script Include form; one implementation, one `setRobDecision`,
+  Caller Restriction retained. Execute RCA
+  `fb1908ef837ec3104f5193a6feaad34a` unchanged and narrow.
+- IDE Build and Install: PASS. Final rollback context
+  `082405e783b607104f5193a6feaad3c7`; Reinstall not used.
+- Active R3 callers: Payroll `5fc23b27a0fd4e14af71b4455896f263`
+  and Workforce `795fabaf203843a79117c1e346a57290`. Both are
+  before-insert and gated by the scoped ROB requested-items field.
+- Live contract: current authorization context present; legacy snapshot inputs
+  absent; decision/gate output dictionaries read-only 12/12.
+- Downstream controls: both M3 lifecycle initiation rules inactive because the
+  governed V2 Supervisor Approval Flow is absent; both M4 orchestration rules
+  inactive.
+- Result: invocation/persistence correction installed and safely active. Full
+  M3 lifecycle runtime acceptance is not claimed.

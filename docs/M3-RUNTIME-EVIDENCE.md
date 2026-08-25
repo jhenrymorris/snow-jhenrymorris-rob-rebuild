@@ -569,3 +569,34 @@ through the supported HR Core Script Include editor, the V2 source diff must
 be installed through ServiceNow IDE after explicit authorization, and both
 inactive evaluator rules must be reviewed before activation. M3 remains open;
 M4 production runtime remains inactive.
+
+## 2026-08-25 V2 R3 adapter install and live activation evidence
+
+The approved source was installed through the standard ServiceNow IDE Build
+and Install path. The final gated incremental install passed in 95.264 seconds
+with rollback context `082405e783b607104f5193a6feaad3c7`; Reinstall was not
+used.
+
+- The existing HR Core bridge `f058c4eb837ec3104f5193a6feaad3fb` contains
+  exactly one bridge class and one `setRobDecision` method. It contains no
+  `opened_by`, `opened_for`, or `subject_person` reference.
+- The existing V2-to-HR-Core Execute RCA
+  `fb1908ef837ec3104f5193a6feaad34a` remains the only narrow bridge path.
+- Payroll caller `5fc23b27a0fd4e14af71b4455896f263` and Workforce caller
+  `795fabaf203843a79117c1e346a57290` are active and gated by
+  `x_2166123_rob_auth_requested_itemsISNOTEMPTY`; unrelated Payroll and
+  Workforce cases are excluded.
+- Both callers reference `AuthorizationDecisionService.js`, contain the
+  current `authorizationContext`, and contain zero legacy snapshot-input
+  references.
+- Authorization path, decision reason, evaluation time, exception-required,
+  exception reason, and processing-blocked dictionaries remain read-only on
+  both subclasses (12/12).
+- Both downstream lifecycle rules remain inactive because no governed V2
+  Supervisor Approval Flow is installed. Both M4 orchestration rules remain
+  inactive. No signing, authorization artifact, PDF, activation, or
+  fulfillment runtime was started.
+
+The focused adapter suite is 11/11 PASS; normal/frozen SDK 4.11.0 builds PASS;
+generated-key diff is empty. The invocation/persistence correction is live,
+but complete M3 runtime acceptance remains open and M4 remains not ready.

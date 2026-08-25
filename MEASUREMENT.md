@@ -2067,3 +2067,30 @@ Not exposed by session/tool — no estimate recorded.
   fix or script approval was performed.
 - Deployment/runtime: not run. HR Core bridge reconciliation, reviewed IDE
   install, inactive-rule activation, and M3 runtime acceptance remain open.
+
+#### V2 R3 production adapter install and controlled activation
+
+- Date: `2026-08-25`.
+- Source checkpoints: `d28b59d` restored the approved adapter and `bdd5cfd`
+  added the required ROB-only `requested_items IS NOT EMPTY` entry gate.
+- HR Core bridge: existing record `f058c4eb837ec3104f5193a6feaad3fb`
+  reconciled in place; exactly one class definition and one
+  `setRobDecision`; native HRSD identity-field references 0. Existing narrow
+  Execute RCA `fb1908ef837ec3104f5193a6feaad34a` remains Allowed.
+- IDE install: normal Build and Install PASS twice; final gated install
+  completed in 95.264 seconds with rollback context
+  `082405e783b607104f5193a6feaad3c7`. No Reinstall was used.
+- Live callers: Payroll `5fc23b27a0fd4e14af71b4455896f263` and Workforce
+  `795fabaf203843a79117c1e346a57290` are active, before-insert, and gated by
+  `x_2166123_rob_auth_requested_itemsISNOTEMPTY`. Both invoke the current
+  authorization-context module; deprecated snapshot-input references 0.
+- System-managed fields: the six verified decision/gate fields on both case
+  subclasses remain active and read-only (12/12).
+- Safety boundary: both downstream M3 lifecycle rules remain inactive because
+  no governed V2 Supervisor Approval Flow is installed. Both M4 orchestration
+  rules remain inactive. No signing, governed-form creation, PDF, activation,
+  or fulfillment was started by this correction.
+- Validation: focused adapter 11/11; normal and frozen-key SDK 4.11.0 builds
+  PASS; generated-key diff empty; `git diff --check` PASS.
+- Result: R3 production invocation/persistence correction PASS. Full M3
+  runtime acceptance remains open; M4 production runtime is not ready.

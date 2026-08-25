@@ -263,3 +263,17 @@ remain prohibited.
 | System-managed R3 output persistence | no approved complete-output writer; existing bridge is M2-only | BLOCKED |
 | M3 lifecycle acceptance | lifecycle rules retained inactive | NOT RUN |
 | M4 production runtime | entry rules retained inactive | NOT READY |
+
+## V2 R3 production adapter reconciliation (2026-08-25)
+
+| Requirement | V2 evidence | Status |
+|---|---|---|
+| Production R3 invocation | Active gated Payroll `5fc23b27a0fd4e14af71b4455896f263` and Workforce `795fabaf203843a79117c1e346a57290` callers | PASS |
+| ROB-only scope | `x_2166123_rob_auth_requested_itemsISNOTEMPTY` on both callers | PASS |
+| Current R3 contract | `authorizationContext` present; legacy snapshot inputs 0 | PASS |
+| System-managed persistence | HR Core bridge `f058c4eb837ec3104f5193a6feaad3fb`; narrow Execute `fb1908ef837ec3104f5193a6feaad34a` | PASS |
+| Read-only outputs | Six decision/gate dictionaries on two subclasses read-only 12/12 | PASS |
+| Standard install | IDE Build and Install PASS; rollback `082405e783b607104f5193a6feaad3c7`; no Reinstall | PASS |
+| Governed lifecycle | V2 Supervisor Approval Flow absent; both lifecycle initiation rules inactive | OPEN |
+| M4 boundary | Both ROB orchestration rules inactive | PASS / NOT STARTED |
+| Overall | Invocation/persistence restored; complete M3 lifecycle runtime not yet accepted | M3 OPEN; M4 NOT READY |
