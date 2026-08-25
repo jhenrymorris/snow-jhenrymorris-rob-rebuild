@@ -601,6 +601,21 @@ The focused adapter suite is 11/11 PASS; normal/frozen SDK 4.11.0 builds PASS;
 generated-key diff is empty. The invocation/persistence correction is live,
 but complete M3 runtime acceptance remains open and M4 remains not ready.
 
+## 2026-08-25 V2 evaluator module-path correction
+
+The first valid Employee Center Payroll submission on the clean V2 PDI
+resolved the governed profile context and preserved native HRSD identity, but
+the active evaluator logged a `ModuleResolutionException`. The installed
+module is uniquely present at
+`x_2166123_rob_auth/x-2166123-hr-access-rob-authorization-v-2/0.0.4/src/server/authorization/AuthorizationDecisionService.js`,
+while the adapter required the nonexistent equivalent under `dist/modules`.
+
+The source-owned adapter now requires the exact installed `src/server` path.
+The focused regression assertion was updated with it. This correction changes
+no decision inputs, outputs, reason codes, bridge fields, privileges, generated
+keys, or lifecycle behavior. Runtime proof remains pending a normal IDE Sync
+and Build and Install of this source change; Reinstall is not authorized.
+
 ## 2026-08-25 V2 Supervisor approval Flow and Document Templates stop
 
 The governed V2 Flow `ROB Authorization Supervisor Approval`

@@ -300,7 +300,7 @@
         duplicateOpenCaseId: duplicateOpenCase(subjectId, requestedItems),
     }
     var decisionModule = require(
-        './dist/modules/server/authorization/AuthorizationDecisionService.js'
+        './src/server/authorization/AuthorizationDecisionService.js'
     )
     var decision = decisionModule.evaluate(context)
     var persisted = new sn_hr_core.RobHrCasePersistenceBridge().setRobDecision(

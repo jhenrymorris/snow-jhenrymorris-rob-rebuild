@@ -95,7 +95,7 @@ function decision(overrides = {}) {
 test('one shared production adapter invokes the committed R3 module and narrow bridge', () => {
     assert.match(
         adapter,
-        /require\(\s*['"]\.\/dist\/modules\/server\/authorization\/AuthorizationDecisionService\.js['"]\s*\)/
+        /require\(\s*['"]\.\/src\/server\/authorization\/AuthorizationDecisionService\.js['"]\s*\)/
     )
     assert.match(adapter, /decisionModule\.evaluate\(context\)/)
     assert.match(
