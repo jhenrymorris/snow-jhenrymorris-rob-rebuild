@@ -108,11 +108,11 @@ test('one shared production adapter invokes the committed R3 module and narrow b
 test('Payroll and Workforce entry rules are source-owned and inactive until native bootstrap', () => {
     assert.match(
         businessRules,
-        /evaluatePayrollAuthorizationDecision[\s\S]*?active: false[\s\S]*?table: 'sn_hr_core_case_payroll'/
+        /evaluatePayrollAuthorizationDecision[\s\S]*?active: false[\s\S]*?table: 'sn_hr_core_case_payroll'[\s\S]*?filterCondition: 'x_2166123_rob_auth_requested_itemsISNOTEMPTY'/
     )
     assert.match(
         businessRules,
-        /evaluateWorkforceAuthorizationDecision[\s\S]*?active: false[\s\S]*?table: 'sn_hr_core_case_workforce_admin'/
+        /evaluateWorkforceAuthorizationDecision[\s\S]*?active: false[\s\S]*?table: 'sn_hr_core_case_workforce_admin'[\s\S]*?filterCondition: 'x_2166123_rob_auth_requested_itemsISNOTEMPTY'/
     )
     assert.match(businessRules, /action: \['insert'\]/)
     assert.match(businessRules, /order: 150/)
