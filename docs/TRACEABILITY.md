@@ -251,3 +251,15 @@ remain prohibited.
 | Identity/security preservation | No PDI write, metadata manipulation, install, reinstall, privilege, role, or generated-key change | PASS |
 | Runtime acceptance | Reconciliation prerequisite failed; New, Denial, Amendment, Renewal, Reuse, and Exception not executed in this gate | NOT RUN — HARD STOP |
 | M3/M4 status | Australia SDK installer defect prevents the only supported reconciliation path permitted by this package | M3 BLOCKED-PLATFORM; M4 NOT READY |
+
+## V2 M3 runtime boundary (2026-08-24)
+
+| Requirement | V2 evidence | Status |
+|---|---|---|
+| Current post-M2 R3 implementation installed | `sys_module` `9c06697e84f74fb09e05847797fa793b` | PASS |
+| Class C environment configuration | Supervisor group, organization root, title fallback | PASS 3/3 |
+| Narrow HR Core prerequisite persistence | bridge `f058c4eb837ec3104f5193a6feaad3fb`; Execute `fb1908ef837ec3104f5193a6feaad34a` | PASS |
+| Production R3 invocation | 0 invoking BR/SI/Flow/Action | BLOCKED |
+| System-managed R3 output persistence | no approved complete-output writer; existing bridge is M2-only | BLOCKED |
+| M3 lifecycle acceptance | lifecycle rules retained inactive | NOT RUN |
+| M4 production runtime | entry rules retained inactive | NOT READY |

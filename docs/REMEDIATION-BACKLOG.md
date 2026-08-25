@@ -258,3 +258,20 @@ No item above is authorized for implementation in R0. Unsupported native capabil
   edit and the native record-template editor cannot populate them.
 - [ ] M3 remains BLOCKED-PLATFORM; the published approval Flow has not yet
   completed Denial, Amendment, Renewal, or Reuse runtime acceptance.
+
+## V2 R3 production invocation/persistence boundary
+
+- [x] Clean V2 install and current post-M2 `AuthorizationDecisionService.js`
+  module verified on dev437065.
+- [x] Class C 3/3 and the narrow V2 HR Core intake-gate bridge configured.
+- [x] Confirm R3 decision outputs remain system-managed/read-only.
+- [x] Confirm installed V2 production callers: Business Rules 0, Script
+  Includes 0, Flows 0, Actions 0.
+- [ ] Architecture/security owner must select a supported production entry
+  point that invokes the existing R3 module and persists its complete output
+  atomically without broad native-case Write or generic GlideRecord APIs.
+- [ ] The same decision must define how committed R3 Exception reason codes
+  are persisted. The existing bridge is intentionally limited to the four M2
+  prerequisite reasons and must not be broadened implicitly.
+- [ ] M3 remains BLOCKED-PLATFORM; both M3 lifecycle entry rules and both M4
+  rules remain inactive; M4 production runtime is not ready.

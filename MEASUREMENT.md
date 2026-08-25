@@ -2024,3 +2024,25 @@ Not exposed by session/tool — no estimate recorded.
   metadata write, or generated-key edit occurred.
 - Result: M3 BLOCKED-PLATFORM; ServiceNow IDE Git relay source synchronization
   FAILED; M4 NOT READY.
+
+#### V2 clean-PDI bootstrap and R3 production-entry boundary
+
+- Date: `2026-08-24`.
+- Source/install: V2 `0.0.4` installed in `x_2166123_rob_auth`; current R3
+  module contract verified; source checkpoint `349c542` clean.
+- Native bootstrap completed before the stop: Class C 3/3, synthetic profile
+  hierarchy, HR Core bridge `f058c4eb837ec3104f5193a6feaad3fb`, and one
+  narrow bridge Execute privilege `fb1908ef837ec3104f5193a6feaad34a`.
+- Security at stop: broad GlideRecord privileges 0; broad native-case Write 0;
+  exact M2 Reads 5/5; M3 and M4 production entry rules inactive.
+- Silent defect: the committed/installed side-effect-free R3 module has no
+  installed production caller or persistence boundary. Queries returned 0
+  invoking Business Rules, Script Includes, Flows, and Actions.
+- Contract conflict: the approved HR Core bridge accepts only M2 intake-gate
+  reasons and cannot persist the R3 output set or the two required unknown-map
+  Exception reason codes.
+- Mutations deliberately not made: no new decision Action/Flow/Business Rule,
+  no editable decision outputs, no bridge expansion, no lifecycle activation,
+  no M4 runtime, and no broad privilege.
+- Result: M3 BLOCKED-PLATFORM; R3 production invocation/persistence boundary
+  requires an explicit architecture/security decision; M4 NOT READY.

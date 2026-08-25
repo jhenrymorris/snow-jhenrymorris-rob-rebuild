@@ -471,3 +471,58 @@ used.
 **M3 — BLOCKED-PLATFORM.** Fluent application bootstrap and runtime
 reconciliation have exhausted the supported IDE installation paths on the
 clean PDI. M4 is not ready.
+
+## 2026-08-24 V2 clean-PDI bootstrap and R3 production-entry hard stop
+
+The prior clean-PDI bootstrap failure is superseded. ServiceNow IDE installed
+`HR Access ROB Authorization V2` version `0.0.4` in scope
+`x_2166123_rob_auth` (application sys_id
+`4aba8657837a43104f5193a6feaad3c5`). The authoritative source checkpoint was
+`349c542bac1e9653b886b2097b07995935ad8764`; the working tree and generated-key
+diff were empty before native configuration.
+
+Read-only inventory proved exactly four custom business tables, five scoped
+functional roles, five exact M2 table Reads, one current R3 ECMAScript module,
+the R4 and M4 source artifacts, and inactive M3/M4 production entry rules.
+The current R3 module is `sys_module` `9c06697e84f74fb09e05847797fa793b`.
+Its content uses `authorizationContext.valid`, `supervisorId`, `position`, and
+`organization`; it does not use the three retired snapshot inputs.
+
+The V2 Class C environment binding completed 3/3 with one active synthetic
+Supervisor group, an approved root with two descendants, an unrelated
+department, and title fallback enabled. Minimal synthetic users, Positions,
+and an HR Profile were created through supported native forms. The exact
+reviewed HR Core persistence bridge was created as
+`sn_hr_core.RobHrCasePersistenceBridge` (`f058c4eb837ec3104f5193a6feaad3fb`),
+with Caller Restriction. The single allowed V2-to-bridge Execute privilege is
+`fb1908ef837ec3104f5193a6feaad34a`. Broad GlideRecord privileges remain 0.
+
+Runtime continuation then reached a genuine architecture/security boundary:
+
+- the installed R3 implementation is a side-effect-free CommonJS module that
+  exports `evaluate`; no V2 Business Rule, Script Include, Flow, or Action
+  invokes it or persists its result;
+- read-only instance queries returned 0 Business Rule callers, 0 Script
+  Include callers, 0 V2 Flows, and 0 V2 Actions;
+- downstream lifecycle Business Rules consume
+  `authorization_path`/`decision_evaluated_at` but do not produce them;
+- R3 decision-output dictionaries remain system-managed/read-only; and
+- the approved bridge exposes only `setRobIntakeGate` and allowlists the four
+  M2 prerequisite reasons. It does not accept
+  `EX_UNRESOLVED_ANNUAL_RENEWAL_RULE` or
+  `EX_AMBIGUOUS_MATERIAL_CHANGE` and cannot persist the complete R3 output
+  contract.
+
+Creating a new evaluator Flow/Action/Business Rule, making the decision fields
+editable, or expanding the HR Core bridge into a general decision-output
+writer would change the approved architecture/security contract. None was
+performed. The two M3 lifecycle entry rules and both M4 entry rules remain
+inactive, so no signing, PDF finalization, activation, or fulfillment started
+against synthetic decision values.
+
+**M3 — BLOCKED-PLATFORM.** Exact failing artifact:
+`AuthorizationDecisionService.js` production invocation/persistence boundary.
+Exact unsupported operation: invoke the installed R3 module and atomically
+persist its system-managed outputs through an existing supported V2-owned
+runtime entry point. This is application-wide, not a stale-module or
+dev437065-specific install defect. M4 is not ready.

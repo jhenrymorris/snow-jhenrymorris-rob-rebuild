@@ -607,3 +607,21 @@ Build evidence is package-specific and must remain distinct from install, runtim
   frozen-key build all PASS; generated-key diff empty; five unchanged TS11
   warnings only.
 - Result: M3 BLOCKED-PLATFORM; M4 runtime NOT READY.
+
+### V2 clean-PDI bootstrap and R3 production-entry checkpoint
+
+- V2 install: PASS, version `0.0.4`, scope `x_2166123_rob_auth`, application
+  sys_id `4aba8657837a43104f5193a6feaad3c5`.
+- R3 module: PASS/current, `9c06697e84f74fb09e05847797fa793b`.
+- Class C environment binding: 3/3.
+- HR Core bridge: `f058c4eb837ec3104f5193a6feaad3fb`; exact V2 Execute
+  privilege `fb1908ef837ec3104f5193a6feaad34a`.
+- R3 production invoker/persistence artifact: MISSING. No installed V2
+  Business Rule, Script Include, Flow, or Action calls
+  `AuthorizationDecisionService`; downstream lifecycle rules only consume its
+  read-only outputs.
+- Security: broad GlideRecord privileges 0; no decision field was made
+  editable; no bridge expansion; M3/M4 entry rules inactive.
+- Result: M3 BLOCKED-PLATFORM. Completing the missing production boundary is
+  an architecture/security change, not native Class C configuration. M4 is not
+  ready.

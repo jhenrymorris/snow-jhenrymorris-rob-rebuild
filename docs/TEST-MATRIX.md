@@ -266,3 +266,9 @@ expansion were not used.
 | TM-160 | Controlled R3 fixture | Inline edit denied and native record-template picker excludes all four read-only R3 outputs | BLOCKED-PLATFORM |
 | TM-161 | Cleanup | Temporary role absent; no fixture template; both R4/M4 entry pairs inactive; broad GlideRecord privileges 0 | PASS |
 | TM-162 | Remaining runtime | Flow Denial, Amendment, Renewal, and Reuse not executed without committed R3 input | NOT RUN / BLOCKED-PLATFORM |
+| TM-163 | V2 installed R3 module contract | Authorization context inputs present; legacy snapshots absent | PASS |
+| TM-164 | V2 R3 production caller inventory | Exactly one approved caller/persistence path | FAIL: 0 callers |
+| TM-165 | V2 R3 outputs remain read-only | No editable synthetic decision outputs | PASS |
+| TM-166 | V2 HR Core bridge scope | Only approved case classes, fields, and M2 reasons | PASS |
+| TM-167 | V2 R3 Exception persistence | Committed Exception codes persist through approved boundary | BLOCKED: no approved boundary |
+| TM-168 | Lifecycle safety at V2 blocker | M3/M4 rules inactive; signing/fulfillment 0 | PASS |

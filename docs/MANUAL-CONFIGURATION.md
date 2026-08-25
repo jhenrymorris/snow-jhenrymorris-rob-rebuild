@@ -962,3 +962,19 @@ and after installation is separately authorized. Do not use Background
 Scripts, direct metadata manipulation, `--reinstall`, a duplicate engine, or a
 fixture/workaround. Until then, leave the production lifecycle and M4 entry
 rules inactive.
+
+## V2 R3 production-entry boundary
+
+V2 dev437065 has the reviewed bridge installed as
+`sn_hr_core.RobHrCasePersistenceBridge` (`f058c4eb837ec3104f5193a6feaad3fb`)
+with Caller Restriction. V2 scope `x_2166123_rob_auth` has exactly one allowed
+Script Include Execute privilege (`fb1908ef837ec3104f5193a6feaad34a`). This
+bridge remains an M2 prerequisite-gate boundary only; it is not an R3 decision
+producer or general case writer.
+
+Do not activate the V2 M3 lifecycle entry rules until an approved production
+entry point invokes the existing `AuthorizationDecisionService.js` module and
+persists the complete system-managed R3 output set. The V2 install currently
+contains no invoking Business Rule, Script Include, Flow, or Action. Do not
+make the decision fields editable and do not silently expand the bridge to
+accept R3 Exception reason codes.
