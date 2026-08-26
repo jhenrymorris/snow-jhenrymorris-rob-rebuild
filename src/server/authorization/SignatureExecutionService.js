@@ -98,9 +98,9 @@ function recordSupervisorSignature(input) {
     }
 }
 
-// Compatibility facade for callers that model the approved decision and
-// signature as one already-completed action. Runtime orchestration uses the
-// separate decision and signature functions above.
+// Production native Sign facade. One terminal ServiceNow Sign task supplies
+// the explicit Supervisor decision and, when accepted, the required signature.
+// A refused task is retained as denial evidence but never becomes a signature.
 function recordSupervisorAction(input) {
     const decision = recordSupervisorDecision({
         supervisorId: input.supervisorId,
@@ -108,7 +108,20 @@ function recordSupervisorAction(input) {
         outcome: input.outcome,
         decidedAt: input.completedAt,
     })
-    if (!decision.launchSupervisorSignature) return decision
+    if (!decision.launchSupervisorSignature) {
+        required(input.declineReason, 'supervisor decline reason')
+        return {
+            ...decision,
+            supervisorDocumentTaskId: required(
+                input.documentTaskId,
+                'supervisor document task'
+            ),
+            documentTaskExecutionId: required(
+                input.documentTaskExecutionId,
+                'document task execution'
+            ),
+        }
+    }
 
     return {
         ...decision,

@@ -840,3 +840,17 @@ Build evidence is package-specific and must remain distinct from install, runtim
   PDF or activation occurred.
 - All required suites and both SDK 4.11.0 builds passed; generated-key diff was
   empty. No install or source deployment was performed.
+
+### 2026-08-26 continuous native Sign source correction
+
+- Restored one `GenerateDocumentAPI` execution using the production Form 1768
+  for New, Amendment, and Renewal.
+- Source-deactivated the post-approval relaunch rule and removed runtime
+  dependency on the approval Flow for those paths.
+- Added strict same-execution Employee `fill`, Supervisor `sign`, accepted, and
+  refused evidence handling. Refusal retains the native task and reason but
+  creates no signature or downstream work.
+- Regression: M2 19/19, R1 9/9, security 22/22, deployment 16/16, R3 30/30,
+  focused runtime 13/13, R4 62/62, M4 26/26.
+- SDK 4.11.0 normal/frozen builds and generated-key gate: PASS. IDE installation
+  and live participant reconciliation remain pending.

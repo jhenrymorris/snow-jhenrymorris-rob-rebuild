@@ -87,6 +87,7 @@ export const captureSupervisorApprovalDecision = BusinessRule({
 export const launchSupervisorSignatureAfterApproval = BusinessRule({
     $id: Now.ID['launch-supervisor-signature-after-approval'],
     name: 'ROB Launch Supervisor Signature After Approval',
+    active: false,
     table: 'x_2166123_rob_auth_rob_auth',
     when: 'after',
     action: ['update'],
@@ -94,7 +95,7 @@ export const launchSupervisorSignatureAfterApproval = BusinessRule({
     filterCondition:
         'status=pending_supervisor_approval_signature^employee_signature_complete=true^supervisor_approval_complete=true^supervisor_approval_outcome=approved^supervisor_signature_complete=false',
     description:
-        'Uses the proven native GenerateDocumentAPI path after the ROB-owned Flow persists approval; the Authorization Form remains governed while the source HRSD Case is only the native Document Task parent.',
+        'Inactive historical split-execution launcher. The production Form 1768 now remains in one ordered Employee-to-Supervisor native Sign execution.',
     script: Now.include('../server/supervisor-signature-launch.server.js'),
 })
 

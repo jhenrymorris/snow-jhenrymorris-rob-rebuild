@@ -972,3 +972,31 @@ normal/frozen builds, diff check, and generated-key gate passed.
 **M3 — BLOCKED-PLATFORM. Native Document Templates cannot apply the Supervisor
 signature after skipping the optional earlier participant on dev437065. M4 —
 NOT READY.**
+
+## 2026-08-26 continuous native Sign source correction
+
+The architecture owner approved restoration of the proven continuous native
+Document Templates execution. Read-only comparison established that the
+successful Australia approval/refusal capability used a Supervisor participant
+with native action `sign`; V2 had rebuilt that participant as `fill` and later
+attempted to restart or skip the Employee participant.
+
+The bounded source correction now launches `ROB Form 1768 Authorization` once
+for New, Amendment, and Renewal. Employee evidence is accepted only from the
+required order-1 `fill` participant. Supervisor evidence is accepted only from
+the required order-2 `sign` participant in the same native execution. State
+`3` atomically persists approval plus signature and renders the final governed
+PDF. State `7` requires a native decline reason, retains the refused task and
+execution as denial evidence, denies pending details, and creates no signature,
+final PDF, activation, supersession, or fulfillment.
+
+The post-approval relaunch Business Rule is source-inactive. The legacy native
+approval response rule remains inactive. No R3, M2, Reuse, HR Core bridge,
+table, role, privilege, generated key, or M4 entry point changed.
+
+Source validation passes M2 19/19, R1 9/9, security 22/22, deployment 16/16,
+R3 30/30, focused R3 runtime 13/13, R4 62/62, and M4 26/26. SDK 4.11.0 normal
+and frozen-key builds, diff check, and generated-key gate pass. This supersedes
+the prior participant-resume design in source only. IDE install, native
+participant reconciliation, and focused accepted/refused runtime proof remain
+required; M3 remains open and M4 remains inactive.

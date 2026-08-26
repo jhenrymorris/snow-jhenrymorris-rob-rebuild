@@ -2277,3 +2277,19 @@ Not exposed by session/tool — no estimate recorded.
 - Result: **M3 — BLOCKED-PLATFORM**. Native Document Templates cannot apply a
   Supervisor signature after skipping the optional prior participant on this
   Australia PDI. **M4 — NOT READY**.
+
+## V2 continuous native Sign source checkpoint
+
+- Date: `2026-08-26`.
+- Approved correction: restore one ordered production Form 1768 execution;
+  Employee action `fill`, Supervisor action `sign`; accepted Sign supplies
+  approval plus signature, refused Sign retains native denial evidence.
+- Source scope: lifecycle initiation, signature evidence, split-launch active
+  state, focused runtime tests, and traceability only. R3, M2, Reuse, HR Core,
+  roles, tables, privileges, and M4 entry points unchanged.
+- Validation: M2 19/19, R1 9/9, security 22/22, deployment 16/16, R3 30/30,
+  focused R3 runtime 13/13, R4 62/62, M4 26/26; SDK 4.11.0 normal/frozen
+  builds, diff check, and generated-key gate PASS.
+- Result: source correction PASS. IDE install, native template reconciliation,
+  and focused accepted/refused runtime proof remain; M3 remains open and M4
+  remains inactive.

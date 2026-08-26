@@ -1,5 +1,4 @@
 (function executeRule(current) {
-    var employeeSignatureTemplateName = 'ROB Form 1768 Employee Signature'
     var authorizationTemplateName = 'ROB Form 1768 Authorization'
     function isTrue(value) {
         return value === '1' || value === 'true'
@@ -140,10 +139,7 @@
         ? template.getValue('name')
         : ''
 
-    if (
-        templateName !== employeeSignatureTemplateName &&
-        templateName !== authorizationTemplateName
-    ) {
+    if (templateName !== authorizationTemplateName) {
         return
     }
 
@@ -159,9 +155,14 @@
         'IN',
         'pending_employee_signature,pending_supervisor_approval_signature'
     )
-    authorization.setLimit(1)
+    authorization.setLimit(2)
     authorization.query()
     if (!authorization.next()) {
+        return
+    }
+    var authorizationId = authorization.getUniqueValue()
+    if (authorization.next() || !authorization.get(authorizationId)) {
+        gs.error('ROB signature evidence found ambiguous Authorization Forms.')
         return
     }
 
@@ -173,19 +174,21 @@
     var participantName = participant.isValidRecord()
         ? participant.getValue('name')
         : ''
+    var participantAction = participant.isValidRecord()
+        ? participant.getValue('action')
+        : ''
     var isEmployeeStage =
-        templateName === employeeSignatureTemplateName &&
-        participantName === 'Employee'
+        participantName === 'Employee' && participantAction === 'fill'
     var isSupervisorStage =
-        templateName === authorizationTemplateName &&
-        participantName === 'Supervisor'
+        participantName === 'Supervisor' && participantAction === 'sign'
 
-    if (
-        (templateName === employeeSignatureTemplateName ||
-            templateName === authorizationTemplateName) &&
-        !isEmployeeStage &&
-        !isSupervisorStage
-    ) {
+    if (!isEmployeeStage && !isSupervisorStage) {
+        gs.error('ROB signature evidence rejected an unexpected participant contract.')
+        return
+    }
+
+    if (!executionId) {
+        gs.error('ROB signature evidence is missing the native execution reference.')
         return
     }
 
@@ -199,7 +202,14 @@
             gs.error('ROB employee signature evidence did not satisfy the lifecycle gate.')
             return
         }
-        if (authorization.getValue('employee_document_task')) {
+        var recordedEmployeeTaskId = authorization.getValue(
+            'employee_document_task'
+        )
+        if (recordedEmployeeTaskId === current.getUniqueValue()) {
+            return
+        }
+        if (recordedEmployeeTaskId) {
+            gs.error('ROB employee signature evidence is already bound to another task.')
             return
         }
 
@@ -219,55 +229,85 @@
             gs.error('ROB employee signature evidence could not be persisted.')
             return
         }
-        // The ROB-owned approval Flow is triggered by this committed state
-        // transition. It creates the native supervisor approval and branches
-        // Denied versus Approved without a Global response Business Rule.
         return
     }
 
     if (signerId !== authorization.getValue('supervisor') || !completedAt) {
-        gs.error('ROB supervisor signature evidence did not satisfy the lifecycle gate.')
+        gs.error('ROB supervisor Sign evidence did not satisfy the lifecycle gate.')
         return
     }
 
-    if (state !== '3') {
-        return
-    }
     if (!isTrue(authorization.getValue('employee_signature_complete'))) {
         gs.error('ROB supervisor action arrived before employee signature completion.')
+        return
+    }
+    if (
+        authorization.getValue('document_task_execution') !== executionId
+    ) {
+        gs.error('ROB supervisor action is not part of the Employee signing execution.')
         return
     }
     var recordedSupervisorTaskId = authorization.getValue(
         'supervisor_document_task'
     )
-    if (recordedSupervisorTaskId) {
-        var recordedSupervisorTask = new GlideRecord('sn_doc_task')
-        if (
-            recordedSupervisorTask.get(recordedSupervisorTaskId) &&
-            recordedSupervisorTask.getValue('document_task_execution') &&
-            recordedSupervisorTask.getValue('pdf_document')
-        ) {
-            return
-        }
+    if (recordedSupervisorTaskId === current.getUniqueValue()) {
+        return
     }
-    if (
-        !isTrue(authorization.getValue('supervisor_approval_complete')) ||
-        authorization.getValue('supervisor_approval_outcome') !== 'approved'
-    ) {
-        gs.error('ROB supervisor signature arrived without explicit approval.')
+    if (recordedSupervisorTaskId) {
+        gs.error('ROB supervisor evidence is already bound to another task.')
         return
     }
 
-    authorization.setValue('supervisor_signature_complete', '1')
-    authorization.setValue('supervisor_signer', signerId)
-    authorization.setValue('supervisor_signature_date_time', completedAt)
+    authorization.setValue('supervisor_approver', signerId)
+    authorization.setValue('supervisor_approval_date_time', completedAt)
     authorization.setValue(
         'supervisor_document_task',
         current.getUniqueValue()
     )
     authorization.setValue('document_task_execution', executionId)
+
+    if (state === '7') {
+        if (!current.getValue('decline_reason')) {
+            gs.error('ROB Supervisor refusal requires a native decline reason.')
+            return
+        }
+        authorization.setValue('supervisor_approval_complete', '0')
+        authorization.setValue('supervisor_approval_outcome', 'denied')
+        authorization.setValue('supervisor_signature_complete', '0')
+        authorization.setValue('supervisor_signer', '')
+        authorization.setValue('supervisor_signature_date_time', '')
+        authorization.setValue('status', 'denied')
+        if (!authorization.update()) {
+            gs.error('ROB denied Authorization Form evidence could not be persisted.')
+            return
+        }
+
+        var deniedDetails = new GlideRecord('x_2166123_rob_auth_auth_detail')
+        deniedDetails.addQuery(
+            'rob_authorization_form',
+            authorization.getUniqueValue()
+        )
+        deniedDetails.addQuery('status', 'pending_authorization')
+        deniedDetails.query()
+        while (deniedDetails.next()) {
+            deniedDetails.setValue('status', 'denied')
+            deniedDetails.update()
+        }
+        return
+    }
+
+    if (state !== '3') {
+        gs.error('ROB Supervisor Sign ended in an unsupported terminal state.')
+        return
+    }
+
+    authorization.setValue('supervisor_approval_complete', '1')
+    authorization.setValue('supervisor_approval_outcome', 'approved')
+    authorization.setValue('supervisor_signature_complete', '1')
+    authorization.setValue('supervisor_signer', signerId)
+    authorization.setValue('supervisor_signature_date_time', completedAt)
     if (!authorization.update()) {
-        gs.error('ROB supervisor evidence could not be persisted.')
+        gs.error('ROB approved Supervisor Sign evidence could not be persisted.')
         return
     }
     generateFinalPdf(authorization)

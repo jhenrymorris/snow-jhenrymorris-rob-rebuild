@@ -1091,3 +1091,30 @@ the skipped participant left the expected signature-field DOM element null.
 Do not delete/recreate the task, add a second template, broaden privileges, or
 manipulate protected metadata. M3 remains blocked pending a supported
 ServiceNow correction or an explicitly approved signing-architecture change.
+
+### Approved continuous native Sign reconciliation
+
+The architecture decision above is now approved and supersedes the split-stage
+and conditional-participant instructions for New, Amendment, and Renewal.
+
+Through the supported Document Templates UI, retain published template
+`ROB Form 1768 Authorization` (`7119926383f247104f5193a6feaad318`) and its 28
+mappings, then configure exactly:
+
+- Employee `b315aaeb833647104f5193a6feaad362`: order 1, action `fill`, required,
+  non-advanced user source `subject_person`, with no conditional skip script.
+- Supervisor `86a52a6f83f247104f5193a6feaad388`: order 2, action `sign`, required,
+  using the existing advanced resolver that returns the governed Authorization
+  Form `supervisor` and rejects missing/inactive users.
+
+Deactivate and retain as historical evidence:
+
+- Flow `ROB Authorization Supervisor Approval`
+  (`73105d6b833a07104f5193a6feaad363`);
+- template `ROB Form 1768 Employee Signature`
+  (`ec9a80b783f687104f5193a6feaad34c`).
+
+The split-execution Business Rule must install inactive. Do not create a Review
+participant, a third participant, a second production Form 1768 template, or a
+post-Employee execution. Keep M3 and M4 entry rules inactive until the focused
+accepted/refused native Sign proof is ready.

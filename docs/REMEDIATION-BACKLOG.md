@@ -380,3 +380,18 @@ No item above is authorized for implementation in R0. Unsupported native capabil
   privileges and temporary roles at zero; keep M4 inactive.
 - [ ] M3 BLOCKED-PLATFORM; ServiceNow correction or explicit architecture-owner
   approval is required. Do not create another workaround.
+
+## V2 continuous native Sign reconciliation
+
+- [x] Approve the continuous ordered Employee-to-Supervisor native execution.
+- [x] Prove the historical Australia denial fixture used Supervisor action
+  `sign`, not `fill` or `review`.
+- [x] Launch the production Form 1768 once for New, Amendment, and Renewal.
+- [x] Source-deactivate the post-approval relaunch rule.
+- [x] Add atomic accepted Sign and refused Sign evidence handling.
+- [x] Pass all source, regression, normal/frozen build, and generated-key gates.
+- [ ] Install through the normal ServiceNow IDE path.
+- [ ] Restore Employee required `fill` and Supervisor required `sign` through
+  Document Templates UI; deactivate the split Flow and employee-only template.
+- [ ] Prove focused accepted New and Denial runtime before resuming the full M3
+  matrix. M4 remains inactive.

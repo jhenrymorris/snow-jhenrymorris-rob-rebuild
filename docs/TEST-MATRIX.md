@@ -310,3 +310,8 @@ expansion were not used.
 | TM-199 | Correct post-approval participant routing | `DOCT0001008` assigned to V2 Supervisor A with execution `fad6363f83ba0b104f5193a6feaad3aa` | PDI PASS |
 | TM-200 | Native Supervisor signature Accept | `snc_viewer.js:setSignatureField` throws null `.style`; task remains Ready and unsigned | BLOCKED-PLATFORM |
 | TM-201 | Conditional-participant safe stop | Admin restored; broad privileges/temporary roles 0; M4 inactive; all suites and normal/frozen builds pass | PASS |
+| TM-202 | Continuous production execution | New/Amendment/Renewal launch `ROB Form 1768 Authorization` once through `GenerateDocumentAPI`; employee-only template absent from runtime source | SOURCE/TEST PASS; IDE INSTALL PENDING |
+| TM-203 | Participant contract | Employee is required order-1 `fill`; Supervisor is required order-2 `sign`; both share one native execution | SOURCE GUARD PASS; PDI CONFIG/RUNTIME PENDING |
+| TM-204 | Accepted native Sign | Governed Supervisor state `3` atomically persists approval and signature identity/time/task/execution before final PDF | SOURCE/UNIT PASS; PDI RUNTIME PENDING |
+| TM-205 | Refused native Sign | Governed Supervisor state `7` plus decline reason retains refused task/execution, denies pending records, and produces no signature/PDF/activation/fulfillment | SOURCE/UNIT PASS; PDI RUNTIME PENDING |
+| TM-206 | Split execution neutralization | Post-approval relaunch and legacy approval response rules inactive; approval Flow and employee-only template scheduled for native deactivation | SOURCE/BUILD PASS; PDI CONFIG PENDING |

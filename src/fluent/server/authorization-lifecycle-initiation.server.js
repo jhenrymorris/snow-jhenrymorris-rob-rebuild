@@ -34,7 +34,7 @@
         return template
     }
 
-    function initiateEmployeeSigning(templateName, outputName) {
+    function initiateAuthorizationSigning(templateName, outputName) {
         var template = publishedTemplate(templateName)
         if (!template) {
             fail('exactly one published production signing template is required')
@@ -60,7 +60,7 @@
             ''
         )
         if (!initiated) {
-            fail('the native Employee signing execution could not be initiated')
+            fail('the native Authorization signing execution could not be initiated')
             return false
         }
         return true
@@ -146,7 +146,7 @@
         return authorization
     }
 
-    function resumeEmployeeSigning(authorization) {
+    function resumeAuthorizationSigning(authorization) {
         if (
             authorization &&
             supportedDecisions[current.getValue(decisionField)] &&
@@ -154,9 +154,9 @@
             current.getValue(processingBlockedField) !== 'true' &&
             authorization.getValue('status') === 'pending_employee_signature'
         ) {
-            return initiateEmployeeSigning(
-                'ROB Form 1768 Employee Signature',
-                'ROB-Form-1768-Employee-Signature-' +
+            return initiateAuthorizationSigning(
+                'ROB Form 1768 Authorization',
+                'ROB-Form-1768-Authorization-' +
                     authorization.getValue('number')
             )
         }
@@ -168,7 +168,7 @@
         current.getValue(decisionTimeField) ===
         previous.getValue(decisionTimeField)
     ) {
-        resumeEmployeeSigning(existingAuthorizationForCase())
+        resumeAuthorizationSigning(existingAuthorizationForCase())
         return
     }
 
@@ -225,7 +225,7 @@
         return
     }
     if (existing) {
-        resumeEmployeeSigning(existing)
+        resumeAuthorizationSigning(existing)
         return
     }
 
@@ -443,9 +443,9 @@
             fail('the Authorization Form signing gate could not be persisted')
             return
         }
-        initiateEmployeeSigning(
-            'ROB Form 1768 Employee Signature',
-            'ROB-Form-1768-Employee-Signature-' +
+        initiateAuthorizationSigning(
+            'ROB Form 1768 Authorization',
+            'ROB-Form-1768-Authorization-' +
                 authorization.getValue('number')
         )
     }

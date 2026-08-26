@@ -344,3 +344,14 @@ remain prohibited.
 | Final PDF and activation | No Supervisor evidence, approved final PDF, activation, or fulfillment created | CORRECTLY ABSENT |
 | Security/build | Admin restored; broad privileges/temporary roles 0; M4 inactive; all suites and normal/frozen builds pass | PASS |
 | M3/M4 status | Supported no-new-template path exhausted at native signing runtime | M3 BLOCKED-PLATFORM; M4 NOT READY |
+
+## V2 continuous native Sign correction (2026-08-26)
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| Original ordered execution | Lifecycle launches `ROB Form 1768 Authorization` once; no participant resume | SOURCE/TEST PASS |
+| Employee evidence | Required Employee order 1/action `fill`; subject identity and shared execution enforced | SOURCE/TEST PASS; PDI CONFIG PENDING |
+| Supervisor approval/signature | Required Supervisor order 2/action `sign`; accepted state atomically persists both evidence sets | SOURCE/TEST PASS; PDI RUNTIME PENDING |
+| Denial | Refused state `7` requires decline reason, retains task/execution, denies form/details, and creates no final PDF or fulfillment | SOURCE/TEST PASS; PDI RUNTIME PENDING |
+| Split runtime removal | Post-approval relaunch rule source-inactive; approval response rule remains inactive | SOURCE/BUILD PASS; INSTALL PENDING |
+| Security and scope | No new table, field, role, broad privilege, native-case Write, or M4 activation | PASS |
