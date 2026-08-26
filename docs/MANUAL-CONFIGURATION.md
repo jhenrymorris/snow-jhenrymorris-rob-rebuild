@@ -1031,3 +1031,26 @@ The lifecycle launches this template through
 `GenerateDocumentAPI.initiateDocumentTasks`. Native approval must complete
 before the existing supervisor-only template is launched. Do not restore the
 direct `DocumentTaskUtils.createDocumentTask` call.
+
+### V2 governed Supervisor approval execution settings
+
+Configure Flow `ROB Authorization Supervisor Approval`
+(`73105d6b833a07104f5193a6feaad363`) as follows:
+
+- Run As: **System User**. The employee session correctly cannot read the
+  governed Authorization Form under repository ACLs.
+- Ask For Approval record: Trigger Authorization Form Record.
+- Approver: Trigger Authorization Form Record > Supervisor.
+- Approved branch: persist the approved outcome, approver, and decision time
+  on the Authorization Form.
+- Rejected branch: persist Denied and deny pending Authorized Access Details.
+- Do not use the generic **Create Document Task** action. It creates only a
+  task shell on this Australia PDI and does not create the required document
+  execution context.
+
+The installed same-table rule `ROB Launch Supervisor Signature After Approval`
+must remain the sole post-approval signing launcher. It runs only for a fully
+employee-signed, explicitly approved Authorization Form and calls
+`GenerateDocumentAPI.initiateDocumentTasks` with the source HRSD Case as the
+technical native parent. Keep `ROB Capture Native Supervisor Approval Decision`
+inactive; do not approve generic GlideRecord privileges.

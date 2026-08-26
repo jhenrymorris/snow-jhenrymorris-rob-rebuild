@@ -776,3 +776,28 @@ introduced.
 The preceding BLOCKED-PLATFORM classification is superseded for this specific
 failure. Current status is **M3 IMPLEMENTATION CORRECTION — SOURCE/BUILD PASS;
 PDI RUNTIME RETEST REQUIRED**. M4 remains inactive and not ready.
+
+## 2026-08-25 V2 governed approval and supervisor-launch reconciliation
+
+Focused runtime on `ROBA0001002` proved that the Authorization Form is the
+governed approval record. After the Flow was changed from the initiating user
+to **Run As: System User**, native `sysapproval_approver` records were created
+for `V2 Supervisor A`; the supervisor approved through the native form and the
+Flow persisted the distinct approval identity and timestamp on the governed
+Authorization Form. The earlier employee-session context error is resolved.
+
+The Flow's generic **Create Document Task** action was then proven incomplete:
+it created task rows but no usable native Document Task Execution, producing
+`Attachment Not Found`. The action was removed from the Flow. The Flow remains
+the decision/persistence boundary; a new same-table scoped adapter launches the
+separate Supervisor task only after the Flow-persisted approved gate, using the
+previously proven `GenerateDocumentAPI.initiateDocumentTasks` path. The
+Authorization Form remains governed; the source HRSD Case is only the native
+Document Task parent. The prohibited `sysapproval_approver` response Business
+Rule remains inactive.
+
+Source validation now passes M2 19/19, R1 9/9, Wave 2 security 22/22,
+deployment 16/16, R3 30/30, focused R3 runtime 13/13, R4 59/59, and M4 26/26.
+SDK 4.11.0 normal and frozen-key builds pass. The sole generated-key addition
+is the new same-scope Business Rule identity. IDE install and focused native
+Supervisor signature/final-PDF runtime remain pending; M3 is not yet closed.

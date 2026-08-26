@@ -2147,3 +2147,23 @@ Not exposed by session/tool — no estimate recorded.
   PASS. Generated-key diff empty.
 - Result: source/build correction PASS. PDI template reconciliation, IDE
   install, and native employee execution retest remain; M4 remains inactive.
+
+#### V2 governed approval and Supervisor native execution correction
+
+- Date: `2026-08-25`.
+- Runtime proof: employee signature completed on `DOCT0001002`; the corrected
+  System User Flow created native approval for `ROBA0001002`; V2 Supervisor A
+  approved and governed approval evidence persisted.
+- Defect isolated: generic Flow Create Document Task produced a task shell
+  without a native execution context. It was removed from the published Flow.
+- Source correction: one same-table scoped rule launches the Supervisor stage
+  through the already-proven GenerateDocumentAPI after approval. HR Case is
+  only the native task parent; Authorization Form remains governed and receives
+  the final PDF.
+- Security: prohibited sysapproval response rule inactive; no broad privilege,
+  native-case Write, table, or duplicate signing engine added.
+- Validation: M2 19/19, R1 9/9, security 22/22, deployment 16/16, R3 30/30,
+  focused runtime 13/13, R4 59/59, M4 26/26, normal build, and frozen build
+  PASS. One expected generated key was added for the new Business Rule.
+- Result: source/build PASS; IDE install and Supervisor signature/final-PDF
+  runtime proof remain. M3 remains open and M4 remains inactive.

@@ -65,6 +65,10 @@ declare global {
                         table: 'sys_script'
                         id: '046c74b9ce424a8f9b504f739506e62e'
                     }
+                    'launch-supervisor-signature-after-approval': {
+                        table: 'sys_script'
+                        id: 'e56b96952f53473c96e6ec811ff0ec95'
+                    }
                     'orchestrate-payroll-fulfillment': {
                         table: 'sys_script'
                         id: '6eb19976015c4d968943117a22e5c41e'

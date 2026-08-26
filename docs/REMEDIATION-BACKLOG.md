@@ -310,3 +310,17 @@ No item above is authorized for implementation in R0. Unsupported native capabil
 - [ ] Reconcile the employee-only template through supported native UI.
 - [ ] Sync, Build and Install through ServiceNow IDE; do not Reinstall.
 - [ ] Prove usable employee document execution before resuming the M3 matrix.
+
+## V2 governed Supervisor launch correction
+
+- [x] Run the ROB-owned approval Flow as System User without changing ACLs.
+- [x] Prove native Supervisor approval and governed evidence persistence.
+- [x] Remove the generic Create Document Task action after proving it creates
+  no usable Document Task Execution.
+- [x] Add a same-table post-approval adapter that reuses GenerateDocumentAPI.
+- [x] Keep the prohibited sysapproval response rule inactive and broad
+  privileges at zero.
+- [ ] Install through the already-authorized IDE path and approve only exact
+  caller-specific Document Templates RCAs if requested.
+- [ ] Prove Supervisor Fill Document, final PDF on Authorization Form, and
+  activation before resuming the remaining M3 scenario matrix.

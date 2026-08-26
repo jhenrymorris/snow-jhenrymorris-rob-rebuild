@@ -535,6 +535,7 @@ test('runtime scripts create no fulfillment, renewal, ARM, or OAS work', () => {
         'src/fluent/server/authorization-lifecycle-initiation.server.js',
         'src/fluent/server/authorization-signature-evidence.server.js',
         'src/fluent/server/supervisor-approval-evidence.server.js',
+        'src/fluent/server/supervisor-signature-launch.server.js',
         'src/fluent/server/authorization-finalization.server.js',
     ]
     const source = files.map((file) => fs.readFileSync(path.join(root, file), 'utf8')).join('\n')
@@ -568,6 +569,35 @@ test('employee signature hands supervisor decision to the ROB-owned Flow', () =>
     assert.match(source, /participantName === 'Supervisor'/)
     assert.doesNotMatch(source, /requestSupervisorDecision/)
     assert.doesNotMatch(source, /new GlideRecord\('sysapproval_approver'\)/)
+})
+
+test('Flow-persisted approval launches the proven native supervisor signing API', () => {
+    const launchSource = fs.readFileSync(
+        path.join(root, 'src/fluent/server/supervisor-signature-launch.server.js'),
+        'utf8'
+    )
+    const rulesSource = fs.readFileSync(
+        path.join(root, 'src/fluent/business-rules/rob-authorization-lifecycle.now.ts'),
+        'utf8'
+    )
+    assert.match(
+        rulesSource,
+        /launchSupervisorSignatureAfterApproval[\s\S]*?table:\s*'x_2166123_rob_auth_rob_auth'/
+    )
+    assert.match(rulesSource, /supervisor_approval_outcome=approved/)
+    assert.match(launchSource, /GenerateDocumentAPI\(\)\.initiateDocumentTasks/)
+    assert.match(launchSource, /current\.source_hrsd_case\.getRefRecord\(\)/)
+    assert.match(launchSource, /sn_hr_core_case_payroll/)
+    assert.match(launchSource, /sn_hr_core_case_workforce_admin/)
+    assert.match(launchSource, /ROB Reuse Supervisor Attestation/)
+    assert.match(launchSource, /employee_signature_complete/)
+    assert.match(launchSource, /supervisor_approval_complete/)
+    assert.match(launchSource, /supervisor_approval_outcome.*approved/s)
+    assert.doesNotMatch(launchSource, /sysapproval_approver/)
+    assert.doesNotMatch(
+        launchSource,
+        /DocumentTaskUtils|setValue\('assigned_to'/
+    )
 })
 
 test('post-signature final PDF fills and flattens the governed Form 1768 on Authorization Form', () => {

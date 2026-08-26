@@ -293,3 +293,7 @@ expansion were not used.
 | TM-182 | Restored employee signing launch | Employee-only HR Case template uses `GenerateDocumentAPI.initiateDocumentTasks`; direct `DocumentTaskUtils` launch absent | SOURCE/BUILD PASS |
 | TM-183 | Approval-order preservation | Employee-only template has no Supervisor participant; native approval precedes existing supervisor-only launch | MANUAL/PDI RETEST REQUIRED |
 | TM-184 | Complete native employee execution | Employee task has Document Task Execution and opens usable Fill Document content | PDI RETEST REQUIRED |
+| TM-185 | Flow execution identity | Published Flow runs as System User and can read the ACL-governed Authorization Form | PDI PASS |
+| TM-186 | Governed native approval | `ROBA0001002` creates native approval for V2 Supervisor A; approval identity/time persist separately | PDI PASS |
+| TM-187 | Generic task-action exclusion | Flow contains no Create Document Task action; incomplete task-shell path is not production | CONFIGURATION PASS |
+| TM-188 | Same-table Supervisor launch adapter | Approved employee-signed form invokes `GenerateDocumentAPI` with supported Payroll/Workforce source case only | SOURCE/BUILD PASS; PDI INSTALL/RETEST REQUIRED |

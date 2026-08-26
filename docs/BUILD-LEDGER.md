@@ -728,3 +728,18 @@ Build evidence is package-specific and must remain distinct from install, runtim
   focused runtime 13/13, R4 58/58, M4 26/26, and normal/frozen builds PASS;
   generated-key diff empty.
 - Status: source/build PASS; supported IDE install and PDI runtime retest remain.
+
+### V2 governed Supervisor launch adapter
+
+- Flow execution identity corrected to System User; native approval on
+  `ROBA0001002` completed under `V2 Supervisor A` and persisted governed
+  approval evidence.
+- Removed the incomplete generic Create Document Task Flow action after it was
+  proven to create a task shell without a Document Task Execution.
+- Added one same-table scoped post-approval launch rule using the proven
+  `GenerateDocumentAPI` path and the HR Case only as native task parent.
+- Prohibited global-table approval response rule remains inactive; no broad
+  GlideRecord privilege, native-case Write, table, or signing engine added.
+- Regression: M2 19/19, R1 9/9, security 22/22, deployment 16/16, R3 30/30,
+  focused runtime 13/13, R4 59/59, M4 26/26. Normal/frozen SDK 4.11.0 builds
+  PASS. One expected generated key was added for the new Business Rule.

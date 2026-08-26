@@ -84,6 +84,20 @@ export const captureSupervisorApprovalDecision = BusinessRule({
     script: Now.include('../server/supervisor-approval-evidence.server.js'),
 })
 
+export const launchSupervisorSignatureAfterApproval = BusinessRule({
+    $id: Now.ID['launch-supervisor-signature-after-approval'],
+    name: 'ROB Launch Supervisor Signature After Approval',
+    table: 'x_2166123_rob_auth_rob_auth',
+    when: 'after',
+    action: ['update'],
+    order: 325,
+    filterCondition:
+        'status=pending_supervisor_approval_signature^employee_signature_complete=true^supervisor_approval_complete=true^supervisor_approval_outcome=approved^supervisor_signature_complete=false',
+    description:
+        'Uses the proven native GenerateDocumentAPI path after the ROB-owned Flow persists approval; the Authorization Form remains governed while the source HRSD Case is only the native Document Task parent.',
+    script: Now.include('../server/supervisor-signature-launch.server.js'),
+})
+
 export const preventDuplicateFinalAuthorizationPdf = BusinessRule({
     $id: Now.ID['prevent-duplicate-final-authorization-pdf'],
     name: 'ROB Prevent Duplicate Final Authorization PDF',

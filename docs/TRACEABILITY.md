@@ -300,3 +300,14 @@ remain prohibited.
 | Native parent | HR Case remains the supported Document Templates parent | PASS |
 | Final governed PDF | Existing post-signature generator targets Authorization Form | SOURCE PASS / RUNTIME PENDING |
 | Overall | Prior platform classification superseded by bounded implementation correction | PDI RETEST REQUIRED; M4 NOT READY |
+
+## V2 governed approval to Supervisor signing boundary (2026-08-25)
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| Governed approval source | ROB-owned Flow operates on Authorization Form and runs as System User | PDI PASS |
+| Governed Supervisor | Native approval assigned to Authorization Form supervisor; `assigned_to` is not authority | PDI PASS |
+| Separate approval/signature | Flow persists approval; same-table adapter launches later native signature | SOURCE/BUILD PASS |
+| Supported native execution | `GenerateDocumentAPI.initiateDocumentTasks` with HR Case technical parent | SOURCE/BUILD PASS |
+| Security boundary | Global-table response rule inactive; broad GlideRecord/native-case Write 0 | PASS |
+| Final PDF | Existing post-signature generator targets Authorization Form only | RUNTIME RETEST REQUIRED |
