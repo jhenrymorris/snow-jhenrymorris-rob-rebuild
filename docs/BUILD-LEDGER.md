@@ -893,3 +893,23 @@ Build evidence is package-specific and must remain distinct from install, runtim
   30/30, focused R3 runtime 13/13, R4 62/62, M4 26/26, template contract
   4/4, SDK 4.11.0 normal/frozen builds, diff check, and generated-key diff all
   PASS. IDE deployment and PDI runtime remain pending.
+
+### 2026-08-26 focused runtime and Fill refusal platform stop
+
+- Normal IDE deployment and supported native participant restoration were
+  completed before runtime proof; production template remained Published with
+  28 mappings and one ordered Fill/Fill execution.
+- Approved New passed on `HRC0001011` / `ROBA0001004`: both participant tasks
+  closed on execution `7d104d8883838b104f5193a6feaad392`, approval and
+  signature evidence persisted, one final PDF was attached only to the
+  Authorization Form, and fulfillment remained zero.
+- Denial fixture `HRC0001012` reached governed Supervisor task `DOCT0001014`
+  on execution `83d5090883c38b104f5193a6feaad3f1`.
+- Both supported Supervisor surfaces (classic Fill Document and Employee
+  Center My Tasks) exposed Save/Submit only. Australia documentation confirms
+  Decline is a Sign-task capability and is not available to PDF Fill.
+- `DOCT0001014` remains Ready and untouched. No direct state write, custom
+  denial mechanism, broad privilege, or M4 activation was used.
+- Result: **M3 BLOCKED-PLATFORM - native Supervisor Fill/Refuse denial is
+  unsupported on Australia. M4 NOT READY.** Documentation-only blocker
+  checkpoint follows; no application reinstall is required.

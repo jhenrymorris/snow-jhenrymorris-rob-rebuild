@@ -396,6 +396,25 @@ No item above is authorized for implementation in R0. Unsupported native capabil
 - [ ] Prove focused accepted New and Denial runtime before resuming the full M3
   matrix. M4 remains inactive.
 
+## V2 focused Fill runtime final boundary
+
+- [x] Prove Approved New end to end with one continuous native execution,
+  atomic Supervisor approval/signature, one Authorization Form PDF, Active
+  status, and zero fulfillment (`HRC0001011` / `ROBA0001004`).
+- [x] Create an independent Denial fixture and advance it through Employee Fill
+  to governed Supervisor task `DOCT0001014`.
+- [x] Inspect both supported Supervisor experiences: classic Fill Document and
+  Employee Center My Tasks.
+- [x] Confirm both expose Save/Submit only and no Refuse/Decline control.
+- [x] Confirm Australia documentation assigns Decline to `Sign`, while PDF
+  `Fill` documents Save/Submit.
+- [x] Preserve `DOCT0001014` Ready and untouched; keep broad privileges and
+  temporary roles zero and M4 inactive.
+- [ ] Platform/architecture owner must supply a supported denial capability or
+  explicitly authorize a different native contract. Direct task-state writes,
+  custom denial engines, and further M3 workarounds remain prohibited.
+- [ ] **M3 BLOCKED-PLATFORM; M4 NOT READY.**
+
 ### Native editor result
 
 - [x] Install commit `221ec1d` through normal IDE Build and Install; verify the

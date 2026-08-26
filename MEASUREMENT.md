@@ -2371,3 +2371,30 @@ Not exposed by session/tool — no estimate recorded.
   and SDK 4.11.0 normal/frozen builds PASS; generated-key diff is empty.
 - Status: source correction PASS; IDE deployment, supported native Employee
   restoration, and runtime acceptance remain pending.
+
+## V2 focused runtime result and native Fill denial stop
+
+- Date: `2026-08-26`.
+- Approved New: **PASS**. Case `HRC0001011` created Authorization
+  `ROBA0001004` and detail `ROBD0001004`. Employee task `DOCT0001011` and
+  Supervisor task `DOCT0001012` shared native execution
+  `7d104d8883838b104f5193a6feaad392` and both closed in state `3`.
+- Approved evidence: V2 Supervisor A supplied the atomic approval/signature at
+  `2026-08-26 14:22:44`; Authorization became Active; exactly one final PDF
+  (`9525c58483c38b104f5193a6feaad3b2`) was attached to the Authorization Form;
+  the HR Case and fulfillment task counts remained zero.
+- Denial fixture: case `HRC0001012`; Employee task `DOCT0001013` closed through
+  the supported native Fill UI; Supervisor task `DOCT0001014` remains Ready,
+  assigned to governed V2 Supervisor A, on shared execution
+  `83d5090883c38b104f5193a6feaad3f1`.
+- Supported denial surfaces attempted: classic Document Task **Fill Document**
+  and Employee Center **My Tasks**. Both exposed Save/Submit only. Neither
+  exposed Refuse, Decline, Reject, or an equivalent persisted denial action.
+- Australia documentation matches the runtime: PDF `Fill` supports Save and
+  Submit; native Decline is documented for a `Sign` participant. Consequently
+  state `7` and a native decline reason cannot be produced through the required
+  Fill contract.
+- Safe stop: `DOCT0001014` was not submitted or directly modified. No state was
+  manufactured, no privilege was broadened, and M4 remains inactive.
+- Result: **M3 - BLOCKED-PLATFORM**. **Native Supervisor Fill/Refuse denial -
+  UNSUPPORTED ON AUSTRALIA. M4 - NOT READY.**

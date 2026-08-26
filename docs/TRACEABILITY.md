@@ -389,3 +389,14 @@ remain prohibited.
 | Supervisor restoration | Existing order 2, required, `fill`, governed Authorization Form Supervisor resolver | READ-ONLY BASELINE PASS |
 | Split path neutralization | Approval Flow, employee-only template, legacy response, and post-approval relaunch inactive | PDI CONFIG PENDING |
 | Runtime acceptance | Approved New and Refuse Denial precede the remaining M3 matrix | PENDING |
+
+## V2 focused Fill runtime outcome (2026-08-26)
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| Approved New | `HRC0001011`; `ROBA0001004`; Employee `DOCT0001011`; Supervisor `DOCT0001012`; shared execution; atomic approval/signature; one final Authorization Form PDF; Active; fulfillment 0 | PASS |
+| Governed Denial fixture | `HRC0001012`; Employee `DOCT0001013` Closed; Supervisor `DOCT0001014` Ready for V2 Supervisor A on shared execution `83d5090883c38b104f5193a6feaad3f1` | REACHED NATIVE DECISION TASK |
+| Native Refuse capability | Classic Fill Document and Employee Center My Tasks expose Save/Submit only; Australia Fill documentation contains no decline | UNSUPPORTED |
+| State `7` evidence | Decline is documented for `Sign`, not PDF `Fill`; no supported Fill operation can produce required state/reason | BLOCKED-PLATFORM |
+| Safe state | `DOCT0001014` untouched; no direct write, custom engine, broad privilege, or M4 activation | PASS |
+| M3/M4 status | Full matrix stopped after focused Denial failed as required | M3 BLOCKED-PLATFORM; M4 NOT READY |

@@ -1142,3 +1142,54 @@ required order-2 Supervisor participant with action `sign` through Document
 Templates UI. **Platform result:** V2-owned templates do not expose native
 Participant creation, and ServiceNow Sign does not support Participant action
 `sign`. **M4 - NOT READY.**
+
+## 2026-08-26 focused Fill runtime proof and denial hard stop
+
+The restored continuous production execution passed the Approved New proof:
+
+- HR Case `HRC0001011`, sys_id `c1fff48883838b104f5193a6feaad346`;
+- Authorization `ROBA0001004`, sys_id `71104d8883838b104f5193a6feaad374`;
+- detail `ROBD0001004`;
+- Employee task `DOCT0001011` (`8a108d8883838b104f5193a6feaad35c`);
+- Supervisor task `DOCT0001012` (`cd64890483c38b104f5193a6feaad33f`);
+- shared native execution `7d104d8883838b104f5193a6feaad392`;
+- both tasks state `3`;
+- Employee signed at `2026-08-26 14:19:19`;
+- Supervisor approval and signature completed by V2 Supervisor A at
+  `2026-08-26 14:22:44`;
+- exactly one authoritative final PDF attachment,
+  `9525c58483c38b104f5193a6feaad3b2`, on the Authorization Form;
+- Authorization Active, HR Case PDF count zero, and fulfillment task count
+  zero.
+
+A separate Denial fixture reached the governed Supervisor task:
+
+- HR Case `HRC0001012`, sys_id `78b54dc483c38b104f5193a6feaad30a`;
+- Employee task `DOCT0001013` (`cbd5490883c38b104f5193a6feaad347`)
+  closed at `2026-08-26 14:28:21`;
+- Supervisor task `DOCT0001014` (`e3668d4883c38b104f5193a6feaad385`)
+  remained Ready for V2 Supervisor A;
+- shared execution `83d5090883c38b104f5193a6feaad3f1`.
+
+The supported classic Document Task Fill Document surface and Employee Center
+My Tasks surface were both inspected as the governed Supervisor. Each exposed
+Save/Submit only. No Refuse, Decline, Reject, or equivalent terminal denial
+control was available. ServiceNow Australia documentation for
+[Fill and sign a PDF document](https://www.servicenow.com/docs/r/employee-service-management/hr-service-delivery/fill-sign-document.html)
+documents Save/Submit for Fill, while
+[Sign an HTML document](https://www.servicenow.com/docs/r/employee-service-management/hr-service-delivery/sign-html-document.html)
+and participant guidance place Decline on a `Sign` task. The live
+Australia Patch 3 behavior therefore matches the documented platform contract:
+the required PDF `Fill` action cannot supply native Refuse evidence.
+
+Exact failing artifact: Supervisor participant on production template
+`7119926383f247104f5193a6feaad318`, materialized as `DOCT0001014`. Exact
+operation: governed Supervisor native refusal/decline. Security consequence:
+producing state `7` would require a direct state mutation, custom denial engine,
+or architecture change, all outside the authorized boundary. The task was
+preserved Ready and untouched; no direct metadata operation, broad privilege,
+or M4 activation occurred.
+
+**M3 - BLOCKED-PLATFORM. Native Supervisor Fill/Refuse denial - UNSUPPORTED ON
+AUSTRALIA. This is an application-contract/platform-capability mismatch, not a
+V2 bootstrap or installer defect. M4 - NOT READY.**
