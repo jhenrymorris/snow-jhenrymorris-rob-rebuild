@@ -744,7 +744,7 @@ Build evidence is package-specific and must remain distinct from install, runtim
   focused runtime 13/13, R4 59/59, M4 26/26. Normal/frozen SDK 4.11.0 builds
   PASS. One expected generated key was added for the new Business Rule.
 
-### 2026-08-26 V2 Supervisor-launch install checkpoint
+### 2026-08-26 V2 Supervisor-launch install reconciliation
 
 - IDE source: current `main`; source-control view clean before deployment.
 - IDE SDK 4.11.0 Build: PASS, zero diagnostics.
@@ -752,12 +752,34 @@ Build evidence is package-specific and must remain distinct from install, runtim
   response.
 - IDE Force Install Fluent App in Instance: FAILED — client `TypeError: Failed
   to fetch`.
-- Direct dev437065 verification: Supervisor launch Business Rule count 0;
-  included Supervisor launch `sys_module` count 0.
+- Generated-key verification: active live Business Rule
+  `e56b96952f53473c96e6ec811ff0ec95` exists and contains the expected
+  `GenerateDocumentAPI` implementation. The live name was truncated to
+  `ROB Launch Supervisor Signature After Ap`, invalidating the earlier exact
+  full-name query.
+- `supervisor-signature-launch.server.js` is compiled inline by `Now.include`;
+  no separate `sys_module` is expected.
 - IDE-generated Flow source excluded because TS4111 and Fluent TS212 require
   mutually incompatible property-access forms. The published Flow remains
   native/manual. Exact `GenerateDocumentAPI` Execute caller metadata remains;
   generic `ScopedGlideElement` Execute metadata was rejected.
 - Local SDK 4.11.0 normal and frozen-key builds: PASS.
-- Result: M3 BLOCKED-PLATFORM. No Reinstall, local SDK install, Background
-  Script, manual runtime duplicate, or broad privilege was used. M4 NOT READY.
+- Result: missing-artifact blocker withdrawn. Later IDE attempts still show a
+  transport-layer `Failed to fetch`, but the correction is installed. Focused
+  runtime proof remains; no Reinstall, local SDK install, Background Script,
+  manual runtime duplicate, or broad privilege was used. M4 NOT READY.
+
+### 2026-08-26 incomplete native-task shell retry correction
+
+- Live comparison: `DOCT0001005` is Ready but has no native execution or PDF;
+  closed employee task `DOCT0001002` has both references.
+- Template asset: Supervisor template source attachment exists and PDF Preview
+  passes; exact `GenerateDocumentAPI` Execute privilege remains Allowed.
+- Source correction: existing signing tasks count as idempotent success only
+  when `document_task_execution` and `pdf_document` are non-empty.
+- Architecture impact: none. The stale shell is retained; no record deletion,
+  direct metadata repair, new table, new engine, or privilege expansion.
+- Regression: M2 19/19, R1 9/9, security 22/22, deployment 16/16,
+  R3 30/30, focused R3 runtime 13/13, R4 59/59, and M4 26/26 PASS.
+- SDK 4.11.0 normal and frozen-key builds: PASS. `git diff --check`: PASS.
+  Generated-key diff: empty. IDE install and clean runtime retest remain.

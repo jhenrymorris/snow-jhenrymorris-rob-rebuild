@@ -802,7 +802,7 @@ SDK 4.11.0 normal and frozen-key builds pass. The sole generated-key addition
 is the new same-scope Business Rule identity. IDE install and focused native
 Supervisor signature/final-PDF runtime remain pending; M3 is not yet closed.
 
-## 2026-08-26 V2 Supervisor launch installation hard stop
+## 2026-08-26 V2 Supervisor launch installation reconciliation
 
 The governed Supervisor launch correction was committed and pushed, and the
 ServiceNow IDE pulled current `main`. Sync produced the published ROB-owned
@@ -813,18 +813,54 @@ from Git after it proved internally incompatible: TypeScript required index
 access for `supervisor` (TS4111), while Fluent `wfa.dataPill` rejected that same
 index access (TS212). The live Flow remains a supported native/manual artifact.
 
-IDE SDK 4.11.0 Build then passed with zero diagnostics. Ordinary IDE Install
-timed out waiting for the deployment response. The supported **Force Install
-Fluent App in Instance** command then failed client fetch. Direct dev437065
-lists were checked after both attempts: `ROB Launch Supervisor Signature After
-Approval` was absent from `sys_script`, and
-`supervisor-signature-launch.server.js` was absent from `sys_module`. No partial
-rule was activated.
+IDE SDK 4.11.0 Build then passed with zero diagnostics. Later ordinary and
+Force Install attempts failed at the IDE transport layer with a deployment
+response timeout and `TypeError: Failed to fetch`. Those later failures did not
+remove the previously installed correction.
 
-**M3 — BLOCKED-PLATFORM.** The exact failing artifacts are the reviewed
-same-table Business Rule and included V2 EcmaScript module. Supported operations
-attempted were ordinary IDE Build and Install and IDE Force Install. A manual
-substitute would create untracked runtime logic or a duplicate service, which
-is prohibited. This is a dev437065 IDE deployment transport/reconciliation
-failure. Source and SDK 4.11.0 normal/frozen builds pass. M4 remains inactive
-and NOT READY.
+Exact generated-key verification superseded the original name-based count-zero
+check. Live `sys_script` `e56b96952f53473c96e6ec811ff0ec95` exists, is active,
+is owned by `x_2166123_rob_auth`, and contains the complete
+`GenerateDocumentAPI.initiateDocumentTasks` implementation. ServiceNow stored
+the Business Rule name as the field-limited `ROB Launch Supervisor Signature
+After Ap`, so an exact query using the longer source label returned zero.
+`supervisor-signature-launch.server.js` is a `Now.include` source under
+`src/fluent/server`; the SDK inlines it into the Business Rule and does not
+create a separate `sys_module` record.
+
+The missing-artifact **M3 — BLOCKED-PLATFORM** classification is therefore
+withdrawn. The later IDE `Failed to fetch` condition remains a deployment
+transport defect, but no further install is required for this correction.
+Focused Supervisor signature/final-PDF runtime verification remains pending;
+M4 remains inactive and NOT READY.
+
+## 2026-08-26 V2 native-task shell reconciliation
+
+Focused runtime inspection proved that the installed approval and launch gates
+reached native Document Templates, but the selected test case still contained
+an incomplete task from the retired Flow **Create Document Task** action.
+`DOCT0001005` is Ready and assigned to governed `V2 Supervisor A`, but both
+`document_task_execution` and `pdf_document` are empty. Its native Fill
+Document frame therefore resolves `sysparm_sys_id=null` and reports
+`Attachment Not Found`.
+
+This is not a missing template asset. Published template `ROB Reuse Supervisor
+Attestation` (`375ba26b837647104f5193a6feaad3c0`) has source attachment
+`e9fb6627837647104f5193a6feaad375`, PDF Preview succeeds, and the exact V2 to
+Document Templates `GenerateDocumentAPI` Execute privilege
+`568959738336c7104f5193a6feaad37a` is Allowed. The comparison employee task
+`DOCT0001002` has both execution `5a895df38336c7104f5193a6feaad3f3`
+and PDF attachment `f09ac0f783f687104f5193a6feaad362` and is Closed.
+
+The retry guards previously treated any matching task row as a completed native
+launch. The bounded correction now accepts an existing task only when both its
+native execution and PDF references are populated. The same rule is applied to
+employee initiation, the active same-table Supervisor launcher, and the
+inactive legacy approval-evidence launcher for consistent idempotency. The
+incomplete task is preserved as evidence; no task, attachment, or history was
+deleted. No signer, approval, parent, table, privilege, or final-PDF contract
+changed.
+
+Status: **SOURCE CORRECTION PREPARED; IDE BUILD/INSTALL AND CLEAN RUNTIME RETEST
+REQUIRED**. This is an ordinary retry-safety defect, not a confirmed platform
+capability block. M3 remains open and M4 remains inactive/NOT READY.

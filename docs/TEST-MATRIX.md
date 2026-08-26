@@ -296,4 +296,5 @@ expansion were not used.
 | TM-185 | Flow execution identity | Published Flow runs as System User and can read the ACL-governed Authorization Form | PDI PASS |
 | TM-186 | Governed native approval | `ROBA0001002` creates native approval for V2 Supervisor A; approval identity/time persist separately | PDI PASS |
 | TM-187 | Generic task-action exclusion | Flow contains no Create Document Task action; incomplete task-shell path is not production | CONFIGURATION PASS |
-| TM-188 | Same-table Supervisor launch adapter | Approved employee-signed form invokes `GenerateDocumentAPI` with supported Payroll/Workforce source case only | SOURCE/BUILD PASS; PDI INSTALL/RETEST REQUIRED |
+| TM-188 | Same-table Supervisor launch adapter | Active `sys_script` `e56b96952f53473c96e6ec811ff0ec95` contains inline `GenerateDocumentAPI` and accepts supported Payroll/Workforce source case only | PDI INSTALL PASS; CLEAN RUNTIME RETEST REQUIRED |
+| TM-189 | Incomplete native task shell retry | A matching task suppresses `GenerateDocumentAPI` only when both `document_task_execution` and `pdf_document` are populated | SOURCE/TEST/BUILD PASS; IDE INSTALL/RETEST REQUIRED |

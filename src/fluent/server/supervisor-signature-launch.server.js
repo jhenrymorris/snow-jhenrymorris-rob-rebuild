@@ -60,6 +60,8 @@
     existingTask.addQuery('document_template', templateId)
     existingTask.addQuery('assigned_to', supervisorId)
     existingTask.addQuery('state', 'IN', '1,2,3')
+    existingTask.addNotNullQuery('document_task_execution')
+    existingTask.addNotNullQuery('pdf_document')
     existingTask.setLimit(1)
     existingTask.query()
     if (existingTask.next()) {

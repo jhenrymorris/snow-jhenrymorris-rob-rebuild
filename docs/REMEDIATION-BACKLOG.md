@@ -320,8 +320,14 @@ No item above is authorized for implementation in R0. Unsupported native capabil
 - [x] Add a same-table post-approval adapter that reuses GenerateDocumentAPI.
 - [x] Keep the prohibited sysapproval response rule inactive and broad
   privileges at zero.
-- [ ] Install through the already-authorized IDE path and approve only exact
-  caller-specific Document Templates RCAs if requested.
+- [x] Verify the installed adapter by generated `sys_script` identity and exact
+  inline content; no additional install is required.
+- [x] Prove stale `DOCT0001005` has neither a Document Task Execution nor PDF
+  document while completed employee task `DOCT0001002` has both.
+- [x] Require both native references before treating a matching signing task as
+  an idempotent success.
+- [ ] Build, review, Sync, and install the bounded retry correction through the
+  supported IDE path; then retest on a clean task context.
 - [ ] Prove Supervisor Fill Document, final PDF on Authorization Form, and
   activation before resuming the remaining M3 scenario matrix.
 
@@ -330,7 +336,9 @@ No item above is authorized for implementation in R0. Unsupported native capabil
 - [x] Ordinary IDE Build passed with zero diagnostics.
 - [x] Ordinary IDE Install timed out waiting for deployment.
 - [x] IDE Force Install failed to fetch.
-- [x] Direct dev437065 verification confirms the new rule and module are absent.
+- [x] Correct the initial verification: the rule is installed under its
+  truncated live name and generated sys_id; the included server source is
+  inline rather than a separate module.
 - [x] Preserve the native/manual governed approval Flow and reject its
   internally incompatible generated source representation.
 - [x] Keep broad caller privileges at zero and avoid Reinstall, local SDK

@@ -307,7 +307,7 @@ remain prohibited.
 |---|---|---|
 | Governed approval source | ROB-owned Flow operates on Authorization Form and runs as System User | PDI PASS |
 | Governed Supervisor | Native approval assigned to Authorization Form supervisor; `assigned_to` is not authority | PDI PASS |
-| Separate approval/signature | Flow persists approval; same-table adapter launches later native signature | SOURCE/BUILD PASS |
-| Supported native execution | `GenerateDocumentAPI.initiateDocumentTasks` with HR Case technical parent | SOURCE/BUILD PASS |
+| Separate approval/signature | Flow persists approval; active same-table adapter `e56b96952f53473c96e6ec811ff0ec95` launches later native signature | INSTALLED; INCOMPLETE-SHELL RETRY CORRECTION PENDING |
+| Supported native execution | `GenerateDocumentAPI.initiateDocumentTasks` with HR Case technical parent; matching tasks require execution and PDF references | SOURCE CORRECTION; BUILD/INSTALL/RETEST REQUIRED |
 | Security boundary | Global-table response rule inactive; broad GlideRecord/native-case Write 0 | PASS |
 | Final PDF | Existing post-signature generator targets Authorization Form only | RUNTIME RETEST REQUIRED |

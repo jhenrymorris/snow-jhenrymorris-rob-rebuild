@@ -550,6 +550,11 @@ test('runtime launch is limited to a stable production template name', () => {
     assert.match(evidenceSource, /ROB Reuse Supervisor Attestation/)
     assert.match(initiationSource, /sysapproval_approver/)
     assert.match(initiationSource, /GenerateDocumentAPI\(\)\.initiateDocumentTasks/)
+    assert.match(
+        initiationSource,
+        /addNotNullQuery\('document_task_execution'\)/
+    )
+    assert.match(initiationSource, /addNotNullQuery\('pdf_document'\)/)
     assert.doesNotMatch(initiationSource, /DocumentTaskUtils\(\)\.createDocumentTask/)
     assert.doesNotMatch(evidenceSource, /new GlideRecord\('sysapproval_approver'\)/)
     assert.doesNotMatch(evidenceSource, /requestSupervisorDecision/)
@@ -593,6 +598,11 @@ test('Flow-persisted approval launches the proven native supervisor signing API'
     assert.match(launchSource, /employee_signature_complete/)
     assert.match(launchSource, /supervisor_approval_complete/)
     assert.match(launchSource, /supervisor_approval_outcome.*approved/s)
+    assert.match(
+        launchSource,
+        /addNotNullQuery\('document_task_execution'\)/
+    )
+    assert.match(launchSource, /addNotNullQuery\('pdf_document'\)/)
     assert.doesNotMatch(launchSource, /sysapproval_approver/)
     assert.doesNotMatch(
         launchSource,

@@ -2168,7 +2168,7 @@ Not exposed by session/tool — no estimate recorded.
 - Result: source/build PASS; IDE install and Supervisor signature/final-PDF
   runtime proof remain. M3 remains open and M4 remains inactive.
 
-## V2 Supervisor-launch IDE deployment hard stop
+## V2 Supervisor-launch IDE deployment reconciliation
 
 - [x] Commit and push the governed same-table Supervisor launch adapter.
 - [x] Retain only the exact `GenerateDocumentAPI` Execute caller metadata.
@@ -2178,8 +2178,28 @@ Not exposed by session/tool — no estimate recorded.
 - [x] Pass IDE SDK 4.11.0 Build with zero diagnostics.
 - [x] Attempt ordinary IDE Install; record deployment-response timeout.
 - [x] Attempt supported IDE Force Install; record client fetch failure.
-- [x] Verify directly on dev437065 that the rule and module did not land.
+- [x] Reconcile the false missing-artifact result by generated sys_id:
+  `sys_script` `e56b96952f53473c96e6ec811ff0ec95` is active and contains the
+  expected inline launch implementation.
+- [x] Record that ServiceNow truncated the Business Rule name and that a
+  `Now.include` file under `src/fluent/server` does not create a separate
+  `sys_module`.
 - [x] Pass local SDK 4.11.0 normal and frozen-key builds.
-- [ ] ServiceNow must restore a supported application installation path without
-  a manual duplicate or broad privilege.
-- [ ] M3 remains BLOCKED-PLATFORM. M4 remains inactive and NOT READY.
+- [ ] Complete focused Supervisor signing/final-PDF runtime proof using the
+  installed correction.
+- [ ] M3 remains open. M4 remains inactive and NOT READY.
+
+## V2 incomplete native-task shell retry correction
+
+- [x] Compare invalid Supervisor task `DOCT0001005` with completed employee
+  task `DOCT0001002`.
+- [x] Confirm the invalid task has no `document_task_execution` or
+  `pdf_document`; confirm the completed task has both.
+- [x] Confirm the published Supervisor template attachment exists and PDF
+  Preview succeeds.
+- [x] Preserve the invalid task as evidence; delete or direct metadata repair
+  was not used.
+- [x] Update all native signing retry guards to require both execution and PDF
+  references.
+- [x] Pass regression, normal build, frozen build, and generated-key gates.
+- [ ] Review and install through ServiceNow IDE, then rerun focused signing.

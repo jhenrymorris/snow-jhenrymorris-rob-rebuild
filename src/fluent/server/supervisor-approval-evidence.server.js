@@ -34,6 +34,8 @@
         var existingTask = new GlideRecord('sn_doc_task')
         existingTask.addQuery('parent', sourceCase.getUniqueValue())
         existingTask.addQuery('document_template', template.getUniqueValue())
+        existingTask.addNotNullQuery('document_task_execution')
+        existingTask.addNotNullQuery('pdf_document')
         existingTask.setLimit(1)
         existingTask.query()
         if (existingTask.next()) return true
