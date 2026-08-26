@@ -401,33 +401,39 @@ The source requirement explicitly states that a requester cannot sign on the sub
 
 # 13. Supervisor Approval and Signature Mapping
 
-The product distinguishes **approval** from **electronic signature**.
-
-These are related but separate requirements.
+For New, Amendment, and Renewal, native Document Templates supplies one
+authoritative Supervisor terminal event. Accepted **Sign** records approval and
+electronic-signature evidence atomically. **Refuse** records Denial evidence
+without signature evidence. The evidence remains stored in separate
+system-managed approval and signature fields even though one native action
+produces it. This V2 architecture-owner decision supersedes the earlier split
+approval-then-signature interaction for these paths.
 
 | Evidence | Source | Required | PDF | Audit |
 |---|---|---:|---:|---:|
-| Supervisor Approval Decision | Native approval | Yes | May be reflected indirectly | Yes |
-| Supervisor Electronic Signature | Document/signature task | Yes | Yes | Yes |
+| Supervisor Approval Decision | Accepted native Supervisor Sign, or Refuse for Denial | Yes | May be reflected indirectly | Yes |
+| Supervisor Electronic Signature | Accepted native Supervisor Sign | Yes for approval; absent for Refuse | Yes | Yes |
 | Supervisor Identity | Native records | Yes | Yes/as signature identity | Yes |
-| Approval Timestamp | Native approval | Yes | Not necessarily printed | Yes |
-| Signature Timestamp | Signature task | Yes | Yes/metadata | Yes |
+| Approval Timestamp | Native task `closed_at` | Yes | Not necessarily printed | Yes |
+| Signature Timestamp | Native task `closed_at` for accepted Sign only | Yes for approval | Yes/metadata | Yes |
 
 ## 13.1 Fulfillment Gate
 
-Fulfillment shall not open when only one of the following has occurred:
-
-- supervisor approval without signature;
-- supervisor signature without required approval.
-
-The implementation plan expressly requires both supervisor actions before fulfillment.
+Fulfillment shall not open unless an accepted Supervisor Sign has populated
+both evidence sets. A partial, unsupported, or mismatched terminal event shall
+remain blocked. Refuse shall never satisfy the fulfillment gate.
 
 ## 13.2 Denial
 
 If the supervisor denies the request:
 
+- the authoritative native Supervisor task ends Refused and retains identity,
+  timestamp, execution, and decline reason;
+- approval outcome is Denied while signature-complete remains false and
+  signer/signature timestamp remain empty;
 - the case closes as Denied;
 - applicable pending authorization/detail records reflect denial as designed;
+- no final governed PDF is created;
 - no fulfillment tasks are created;
 - no authorization becomes Active.
 
@@ -996,8 +1002,9 @@ The document/signature test suite shall include at least:
 ### Signature Sequence
 
 - employee signature before supervisor;
-- supervisor approval without signature;
-- supervisor signature without valid approval;
+- accepted Supervisor Sign populates both approval and signature evidence;
+- Supervisor Refuse retains decision evidence but no signature evidence;
+- unsupported partial terminal evidence remains blocked;
 - incomplete employee signature;
 - denial.
 

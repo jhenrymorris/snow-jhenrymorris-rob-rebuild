@@ -1043,3 +1043,41 @@ participant-action reconciliation on production template
 existing Supervisor participant action through the native V2 application-owned
 form. **Security/data consequence:** the editor requires destructive clearing
 and reconstruction of the complete governed mapping set. **M4 — NOT READY.**
+
+## 2026-08-26 template-first rollback baseline
+
+Before candidate construction, read-only native inspection captured the
+complete production rollback identity:
+
+- template `7119926383f247104f5193a6feaad318`, name
+  `ROB Form 1768 Authorization`, active/Published, table
+  `sn_hr_core_case`, V2-owned;
+- source document `e6b4aa6b833647104f5193a6feaad36a`;
+- approved repository PDF SHA-256
+  `FD8A522B834E65CDBEE84E335B008CE36FB838F32613A2910B37CF0FD23E9B3A`;
+- Employee participant `b315aaeb833647104f5193a6feaad362`, order 1,
+  action `fill`, optional and advanced, using the historical conditional-skip
+  resolver for `subject_person`;
+- Supervisor participant `86a52a6f83f247104f5193a6feaad388`, order 2,
+  action `fill`, required and advanced, using the governed V2 Authorization
+  Form `supervisor` resolver;
+- exactly 28 mappings: Employee Name, Position Title, Directorate/Office,
+  Federal, Contractor, IPA, Auditor/Investigator, Contractor End Date,
+  Auditor End Date, Justification, FPPS/WTTS, eOPF, USA Staffing,
+  OAS/DataMart, Human Capital Reports, Workforce Profile Charts, Date,
+  Authorization Number, HR Case Number, Form Version, Employee Signature
+  Date/Time, Supervisor Signature Date/Time, Effective Date, Expiration Date,
+  Decision Type, Generated Date/Time, Employee signature, and Supervisor
+  signature.
+
+The two advanced resolver bodies were also captured read-only from the native
+participant forms before any production change. No production template,
+participant, mapping, Flow, lifecycle rule, or M4 rule was changed during this
+capture.
+
+The Australia scoped Application File wizard does not expose
+`sn_doc_pdf_template` as a creatable file type. It exposes Document Template
+Block, Script, and Category only. The supported scoped bootstrap is therefore
+one Fluent-owned empty Draft `sn_doc_pdf_template` record. The approved PDF,
+participants, and mappings remain native Document Templates UI configuration;
+the bootstrap adds no table, field, role, privilege, or runtime service.

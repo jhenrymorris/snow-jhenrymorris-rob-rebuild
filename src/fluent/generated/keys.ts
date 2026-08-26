@@ -73,6 +73,10 @@ declare global {
                         table: 'sys_script'
                         id: 'e56b96952f53473c96e6ec811ff0ec95'
                     }
+                    'm3-form1768-template-candidate': {
+                        table: 'sn_doc_pdf_template'
+                        id: 'e379d41ebe5b41cf865be52bce73dc7f'
+                    }
                     'orchestrate-payroll-fulfillment': {
                         table: 'sys_script'
                         id: '6eb19976015c4d968943117a22e5c41e'

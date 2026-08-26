@@ -367,3 +367,14 @@ remain prohibited.
 | Supported conversion path | Native form requires clearing/recreating complete mapping set; no direct metadata path or new architecture authorized | UNSUPPORTED WITHIN BOUNDED CORRECTION |
 | Runtime/security | Focused runtime not started; lifecycle/M4 entry rules inactive; no broad privilege or new artifact | SAFE STOP |
 | M3/M4 status | Irreversible mapping-integrity risk prevents reconciliation | M3 BLOCKED-PLATFORM; M4 NOT READY |
+
+## V2 template-first M3 reconstruction authorization (2026-08-26)
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| Bounded native correction | Existing V2 application/scope retained; temporary parallel Draft template authorized; no table/field/role/runtime-engine change | APPROVED |
+| Combined decision/signature contract | Accepted native Supervisor Sign populates separate approval and signature evidence fields; Refuse records Denial without signature | REQUIREMENT SUPERSEDED / SOURCE ALIGNED |
+| Logical readiness contract | `scripts/validation/m3-form1768-template-contract.json` contains names, table, participant semantics, and 28 logical mapping keys without PDI sys_ids | SOURCE PASS |
+| Read-only validator | `scripts/validation/m3-native-template-readiness.cjs` queries the three native Document Templates tables and supports candidate/production modes | UNIT 5/5 PASS; PDI PENDING |
+| Runtime parity | Commit `221ec1d` already launches one continuous execution and enforces Employee `fill`, Supervisor `sign`, state `3` acceptance, and state `7` denial | SOURCE PASS / NATIVE CONFIG PENDING |
+| M4 boundary | Both M4 entry rules remain inactive | PASS / NOT STARTED |

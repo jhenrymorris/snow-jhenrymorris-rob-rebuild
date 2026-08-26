@@ -69,3 +69,21 @@ context; live profile changes cannot redirect an in-flight supervisor stage.
 Reuse retains its M1 state model. It validates the current request Supervisor
 from the same resolver but never updates the historical context on the reused
 Authorization Form.
+
+## M3 Continuous Native Sign Gate
+
+For New, Amendment, and Renewal, one native Document Templates execution owns
+the ordered terminal sequence:
+
+```text
+Employee Fill/Sign
+→ Supervisor Sign = Approved + Signed
+  or Supervisor Refuse = Denied
+```
+
+Accepted Supervisor Sign populates the separate system-managed approval and
+signature evidence fields from native `closed_by` and `closed_at`. Refuse
+records Denial identity, time, task, execution, and decline reason, but leaves
+signature-complete false and signer/signature time empty. Only accepted Sign
+permits the final PDF and Active transition. Reuse retains its separate
+attestation state model.

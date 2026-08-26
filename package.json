@@ -20,7 +20,10 @@
         "test:r4": "node --test scripts/validation/r4-authorization-lifecycle.test.cjs",
         "test:m4": "node --test scripts/validation/m4-fulfillment-orchestration.test.cjs",
         "test:m2": "node --test scripts/validation/m2-profile-authorization-context.test.cjs",
-        "verify:wave2:pdi": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validation/verify-wave-2-deployment.ps1 -Auth pdi"
+        "test:m3-template": "node --test scripts/validation/m3-native-template-readiness.test.cjs",
+        "verify:wave2:pdi": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validation/verify-wave-2-deployment.ps1 -Auth pdi",
+        "verify:m3-template:candidate": "node scripts/validation/m3-native-template-readiness.cjs --mode candidate --auth pdi",
+        "verify:m3-template:production": "node scripts/validation/m3-native-template-readiness.cjs --mode production --auth pdi"
     },
     "devDependencies": {
         "@servicenow/glide": "27.0.5",

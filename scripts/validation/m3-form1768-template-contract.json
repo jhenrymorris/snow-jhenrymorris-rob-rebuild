@@ -1,0 +1,73 @@
+{
+    "schemaVersion": 1,
+    "scope": "x_2166123_rob_auth",
+    "table": "sn_hr_core_case",
+    "productionName": "ROB Form 1768 Authorization",
+    "candidateName": "ROB Form 1768 Authorization Candidate",
+    "mappingCount": 28,
+    "bodyMappings": [
+        "Employee Name",
+        "Position Title",
+        "Directorate/Office",
+        "Federal",
+        "Contractor",
+        "IPA",
+        "Auditor/Investigator",
+        "Contractor End Date",
+        "Auditor End Date",
+        "Justification",
+        "FPPS/WTTS",
+        "eOPF",
+        "USA Staffing",
+        "OAS/DataMart",
+        "Human Capital Reports",
+        "Workforce Profile Charts",
+        "Date",
+        "Authorization Number",
+        "HR Case Number",
+        "Form Version",
+        "Employee Signature Date/Time",
+        "Supervisor Signature Date/Time",
+        "Effective Date",
+        "Expiration Date",
+        "Decision Type",
+        "Generated Date/Time"
+    ],
+    "participants": [
+        {
+            "name": "Employee",
+            "order": "1",
+            "action": "fill",
+            "optional": false,
+            "advanced": false,
+            "userField": "subject_person",
+            "scriptTokens": []
+        },
+        {
+            "name": "Supervisor",
+            "order": "2",
+            "action": "sign",
+            "optional": false,
+            "advanced": true,
+            "userField": "",
+            "scriptTokens": [
+                "x_2166123_rob_auth_rob_auth",
+                "source_hrsd_case",
+                "supervisor",
+                "active"
+            ]
+        }
+    ],
+    "signatureMappings": [
+        {
+            "participant": "Employee",
+            "type": "signature",
+            "mandatory": true
+        },
+        {
+            "participant": "Supervisor",
+            "type": "signature",
+            "mandatory": true
+        }
+    ]
+}

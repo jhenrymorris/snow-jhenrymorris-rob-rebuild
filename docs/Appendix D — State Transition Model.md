@@ -128,10 +128,10 @@ Employee Signature           |
       +-----------+-----------+
                   |
                   v
-        Supervisor Approval
-                  |
-                  v
-        Supervisor Signature
+        Supervisor Sign or Refuse
+            |              |
+            v              v
+   Approved + Signed     Denied
                   |
                   v
           Fulfillment Gate
@@ -577,9 +577,10 @@ For Reuse, the existing Authorization Form itself remains Active; the current HR
 
 ## Required Activities
 
-1. Supervisor reviews business need.
-2. Supervisor approves or denies.
-3. Supervisor provides electronic signature when approval is granted.
+1. Supervisor reviews business need in the native signing task.
+2. Supervisor selects Sign or Refuse.
+3. Accepted Sign atomically supplies approval and signature evidence; Refuse
+   supplies Denial evidence without signature evidence.
 
 ## Allowed Outcome
 
@@ -591,15 +592,10 @@ Proceed to final validation/activation or fulfillment gate as appropriate.
 
 Proceed to Denied processing.
 
-### Approval Only
+### Unsupported Partial Evidence
 
-Remain pending.
-
-### Signature Only
-
-Remain pending.
-
-The requirements expressly state that approval alone does not satisfy the signature requirement.
+Remain blocked. The lifecycle requires the complete atomic evidence set from an
+accepted native Sign and does not infer a missing value.
 
 ---
 
@@ -1437,13 +1433,14 @@ The system shall not:
 
 # 57. Approval State Interaction
 
-Native approval processing shall remain authoritative.
+For New, Amendment, and Renewal, the native Document Templates Supervisor task
+shall remain authoritative for both the decision and signature event.
 
 Logical supervisor approval outcomes are:
 
 - Requested / Pending
-- Approved
-- Rejected / Denied
+- Approved through accepted Sign
+- Rejected / Denied through Refuse
 - Cancelled or equivalent if supported/required
 
 The Authorization Form shall snapshot authoritative approval evidence but shall not duplicate the approval engine.
@@ -2126,7 +2123,8 @@ When generating logic, Codex shall:
 - prohibit terminal-state reactivation;
 - separate authorization from fulfillment;
 - separate request phase from Authorization Form status;
-- avoid combining approval and signature into a single boolean;
+- keep approval and signature in separate system-managed evidence fields even
+  when accepted native Sign populates both atomically;
 - avoid setting states directly where a native lifecycle event should remain authoritative.
 
 ---
@@ -2250,7 +2248,9 @@ The state-transition model is correctly implemented when:
 12. obsolete forms cannot be reused;
 13. expiration/lapse behavior distinguishes replacement versus no replacement;
 14. employee signature precedes supervisor finalization where required;
-15. supervisor approval and signature are independently required;
+15. accepted native Supervisor Sign supplies complete approval and signature
+    evidence atomically for New, Amendment, and Renewal, while Refuse supplies
+    Denial evidence without signature evidence;
 16. fulfillment cannot start early;
 17. details activate only after item-specific fulfillment;
 18. required OM work prevents premature WPC closure;

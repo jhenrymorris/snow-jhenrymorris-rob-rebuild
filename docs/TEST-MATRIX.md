@@ -320,3 +320,13 @@ expansion were not used.
 | TM-209 | Single-mapping preservation | Authorized Supervisor Signature mapping delete did not persist; mapping `86e62aab83f247104f5193a6feaad318` and all 28 mappings remain | PASS — no destructive change |
 | TM-210 | Native safe restoration | Production template active/Published; prior Employee optional/advanced `fill`, Supervisor required `fill`, 28 mappings, active Flow/employee-only template; Reuse unchanged | PASS |
 | TM-211 | Continuous Sign runtime matrix | Accepted New, Denial, Amendment, Renewal, Reuse, Exception, and immutability not run because native participant contract cannot be reconciled without rebuilding all mappings | NOT RUN / BLOCKED-PLATFORM |
+
+### V2 template-first M3 reconstruction
+
+| ID | Test | Method | Status |
+|---|---|---|---|
+| TM-212 | Logical Form 1768 contract | Source-controlled manifest defines one HR Case template, Employee required order-1 `fill`/`subject_person`, Supervisor required order-2 `sign`/governed resolver, 26 body mappings, and two mandatory participant signatures | SOURCE PASS |
+| TM-213 | Read-only candidate readiness | SDK query validator rejects missing/duplicate template, optional or conditional participant, Supervisor `fill`, incomplete/unexpected body fields, and missing participant signature mappings | UNIT 5/5 PASS; PDI CANDIDATE PENDING |
+| TM-214 | Read-only production readiness | Production mode requires exactly one active Published stable-name template with source PDF, exact participants, and all 28 mappings; no PDI sys_id exists in the contract | PDI PENDING |
+| TM-215 | Approved continuous execution | Employee state `3` and governed Supervisor Sign state `3` share one execution; both evidence sets persist; exactly one final PDF; Authorization Active; fulfillment zero | PDI PENDING |
+| TM-216 | Native Refuse denial | Governed Supervisor state `7` retains identity/time/task/execution/reason; signature fields remain incomplete/empty; form/details Denied; PDF/activation/supersession/fulfillment zero | PDI PENDING |

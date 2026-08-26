@@ -1140,3 +1140,34 @@ Flow and employee-only template active, and Reuse unchanged.
 The already-installed continuous runtime source must not be exercised while
 the participant contract remains unreconciled. Keep M3 and M4 entry rules
 inactive. **M3 is BLOCKED-PLATFORM; M4 is NOT READY.**
+
+### Authorized template-first V2 reconstruction (supersedes the stop above)
+
+The architecture owner has authorized one reversible native reconstruction in
+the existing V2 application. Do not alter the current production template
+during candidate construction.
+
+1. Keep both M3 lifecycle entry rules and both M4 entry rules inactive.
+2. Export the current production template, source PDF, two participants, and
+   all 28 mappings as rollback evidence.
+3. Create `ROB Form 1768 Authorization Candidate` through Document Templates
+   UI using the approved April 2026 source PDF. Do not copy the mapped template.
+4. Before mapping, configure Employee as required order 1, action `fill`,
+   non-advanced user field `subject_person`; configure Supervisor as required
+   order 2, action `sign`, using the governed Authorization Form supervisor
+   resolver.
+5. Save and reopen both participants. Then recreate the 26 governed body
+   mappings and the two mandatory participant-bound signature mappings.
+6. Preview the PDF and run `npm run verify:m3-template:candidate`.
+7. After candidate PASS, rename the former production template
+   `ROB Form 1768 Authorization — Retired Fill`, set it inactive, rename the
+   candidate exactly `ROB Form 1768 Authorization`, and publish/activate it.
+8. Run `npm run verify:m3-template:production`; failure requires immediate
+   rollback of names/states while M3 rules remain inactive.
+9. Deactivate and retain the approval Flow and employee-only template. Confirm
+   the legacy approval-response and post-approval relaunch rules are inactive.
+   Leave the Reuse template unchanged.
+
+No PDI sys_id is a runtime configuration value. Candidate/production
+validation uses logical names and mapping keys only. Do not delete historical
+records, manipulate metadata directly, broaden access, or enable M4.

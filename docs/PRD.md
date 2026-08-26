@@ -503,12 +503,19 @@ The standard sequence shall be:
 2. populate current form version;
 3. populate full authorization scope;
 4. employee electronic signature;
-5. supervisor approval;
-6. supervisor electronic signature;
+5. supervisor native Sign or Refuse;
+6. accepted Sign records approval and electronic-signature evidence atomically;
 7. final validation;
 8. signed PDF generation;
 9. authorization activation;
 10. fulfillment release.
+
+For New, Amendment, and Renewal, the native Supervisor **Sign** action is the
+single authoritative event that supplies both explicit approval and electronic
+signature evidence. The native Supervisor **Refuse** action supplies the Denial
+identity, timestamp, task, execution, and decline reason without signature
+evidence. This decision formally supersedes the earlier split native-approval
+then signature sequence for these three paths.
 
 ## 13.2 Reuse
 
@@ -529,9 +536,13 @@ System-managed signature data shall be read-only to ordinary users and fulfiller
 
 ## 13.4 Fulfillment Gate
 
-Neither supervisor approval alone nor supervisor signature alone is sufficient.
+For New, Amendment, and Renewal, fulfillment shall not be released until the
+accepted native Supervisor Sign has populated both system-managed approval and
+signature evidence. Refuse shall keep signature evidence incomplete and shall
+block final PDF generation, activation, supersession, and fulfillment.
 
-Fulfillment shall not be released until every required supervisor action is complete.
+Reuse retains its request-specific supervisor-attestation contract and is not
+changed by the combined Sign/Refuse decision above.
 
 ---
 

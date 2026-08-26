@@ -2316,3 +2316,19 @@ Not exposed by session/tool — no estimate recorded.
   recreating the complete governed mapping set to change the participant
   action. That is an unapproved, irreversible data-integrity risk and is not a
   bounded compatibility correction. **M4 — NOT READY**.
+
+## V2 template-first M3 reconstruction
+
+- [x] Architecture owner authorized a temporary parallel Draft template in the
+  existing V2 scope; no application reset, new scope, or V2.1.
+- [x] Continuous runtime parity reviewed against commit `221ec1d`; no runtime
+  source change required.
+- [x] Add a sys_id-free logical Form 1768 contract and read-only candidate/
+  production validator for template, participants, and mappings.
+- [x] Validator unit tests pass 5/5.
+- [ ] Export current native template rollback evidence.
+- [ ] Build and validate the candidate through supported Document Templates UI.
+- [ ] Perform reversible production cutover and production readiness check.
+- [ ] Complete focused Approved New and Denial proof.
+- [ ] Complete the remaining M3 runtime, security, regression, and closeout
+  gates. M4 remains inactive.
