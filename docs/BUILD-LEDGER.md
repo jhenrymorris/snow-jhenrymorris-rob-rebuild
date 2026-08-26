@@ -743,3 +743,21 @@ Build evidence is package-specific and must remain distinct from install, runtim
 - Regression: M2 19/19, R1 9/9, security 22/22, deployment 16/16, R3 30/30,
   focused runtime 13/13, R4 59/59, M4 26/26. Normal/frozen SDK 4.11.0 builds
   PASS. One expected generated key was added for the new Business Rule.
+
+### 2026-08-26 V2 Supervisor-launch install checkpoint
+
+- IDE source: current `main`; source-control view clean before deployment.
+- IDE SDK 4.11.0 Build: PASS, zero diagnostics.
+- Ordinary IDE Install: FAILED — deployment request timed out waiting for a
+  response.
+- IDE Force Install Fluent App in Instance: FAILED — client `TypeError: Failed
+  to fetch`.
+- Direct dev437065 verification: Supervisor launch Business Rule count 0;
+  included Supervisor launch `sys_module` count 0.
+- IDE-generated Flow source excluded because TS4111 and Fluent TS212 require
+  mutually incompatible property-access forms. The published Flow remains
+  native/manual. Exact `GenerateDocumentAPI` Execute caller metadata remains;
+  generic `ScopedGlideElement` Execute metadata was rejected.
+- Local SDK 4.11.0 normal and frozen-key builds: PASS.
+- Result: M3 BLOCKED-PLATFORM. No Reinstall, local SDK install, Background
+  Script, manual runtime duplicate, or broad privilege was used. M4 NOT READY.

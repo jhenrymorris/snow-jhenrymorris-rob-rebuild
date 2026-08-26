@@ -324,3 +324,17 @@ No item above is authorized for implementation in R0. Unsupported native capabil
   caller-specific Document Templates RCAs if requested.
 - [ ] Prove Supervisor Fill Document, final PDF on Authorization Form, and
   activation before resuming the remaining M3 scenario matrix.
+
+## V2 supported IDE deployment boundary — 2026-08-26
+
+- [x] Ordinary IDE Build passed with zero diagnostics.
+- [x] Ordinary IDE Install timed out waiting for deployment.
+- [x] IDE Force Install failed to fetch.
+- [x] Direct dev437065 verification confirms the new rule and module are absent.
+- [x] Preserve the native/manual governed approval Flow and reject its
+  internally incompatible generated source representation.
+- [x] Keep broad caller privileges at zero and avoid Reinstall, local SDK
+  deployment, Background Scripts, and duplicate runtime services.
+- [ ] Platform action is required to restore IDE deployment transport or
+  reconcile the reviewed artifacts through a supported installation path.
+- [ ] M3 BLOCKED-PLATFORM; M4 NOT READY.

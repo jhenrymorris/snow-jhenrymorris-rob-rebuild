@@ -801,3 +801,30 @@ deployment 16/16, R3 30/30, focused R3 runtime 13/13, R4 59/59, and M4 26/26.
 SDK 4.11.0 normal and frozen-key builds pass. The sole generated-key addition
 is the new same-scope Business Rule identity. IDE install and focused native
 Supervisor signature/final-PDF runtime remain pending; M3 is not yet closed.
+
+## 2026-08-26 V2 Supervisor launch installation hard stop
+
+The governed Supervisor launch correction was committed and pushed, and the
+ServiceNow IDE pulled current `main`. Sync produced the published ROB-owned
+approval Flow and two caller records. Review retained only the exact
+`GenerateDocumentAPI` Execute caller and rejected the generic
+`ScopedGlideElement` Execute artifact. The IDE-generated Flow source was removed
+from Git after it proved internally incompatible: TypeScript required index
+access for `supervisor` (TS4111), while Fluent `wfa.dataPill` rejected that same
+index access (TS212). The live Flow remains a supported native/manual artifact.
+
+IDE SDK 4.11.0 Build then passed with zero diagnostics. Ordinary IDE Install
+timed out waiting for the deployment response. The supported **Force Install
+Fluent App in Instance** command then failed client fetch. Direct dev437065
+lists were checked after both attempts: `ROB Launch Supervisor Signature After
+Approval` was absent from `sys_script`, and
+`supervisor-signature-launch.server.js` was absent from `sys_module`. No partial
+rule was activated.
+
+**M3 — BLOCKED-PLATFORM.** The exact failing artifacts are the reviewed
+same-table Business Rule and included V2 EcmaScript module. Supported operations
+attempted were ordinary IDE Build and Install and IDE Force Install. A manual
+substitute would create untracked runtime logic or a duplicate service, which
+is prohibited. This is a dev437065 IDE deployment transport/reconciliation
+failure. Source and SDK 4.11.0 normal/frozen builds pass. M4 remains inactive
+and NOT READY.

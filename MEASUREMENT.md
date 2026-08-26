@@ -2167,3 +2167,19 @@ Not exposed by session/tool — no estimate recorded.
   PASS. One expected generated key was added for the new Business Rule.
 - Result: source/build PASS; IDE install and Supervisor signature/final-PDF
   runtime proof remain. M3 remains open and M4 remains inactive.
+
+## V2 Supervisor-launch IDE deployment hard stop
+
+- [x] Commit and push the governed same-table Supervisor launch adapter.
+- [x] Retain only the exact `GenerateDocumentAPI` Execute caller metadata.
+- [x] Reject generated broad `ScopedGlideElement` Execute metadata.
+- [x] Remove the non-buildable generated Flow source while preserving the live
+  native/manual Flow.
+- [x] Pass IDE SDK 4.11.0 Build with zero diagnostics.
+- [x] Attempt ordinary IDE Install; record deployment-response timeout.
+- [x] Attempt supported IDE Force Install; record client fetch failure.
+- [x] Verify directly on dev437065 that the rule and module did not land.
+- [x] Pass local SDK 4.11.0 normal and frozen-key builds.
+- [ ] ServiceNow must restore a supported application installation path without
+  a manual duplicate or broad privilege.
+- [ ] M3 remains BLOCKED-PLATFORM. M4 remains inactive and NOT READY.
