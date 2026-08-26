@@ -1150,7 +1150,7 @@ during candidate construction.
 1. Keep both M3 lifecycle entry rules and both M4 entry rules inactive.
 2. Export the current production template, source PDF, two participants, and
    all 28 mappings as rollback evidence.
-3. Create `ROB Form 1768 Authorization Candidate` through Document Templates
+3. Create `ROB Form 1768 Authorization Candidate V2` through Document Templates
    UI using the approved April 2026 source PDF. Do not copy the mapped template.
 4. Before mapping, configure Employee as required order 1, action `fill`,
    non-advanced user field `subject_person`; configure Supervisor as required

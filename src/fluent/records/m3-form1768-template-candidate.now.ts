@@ -13,7 +13,7 @@ export const m3Form1768TemplateCandidate = Record({
     $id: Now.ID['m3-form1768-template-candidate'],
     table: 'sn_doc_pdf_template',
     data: {
-        name: 'ROB Form 1768 Authorization Candidate',
+        name: 'ROB Form 1768 Authorization Candidate V2',
         table: 'sn_hr_core_case',
         active: true,
         state: 'draft',

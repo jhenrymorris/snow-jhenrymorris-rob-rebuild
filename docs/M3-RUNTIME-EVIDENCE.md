@@ -1081,3 +1081,14 @@ Block, Script, and Category only. The supported scoped bootstrap is therefore
 one Fluent-owned empty Draft `sn_doc_pdf_template` record. The approved PDF,
 participants, and mappings remain native Document Templates UI configuration;
 the bootstrap adds no table, field, role, privilege, or runtime service.
+
+The first normal IDE install completed successfully with rollback context
+`7e70bbf783b24b104f5193a6feaad36d` and created V2-owned Draft
+`e379d41ebe5b41cf865be52bce73dc7f`. Read-only inspection then found an earlier
+empty Draft `0328ef7f83724b104f5193a6feaad374` with the same candidate name but
+owned by the Document Templates application. Native form deletion did not
+persist, and Data Management preview confirmed that the current user lacks
+delete permission on `sn_doc_pdf_template`. No privilege was broadened. The
+V2 candidate and readiness contract were therefore given the collision-free
+construction name `ROB Form 1768 Authorization Candidate V2`; the final
+production cutover name remains unchanged.
