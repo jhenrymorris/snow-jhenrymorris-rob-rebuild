@@ -2220,5 +2220,37 @@ Not exposed by session/tool — no estimate recorded.
   New/Amendment/Renewal signature evidence.
 - [x] Pass all regression suites, SDK 4.11.0 normal/frozen builds, diff check,
   and generated-key gate. R4 is 60/60; generated-key diff is empty.
-- [ ] Install through ServiceNow IDE and complete focused Supervisor
-  signature/final-PDF runtime proof. M3 remains open; M4 remains inactive.
+- [x] Install through ServiceNow IDE and verify live template selection.
+- [ ] Supervisor signature/final-PDF runtime is stopped at the native
+  participant-order boundary below. M3 is blocked; M4 remains inactive.
+
+## V2 post-approval participant-order platform boundary
+
+- Date: `2026-08-26`.
+- Deployment: ServiceNow IDE Pull, Sync review, SDK 4.11.0 Build, and normal
+  Build and Install completed. Sync-derived Flow/template exports and the
+  generated-key mutation were reviewed and discarded; source control returned
+  clean and the committed generated-key diff remained empty. Live Business
+  Rules `e56b96952f53473c96e6ec811ff0ec95` and
+  `14ead99fc1b340f299e67d6c497ec299` contain the installed production-template
+  separation.
+- Runtime: native approval `c88b6eb3837a0b104f5193a6feaad3ee`
+  routed to V2 Supervisor A and persisted Approved at `2026-08-26 10:14:55`.
+  The supported post-approval launch created complete native task
+  `DOCT0001007` (`074c2e37837a0b104f5193a6feaad35f`) with execution
+  `be4c2e37837a0b104f5193a6feaad329`, PDF
+  `e6b4aa6b833647104f5193a6feaad36a`, and the correct production template
+  `7119926383f247104f5193a6feaad318`.
+- Platform boundary: the production template's ordered participant chain
+  began at Employee (order 1), assigning the new task to the employee rather
+  than the governed Supervisor. Protected native
+  `sn_doc.GenerateDocumentAPISNC.initiateDocumentTasks` accepts only task,
+  body, template, PDF name, and document inputs; it exposes no supported
+  participant/order/resume parameter.
+- Safe stop: the task was not signed or deleted; impersonation ended;
+  temporary roles and broad privileges remain zero; M4 entry rules remain
+  inactive.
+- Result: **M3 — BLOCKED-PLATFORM**. Continuing requires an explicit
+  architecture decision between a Supervisor-only production signing template
+  and a supported gated continuous two-participant execution. Neither was
+  inferred or implemented. **M4 — NOT READY**.

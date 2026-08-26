@@ -802,3 +802,28 @@ Build evidence is package-specific and must remain distinct from install, runtim
 - Regression: M2 19/19, R1 9/9, security 22/22, deployment 16/16, R3 30/30,
   focused R3 runtime 13/13, R4 60/60, M4 26/26. SDK 4.11.0 normal/frozen
   builds and diff gates PASS.
+
+### 2026-08-26 installed stage separation and participant-order hard stop
+
+- IDE deployment: Pull PASS; Sync PASS after reviewing and discarding only
+  instance-derived Flow/template exports and generated keys; Build PASS; normal
+  Build and Install applied the committed correction. No Reinstall or local SDK
+  install was used.
+- Installed content: active launch rule
+  `e56b96952f53473c96e6ec811ff0ec95` selects `ROB Form 1768 Authorization`;
+  finalization rule `14ead99fc1b340f299e67d6c497ec299` retains the three
+  intended template purposes.
+- Controlled approval: `sysapproval_approver`
+  `c88b6eb3837a0b104f5193a6feaad3ee` approved the governed form as V2
+  Supervisor A.
+- Controlled launch: `DOCT0001007` was created with the correct production
+  template, native execution, and PDF references, but native Document
+  Templates selected participant order 1 (Employee) and assigned the task to
+  the employee.
+- Supported API evidence: `sn_doc.GenerateDocumentAPISNC` record
+  `ad2b8903c7a20010296ad3de17c260cb` exposes no participant, order, or resume
+  input on `initiateDocumentTasks`.
+- Result: **M3 BLOCKED-PLATFORM**. A Supervisor-only production template or a
+  supported approval gate inside one continuous participant execution is an
+  architecture decision, not an ordinary defect correction. No such change
+  was made; M4 remains inactive and NOT READY.

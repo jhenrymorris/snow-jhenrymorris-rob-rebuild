@@ -299,4 +299,10 @@ expansion were not used.
 | TM-188 | Same-table Supervisor launch adapter | Active `sys_script` `e56b96952f53473c96e6ec811ff0ec95` contains inline `GenerateDocumentAPI` and accepts supported Payroll/Workforce source case only | PDI INSTALL PASS; CLEAN RUNTIME RETEST REQUIRED |
 | TM-189 | Incomplete native task shell retry | A matching task suppresses `GenerateDocumentAPI` only when both `document_task_execution` and `pdf_document` are populated | SOURCE/TEST/BUILD PASS; IDE INSTALL/RETEST REQUIRED |
 | TM-190 | Complete Supervisor native launch | `DOCT0001006` contains native execution `3fc1eaf783b60b104f5193a6feaad31b` and PDF `e9fb6627837647104f5193a6feaad375` | PDI PASS |
-| TM-191 | Template purpose isolation | Employee stage uses `ROB Form 1768 Employee Signature`; New/Amendment/Renewal Supervisor and final PDF use `ROB Form 1768 Authorization`; Reuse attestation is excluded | SOURCE/TEST/BUILD PASS; IDE INSTALL/RETEST REQUIRED |
+| TM-191 | Template purpose isolation | Employee stage uses `ROB Form 1768 Employee Signature`; New/Amendment/Renewal Supervisor and final PDF use `ROB Form 1768 Authorization`; Reuse attestation is excluded | SOURCE/TEST/BUILD/INSTALL PASS |
+| TM-192 | IDE stage-separation deployment | IDE Pull/Sync review/Build/normal Install; live launcher and finalizer contain committed template selection; generated-key diff empty | PASS |
+| TM-193 | Governed approval retry | Native approval `c88b6eb3837a0b104f5193a6feaad3ee` routed to V2 Supervisor A and persisted Approved at `2026-08-26 10:14:55` | PASS |
+| TM-194 | Production-template native task creation | `DOCT0001007` uses production template `7119926383f247104f5193a6feaad318` and has execution/PDF references | PASS |
+| TM-195 | Post-approval Supervisor participant selection | New execution starts production template at Employee participant order 1; protected `GenerateDocumentAPISNC` exposes no participant/order/resume parameter | BLOCKED-PLATFORM |
+| TM-196 | Safe stop | `DOCT0001007` unsigned and retained; admin restored; broad privileges/temporary roles 0; M4 inactive | PASS |
+| TM-197 | Remaining M3 matrix | New activation, Denial, Amendment, Renewal, Reuse, Exception, immutability, and complete regression acceptance not continued after TM-195 hard stop | NOT RUN / BLOCKED-PLATFORM |

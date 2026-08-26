@@ -317,7 +317,19 @@ remain prohibited.
 | Requirement | Evidence | Status |
 |---|---|---|
 | Employee-before-approval | Employee-stage template remains `ROB Form 1768 Employee Signature` | PRESERVED |
-| Supervisor signing after approval | Existing same-table launcher selects published `ROB Form 1768 Authorization` | SOURCE/BUILD PASS |
+| Supervisor signing after approval | Existing same-table launcher selects published `ROB Form 1768 Authorization` | SOURCE/BUILD/INSTALL PASS; PARTICIPANT ORDER BLOCKED BELOW |
 | Reuse isolation | `ROB Reuse Supervisor Attestation` is no longer accepted by the Authorization Form evidence adapter | SOURCE/TEST PASS |
-| Final governed PDF | Final renderer selects production `ROB Form 1768 Authorization` and targets the Authorization Form | SOURCE/BUILD PASS; RUNTIME PENDING |
+| Final governed PDF | Final renderer selects production `ROB Form 1768 Authorization` and targets the Authorization Form | SOURCE/BUILD/INSTALL PASS; RUNTIME BLOCKED BELOW |
 | Security | Only exact caller PDF Template Read and Document Task Read were added; broad privileges remain prohibited | PDI CONFIGURATION PASS |
+
+## V2 native participant-order boundary (2026-08-26)
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| IDE reconciliation | Commit `58ea979` pulled; Sync reviewed; Build and normal Install applied; generated-key diff empty | PASS |
+| Governed native approval | Approval `c88b6eb3837a0b104f5193a6feaad3ee` assigned to V2 Supervisor A and persisted Approved | PASS |
+| Production template launch | `DOCT0001007`; template `7119926383f247104f5193a6feaad318`; native execution and PDF present | PASS |
+| Post-approval Supervisor signing | New template execution selected Employee participant order 1 and employee assignee | BLOCKED-PLATFORM |
+| Supported API capability | `GenerateDocumentAPISNC.initiateDocumentTasks` has no participant/order/resume input | UNSUPPORTED |
+| Security/safe state | Task unsigned/retained; admin restored; broad privileges and temporary roles 0; M4 inactive | PASS |
+| M3/M4 status | Architecture decision required; no workaround or M4 activation performed | M3 BLOCKED-PLATFORM; M4 NOT READY |

@@ -1054,3 +1054,24 @@ employee-signed, explicitly approved Authorization Form and calls
 `GenerateDocumentAPI.initiateDocumentTasks` with the source HRSD Case as the
 technical native parent. Keep `ROB Capture Native Supervisor Approval Decision`
 inactive; do not approve generic GlideRecord privileges.
+
+### V2 post-approval participant-order hard stop
+
+The production-template selection above is installed, but it is not a valid
+manual completion path. A fresh post-approval invocation of the published
+two-participant `ROB Form 1768 Authorization` template created `DOCT0001007`
+with valid native execution/PDF references and then started at its first
+participant, Employee. The supported `GenerateDocumentAPI` interface does not
+offer a participant, order, or resume-at-Supervisor input.
+
+Do not sign `DOCT0001007`, reorder the production participant chain, bypass a
+read-only native field, manipulate `sys_module`/Document Templates metadata,
+or add broad caller access. Do not enable additional M3 or any M4 entry rules.
+Continuation requires an explicit architecture decision for either:
+
+1. a supported Supervisor-only production Form 1768 signing template; or
+2. one continuous Employee/Supervisor native execution with a supported gate
+   that prevents Supervisor signing until native approval is Approved.
+
+Until that decision is approved and proven, **M3 is BLOCKED-PLATFORM and M4 is
+NOT READY**.

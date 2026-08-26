@@ -891,6 +891,47 @@ engine, caller privilege, or generated identity was introduced.
 
 All required source gates pass: M2 19/19, R1 9/9, security 22/22, deployment
 16/16, R3 30/30, focused R3 runtime 13/13, R4 60/60, M4 26/26, SDK 4.11.0
-normal and frozen builds, diff check, and empty generated-key diff. IDE
-installation and focused production Form 1768 Supervisor signature/final-PDF
-runtime proof remain. M3 is open; M4 remains inactive and NOT READY.
+normal and frozen builds, diff check, and empty generated-key diff. The IDE
+installation later passed; focused production Form 1768 runtime reached the
+participant-order hard stop documented below. M4 remains inactive and NOT
+READY.
+
+## 2026-08-26 installed production template and native participant-order stop
+
+ServiceNow IDE pulled commit `58ea979`, reviewed Sync output, and returned the
+working tree to zero changes by discarding only instance-derived generated-key,
+Flow-export, and template-export changes. SDK 4.11.0 Build passed and normal
+Build and Install applied the committed correction. Live inspection confirmed
+the active Supervisor launcher uses `ROB Form 1768 Authorization`; the active
+finalizer preserves the separate employee, authorization, and reuse template
+contracts. No Reinstall, local SDK install, Background Script, generated-key
+edit, or duplicate runtime service was used.
+
+The controlled Flow retry on `ROBA0001002` created native approval
+`c88b6eb3837a0b104f5193a6feaad3ee` for governed V2 Supervisor A. Approval was
+performed through the native form and persisted at `2026-08-26 10:14:55`.
+The installed post-approval launcher then created `DOCT0001007`
+(`074c2e37837a0b104f5193a6feaad35f`) using production template
+`7119926383f247104f5193a6feaad318`, native execution
+`be4c2e37837a0b104f5193a6feaad329`, and PDF
+`e6b4aa6b833647104f5193a6feaad36a`.
+
+The native task nevertheless selected participant
+`b315aaeb833647104f5193a6feaad362` (Employee) and assigned the task to the
+employee, because a new execution starts the template's ordered participant
+chain at order 1. Read-only inspection of protected native Script Include
+`sn_doc.GenerateDocumentAPISNC` (`ad2b8903c7a20010296ad3de17c260cb`)
+confirmed that `initiateDocumentTasks(taskGr, htmlBody, docTemplateId,
+generatedPdfName, documentId)` provides no participant, order, or resume input.
+
+`DOCT0001007` was not signed or deleted. Administrator context was restored,
+no temporary role or broad privilege was introduced, and M4 entry rules remain
+inactive. The remaining options change the signing architecture: create a
+Supervisor-only production template, or begin one continuous two-participant
+execution at Employee and introduce a supported approval gate before the
+Supervisor participant. Neither option is authorized by the current bounded
+package.
+
+**M3 — BLOCKED-PLATFORM. Native two-participant Document Templates execution
+cannot resume at Supervisor after approval through the supported API. M4 — NOT
+READY.**

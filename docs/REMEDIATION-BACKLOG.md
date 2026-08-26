@@ -343,9 +343,10 @@ No item above is authorized for implementation in R0. Unsupported native capabil
   internally incompatible generated source representation.
 - [x] Keep broad caller privileges at zero and avoid Reinstall, local SDK
   deployment, Background Scripts, and duplicate runtime services.
-- [ ] Platform action is required to restore IDE deployment transport or
-  reconcile the reviewed artifacts through a supported installation path.
-- [ ] M3 BLOCKED-PLATFORM; M4 NOT READY.
+- [x] A later normal IDE Build and Install applied commit `58ea979`; this
+  deployment-transport boundary is superseded by live content verification.
+- [x] No Reinstall or local SDK install was required. The current M3 blocker is
+  the separate native participant-order boundary below.
 
 ## V2 production Form 1768 stage separation
 
@@ -354,5 +355,13 @@ No item above is authorized for implementation in R0. Unsupported native capabil
 - [x] Route existing lifecycle adapters to the published production Form 1768
   template without adding architecture or privileges.
 - [x] Pass regression, normal/frozen build, and generated-key gates.
-- [ ] Install the bounded correction in the IDE and complete Supervisor
-  signature, final PDF, and activation proof.
+- [x] Install the bounded correction through normal ServiceNow IDE Build and
+  Install; verify live launcher/finalizer content and clean generated keys.
+- [x] Prove the corrected launcher creates complete native `DOCT0001007` with
+  the production template, execution, and PDF references.
+- [x] Stop unsigned when native execution starts at Employee participant order
+  1 instead of the post-approval Supervisor.
+- [ ] Architecture owner must select and approve either a Supervisor-only
+  production signing template or a supported gated continuous two-participant
+  execution. The supported API cannot select/resume a participant.
+- [ ] M3 BLOCKED-PLATFORM; M4 NOT READY. Do not create another workaround.
