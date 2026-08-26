@@ -603,11 +603,25 @@ test('Flow-persisted approval launches the proven native supervisor signing API'
         /addNotNullQuery\('document_task_execution'\)/
     )
     assert.match(launchSource, /addNotNullQuery\('pdf_document'\)/)
+    assert.doesNotMatch(
+        launchSource,
+        /isTrue\(current\.getValue\('supervisor_signature_complete'\)\)\s*\|\|\s*current\.getValue\('supervisor_document_task'\)/
+    )
     assert.doesNotMatch(launchSource, /sysapproval_approver/)
     assert.doesNotMatch(
         launchSource,
         /DocumentTaskUtils|setValue\('assigned_to'/
     )
+})
+
+test('incomplete supervisor task references do not suppress valid completion evidence', () => {
+    const source = fs.readFileSync(
+        path.join(root, 'src/fluent/server/authorization-signature-evidence.server.js'),
+        'utf8'
+    )
+    assert.match(source, /recordedSupervisorTask\.get\(recordedSupervisorTaskId\)/)
+    assert.match(source, /recordedSupervisorTask\.getValue\('document_task_execution'\)/)
+    assert.match(source, /recordedSupervisorTask\.getValue\('pdf_document'\)/)
 })
 
 test('post-signature final PDF fills and flattens the governed Form 1768 on Authorization Form', () => {

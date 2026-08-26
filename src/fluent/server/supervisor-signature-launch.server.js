@@ -15,8 +15,7 @@
         !isTrue(current.getValue('employee_signature_complete')) ||
         !isTrue(current.getValue('supervisor_approval_complete')) ||
         current.getValue('supervisor_approval_outcome') !== 'approved' ||
-        isTrue(current.getValue('supervisor_signature_complete')) ||
-        current.getValue('supervisor_document_task')
+        isTrue(current.getValue('supervisor_signature_complete'))
     ) {
         return
     }

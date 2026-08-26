@@ -237,8 +237,18 @@
         gs.error('ROB supervisor action arrived before employee signature completion.')
         return
     }
-    if (authorization.getValue('supervisor_document_task')) {
-        return
+    var recordedSupervisorTaskId = authorization.getValue(
+        'supervisor_document_task'
+    )
+    if (recordedSupervisorTaskId) {
+        var recordedSupervisorTask = new GlideRecord('sn_doc_task')
+        if (
+            recordedSupervisorTask.get(recordedSupervisorTaskId) &&
+            recordedSupervisorTask.getValue('document_task_execution') &&
+            recordedSupervisorTask.getValue('pdf_document')
+        ) {
+            return
+        }
     }
     if (
         !isTrue(authorization.getValue('supervisor_approval_complete')) ||
