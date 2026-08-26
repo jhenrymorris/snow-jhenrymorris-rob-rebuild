@@ -1092,3 +1092,53 @@ delete permission on `sn_doc_pdf_template`. No privilege was broadened. The
 V2 candidate and readiness contract were therefore given the collision-free
 construction name `ROB Form 1768 Authorization Candidate V2`; the final
 production cutover name remains unchanged.
+
+## 2026-08-26 template-first native participant boundary
+
+Candidate `e379d41ebe5b41cf865be52bce73dc7f` remained active/Draft and
+V2-owned. Because the direct PDF Document control did not persist an upload,
+the supported Managed Documents path was used: document
+`985b444483c74b104f5193a6feaad3b1`, Published revision
+`d30cc84483c74b104f5193a6feaad34d`, and candidate source binding
+`document=4cad048883c74b104f5193a6feaad3c6`. Native Parse PDF succeeded and
+created 15 body mappings. The production template, its two participants, and
+all 28 production mappings were not changed.
+
+The native Participant editor was tested with temporary `sn_doc.writer` and
+`sn_doc.admin` roles applied through the normal User role editor and a fresh
+login. Even in the V2 application context, the candidate Participants related
+list omitted **New**, while a direct new Participant form omitted
+Insert/Submit. Protected platform ACL inspection confirmed that
+`sn_doc.writer` grants create and that
+`sn_doc.DocumentTemplateUtilsSNC.isTemplateEditable()` accepts every state
+except Published; the candidate is Draft.
+
+Australia documentation provides the decisive contract:
+
+- native Participant creation applies to templates created in the Document
+  Templates (`sn_doc`) application;
+- for a PDF template using `ServiceNow Sign`, Participant actions are only
+  `Fill` and `Review`;
+- Participant action `Sign` is available for external signing systems, not
+  ServiceNow Sign.
+
+The platform choice table independently confirmed active values `fill`,
+`review`, and `sign`, while the ServiceNow Sign Participant form exposed only
+Fill and Review exactly as documented. The authorized plan requires the
+candidate to remain V2-owned and requires Supervisor action `sign`. Those two
+requirements cannot be satisfied together through the supported Australia
+native editor. No external signing system, direct metadata operation,
+Background Script, copied production template, new table, broad privilege, or
+production cutover was attempted.
+
+Both temporary document roles were removed through the native role editor; the
+administrator returned to the original 283-role baseline. The production Form
+1768 template remains active/Published and unchanged. M3 and M4 entry rules
+remain inactive.
+
+**M3 - BLOCKED-PLATFORM. Exact failing artifact:** V2-owned Draft PDF template
+`e379d41ebe5b41cf865be52bce73dc7f`. **Exact supported operation:** create a
+required order-2 Supervisor participant with action `sign` through Document
+Templates UI. **Platform result:** V2-owned templates do not expose native
+Participant creation, and ServiceNow Sign does not support Participant action
+`sign`. **M4 - NOT READY.**

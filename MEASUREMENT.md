@@ -2332,3 +2332,24 @@ Not exposed by session/tool — no estimate recorded.
 - [ ] Complete focused Approved New and Denial proof.
 - [ ] Complete the remaining M3 runtime, security, regression, and closeout
   gates. M4 remains inactive.
+
+## V2 template-first native participant boundary
+
+- Date: `2026-08-26`.
+- Candidate: V2-owned Draft `e379d41ebe5b41cf865be52bce73dc7f` is bound to
+  Published Managed Document revision `d30cc84483c74b104f5193a6feaad34d`;
+  native Parse PDF created 15 candidate mappings.
+- Production preservation: template `7119926383f247104f5193a6feaad318`,
+  both production participants, and all 28 production mappings are unchanged.
+- Supported editor proof: temporary native `sn_doc.writer` and `sn_doc.admin`
+  roles plus a fresh login did not expose New/Insert for the V2-owned
+  candidate. The roles were removed; the administrator returned to the
+  original 283-role baseline.
+- Australia contract proof: ServiceNow Sign PDF participants support Fill and
+  Review only. Sign is available only for external signing. Native participant
+  creation is documented for templates created in the Document Templates
+  (`sn_doc`) application, not an application-owned V2 template.
+- Result: **M3 - BLOCKED-PLATFORM**. The required V2-owned Supervisor
+  participant with `action=sign` cannot be configured through the supported
+  native Australia surface. Production cutover and focused runtime proof were
+  not started. **M4 - NOT READY.**

@@ -408,3 +408,21 @@ No item above is authorized for implementation in R0. Unsupported native capabil
   restore Employee optional/advanced `fill` and republish the template.
 - [ ] **M3 BLOCKED-PLATFORM**. Do not delete/rebuild all 28 mappings or create
   another signing workaround. M4 remains inactive and NOT READY.
+
+## V2 template-first native participant boundary
+
+- [x] Preserve the production template and its 28 mappings unchanged.
+- [x] Bind the V2-owned candidate to a Published Managed Document revision and
+  prove native Parse PDF creates 15 candidate mappings.
+- [x] Test the supported Participant UI with temporary `sn_doc.writer` and
+  `sn_doc.admin`, including a fresh login and correct V2 application context.
+- [x] Confirm the Australia contract: ServiceNow Sign exposes Participant
+  actions `Fill` and `Review`; `Sign` is reserved for external signing.
+- [x] Confirm native Participant creation is documented for templates created
+  in the Document Templates (`sn_doc`) application, while the required V2-owned
+  candidate omits New/Insert.
+- [x] Remove both temporary document roles and restore the 283-role baseline.
+- [ ] **M3 BLOCKED-PLATFORM.** The locked V2 ownership plus ServiceNow Sign
+  `action=sign` contract has no supported native configuration path. Do not
+  cut over, create an external-signing substitution, or modify production.
+  **M4 remains inactive and NOT READY.**
