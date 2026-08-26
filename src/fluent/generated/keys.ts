@@ -5,6 +5,10 @@ declare global {
         namespace Internal {
             interface Keys extends KeysRegistry {
                 explicit: {
+                    '568959738336c7104f5193a6feaad37a': {
+                        table: 'sys_scope_privilege'
+                        id: '568959738336c7104f5193a6feaad37a'
+                    }
                     'authorized-access-details-module': {
                         table: 'sys_app_module'
                         id: '9bf836774aa7421d85e8cc443c3e26c8'
