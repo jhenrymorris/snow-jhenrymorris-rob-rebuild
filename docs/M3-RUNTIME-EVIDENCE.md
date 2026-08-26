@@ -756,3 +756,23 @@ is an application-wide capability mismatch reproduced on the clean Australia
 PDI, not the closed old-PDI installer defect. New reached its native signing
 gate; Denial, Amendment, Renewal, Reuse, and Exception end-to-end acceptance
 were not executed after the mandatory stop. M4 production runtime is not ready.
+
+## 2026-08-25 V2 proven launch-model restoration
+
+Repository history showed that the prior successful native execution used
+`sn_doc.GenerateDocumentAPI().initiateDocumentTasks()` with the HR Case as the
+native parent. The later approval-Flow checkpoint replaced only the employee
+stage with the lower-level `DocumentTaskUtils.createDocumentTask()`. That call
+created `DOCT0001001` without a usable document execution/attachment context.
+
+The source correction restores the already-approved split-stage design from
+commit `f1bb4cd`: an employee-only `ROB Form 1768 Employee Signature` template
+launches through `GenerateDocumentAPI`; native approval remains between stages;
+the existing supervisor-only path continues through the same API. The governed
+Supervisor still comes from the Authorization Form and the HR Case remains only
+the native signing parent. No new engine, table, privilege, or identity write is
+introduced.
+
+The preceding BLOCKED-PLATFORM classification is superseded for this specific
+failure. Current status is **M3 IMPLEMENTATION CORRECTION — SOURCE/BUILD PASS;
+PDI RUNTIME RETEST REQUIRED**. M4 remains inactive and not ready.

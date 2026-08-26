@@ -2132,3 +2132,18 @@ Not exposed by session/tool — no estimate recorded.
 - Result: M3 BLOCKED-PLATFORM. The mismatch is application-wide on the clean
   Australia V2 architecture, not the historical old-PDI installer defect.
   M4 production runtime NOT READY.
+
+#### V2 employee native-execution restoration
+
+- Date: `2026-08-25`.
+- Root cause correction: the employee stage had regressed from full
+  `GenerateDocumentAPI.initiateDocumentTasks` execution to a lower-level direct
+  task creation call. The task shell caused `Attachment Not Found`.
+- Source: restored the earlier employee-only Form 1768 template contract and
+  full native API; preserved native approval before the separate supervisor
+  launch and preserved Authorization Form supervisor authority.
+- Validation: M2 19/19, R1 9/9, security 22/22, deployment 16/16, R3 30/30,
+  focused runtime 13/13, R4 58/58, M4 26/26, normal build, and frozen-key build
+  PASS. Generated-key diff empty.
+- Result: source/build correction PASS. PDI template reconciliation, IDE
+  install, and native employee execution retest remain; M4 remains inactive.

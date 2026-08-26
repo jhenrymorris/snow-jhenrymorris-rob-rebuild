@@ -34,52 +34,31 @@
         return template
     }
 
-    function employeeParticipant(template) {
-        var participant = new GlideRecord('sn_doc_participant')
-        participant.addQuery('document_template', template.getUniqueValue())
-        participant.addQuery('name', 'Employee')
-        participant.addQuery('action', 'fill')
-        participant.addQuery('order', 1)
-        participant.setLimit(2)
-        participant.query()
-        if (!participant.next()) return null
-
-        var participantId = participant.getUniqueValue()
-        if (participant.next() || !participant.get(participantId)) return null
-        return participant
-    }
-
-    function initiateEmployeeSigning(templateName) {
+    function initiateEmployeeSigning(templateName, outputName) {
         var template = publishedTemplate(templateName)
         if (!template) {
             fail('exactly one published production signing template is required')
-            return false
-        }
-        var participant = employeeParticipant(template)
-        if (!participant) {
-            fail('exactly one production Employee signing participant is required')
             return false
         }
 
         var existingTask = new GlideRecord('sn_doc_task')
         existingTask.addQuery('parent', current.getUniqueValue())
         existingTask.addQuery('document_template', template.getUniqueValue())
-        existingTask.addQuery('participant', participant.getUniqueValue())
         existingTask.setLimit(1)
         existingTask.query()
         if (existingTask.next()) {
             return true
         }
 
-        var documentTaskId = new sn_doc.DocumentTaskUtils().createDocumentTask(
-            template.getUniqueValue(),
-            participant.getUniqueValue(),
-            current.getUniqueValue(),
+        var initiated = new sn_doc.GenerateDocumentAPI().initiateDocumentTasks(
+            current,
             '',
+            template.getUniqueValue(),
+            outputName,
             ''
         )
-        if (!documentTaskId) {
-            fail('the native Employee signing task could not be initiated')
+        if (!initiated) {
+            fail('the native Employee signing execution could not be initiated')
             return false
         }
         return true
@@ -173,7 +152,11 @@
             current.getValue(processingBlockedField) !== 'true' &&
             authorization.getValue('status') === 'pending_employee_signature'
         ) {
-            return initiateEmployeeSigning('ROB Form 1768 Authorization')
+            return initiateEmployeeSigning(
+                'ROB Form 1768 Employee Signature',
+                'ROB-Form-1768-Employee-Signature-' +
+                    authorization.getValue('number')
+            )
         }
         return false
     }
@@ -458,6 +441,10 @@
             fail('the Authorization Form signing gate could not be persisted')
             return
         }
-        initiateEmployeeSigning('ROB Form 1768 Authorization')
+        initiateEmployeeSigning(
+            'ROB Form 1768 Employee Signature',
+            'ROB-Form-1768-Employee-Signature-' +
+                authorization.getValue('number')
+        )
     }
 })(current, previous)

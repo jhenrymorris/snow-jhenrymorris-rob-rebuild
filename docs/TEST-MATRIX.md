@@ -290,3 +290,6 @@ expansion were not used.
 | TM-179 | Native Fill Document | Synthetic employee invoked supported action; modal returned `Attachment Not Found` | BLOCKED-PLATFORM |
 | TM-180 | Governed template source/parent | Source PDF Preview succeeds, but supported Table selector excludes `x_2166123_rob_auth_rob_auth` | UNSUPPORTED |
 | TM-181 | Safe stop and local regression | Production template Published; duplicate inactive/Draft; M3/M4 lifecycle rules inactive; all required suites/builds pass | PASS |
+| TM-182 | Restored employee signing launch | Employee-only HR Case template uses `GenerateDocumentAPI.initiateDocumentTasks`; direct `DocumentTaskUtils` launch absent | SOURCE/BUILD PASS |
+| TM-183 | Approval-order preservation | Employee-only template has no Supervisor participant; native approval precedes existing supervisor-only launch | MANUAL/PDI RETEST REQUIRED |
+| TM-184 | Complete native employee execution | Employee task has Document Task Execution and opens usable Fill Document content | PDI RETEST REQUIRED |

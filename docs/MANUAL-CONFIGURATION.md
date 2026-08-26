@@ -1017,3 +1017,17 @@ add a custom signing mechanism, directly manipulate metadata, or grant broader
 cross-scope access. Production template `7119926383f247104f5193a6feaad318`
 must remain Published. Accidental copy `ec9a80b783f687104f5193a6feaad34c`
 is intentionally inactive/Draft and is not a deployable production feature.
+
+### Restored employee-only native signing template
+
+The prior hard-stop guidance is superseded for the `Attachment Not Found`
+failure. Configure exactly one active Published PDF Template named
+`ROB Form 1768 Employee Signature`, bound to `sn_hr_core_case`, containing the
+approved Form 1768 PDF and exactly one ordered Employee/Fill participant sourced
+from `subject_person`. Use the existing 26 governed body mappings and employee
+signature block. Do not include a Supervisor participant in this template.
+
+The lifecycle launches this template through
+`GenerateDocumentAPI.initiateDocumentTasks`. Native approval must complete
+before the existing supervisor-only template is launched. Do not restore the
+direct `DocumentTaskUtils.createDocumentTask` call.

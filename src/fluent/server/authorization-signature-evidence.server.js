@@ -1,5 +1,5 @@
 (function executeRule(current) {
-    var authorizationTemplateName = 'ROB Form 1768 Authorization'
+    var authorizationTemplateName = 'ROB Form 1768 Employee Signature'
     var reuseSupervisorTemplateName = 'ROB Reuse Supervisor Attestation'
 
     function isTrue(value) {

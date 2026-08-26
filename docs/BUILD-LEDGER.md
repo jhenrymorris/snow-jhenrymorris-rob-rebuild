@@ -715,3 +715,16 @@ Build evidence is package-specific and must remain distinct from install, runtim
   PASS; generated-key diff empty.
 - Result: M3 BLOCKED-PLATFORM. Proceeding requires an architecture/data-
   integrity change. M4 NOT READY.
+
+### V2 employee signing launch-model correction
+
+- Restored `GenerateDocumentAPI.initiateDocumentTasks` for the employee stage.
+- Restored the approved employee-only template name
+  `ROB Form 1768 Employee Signature`.
+- Preserved HR Case native parent, Authorization Form supervisor authority,
+  intervening native approval, and the existing supervisor-only launch.
+- Removed the unproven direct `DocumentTaskUtils.createDocumentTask` call.
+- Source gates: M2 19/19, R1 9/9, security 22/22, deployment 16/16, R3 30/30,
+  focused runtime 13/13, R4 58/58, M4 26/26, and normal/frozen builds PASS;
+  generated-key diff empty.
+- Status: source/build PASS; supported IDE install and PDI runtime retest remain.

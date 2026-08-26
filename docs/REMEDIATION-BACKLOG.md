@@ -299,3 +299,14 @@ No item above is authorized for implementation in R0. Unsupported native capabil
   approve an architecture/data-integrity change. No M3.x workaround is
   authorized.
 - [ ] M3 remains BLOCKED-PLATFORM; M4 remains inactive and NOT READY.
+
+## V2 employee native-execution correction
+
+- [x] Identify the regression from full `GenerateDocumentAPI` execution to a
+  direct `DocumentTaskUtils` task shell.
+- [x] Restore the prior employee-only template contract and full native launch.
+- [x] Preserve intervening native approval and supervisor-only launch.
+- [x] Pass all source, regression, normal-build, frozen-build, and key gates.
+- [ ] Reconcile the employee-only template through supported native UI.
+- [ ] Sync, Build and Install through ServiceNow IDE; do not Reinstall.
+- [ ] Prove usable employee document execution before resuming the M3 matrix.

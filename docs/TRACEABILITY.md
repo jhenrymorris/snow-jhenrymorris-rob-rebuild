@@ -289,3 +289,14 @@ remain prohibited.
 | Approved PDF storage | Final PDF only on Authorization Form cannot be configured through this path | BLOCKED-PLATFORM |
 | Security/safe state | Broad privileges 0; production template Published; copy inactive/Draft; M3/M4 entry rules inactive | PASS |
 | Overall | Architecture/data-integrity change required to proceed | M3 BLOCKED-PLATFORM; M4 NOT READY |
+
+## V2 restored native launch model (2026-08-25)
+
+| Requirement | Corrected evidence | Status |
+|---|---|---|
+| Employee native execution | `GenerateDocumentAPI.initiateDocumentTasks`; employee-only template | SOURCE/BUILD PASS |
+| Approval before supervisor signing | Employee template excludes Supervisor; existing approval response launches supervisor template | PRESERVED |
+| Governed Supervisor | Authorization Form supervisor remains authoritative; `assigned_to` absent | PASS |
+| Native parent | HR Case remains the supported Document Templates parent | PASS |
+| Final governed PDF | Existing post-signature generator targets Authorization Form | SOURCE PASS / RUNTIME PENDING |
+| Overall | Prior platform classification superseded by bounded implementation correction | PDI RETEST REQUIRED; M4 NOT READY |

@@ -208,6 +208,12 @@ test('downstream lifecycle safely resumes a missing native employee signing task
         lifecycle,
         /existingAuthorizationForCase[\s\S]*setLimit\(2\)[\s\S]*duplicate governed Authorization Forms/
     )
+    assert.match(
+        lifecycle,
+        /GenerateDocumentAPI\(\)\.initiateDocumentTasks\([\s\S]*current[\s\S]*template\.getUniqueValue\(\)[\s\S]*outputName/
+    )
+    assert.match(lifecycle, /ROB Form 1768 Employee Signature/)
+    assert.doesNotMatch(lifecycle, /DocumentTaskUtils\(\)\.createDocumentTask/)
 })
 
 test('HR Core bridge persists the complete New output without changing HRSD identity', () => {
