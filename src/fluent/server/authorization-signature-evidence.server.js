@@ -251,6 +251,19 @@
         'supervisor_document_task'
     )
     if (recordedSupervisorTaskId === current.getUniqueValue()) {
+        // A caller-access denial or another transient Document Templates
+        // failure can occur after the native terminal evidence is committed
+        // but before the authoritative PDF is attached. Reprocessing the same
+        // accepted native task may retry only that missing idempotent output.
+        if (
+            state === '3' &&
+            isTrue(authorization.getValue('supervisor_approval_complete')) &&
+            authorization.getValue('supervisor_approval_outcome') === 'approved' &&
+            isTrue(authorization.getValue('supervisor_signature_complete')) &&
+            !authorization.getValue('final_pdf_attachment')
+        ) {
+            generateFinalPdf(authorization)
+        }
         return
     }
     if (recordedSupervisorTaskId) {

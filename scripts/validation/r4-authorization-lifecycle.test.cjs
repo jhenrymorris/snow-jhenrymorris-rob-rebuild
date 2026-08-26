@@ -635,6 +635,18 @@ test('terminal supervisor evidence is immutable and bound to one native task', (
     assert.match(source, /not part of the Employee signing execution/)
 })
 
+test('accepted native Supervisor task can idempotently retry only a missing final PDF', () => {
+    const source = fs.readFileSync(
+        path.join(root, 'src/fluent/server/authorization-signature-evidence.server.js'),
+        'utf8'
+    )
+    assert.match(
+        source,
+        /recordedSupervisorTaskId === current\.getUniqueValue\(\)[\s\S]*state === '3'[\s\S]*supervisor_approval_complete[\s\S]*supervisor_approval_outcome'\) === 'approved'[\s\S]*supervisor_signature_complete[\s\S]*!authorization\.getValue\('final_pdf_attachment'\)[\s\S]*generateFinalPdf\(authorization\)/
+    )
+    assert.match(source, /already bound to another task/)
+})
+
 test('native Supervisor Fill/signature atomically records approval and signature', () => {
     const source = fs.readFileSync(
         path.join(root, 'src/fluent/server/authorization-signature-evidence.server.js'),
