@@ -24,10 +24,9 @@ function bool(field) {
     return ['1', 'true'].includes(value(field).toLowerCase())
 }
 
-function validateTemplateData(mode, templates, participants, mappings) {
+function validateTemplateData(templates, participants, mappings) {
     const errors = []
-    const expectedName =
-        mode === 'candidate' ? contract.candidateName : contract.productionName
+    const expectedName = contract.productionName
     const matching = templates.filter(
         (record) => value(record.name) === expectedName
     )
@@ -52,11 +51,8 @@ function validateTemplateData(mode, templates, participants, mappings) {
         errors.push(`${expectedName}: source PDF is missing`)
     }
     const state = value(template.state).toLowerCase()
-    if (mode === 'production' && state !== 'published') {
+    if (state !== 'published') {
         errors.push(`${expectedName}: production template must be Published`)
-    }
-    if (mode === 'candidate' && !['draft', 'published'].includes(state)) {
-        errors.push(`${expectedName}: candidate must be Draft or Published`)
     }
 
     if (participants.length !== contract.participants.length) {
@@ -178,6 +174,7 @@ function validateTemplateData(mode, templates, participants, mappings) {
 }
 
 function query(table, encodedQuery, fields, auth) {
+    const projectRoot = path.resolve(__dirname, '..', '..')
     const args = [
             '@servicenow/sdk',
             'query',
@@ -193,32 +190,36 @@ function query(table, encodedQuery, fields, auth) {
             '-o',
             'json',
         ]
-    let executable = 'npx'
-    let executableArgs = args
-    if (process.platform === 'win32') {
-        if (!/^[A-Za-z0-9_.-]+$/.test(auth)) {
-            throw new Error('--auth must be a stored credential alias')
-        }
-        executable = process.env.ComSpec || 'cmd.exe'
-        const quote = (argument) =>
-            `"${String(argument).replaceAll('"', '""')}"`
-        executableArgs = [
-            '/d',
-            '/s',
-            '/c',
-            ['npx.cmd', ...args].map(quote).join(' '),
-        ]
+    if (!/^[A-Za-z0-9_.-]+$/.test(auth)) {
+        throw new Error('--auth must be a stored credential alias')
     }
-    const output = execFileSync(
-        executable,
-        executableArgs,
-        {
-            cwd: path.resolve(__dirname, '..', '..'),
-            encoding: 'utf8',
-            maxBuffer: 8 * 1024 * 1024,
-            shell: false,
+    const commandOptions = {
+        cwd: projectRoot,
+        encoding: 'utf8',
+        maxBuffer: 8 * 1024 * 1024,
+        shell: false,
+    }
+    let output
+    if (process.platform === 'win32') {
+        const npxCommand = path.join(path.dirname(process.execPath), 'npx.cmd')
+        if (!fs.existsSync(npxCommand)) {
+            throw new Error('The Node.js npx launcher is not installed')
         }
-    )
+        const quotePowerShell = (argument) =>
+            `'${String(argument).replaceAll("'", "''")}'`
+        output = execFileSync(
+            'powershell.exe',
+            [
+                '-NoProfile',
+                '-NonInteractive',
+                '-Command',
+                `& ${quotePowerShell(npxCommand)} ${args.map(quotePowerShell).join(' ')}`,
+            ],
+            commandOptions
+        )
+    } else {
+        output = execFileSync('npx', args, commandOptions)
+    }
     const response = JSON.parse(output)
     if (!response.ok) {
         throw new Error(response.error?.message || `Query failed for ${table}`)
@@ -227,13 +228,13 @@ function query(table, encodedQuery, fields, auth) {
 }
 
 function parseArguments(argv) {
-    const result = { mode: '', auth: 'pdi' }
+    const result = { mode: 'production', auth: 'pdi' }
     for (let index = 0; index < argv.length; index += 1) {
         if (argv[index] === '--mode') result.mode = argv[index + 1] || ''
         if (argv[index] === '--auth') result.auth = argv[index + 1] || ''
     }
-    if (!['candidate', 'production'].includes(result.mode)) {
-        throw new Error('--mode must be candidate or production')
+    if (result.mode !== 'production') {
+        throw new Error('--mode must be production')
     }
     if (!result.auth) throw new Error('--auth requires a credential alias')
     return result
@@ -241,22 +242,22 @@ function parseArguments(argv) {
 
 function run(argv = process.argv.slice(2)) {
     const options = parseArguments(argv)
-    const templateName =
-        options.mode === 'candidate'
-            ? contract.candidateName
-            : contract.productionName
+    const templateName = contract.productionName
     const templates = query(
         'sn_doc_pdf_template',
-        `name=${templateName}`,
+        'nameSTARTSWITHROB',
         ['sys_id', 'name', 'table', 'state', 'active', 'document', 'sys_scope'],
         options.auth
     )
-    if (templates.length !== 1) {
-        const errors = validateTemplateData(options.mode, templates, [], [])
+    const matchingTemplates = templates.filter(
+        (record) => value(record.name) === templateName
+    )
+    if (matchingTemplates.length !== 1) {
+        const errors = validateTemplateData(templates, [], [])
         throw new Error(errors.join('\n'))
     }
 
-    const templateId = value(templates[0].sys_id)
+    const templateId = value(matchingTemplates[0].sys_id)
     const participants = query(
         'sn_doc_participant',
         `document_template=${templateId}`,
@@ -284,15 +285,10 @@ function run(argv = process.argv.slice(2)) {
         ],
         options.auth
     )
-    const errors = validateTemplateData(
-        options.mode,
-        templates,
-        participants,
-        mappings
-    )
+    const errors = validateTemplateData(templates, participants, mappings)
     if (errors.length) throw new Error(errors.join('\n'))
     process.stdout.write(
-        `M3 Form 1768 ${options.mode} readiness: PASS (${participants.length} participants, ${mappings.length} mappings)\n`
+        `M3 Form 1768 production readiness: PASS (${participants.length} participants, ${mappings.length} mappings)\n`
     )
 }
 

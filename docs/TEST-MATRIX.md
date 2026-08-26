@@ -311,22 +311,22 @@ expansion were not used.
 | TM-200 | Native Supervisor signature Accept | `snc_viewer.js:setSignatureField` throws null `.style`; task remains Ready and unsigned | BLOCKED-PLATFORM |
 | TM-201 | Conditional-participant safe stop | Admin restored; broad privileges/temporary roles 0; M4 inactive; all suites and normal/frozen builds pass | PASS |
 | TM-202 | Continuous production execution | New/Amendment/Renewal launch `ROB Form 1768 Authorization` once through `GenerateDocumentAPI`; employee-only template absent from runtime source | SOURCE/TEST PASS; IDE INSTALL PENDING |
-| TM-203 | Participant contract | Employee is required order-1 `fill`; Supervisor is required order-2 `sign`; both share one native execution | SOURCE GUARD PASS; PDI CONFIG/RUNTIME PENDING |
+| TM-203 | Participant contract | Employee is required order-1 `fill`; Supervisor is required order-2 `fill`; both have mandatory signature mappings and share one native execution | SOURCE GUARD PASS; PDI CONFIG/RUNTIME PENDING |
 | TM-204 | Accepted native Sign | Governed Supervisor state `3` atomically persists approval and signature identity/time/task/execution before final PDF | SOURCE/UNIT PASS; PDI RUNTIME PENDING |
 | TM-205 | Refused native Sign | Governed Supervisor state `7` plus decline reason retains refused task/execution, denies pending records, and produces no signature/PDF/activation/fulfillment | SOURCE/UNIT PASS; PDI RUNTIME PENDING |
 | TM-206 | Split execution neutralization | Post-approval relaunch and legacy approval response rules inactive; approval Flow and employee-only template scheduled for native deactivation | SOURCE/BUILD PASS; PDI CONFIG PENDING |
 | TM-207 | IDE deployment of continuous correction | Commit `221ec1d`; normal IDE Build and Install; live evidence handler current; split launcher inactive | PASS |
-| TM-208 | Existing Supervisor participant action conversion | Native V2 Document Templates form rejects `fill` to `sign` until existing PDF mappings are cleared | BLOCKED-PLATFORM |
+| TM-208 | Australia action reconciliation | Existing Supervisor `fill` is retained because ServiceNow Sign uses Fill/Review; no mapping deletion or action conversion is required | SUPERSEDED / RESOLVED BY CONTRACT |
 | TM-209 | Single-mapping preservation | Authorized Supervisor Signature mapping delete did not persist; mapping `86e62aab83f247104f5193a6feaad318` and all 28 mappings remain | PASS — no destructive change |
 | TM-210 | Native safe restoration | Production template active/Published; prior Employee optional/advanced `fill`, Supervisor required `fill`, 28 mappings, active Flow/employee-only template; Reuse unchanged | PASS |
-| TM-211 | Continuous Sign runtime matrix | Accepted New, Denial, Amendment, Renewal, Reuse, Exception, and immutability not run because native participant contract cannot be reconciled without rebuilding all mappings | NOT RUN / BLOCKED-PLATFORM |
+| TM-211 | Continuous Fill/Refuse runtime matrix | Accepted New, Denial, Amendment, Renewal, Reuse, Exception, and immutability after supported Fill contract restoration | PDI PENDING |
 
 ### V2 template-first M3 reconstruction
 
 | ID | Test | Method | Status |
 |---|---|---|---|
-| TM-212 | Logical Form 1768 contract | Source-controlled manifest defines one HR Case template, Employee required order-1 `fill`/`subject_person`, Supervisor required order-2 `sign`/governed resolver, 26 body mappings, and two mandatory participant signatures | SOURCE PASS |
-| TM-213 | Read-only candidate readiness | SDK query validator rejects missing/duplicate template, optional or conditional participant, Supervisor `fill`, incomplete/unexpected body fields, and missing participant signature mappings | UNIT 5/5 PASS; PDI CANDIDATE PENDING |
+| TM-212 | Logical Form 1768 contract | Source-controlled manifest defines one HR Case template, Employee required order-1 `fill`/`subject_person`, Supervisor required order-2 `fill`/governed resolver, 26 body mappings, and two mandatory participant signatures | SOURCE PASS |
+| TM-213 | Read-only production contract rejection | Validator rejects duplicate/Draft templates, optional or conditional Employee, non-Fill Supervisor, incomplete/unexpected body fields, and missing signature mappings | UNIT 4/4 PASS |
 | TM-214 | Read-only production readiness | Production mode requires exactly one active Published stable-name template with source PDF, exact participants, and all 28 mappings; no PDI sys_id exists in the contract | PDI PENDING |
 | TM-215 | Approved continuous execution | Employee state `3` and governed Supervisor Sign state `3` share one execution; both evidence sets persist; exactly one final PDF; Authorization Active; fulfillment zero | PDI PENDING |
 | TM-216 | Native Refuse denial | Governed Supervisor state `7` retains identity/time/task/execution/reason; signature fields remain incomplete/empty; form/details Denied; PDF/activation/supersession/fulfillment zero | PDI PENDING |

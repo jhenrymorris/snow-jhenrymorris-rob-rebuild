@@ -2353,3 +2353,21 @@ Not exposed by session/tool — no estimate recorded.
   participant with `action=sign` cannot be configured through the supported
   native Australia surface. Production cutover and focused runtime proof were
   not started. **M4 - NOT READY.**
+
+## V2 proven Fill/Refuse restoration
+
+- Date: `2026-08-26`.
+- Corrected platform contract: Australia ServiceNow Sign uses participant
+  action `Fill` plus a mandatory participant-bound signature mapping. Native
+  state `3` Submit is the combined Approved + Signed event; state `7` Refuse is
+  Denied without signature evidence.
+- Read-only live baseline: one active Published production template with 28
+  mappings; Supervisor already required order 2 `fill` with governed resolver;
+  Employee remains optional/advanced pending supported UI restoration.
+- Production preservation: no template copy, mapping deletion, generated-key
+  deletion, broad privilege, or M4 activation is authorized.
+- Local validation: M2 19/19, R1 9/9, security 22/22, deployment 16/16, R3
+  30/30, focused runtime 13/13, R4 62/62, M4 26/26, template validator 4/4,
+  and SDK 4.11.0 normal/frozen builds PASS; generated-key diff is empty.
+- Status: source correction PASS; IDE deployment, supported native Employee
+  restoration, and runtime acceptance remain pending.

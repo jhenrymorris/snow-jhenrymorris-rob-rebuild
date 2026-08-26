@@ -391,7 +391,7 @@ No item above is authorized for implementation in R0. Unsupported native capabil
 - [x] Add atomic accepted Sign and refused Sign evidence handling.
 - [x] Pass all source, regression, normal/frozen build, and generated-key gates.
 - [ ] Install through the normal ServiceNow IDE path.
-- [ ] Restore Employee required `fill` and Supervisor required `sign` through
+- [ ] Restore Employee required `fill` and retain Supervisor required `fill` through
   Document Templates UI; deactivate the split Flow and employee-only template.
 - [ ] Prove focused accepted New and Denial runtime before resuming the full M3
   matrix. M4 remains inactive.
@@ -422,7 +422,9 @@ No item above is authorized for implementation in R0. Unsupported native capabil
   in the Document Templates (`sn_doc`) application, while the required V2-owned
   candidate omits New/Insert.
 - [x] Remove both temporary document roles and restore the 283-role baseline.
-- [ ] **M3 BLOCKED-PLATFORM.** The locked V2 ownership plus ServiceNow Sign
-  `action=sign` contract has no supported native configuration path. Do not
-  cut over, create an external-signing substitution, or modify production.
-  **M4 remains inactive and NOT READY.**
+- [x] Supersede the unsupported `action=sign` assumption. Australia ServiceNow
+  Sign uses `Fill` plus a participant-bound signature mapping; the production
+  Supervisor participant already matches that contract.
+- [ ] Restore the production Employee participant to required/non-advanced
+  `subject_person`, neutralize the split Flow/templates, and execute focused
+  Approved New and Refuse Denial proof. M4 remains inactive.

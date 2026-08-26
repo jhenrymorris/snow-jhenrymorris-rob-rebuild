@@ -1,21 +1,19 @@
 import { Record } from '@servicenow/sdk/core'
 
 /**
- * Draft-only bootstrap for the native M3 Form 1768 template reconstruction.
+ * Inactive historical record retained to preserve its generated identity.
  *
- * The Australia application-file creator does not expose sn_doc_pdf_template
- * for scoped applications.  Owning the empty Draft through Fluent lets the
- * Document Templates UI add the approved PDF, participants, and mappings
- * without direct metadata manipulation.  The record is renamed to the stable
- * production name only after the native readiness contract passes.
+ * Australia ServiceNow Sign participants use Fill/Review, and participant
+ * authoring belongs to the native Document Templates configuration surface.
+ * This scoped candidate is therefore not a production deployment artifact.
  */
 export const m3Form1768TemplateCandidate = Record({
     $id: Now.ID['m3-form1768-template-candidate'],
     table: 'sn_doc_pdf_template',
     data: {
-        name: 'ROB Form 1768 Authorization Candidate V2',
+        name: 'ROB Form 1768 Candidate - Retired Unsupported Scope',
         table: 'sn_hr_core_case',
-        active: true,
+        active: false,
         state: 'draft',
         language: 'en',
         signing_type: 'servicenow_sign',

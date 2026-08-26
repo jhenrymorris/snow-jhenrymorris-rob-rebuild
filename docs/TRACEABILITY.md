@@ -351,7 +351,7 @@ remain prohibited.
 |---|---|---|
 | Original ordered execution | Lifecycle launches `ROB Form 1768 Authorization` once; no participant resume | SOURCE/TEST PASS |
 | Employee evidence | Required Employee order 1/action `fill`; subject identity and shared execution enforced | SOURCE/TEST PASS; PDI CONFIG PENDING |
-| Supervisor approval/signature | Required Supervisor order 2/action `sign`; accepted state atomically persists both evidence sets | SOURCE/TEST PASS; PDI RUNTIME PENDING |
+| Supervisor approval/signature | Required Supervisor order 2/action `fill` with mandatory signature mapping; accepted state `3` atomically persists both evidence sets | SOURCE/UNIT PASS; PDI RUNTIME PENDING |
 | Denial | Refused state `7` requires decline reason, retains task/execution, denies form/details, and creates no final PDF or fulfillment | SOURCE/TEST PASS; PDI RUNTIME PENDING |
 | Split runtime removal | Post-approval relaunch rule source-inactive; approval response rule remains inactive | SOURCE/BUILD PASS; INSTALL PENDING |
 | Security and scope | No new table, field, role, broad privilege, native-case Write, or M4 activation | PASS |
@@ -362,7 +362,7 @@ remain prohibited.
 |---|---|---|
 | Source deployment | Commit `221ec1d`; normal IDE Build and Install; live continuous evidence handler; split launcher inactive | PASS |
 | Employee participant | Safe baseline restored: optional/advanced order-1 `fill` with original resolver | RESTORED |
-| Supervisor participant | Existing required order-2 `fill`; native editor blocks change to `sign` while mappings exist | BLOCKED-PLATFORM |
+| Supervisor participant | Existing required order-2 `fill` with governed resolver is the supported Australia ServiceNow Sign contract | CONFIGURATION MATCHING |
 | Form 1768 mapping integrity | Production template active/Published; all 28 mappings and both signature mappings retained | PASS |
 | Supported conversion path | Native form requires clearing/recreating complete mapping set; no direct metadata path or new architecture authorized | UNSUPPORTED WITHIN BOUNDED CORRECTION |
 | Runtime/security | Focused runtime not started; lifecycle/M4 entry rules inactive; no broad privilege or new artifact | SAFE STOP |
@@ -373,8 +373,19 @@ remain prohibited.
 | Requirement | Evidence | Status |
 |---|---|---|
 | Bounded native correction | Existing V2 application/scope retained; temporary parallel Draft template authorized; no table/field/role/runtime-engine change | APPROVED |
-| Combined decision/signature contract | Accepted native Supervisor Sign populates separate approval and signature evidence fields; Refuse records Denial without signature | REQUIREMENT SUPERSEDED / SOURCE ALIGNED |
+| Combined decision/signature contract | Accepted native Supervisor Fill/Submit populates separate approval and signature evidence fields; Refuse records Denial without signature | REQUIREMENT SUPERSEDED / SOURCE ALIGNED |
 | Logical readiness contract | `scripts/validation/m3-form1768-template-contract.json` contains names, table, participant semantics, and 28 logical mapping keys without PDI sys_ids | SOURCE PASS |
-| Read-only validator | `scripts/validation/m3-native-template-readiness.cjs` queries the three native Document Templates tables and supports candidate/production modes | UNIT 5/5 PASS; PDI PENDING |
-| Runtime parity | Commit `221ec1d` already launches one continuous execution and enforces Employee `fill`, Supervisor `sign`, state `3` acceptance, and state `7` denial | SOURCE PASS / NATIVE CONFIG PENDING |
+| Read-only validator | `scripts/validation/m3-native-template-readiness.cjs` queries the three native Document Templates tables and validates the stable production contract only | UNIT 4/4 PASS; PDI PENDING |
+| Runtime parity | One continuous execution enforces Employee `fill`, Supervisor `fill`, state `3` acceptance, and state `7` denial | SOURCE/R4 62/62 PASS / NATIVE CONFIG PENDING |
 | M4 boundary | Both M4 entry rules remain inactive | PASS / NOT STARTED |
+
+## V2 proven Fill/Refuse restoration (2026-08-26)
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| Australia participant semantics | ServiceNow Sign uses `Fill` with mandatory participant-bound signature mappings; `Sign` is reserved for external signing | CONFIRMED |
+| Production preservation | Existing `ROB Form 1768 Authorization` remains active/Published with 28 mappings; no template copy or remap | READ-ONLY BASELINE PASS |
+| Employee restoration | Order 1, required, `fill`, non-advanced `subject_person` | PDI CONFIG PENDING |
+| Supervisor restoration | Existing order 2, required, `fill`, governed Authorization Form Supervisor resolver | READ-ONLY BASELINE PASS |
+| Split path neutralization | Approval Flow, employee-only template, legacy response, and post-approval relaunch inactive | PDI CONFIG PENDING |
+| Runtime acceptance | Approved New and Refuse Denial precede the remaining M3 matrix | PENDING |

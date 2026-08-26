@@ -577,9 +577,9 @@ For Reuse, the existing Authorization Form itself remains Active; the current HR
 
 ## Required Activities
 
-1. Supervisor reviews business need in the native signing task.
-2. Supervisor selects Sign or Refuse.
-3. Accepted Sign atomically supplies approval and signature evidence; Refuse
+1. Supervisor reviews business need in the native ServiceNow Sign Fill task.
+2. Supervisor submits the mapped signature or selects Refuse.
+3. Accepted Submit atomically supplies approval and signature evidence; Refuse
    supplies Denial evidence without signature evidence.
 
 ## Allowed Outcome

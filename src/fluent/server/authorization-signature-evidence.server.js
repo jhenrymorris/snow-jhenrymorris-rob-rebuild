@@ -180,7 +180,7 @@
     var isEmployeeStage =
         participantName === 'Employee' && participantAction === 'fill'
     var isSupervisorStage =
-        participantName === 'Supervisor' && participantAction === 'sign'
+        participantName === 'Supervisor' && participantAction === 'fill'
 
     if (!isEmployeeStage && !isSupervisorStage) {
         gs.error('ROB signature evidence rejected an unexpected participant contract.')
@@ -233,7 +233,7 @@
     }
 
     if (signerId !== authorization.getValue('supervisor') || !completedAt) {
-        gs.error('ROB supervisor Sign evidence did not satisfy the lifecycle gate.')
+        gs.error('ROB supervisor Fill/signature evidence did not satisfy the lifecycle gate.')
         return
     }
 
@@ -297,7 +297,7 @@
     }
 
     if (state !== '3') {
-        gs.error('ROB Supervisor Sign ended in an unsupported terminal state.')
+        gs.error('ROB Supervisor Fill ended in an unsupported terminal state.')
         return
     }
 
@@ -307,7 +307,7 @@
     authorization.setValue('supervisor_signer', signerId)
     authorization.setValue('supervisor_signature_date_time', completedAt)
     if (!authorization.update()) {
-        gs.error('ROB approved Supervisor Sign evidence could not be persisted.')
+        gs.error('ROB approved Supervisor Fill/signature evidence could not be persisted.')
         return
     }
     generateFinalPdf(authorization)

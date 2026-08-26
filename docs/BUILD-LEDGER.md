@@ -874,3 +874,22 @@ Build evidence is package-specific and must remain distinct from install, runtim
 - Result: **M3 BLOCKED-PLATFORM**. Clearing/recreating all governed mappings is
   outside the approved correction and presents irreversible mapping-integrity
   risk. M4 remains inactive and NOT READY.
+
+### 2026-08-26 proven Fill/Refuse restoration
+
+- Australia documentation and live production metadata reconcile on the native
+  ServiceNow Sign contract: Employee and Supervisor participants use `Fill`;
+  mandatory participant-bound mappings supply their electronic signatures.
+- The existing production template is preserved with 28 mappings. Supervisor
+  is already required order 2 `fill` with the governed resolver. Only Employee
+  required/non-advanced `subject_person` restoration remains manual.
+- Source correction changes the terminal evidence adapter and read-only
+  production validator from unsupported Supervisor `sign` to supported `fill`.
+- The app-owned candidate retains its generated identity but is renamed and
+  deactivated as historical unsupported-scope configuration.
+- Local regression/build, IDE deployment, native restoration, and runtime
+  acceptance are recorded below as they execute; M4 remains inactive.
+- Local gates: M2 19/19, R1 9/9, security 22/22, deployment 16/16, R3
+  30/30, focused R3 runtime 13/13, R4 62/62, M4 26/26, template contract
+  4/4, SDK 4.11.0 normal/frozen builds, diff check, and generated-key diff all
+  PASS. IDE deployment and PDI runtime remain pending.

@@ -1092,7 +1092,7 @@ Do not delete/recreate the task, add a second template, broaden privileges, or
 manipulate protected metadata. M3 remains blocked pending a supported
 ServiceNow correction or an explicitly approved signing-architecture change.
 
-### Approved continuous native Sign reconciliation
+### Historical continuous native Sign reconciliation — superseded
 
 The architecture decision above is now approved and supersedes the split-stage
 and conditional-participant instructions for New, Amendment, and Renewal.
@@ -1103,7 +1103,7 @@ mappings, then configure exactly:
 
 - Employee `b315aaeb833647104f5193a6feaad362`: order 1, action `fill`, required,
   non-advanced user source `subject_person`, with no conditional skip script.
-- Supervisor `86a52a6f83f247104f5193a6feaad388`: order 2, action `sign`, required,
+- Supervisor `86a52a6f83f247104f5193a6feaad388`: order 2, action `fill`, required,
   using the existing advanced resolver that returns the governed Authorization
   Form `supervisor` and rejects missing/inactive users.
 
@@ -1141,7 +1141,7 @@ The already-installed continuous runtime source must not be exercised while
 the participant contract remains unreconciled. Keep M3 and M4 entry rules
 inactive. **M3 is BLOCKED-PLATFORM; M4 is NOT READY.**
 
-### Authorized template-first V2 reconstruction (supersedes the stop above)
+### Historical template-first V2 reconstruction — superseded
 
 The architecture owner has authorized one reversible native reconstruction in
 the existing V2 application. Do not alter the current production template
@@ -1150,15 +1150,15 @@ during candidate construction.
 1. Keep both M3 lifecycle entry rules and both M4 entry rules inactive.
 2. Export the current production template, source PDF, two participants, and
    all 28 mappings as rollback evidence.
-3. Create `ROB Form 1768 Authorization Candidate V2` through Document Templates
-   UI using the approved April 2026 source PDF. Do not copy the mapped template.
+3. This candidate reconstruction is no longer authorized; retain any created
+   Draft candidate inactive as historical evidence.
 4. Before mapping, configure Employee as required order 1, action `fill`,
    non-advanced user field `subject_person`; configure Supervisor as required
-   order 2, action `sign`, using the governed Authorization Form supervisor
+   order 2, action `fill`, using the governed Authorization Form supervisor
    resolver.
 5. Save and reopen both participants. Then recreate the 26 governed body
    mappings and the two mandatory participant-bound signature mappings.
-6. Preview the PDF and run `npm run verify:m3-template:candidate`.
+6. Candidate validation is retired; use production readiness validation only.
 7. After candidate PASS, rename the former production template
    `ROB Form 1768 Authorization — Retired Fill`, set it inactive, rename the
    candidate exactly `ROB Form 1768 Authorization`, and publish/activate it.
@@ -1171,3 +1171,31 @@ during candidate construction.
 No PDI sys_id is a runtime configuration value. Candidate/production
 validation uses logical names and mapping keys only. Do not delete historical
 records, manipulate metadata directly, broaden access, or enable M4.
+
+### Authoritative M3 Fill/Refuse restoration
+
+This section supersedes the two historical sections above. Keep M3 lifecycle
+and M4 entry rules inactive while applying the configuration.
+
+1. Export the active Published `ROB Form 1768 Authorization` template, source
+   PDF, participants, and all 28 mappings as rollback evidence.
+2. Do not copy, delete, unmap, or replace the production template.
+3. On its Employee participant, retain order `1` and action `Fill`; set Required
+   (`optional=false`), turn off Advanced, select `subject_person`, and remove the
+   conditional skip script.
+4. Leave its Supervisor participant unchanged: order `2`, action `Fill`,
+   required, with the existing governed Authorization Form Supervisor resolver.
+5. Reopen both participants and confirm the two mandatory signature mappings
+   and 26 body mappings remain present.
+6. Deactivate and retain the `ROB Authorization Supervisor Approval` Flow and
+   `ROB Form 1768 Employee Signature` template. Confirm the legacy approval
+   response and post-approval relaunch Business Rules are inactive.
+7. Rename/deactivate the empty native candidate and the partial V2 candidate as
+   historical records. Do not delete either record.
+8. Run `npm run verify:m3-template:production`. Do not activate a lifecycle
+   entry rule unless readiness passes with two participants and 28 mappings.
+9. Confirm `sn_doc.admin` and `sn_doc.writer` temporary assignments are zero.
+
+ServiceNow Sign participant action `Fill` plus its mandatory signature mapping
+is the electronic-signature mechanism. Supervisor task state `3` is accepted
+Submit (Approved + Signed); state `7` is Refuse (Denied without signature).

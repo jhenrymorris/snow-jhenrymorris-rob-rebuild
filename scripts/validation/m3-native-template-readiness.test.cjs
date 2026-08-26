@@ -48,25 +48,10 @@ function validFixture(name = contract.productionName) {
     return { templates, participants, mappings }
 }
 
-test('production contract accepts the exact continuous Sign template', () => {
+test('production contract accepts the exact continuous Fill/signature template', () => {
     const fixture = validFixture()
     assert.deepEqual(
         validateTemplateData(
-            'production',
-            fixture.templates,
-            fixture.participants,
-            fixture.mappings
-        ),
-        []
-    )
-})
-
-test('candidate contract accepts a complete Draft template', () => {
-    const fixture = validFixture(contract.candidateName)
-    fixture.templates[0].state = wrapped('draft', 'Draft')
-    assert.deepEqual(
-        validateTemplateData(
-            'candidate',
             fixture.templates,
             fixture.participants,
             fixture.mappings
@@ -82,7 +67,6 @@ test('validator rejects optional or conditionally skipped Employee', () => {
     fixture.participants[0].doc_template_user = wrapped('')
     fixture.participants[0].script = wrapped('return blank conditionally')
     const errors = validateTemplateData(
-        'production',
         fixture.templates,
         fixture.participants,
         fixture.mappings
@@ -93,17 +77,16 @@ test('validator rejects optional or conditionally skipped Employee', () => {
     )
 })
 
-test('validator rejects Supervisor fill and incomplete mappings', () => {
+test('validator rejects unsupported Supervisor action and incomplete mappings', () => {
     const fixture = validFixture()
-    fixture.participants[1].action = wrapped('fill')
+    fixture.participants[1].action = wrapped('sign')
     fixture.mappings.pop()
     const errors = validateTemplateData(
-        'production',
         fixture.templates,
         fixture.participants,
         fixture.mappings
     )
-    assert.ok(errors.some((error) => error.includes('action must be sign')))
+    assert.ok(errors.some((error) => error.includes('action must be fill')))
     assert.ok(errors.some((error) => error.includes('expected 28 mappings')))
     assert.ok(
         errors.some((error) =>
@@ -116,7 +99,6 @@ test('validator rejects duplicate production templates', () => {
     const fixture = validFixture()
     fixture.templates.push({ ...fixture.templates[0] })
     const errors = validateTemplateData(
-        'production',
         fixture.templates,
         fixture.participants,
         fixture.mappings

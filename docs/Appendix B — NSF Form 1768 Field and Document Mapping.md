@@ -402,7 +402,8 @@ The source requirement explicitly states that a requester cannot sign on the sub
 # 13. Supervisor Approval and Signature Mapping
 
 For New, Amendment, and Renewal, native Document Templates supplies one
-authoritative Supervisor terminal event. Accepted **Sign** records approval and
+authoritative Supervisor terminal event. The ServiceNow Sign participant action
+is **Fill**, with a mandatory mapped signature block. Accepted **Submit** records approval and
 electronic-signature evidence atomically. **Refuse** records Denial evidence
 without signature evidence. The evidence remains stored in separate
 system-managed approval and signature fields even though one native action
@@ -411,15 +412,15 @@ approval-then-signature interaction for these paths.
 
 | Evidence | Source | Required | PDF | Audit |
 |---|---|---:|---:|---:|
-| Supervisor Approval Decision | Accepted native Supervisor Sign, or Refuse for Denial | Yes | May be reflected indirectly | Yes |
-| Supervisor Electronic Signature | Accepted native Supervisor Sign | Yes for approval; absent for Refuse | Yes | Yes |
+| Supervisor Approval Decision | Accepted native Supervisor Fill/Submit, or Refuse for Denial | Yes | May be reflected indirectly | Yes |
+| Supervisor Electronic Signature | Accepted native Supervisor mapped signature | Yes for approval; absent for Refuse | Yes | Yes |
 | Supervisor Identity | Native records | Yes | Yes/as signature identity | Yes |
 | Approval Timestamp | Native task `closed_at` | Yes | Not necessarily printed | Yes |
-| Signature Timestamp | Native task `closed_at` for accepted Sign only | Yes for approval | Yes/metadata | Yes |
+| Signature Timestamp | Native task `closed_at` for accepted Submit only | Yes for approval | Yes/metadata | Yes |
 
 ## 13.1 Fulfillment Gate
 
-Fulfillment shall not open unless an accepted Supervisor Sign has populated
+Fulfillment shall not open unless an accepted Supervisor Fill/Submit has populated
 both evidence sets. A partial, unsupported, or mismatched terminal event shall
 remain blocked. Refuse shall never satisfy the fulfillment gate.
 

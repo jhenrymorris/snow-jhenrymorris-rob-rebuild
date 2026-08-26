@@ -606,7 +606,7 @@ test('employee completion remains inside the ordered native signing execution', 
     )
     assert.match(source, /pending_supervisor_approval_signature/)
     assert.match(source, /participantName === 'Employee'.*participantAction === 'fill'/s)
-    assert.match(source, /participantName === 'Supervisor'.*participantAction === 'sign'/s)
+    assert.match(source, /participantName === 'Supervisor'.*participantAction === 'fill'/s)
     assert.match(source, /document_task_execution/)
     assert.doesNotMatch(source, /ROB-owned approval Flow/)
     assert.doesNotMatch(source, /requestSupervisorDecision/)
@@ -635,7 +635,7 @@ test('terminal supervisor evidence is immutable and bound to one native task', (
     assert.match(source, /not part of the Employee signing execution/)
 })
 
-test('native Supervisor Sign atomically records approval and signature', () => {
+test('native Supervisor Fill/signature atomically records approval and signature', () => {
     const source = fs.readFileSync(
         path.join(root, 'src/fluent/server/authorization-signature-evidence.server.js'),
         'utf8'

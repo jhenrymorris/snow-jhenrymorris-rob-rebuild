@@ -1,9 +1,7 @@
 {
     "schemaVersion": 1,
-    "scope": "x_2166123_rob_auth",
     "table": "sn_hr_core_case",
     "productionName": "ROB Form 1768 Authorization",
-    "candidateName": "ROB Form 1768 Authorization Candidate V2",
     "mappingCount": 28,
     "bodyMappings": [
         "Employee Name",
@@ -46,7 +44,7 @@
         {
             "name": "Supervisor",
             "order": "2",
-            "action": "sign",
+            "action": "fill",
             "optional": false,
             "advanced": true,
             "userField": "",

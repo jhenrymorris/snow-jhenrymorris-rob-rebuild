@@ -1152,7 +1152,11 @@ The MVP shall demonstrate, at minimum:
 10. Exception conditions do not create invalid authorization artifacts.
 11. Employee signature is required for New, Amendment, and Renewal.
 12. Reuse does not alter original employee signature evidence.
-13. Supervisor approval and signature are required before fulfillment.
+13. Supervisor approval and signature are required before fulfillment. For
+    New, Amendment, and Renewal on Australia ServiceNow Sign, the required
+    order-2 Supervisor participant uses action `Fill`; submitting the mapped
+    signature atomically supplies approval and signature evidence, while native
+    Refuse supplies Denial without signature evidence.
 14. Denial creates no fulfillment.
 15. Staffing-only requests create Staffing work.
 16. Analytics-only requests create Analytics work.

@@ -77,13 +77,15 @@ the ordered terminal sequence:
 
 ```text
 Employee Fill/Sign
-→ Supervisor Sign = Approved + Signed
+→ Supervisor Fill/Sign Submit = Approved + Signed
   or Supervisor Refuse = Denied
 ```
 
-Accepted Supervisor Sign populates the separate system-managed approval and
+The native participant action for both stages is `Fill`; the mandatory mapped
+signature block supplies the signature. Accepted Supervisor Submit populates
+the separate system-managed approval and
 signature evidence fields from native `closed_by` and `closed_at`. Refuse
 records Denial identity, time, task, execution, and decline reason, but leaves
-signature-complete false and signer/signature time empty. Only accepted Sign
+signature-complete false and signer/signature time empty. Only accepted Submit
 permits the final PDF and Active transition. Reuse retains its separate
 attestation state model.

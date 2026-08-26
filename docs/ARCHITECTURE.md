@@ -267,6 +267,13 @@ signature time, and refusal. After the employee stage and an APPROVED supervisor
 stage are both committed, an HR Core/Document Templates-owned finalization step
 rereads that native evidence and generates a distinct completed Form 1768 PDF.
 
+For ServiceNow Sign PDF templates on Australia, both ordered participants use
+the native participant action `Fill`; their mandatory participant-bound
+signature mappings provide the electronic signatures. The Supervisor's state
+`3` Submit event is the combined Approved + Signed terminal event. State `7`
+Refuse is Denied and never supplies signature evidence. The `Sign` participant
+action is not used because it belongs to external signing integrations.
+
 The final PDF is derived output, not a replacement for the native signing
 execution. `Final Authorization Date` is the local calendar date of the persisted
 Supervisor Signature Date/Time. Employee Signature Date/Time, Supervisor
