@@ -315,3 +315,8 @@ expansion were not used.
 | TM-204 | Accepted native Sign | Governed Supervisor state `3` atomically persists approval and signature identity/time/task/execution before final PDF | SOURCE/UNIT PASS; PDI RUNTIME PENDING |
 | TM-205 | Refused native Sign | Governed Supervisor state `7` plus decline reason retains refused task/execution, denies pending records, and produces no signature/PDF/activation/fulfillment | SOURCE/UNIT PASS; PDI RUNTIME PENDING |
 | TM-206 | Split execution neutralization | Post-approval relaunch and legacy approval response rules inactive; approval Flow and employee-only template scheduled for native deactivation | SOURCE/BUILD PASS; PDI CONFIG PENDING |
+| TM-207 | IDE deployment of continuous correction | Commit `221ec1d`; normal IDE Build and Install; live evidence handler current; split launcher inactive | PASS |
+| TM-208 | Existing Supervisor participant action conversion | Native V2 Document Templates form rejects `fill` to `sign` until existing PDF mappings are cleared | BLOCKED-PLATFORM |
+| TM-209 | Single-mapping preservation | Authorized Supervisor Signature mapping delete did not persist; mapping `86e62aab83f247104f5193a6feaad318` and all 28 mappings remain | PASS — no destructive change |
+| TM-210 | Native safe restoration | Production template active/Published; prior Employee optional/advanced `fill`, Supervisor required `fill`, 28 mappings, active Flow/employee-only template; Reuse unchanged | PASS |
+| TM-211 | Continuous Sign runtime matrix | Accepted New, Denial, Amendment, Renewal, Reuse, Exception, and immutability not run because native participant contract cannot be reconciled without rebuilding all mappings | NOT RUN / BLOCKED-PLATFORM |

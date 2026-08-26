@@ -854,3 +854,23 @@ Build evidence is package-specific and must remain distinct from install, runtim
   focused runtime 13/13, R4 62/62, M4 26/26.
 - SDK 4.11.0 normal/frozen builds and generated-key gate: PASS. IDE installation
   and live participant reconciliation remain pending.
+
+### 2026-08-26 continuous native Sign native-editor hard stop
+
+- Commit `221ec1d` was pulled and installed through normal IDE Build and
+  Install; no Reinstall or local SDK deployment was used.
+- Live runtime source matches the continuous Sign/Refuse correction and the
+  split post-approval launcher is inactive.
+- In the supported V2 application-owned Document Templates editor, changing
+  Supervisor `86a52a6f83f247104f5193a6feaad388` from `fill` to `sign` was
+  rejected until the existing PDF mappings are cleared.
+- A participant-reference clear and the separately authorized attempt to
+  delete only Supervisor Signature mapping
+  `86e62aab83f247104f5193a6feaad318` did not satisfy the constraint; the delete
+  did not persist and the 28-mapping count remained unchanged.
+- The production template was restored active/Published with its original
+  Employee optional/advanced `fill`, Supervisor required `fill`, both signature
+  mappings, and all 28 mappings. Flow/template deactivation was not performed.
+- Result: **M3 BLOCKED-PLATFORM**. Clearing/recreating all governed mappings is
+  outside the approved correction and presents irreversible mapping-integrity
+  risk. M4 remains inactive and NOT READY.

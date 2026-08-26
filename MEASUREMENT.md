@@ -2293,3 +2293,26 @@ Not exposed by session/tool — no estimate recorded.
 - Result: source correction PASS. IDE install, native template reconciliation,
   and focused accepted/refused runtime proof remain; M3 remains open and M4
   remains inactive.
+
+## V2 continuous native Sign configuration hard stop
+
+- Date: `2026-08-26`.
+- IDE deployment: commit `221ec1d` installed through normal ServiceNow IDE
+  Build and Install. Live evidence rule contains the continuous Sign/Refuse
+  adapter; the split post-approval launcher is inactive.
+- Supported native configuration attempt: the V2 application-owned Document
+  Templates form was used to edit production template
+  `7119926383f247104f5193a6feaad318`. ServiceNow rejected changing Supervisor
+  participant `86a52a6f83f247104f5193a6feaad388` from `fill` to `sign` with:
+  `You can change the action only if you clear the existing PDF mappings.`
+- Scope proof: removing only the Supervisor participant from its signature
+  mapping did not satisfy the validation. The authorized single-mapping delete
+  did not persist; the mapping and all 28 production mappings remained.
+- Safe restoration: Employee returned to optional/advanced order-1 `fill` with
+  its original resolver; Supervisor remains required order-2 `fill`; the
+  template is active/Published with 28 mappings. The approval Flow and
+  employee-only template remain active, and Reuse was not changed.
+- Result: **M3 — BLOCKED-PLATFORM**. The native editor requires clearing and
+  recreating the complete governed mapping set to change the participant
+  action. That is an unapproved, irreversible data-integrity risk and is not a
+  bounded compatibility correction. **M4 — NOT READY**.

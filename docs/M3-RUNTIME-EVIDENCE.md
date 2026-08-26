@@ -1000,3 +1000,46 @@ and frozen-key builds, diff check, and generated-key gate pass. This supersedes
 the prior participant-resume design in source only. IDE install, native
 participant reconciliation, and focused accepted/refused runtime proof remain
 required; M3 remains open and M4 remains inactive.
+
+## 2026-08-26 continuous native Sign configuration hard stop
+
+Commit `221ec1d` was installed through the normal ServiceNow IDE Build and
+Install path. Read-only live inspection confirmed the continuous native
+Sign/Refuse evidence handler is installed and the split post-approval launcher
+is inactive.
+
+The remaining native participant reconciliation was attempted only through the
+supported application-owned Document Templates forms. On production template
+`7119926383f247104f5193a6feaad318`, ServiceNow refused changing Supervisor
+participant `86a52a6f83f247104f5193a6feaad388` from `fill` to `sign`:
+
+```text
+You can change the action only if you clear the existing PDF mappings.
+```
+
+The validation remained after the Supervisor participant reference was
+temporarily cleared from the Supervisor Signature mapping. That reference was
+restored. The separately authorized attempt to delete only mapping
+`86e62aab83f247104f5193a6feaad318` did not persist; the record remained and the
+related-list count remained 28. Therefore the message applies to the template's
+mapping set, not merely the Supervisor signature mapping.
+
+No authorization existed to clear and manually reconstruct all 28 governed
+mappings. Doing so risks losing mapping identity, field coordinates, mandatory
+flags, participant bindings, and the approved Form 1768 rendering contract.
+No direct metadata operation, Background Script, Reinstall, copied production
+template, third participant, new table, broad privilege, or M4 activation was
+used.
+
+The production template was returned to active/Published. Employee is restored
+to its prior optional/advanced order-1 `fill` configuration; Supervisor remains
+required order-2 `fill`; all 28 mappings and both signature mappings remain.
+The approval Flow and employee-only template remain active, and the Reuse
+template was untouched. Focused accepted/refused runtime was not started.
+
+**M3 — BLOCKED-PLATFORM. Exact failing artifact:** native Document Templates
+participant-action reconciliation on production template
+`7119926383f247104f5193a6feaad318`. **Exact supported operation:** change the
+existing Supervisor participant action through the native V2 application-owned
+form. **Security/data consequence:** the editor requires destructive clearing
+and reconstruction of the complete governed mapping set. **M4 — NOT READY.**

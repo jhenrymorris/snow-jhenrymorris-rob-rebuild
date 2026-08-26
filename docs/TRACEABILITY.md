@@ -355,3 +355,15 @@ remain prohibited.
 | Denial | Refused state `7` requires decline reason, retains task/execution, denies form/details, and creates no final PDF or fulfillment | SOURCE/TEST PASS; PDI RUNTIME PENDING |
 | Split runtime removal | Post-approval relaunch rule source-inactive; approval response rule remains inactive | SOURCE/BUILD PASS; INSTALL PENDING |
 | Security and scope | No new table, field, role, broad privilege, native-case Write, or M4 activation | PASS |
+
+## V2 continuous native Sign configuration boundary (2026-08-26)
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| Source deployment | Commit `221ec1d`; normal IDE Build and Install; live continuous evidence handler; split launcher inactive | PASS |
+| Employee participant | Safe baseline restored: optional/advanced order-1 `fill` with original resolver | RESTORED |
+| Supervisor participant | Existing required order-2 `fill`; native editor blocks change to `sign` while mappings exist | BLOCKED-PLATFORM |
+| Form 1768 mapping integrity | Production template active/Published; all 28 mappings and both signature mappings retained | PASS |
+| Supported conversion path | Native form requires clearing/recreating complete mapping set; no direct metadata path or new architecture authorized | UNSUPPORTED WITHIN BOUNDED CORRECTION |
+| Runtime/security | Focused runtime not started; lifecycle/M4 entry rules inactive; no broad privilege or new artifact | SAFE STOP |
+| M3/M4 status | Irreversible mapping-integrity risk prevents reconciliation | M3 BLOCKED-PLATFORM; M4 NOT READY |

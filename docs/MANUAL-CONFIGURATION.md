@@ -1118,3 +1118,25 @@ The split-execution Business Rule must install inactive. Do not create a Review
 participant, a third participant, a second production Form 1768 template, or a
 post-Employee execution. Keep M3 and M4 entry rules inactive until the focused
 accepted/refused native Sign proof is ready.
+
+### Continuous native Sign configuration stop
+
+The source correction is installed, but the current Australia Document
+Templates editor does not permit the existing Supervisor participant action to
+change from `fill` to `sign` while the template has PDF mappings. It reports:
+
+```text
+You can change the action only if you clear the existing PDF mappings.
+```
+
+Clearing only the Supervisor participant reference or the Supervisor Signature
+mapping does not satisfy the validator. Do not clear/delete the full set of 28
+governed mappings, manipulate metadata directly, copy the production template,
+or introduce another signing design. The safe native baseline has been
+restored: production template Published, Employee optional/advanced order-1
+`fill`, Supervisor required order-2 `fill`, all 28 mappings present, approval
+Flow and employee-only template active, and Reuse unchanged.
+
+The already-installed continuous runtime source must not be exercised while
+the participant contract remains unreconciled. Keep M3 and M4 entry rules
+inactive. **M3 is BLOCKED-PLATFORM; M4 is NOT READY.**

@@ -395,3 +395,16 @@ No item above is authorized for implementation in R0. Unsupported native capabil
   Document Templates UI; deactivate the split Flow and employee-only template.
 - [ ] Prove focused accepted New and Denial runtime before resuming the full M3
   matrix. M4 remains inactive.
+
+### Native editor result
+
+- [x] Install commit `221ec1d` through normal IDE Build and Install; verify the
+  continuous evidence handler and inactive split launcher live.
+- [x] Attempt the participant correction only through the supported V2
+  application-owned Document Templates UI.
+- [x] Prove ServiceNow requires clearing the template's existing PDF mappings
+  before changing Supervisor action from `fill` to `sign`.
+- [x] Preserve the authorized Supervisor Signature mapping and all 28 mappings;
+  restore Employee optional/advanced `fill` and republish the template.
+- [ ] **M3 BLOCKED-PLATFORM**. Do not delete/rebuild all 28 mappings or create
+  another signing workaround. M4 remains inactive and NOT READY.
