@@ -1075,3 +1075,19 @@ Continuation requires an explicit architecture decision for either:
 
 Until that decision is approved and proven, **M3 is BLOCKED-PLATFORM and M4 is
 NOT READY**.
+
+### Conditional-participant attempt and native signing failure
+
+The approved no-new-template experiment retained the production template's two
+participants and 28 mappings. Employee is optional and uses an advanced script
+that resolves the HR Case `subject_person` normally, returning blank only for
+one unambiguous governed Authorization Form that is employee-signed and has an
+explicit approved Supervisor decision. A fresh post-approval execution created
+`DOCT0001008` for V2 Supervisor A as intended.
+
+Do not treat that routing proof as production acceptance. Native signature
+acceptance failed in `sn_doc_templates/snc_viewer.js:setSignatureField` because
+the skipped participant left the expected signature-field DOM element null.
+Do not delete/recreate the task, add a second template, broaden privileges, or
+manipulate protected metadata. M3 remains blocked pending a supported
+ServiceNow correction or an explicitly approved signing-architecture change.

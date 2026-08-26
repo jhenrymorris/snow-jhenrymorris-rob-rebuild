@@ -935,3 +935,40 @@ package.
 **M3 — BLOCKED-PLATFORM. Native two-participant Document Templates execution
 cannot resume at Supervisor after approval through the supported API. M4 — NOT
 READY.**
+
+## 2026-08-26 conditional-participant reconciliation and final hard stop
+
+The production template `7119926383f247104f5193a6feaad318` remained Published
+with Employee order 1, Supervisor order 2, and 28 mappings. Employee participant
+`b315aaeb833647104f5193a6feaad362` was made optional and assigned a native
+advanced resolver that returns the subject for ordinary employee signing and
+returns blank only after one unambiguous Authorization Form is employee-signed
+and explicitly approved by its governed Supervisor.
+
+A controlled update of `ROBA0001002` created `DOCT0001008`
+(`c3d6363f83ba0b104f5193a6feaad3de`) assigned directly to V2 Supervisor A.
+The task contained execution `fad6363f83ba0b104f5193a6feaad3aa` and the
+production Form 1768 PDF. This proves participant selection worked without a
+new template, table, Flow, service, privilege, or generated key.
+
+The Supervisor invoked native **Fill Document**, selected the Supervisor
+signature field, entered the governed identity, and invoked **Accept**. The
+native callback failed reproducibly in
+`scripts/sn_doc_templates/snc_viewer.js:432`:
+
+```text
+TypeError: Cannot read properties of null (reading 'style')
+at Object.setSignatureField
+```
+
+`DOCT0001008` remained Ready. Supervisor signature evidence, approved final PDF,
+activation, and fulfillment remained absent. Administrator context was
+restored; broad privileges and temporary roles remain zero; M4 remains inactive.
+
+M2 19/19, R1 9/9, Wave 2 security 22/22, deployment 16/16, R3 30/30,
+focused R3 runtime 13/13, R4 60/60, and M4 26/26 passed. SDK 4.11.0
+normal/frozen builds, diff check, and generated-key gate passed.
+
+**M3 — BLOCKED-PLATFORM. Native Document Templates cannot apply the Supervisor
+signature after skipping the optional earlier participant on dev437065. M4 —
+NOT READY.**

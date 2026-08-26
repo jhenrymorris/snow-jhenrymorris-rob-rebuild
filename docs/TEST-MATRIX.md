@@ -306,3 +306,7 @@ expansion were not used.
 | TM-195 | Post-approval Supervisor participant selection | New execution starts production template at Employee participant order 1; protected `GenerateDocumentAPISNC` exposes no participant/order/resume parameter | BLOCKED-PLATFORM |
 | TM-196 | Safe stop | `DOCT0001007` unsigned and retained; admin restored; broad privileges/temporary roles 0; M4 inactive | PASS |
 | TM-197 | Remaining M3 matrix | New activation, Denial, Amendment, Renewal, Reuse, Exception, immutability, and complete regression acceptance not continued after TM-195 hard stop | NOT RUN / BLOCKED-PLATFORM |
+| TM-198 | Conditional Employee participant | Published production template retains Employee order 1/Supervisor order 2 and 28 mappings; Employee optional resolver skips only after employee signature and explicit approval | CONFIGURATION PASS |
+| TM-199 | Correct post-approval participant routing | `DOCT0001008` assigned to V2 Supervisor A with execution `fad6363f83ba0b104f5193a6feaad3aa` | PDI PASS |
+| TM-200 | Native Supervisor signature Accept | `snc_viewer.js:setSignatureField` throws null `.style`; task remains Ready and unsigned | BLOCKED-PLATFORM |
+| TM-201 | Conditional-participant safe stop | Admin restored; broad privileges/temporary roles 0; M4 inactive; all suites and normal/frozen builds pass | PASS |

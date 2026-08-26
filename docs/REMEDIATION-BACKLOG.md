@@ -365,3 +365,18 @@ No item above is authorized for implementation in R0. Unsupported native capabil
   production signing template or a supported gated continuous two-participant
   execution. The supported API cannot select/resume a participant.
 - [ ] M3 BLOCKED-PLATFORM; M4 NOT READY. Do not create another workaround.
+
+## V2 conditional-participant final platform boundary
+
+- [x] Retain one production Form 1768 template, both ordered participants, and
+  28 mappings.
+- [x] Configure Employee as optional with a narrow advanced resolver that skips
+  only after employee signature and explicit governed Supervisor approval.
+- [x] Prove fresh post-approval launch creates complete Supervisor-owned
+  `DOCT0001008` with native execution/PDF references.
+- [x] Prove native signature Accept fails in
+  `sn_doc_templates/snc_viewer.js:setSignatureField` on a null DOM field.
+- [x] Restore administrator context; preserve task/evidence; keep broad
+  privileges and temporary roles at zero; keep M4 inactive.
+- [ ] M3 BLOCKED-PLATFORM; ServiceNow correction or explicit architecture-owner
+  approval is required. Do not create another workaround.

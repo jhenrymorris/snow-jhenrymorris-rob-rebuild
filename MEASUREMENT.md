@@ -2254,3 +2254,26 @@ Not exposed by session/tool — no estimate recorded.
   architecture decision between a Supervisor-only production signing template
   and a supported gated continuous two-participant execution. Neither was
   inferred or implemented. **M4 — NOT READY**.
+
+## V2 conditional-participant runtime result
+
+- Date: `2026-08-26`.
+- The published production template retained both ordered participants and all
+  28 mappings. Employee remained order 1 but was made optional with a native
+  advanced resolver that returns the subject normally and returns blank only
+  after employee signature plus explicit Supervisor approval.
+- Controlled update of `ROBA0001002` created `DOCT0001008`
+  (`c3d6363f83ba0b104f5193a6feaad3de`) directly for V2 Supervisor A with
+  execution `fad6363f83ba0b104f5193a6feaad3aa` and the production PDF.
+- Accepting the Supervisor signature called native
+  `sn_doc_templates/snc_viewer.js:setSignatureField`, which failed with
+  `TypeError: Cannot read properties of null (reading 'style')`. The task
+  remained Ready and the Authorization Form remained unsigned/pending.
+- Administrator context was restored. No role, privilege, table, source,
+  generated key, M4 entry point, or historical record was changed.
+- M2 19/19, R1 9/9, security 22/22, deployment 16/16, R3 30/30, focused R3
+  runtime 13/13, R4 60/60, and M4 26/26 passed. SDK 4.11.0 normal and
+  frozen-key builds passed; generated-key diff was empty.
+- Result: **M3 — BLOCKED-PLATFORM**. Native Document Templates cannot apply a
+  Supervisor signature after skipping the optional prior participant on this
+  Australia PDI. **M4 — NOT READY**.

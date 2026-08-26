@@ -333,3 +333,14 @@ remain prohibited.
 | Supported API capability | `GenerateDocumentAPISNC.initiateDocumentTasks` has no participant/order/resume input | UNSUPPORTED |
 | Security/safe state | Task unsigned/retained; admin restored; broad privileges and temporary roles 0; M4 inactive | PASS |
 | M3/M4 status | Architecture decision required; no workaround or M4 activation performed | M3 BLOCKED-PLATFORM; M4 NOT READY |
+
+## V2 conditional-participant runtime boundary (2026-08-26)
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| Preserve original production template | Template `7119926383f247104f5193a6feaad318`; two ordered participants; 28 mappings | PASS |
+| Post-approval governed routing | Optional Employee resolver skips only after employee signature and explicit approval; `DOCT0001008` assigned to V2 Supervisor A | PASS |
+| Native Supervisor signature | Accept callback fails in `snc_viewer.js:setSignatureField` on null `.style`; task remains Ready | BLOCKED-PLATFORM |
+| Final PDF and activation | No Supervisor evidence, approved final PDF, activation, or fulfillment created | CORRECTLY ABSENT |
+| Security/build | Admin restored; broad privileges/temporary roles 0; M4 inactive; all suites and normal/frozen builds pass | PASS |
+| M3/M4 status | Supported no-new-template path exhausted at native signing runtime | M3 BLOCKED-PLATFORM; M4 NOT READY |

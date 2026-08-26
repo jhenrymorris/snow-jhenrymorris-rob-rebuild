@@ -827,3 +827,16 @@ Build evidence is package-specific and must remain distinct from install, runtim
   supported approval gate inside one continuous participant execution is an
   architecture decision, not an ordinary defect correction. No such change
   was made; M4 remains inactive and NOT READY.
+
+### 2026-08-26 conditional-participant platform proof
+
+- Production template remained Published with two participants and 28 mappings.
+- Employee participant `b315aaeb833647104f5193a6feaad362` was configured
+  optional with a narrow native advanced resolver.
+- Post-approval retry created Supervisor task `DOCT0001008` with execution
+  `fad6363f83ba0b104f5193a6feaad3aa`, proving governed routing.
+- Native Accept failed in `snc_viewer.js:setSignatureField` because the skipped
+  participant's signature-field DOM state was null. Task stayed Ready; no final
+  PDF or activation occurred.
+- All required suites and both SDK 4.11.0 builds passed; generated-key diff was
+  empty. No install or source deployment was performed.
