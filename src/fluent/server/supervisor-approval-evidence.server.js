@@ -1,6 +1,6 @@
 (function executeRule(current, previous) {
     var authorizationTable = 'x_2166123_rob_auth_rob_auth'
-    var supervisorTemplateName = 'ROB Reuse Supervisor Attestation'
+    var supervisorTemplateName = 'ROB Form 1768 Authorization'
 
     function isTerminalDecision(state) {
         return state === 'approved' || state === 'rejected'

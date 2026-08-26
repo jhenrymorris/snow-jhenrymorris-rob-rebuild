@@ -346,3 +346,13 @@ No item above is authorized for implementation in R0. Unsupported native capabil
 - [ ] Platform action is required to restore IDE deployment transport or
   reconcile the reviewed artifacts through a supported installation path.
 - [ ] M3 BLOCKED-PLATFORM; M4 NOT READY.
+
+## V2 production Form 1768 stage separation
+
+- [x] Prove IDE-installed launch creates a complete native Supervisor task.
+- [x] Reject the Reuse-only attestation as New/Amendment/Renewal evidence.
+- [x] Route existing lifecycle adapters to the published production Form 1768
+  template without adding architecture or privileges.
+- [x] Pass regression, normal/frozen build, and generated-key gates.
+- [ ] Install the bounded correction in the IDE and complete Supervisor
+  signature, final PDF, and activation proof.

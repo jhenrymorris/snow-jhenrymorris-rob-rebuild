@@ -783,3 +783,22 @@ Build evidence is package-specific and must remain distinct from install, runtim
   R3 30/30, focused R3 runtime 13/13, R4 59/59, and M4 26/26 PASS.
 - SDK 4.11.0 normal and frozen-key builds: PASS. `git diff --check`: PASS.
   Generated-key diff: empty. IDE install and clean runtime retest remain.
+
+### 2026-08-26 production Form 1768 stage separation correction
+
+- Live approval branch: PASS; `ROBA0001002` persisted governed Supervisor,
+  approval timestamp, and `approved` outcome.
+- Narrow RCAs: active V2 lifecycle Business Rule to Document Templates PDF
+  Template Read and Document Task Read only; both Allowed.
+- Native launch: `DOCT0001006` includes Document Task Execution and PDF,
+  proving the retry and IDE-installed launcher corrections.
+- Semantic defect: the Supervisor launch selected `ROB Reuse Supervisor
+  Attestation` for a New authorization. The signing modal was closed without a
+  signature.
+- Source correction: Supervisor launch/final rendering now select the existing
+  published `ROB Form 1768 Authorization`; employee launch remains on the
+  employee-stage template. No new template, Flow, table, service, privilege,
+  or generated key was added.
+- Regression: M2 19/19, R1 9/9, security 22/22, deployment 16/16, R3 30/30,
+  focused R3 runtime 13/13, R4 60/60, M4 26/26. SDK 4.11.0 normal/frozen
+  builds and diff gates PASS.

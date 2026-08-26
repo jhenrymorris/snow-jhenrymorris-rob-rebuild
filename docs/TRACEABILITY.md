@@ -311,3 +311,13 @@ remain prohibited.
 | Supported native execution | `GenerateDocumentAPI.initiateDocumentTasks` with HR Case technical parent; matching tasks require execution and PDF references | SOURCE CORRECTION; BUILD/INSTALL/RETEST REQUIRED |
 | Security boundary | Global-table response rule inactive; broad GlideRecord/native-case Write 0 | PASS |
 | Final PDF | Existing post-signature generator targets Authorization Form only | RUNTIME RETEST REQUIRED |
+
+## V2 production Form 1768 stage separation (2026-08-26)
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| Employee-before-approval | Employee-stage template remains `ROB Form 1768 Employee Signature` | PRESERVED |
+| Supervisor signing after approval | Existing same-table launcher selects published `ROB Form 1768 Authorization` | SOURCE/BUILD PASS |
+| Reuse isolation | `ROB Reuse Supervisor Attestation` is no longer accepted by the Authorization Form evidence adapter | SOURCE/TEST PASS |
+| Final governed PDF | Final renderer selects production `ROB Form 1768 Authorization` and targets the Authorization Form | SOURCE/BUILD PASS; RUNTIME PENDING |
+| Security | Only exact caller PDF Template Read and Document Task Read were added; broad privileges remain prohibited | PDI CONFIGURATION PASS |

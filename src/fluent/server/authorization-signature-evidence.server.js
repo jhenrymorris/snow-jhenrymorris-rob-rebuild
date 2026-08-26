@@ -1,7 +1,6 @@
 (function executeRule(current) {
-    var authorizationTemplateName = 'ROB Form 1768 Employee Signature'
-    var reuseSupervisorTemplateName = 'ROB Reuse Supervisor Attestation'
-
+    var employeeSignatureTemplateName = 'ROB Form 1768 Employee Signature'
+    var authorizationTemplateName = 'ROB Form 1768 Authorization'
     function isTrue(value) {
         return value === '1' || value === 'true'
     }
@@ -142,8 +141,8 @@
         : ''
 
     if (
-        templateName !== authorizationTemplateName &&
-        templateName !== reuseSupervisorTemplateName
+        templateName !== employeeSignatureTemplateName &&
+        templateName !== authorizationTemplateName
     ) {
         return
     }
@@ -175,14 +174,15 @@
         ? participant.getValue('name')
         : ''
     var isEmployeeStage =
-        templateName === authorizationTemplateName &&
+        templateName === employeeSignatureTemplateName &&
         participantName === 'Employee'
     var isSupervisorStage =
         templateName === authorizationTemplateName &&
         participantName === 'Supervisor'
 
     if (
-        templateName === authorizationTemplateName &&
+        (templateName === employeeSignatureTemplateName ||
+            templateName === authorizationTemplateName) &&
         !isEmployeeStage &&
         !isSupervisorStage
     ) {

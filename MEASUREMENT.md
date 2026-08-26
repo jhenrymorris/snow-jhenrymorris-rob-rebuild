@@ -2203,3 +2203,22 @@ Not exposed by session/tool — no estimate recorded.
   references.
 - [x] Pass regression, normal build, frozen build, and generated-key gates.
 - [ ] Review and install through ServiceNow IDE, then rerun focused signing.
+
+## V2 production Form 1768 stage separation correction
+
+- [x] Prove the governed approval Flow persists native approval identity and
+  `approved` outcome on `ROBA0001002`.
+- [x] Approve only caller-specific Document Templates Reads for the active V2
+  lifecycle rule: PDF Template and Document Task.
+- [x] Prove retry-safe native Supervisor task creation as `DOCT0001006` with
+  both Document Task Execution and PDF references.
+- [x] Stop before signing when the task exposed the Reuse-only attestation for
+  a New authorization.
+- [x] Separate the existing templates in source: employee-stage launch uses
+  `ROB Form 1768 Employee Signature`; Supervisor-stage launch and final PDF use
+  `ROB Form 1768 Authorization`; Reuse attestation is not accepted as
+  New/Amendment/Renewal signature evidence.
+- [x] Pass all regression suites, SDK 4.11.0 normal/frozen builds, diff check,
+  and generated-key gate. R4 is 60/60; generated-key diff is empty.
+- [ ] Install through ServiceNow IDE and complete focused Supervisor
+  signature/final-PDF runtime proof. M3 remains open; M4 remains inactive.

@@ -1,5 +1,5 @@
 (function executeRule(current) {
-    var supervisorTemplateName = 'ROB Reuse Supervisor Attestation'
+    var supervisorTemplateName = 'ROB Form 1768 Authorization'
 
     function isTrue(value) {
         return value === '1' || value === 'true'

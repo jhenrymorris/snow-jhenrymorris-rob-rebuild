@@ -864,3 +864,33 @@ changed.
 Status: **SOURCE CORRECTION PREPARED; IDE BUILD/INSTALL AND CLEAN RUNTIME RETEST
 REQUIRED**. This is an ordinary retry-safety defect, not a confirmed platform
 capability block. M3 remains open and M4 remains inactive/NOT READY.
+
+## 2026-08-26 V2 production Form 1768 stage separation
+
+The retry correction and governed approval Flow were proven live on
+`ROBA0001002`. Native approval persisted the governed Supervisor, decision
+timestamp, and `approved` outcome. After allowing only the active lifecycle
+Business Rule's exact Document Templates PDF Template Read and Document Task
+Read requests, the installed launcher created complete native task
+`DOCT0001006` with Document Task Execution
+`3fc1eaf783b60b104f5193a6feaad31b` and PDF
+`e9fb6627837647104f5193a6feaad375`.
+
+The task's supported Fill Document modal then exposed `ROB Reuse Supervisor
+Attestation`, whose text explicitly applies only to Reuse and says that no new
+Form 1768 is created. Because the active record is a deterministic New
+authorization, the modal was closed without signing. This isolated a bounded
+source-contract defect rather than a platform or native-execution failure.
+
+The existing adapters now keep the three native artifacts distinct:
+`ROB Form 1768 Employee Signature` is the employee stage; the published
+`ROB Form 1768 Authorization` is the New/Amendment/Renewal Supervisor stage and
+final PDF source; `ROB Reuse Supervisor Attestation` is not accepted as
+Authorization Form signature evidence. No new template, Flow, table, signing
+engine, caller privilege, or generated identity was introduced.
+
+All required source gates pass: M2 19/19, R1 9/9, security 22/22, deployment
+16/16, R3 30/30, focused R3 runtime 13/13, R4 60/60, M4 26/26, SDK 4.11.0
+normal and frozen builds, diff check, and empty generated-key diff. IDE
+installation and focused production Form 1768 Supervisor signature/final-PDF
+runtime proof remain. M3 is open; M4 remains inactive and NOT READY.
