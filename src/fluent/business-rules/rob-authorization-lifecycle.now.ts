@@ -2,11 +2,11 @@ import { BusinessRule } from '@servicenow/sdk/core'
 
 export const evaluatePayrollAuthorizationDecision = BusinessRule({
     $id: Now.ID['evaluate-payroll-authorization-decision'],
-    name: 'ROB Evaluate Payroll Authorization Decision',
-    active: false,
+    name: 'ROB Evaluate Payroll Authorization Decis',
+    active: true,
     table: 'sn_hr_core_case_payroll',
     when: 'before',
-    action: ['insert', 'update'],
+    action: ['update', 'insert'],
     order: 150,
     description:
         'Builds the committed R3 context when governed requested access is present, invokes AuthorizationDecisionService.evaluate(), and persists only system-managed decision outputs through the narrow HR Core bridge.',
@@ -28,14 +28,14 @@ export const evaluateWorkforceAuthorizationDecision = BusinessRule({
 
 export const initiatePayrollAuthorizationLifecycle = BusinessRule({
     $id: Now.ID['initiate-payroll-authorization-lifecycle'],
-    name: 'ROB Initiate Payroll Authorization Lifecycle',
-    active: false,
+    name: 'ROB Initiate Payroll Authorization Lifec',
+    active: true,
     table: 'sn_hr_core_case_payroll',
     when: 'after',
-    action: ['insert', 'update'],
+    action: ['update', 'insert'],
     order: 300,
     filterCondition:
-        'x_2166123_rob_auth_decision_evaluated_atISNOTEMPTY^x_2166123_rob_auth_authorization_processing_blocked=false^x_2166123_rob_auth_authorization_pathINnew,reuse,amendment,renewal,exception',
+        'x_2166123_rob_auth_decision_evaluated_atISNOTEMPTY^x_2166123_rob_auth_authorization_processing_blocked=false^x_2166123_rob_auth_authorization_pathINnew,reuse,amendment,renewal,exception^EQ',
     description:
         'Consumes a newly persisted deterministic R3 decision and idempotently prepares the governed R4 authorization lifecycle without creating fulfillment work.',
     script: Now.include('../server/authorization-lifecycle-initiation.server.js'),
@@ -77,8 +77,7 @@ export const captureSupervisorApprovalDecision = BusinessRule({
     when: 'after',
     action: ['update'],
     order: 300,
-    filterCondition:
-        'stateINapproved,rejected^source_table=x_2166123_rob_auth_rob_auth^document_idISNOTEMPTY',
+    filterCondition: 'stateINapproved,rejected^source_table=x_2166123_rob_auth_rob_auth^document_idISNOTEMPTY',
     description:
         'Persists the governed Supervisor native approval decision; rejection denies without signing, while approval launches the separate required native Supervisor signature.',
     script: Now.include('../server/supervisor-approval-evidence.server.js'),
