@@ -5,7 +5,8 @@
     "ignoreTransformTableList": [
         "sys_db_object",
         "sys_dictionary",
-        "sn_doc_pdf_template"
+        "sn_doc_pdf_template",
+        "sys_restricted_caller_access"
     ],
     "dependencies": {
         "sn_hr_core": {
