@@ -309,6 +309,10 @@ declare global {
                         table: 'sys_scope_privilege'
                         id: 'ffdf940d714b4211a8e3eab0671b24eb'
                     }
+                    'reconcile-rob-fulfillment-task-completion': {
+                        table: 'sys_script'
+                        id: '31b6f6fe7198436d8d6600355948fe70'
+                    }
                     'rederive-requester-profile-snapshots': {
                         table: 'sys_ui_action'
                         id: 'd3951036b289476a865b644822dc7864'
@@ -480,6 +484,10 @@ declare global {
                     src_server_fulfillment_FulfillmentRoutingService_js: {
                         table: 'sys_module'
                         id: 'a0c4f1427e79403b85d7ac897c2d466f'
+                    }
+                    'validate-rob-fulfillment-task-completion': {
+                        table: 'sys_script'
+                        id: 'ac053c7003d6498ab045cc1cc7ffa7ec'
                     }
                     'workforce-admin-corrected-at-read': {
                         table: 'sys_security_acl'

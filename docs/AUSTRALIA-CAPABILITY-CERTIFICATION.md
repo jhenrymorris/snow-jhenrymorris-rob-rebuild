@@ -257,3 +257,17 @@ Authorization Form, Access Detail, final Authorization PDF, supersession, or
 M4 task. No required capability is UNKNOWN and no C0 capability was disproven.
 
 **C0 — COMPLETE. C1 — COMPLETE. M3 — COMPLETE. C2 / M4 RUNTIME — READY.**
+
+## C2 M4 certification reuse and implementation evidence
+
+C2 reused M4-01 through M4-09 without reclassification. Australia Patch 3,
+`dev437065`, V2 scope `x_2166123_rob_auth`, SDK 4.11.0, and required HR Core
+capabilities are unchanged. New capability investigations and architecture
+changes are zero.
+
+The candidate implementation follows the certified constraint: V2 plans
+grouped work, while the HR Core-owned `RobHrFulfillmentBridgeV2` allowlists the
+two case subclasses, four task types, assignments, deterministic business
+keys, terminal evidence, waiver authority, and eligible case closure. Focused
+source tests are 31/31 PASS. PDI classification remains pending Install #1 and
+the fixed 13-gate acceptance matrix.

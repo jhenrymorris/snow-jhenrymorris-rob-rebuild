@@ -75,8 +75,10 @@ function completed(taskType, overrides = {}) {
     return {
         taskType,
         isClosed: true,
+        authorizedFulfiller: true,
         fulfillmentOutcome: 'provisioning_completed',
         completionEvidence: 'Synthetic completion evidence.',
+        closeNotes: 'Synthetic privacy-safe close notes.',
         completionTimestamp: '2026-08-20 20:00:00',
         provisioningCompleted: true,
         ...overrides,
@@ -191,6 +193,17 @@ test('closed state without evidence does not satisfy fulfillment', () => {
     assert.equal(assess(completed(TASK_TYPES.STAFFING, { completionEvidence: '' })).satisfied, false)
 })
 
+test('closed state from an unauthorized fulfiller does not satisfy fulfillment', () => {
+    assert.equal(
+        assess(completed(TASK_TYPES.STAFFING, { authorizedFulfiller: false })).reasonCode,
+        'FULFILLER_NOT_AUTHORIZED'
+    )
+})
+
+test('closed state without native close notes does not satisfy fulfillment', () => {
+    assert.equal(assess(completed(TASK_TYPES.STAFFING, { closeNotes: '' })).satisfied, false)
+})
+
 test('authorized waiver requires complete waiver evidence', () => {
     const task = completed(TASK_TYPES.STAFFING, {
         fulfillmentOutcome: 'waived',
@@ -244,6 +257,19 @@ test('unresolved Exception task prevents parent closure', () => {
     })
     assert.equal(result.parentCanClose, false)
     assert.equal(result.reasonCode, 'EXCEPTION_UNRESOLVED')
+})
+
+test('resolved Exception evidence does not permanently block later satisfied WPC work', () => {
+    const result = evaluate({
+        requestStatus: 'approved',
+        details: [wpc()],
+        tasks: [
+            completed(TASK_TYPES.ANALYTICS),
+            completed(TASK_TYPES.OPERATIONS_MANAGER),
+            completed(TASK_TYPES.EXCEPTION),
+        ],
+    })
+    assert.equal(result.parentCanClose, true)
 })
 
 test('overdue OM work produces one privacy-safe escalation plan without closing work', () => {
@@ -300,7 +326,7 @@ for (const requestStatus of ['denied', 'withdrawn']) {
     })
 }
 
-test('inactive production entry points and native HR Task metadata are source-controlled', () => {
+test('active production entry points and native HR Task metadata are source-controlled', () => {
     const rules = fs.readFileSync(
         path.join(root, 'src/fluent/business-rules/rob-fulfillment-orchestration.now.ts'),
         'utf8'
@@ -309,7 +335,7 @@ test('inactive production entry points and native HR Task metadata are source-co
         path.join(root, 'src/fluent/tables/rob-case-security-fields.now.ts'),
         'utf8'
     )
-    assert.equal((rules.match(/active:\s*false/g) || []).length, 2)
+    assert.equal((rules.match(/active:\s*true/g) || []).length, 2)
     assert.match(rules, /sn_hr_core_case_payroll/)
     assert.match(rules, /sn_hr_core_case_workforce_admin/)
     for (const taskType of Object.values(TASK_TYPES)) assert.match(table, new RegExp(taskType))
@@ -319,6 +345,53 @@ test('inactive production entry points and native HR Task metadata are source-co
     )
     assert.match(adapter, /x_2166123_rob_auth_requested_items/)
     assert.doesNotMatch(adapter, /x_2166123_rob_auth_requested_access_items/)
+    assert.match(adapter, /new sn_hr_core\.RobHrFulfillmentBridgeV2\(\)\.createTasks/)
+    assert.doesNotMatch(adapter, /new GlideRecord\('sn_hr_core_task'\)/)
+    assert.doesNotMatch(adapter, /task\.insert\(\)/)
+})
+
+test('HR Core fulfillment bridge is allowlisted and performs the final insert idempotency check', () => {
+    const bridge = fs.readFileSync(
+        path.join(root, 'manual/hr-core/RobHrFulfillmentBridgeV2.server.js'),
+        'utf8'
+    )
+    for (const table of ['sn_hr_core_case_payroll', 'sn_hr_core_case_workforce_admin']) {
+        assert.match(bridge, new RegExp(`${table}: true`))
+    }
+    for (const taskType of Object.values(TASK_TYPES)) {
+        assert.match(bridge, new RegExp(`${taskType}: true`))
+    }
+    assert.match(bridge, /_existingTask\(businessKey\)/)
+    assert.match(bridge, /INVALID_TASK_IDENTITY/)
+    assert.match(bridge, /INVALID_ASSIGNMENT_GROUP/)
+    assert.match(bridge, /INVALID_OPERATIONS_MANAGER_ROUTE/)
+    assert.match(bridge, /INVALID_EXCEPTION_REASON/)
+    assert.match(bridge, /UNAUTHORIZED_OR_INVALID_PARENT/)
+    assert.match(bridge, /WAIVER_NOT_AUTHORIZED/)
+    assert.doesNotMatch(bridge, /RESTMessageV2|IntegrationHub/)
+})
+
+test('task lifecycle delegates protected validation and closure to the narrow HR Core bridge', () => {
+    const rules = fs.readFileSync(
+        path.join(root, 'src/fluent/business-rules/rob-fulfillment-task-lifecycle.now.ts'),
+        'utf8'
+    )
+    const validation = fs.readFileSync(
+        path.join(root, 'src/fluent/server/validate-fulfillment-task-completion.server.js'),
+        'utf8'
+    )
+    const reconciliation = fs.readFileSync(
+        path.join(root, 'src/fluent/server/reconcile-fulfillment-task-completion.server.js'),
+        'utf8'
+    )
+    assert.equal((rules.match(/active:\s*true/g) || []).length, 2)
+    assert.match(rules, /stateCHANGESTO3/)
+    assert.match(validation, /RobHrFulfillmentBridgeV2\(\)\.validateTaskCompletion/)
+    assert.match(validation, /setAbortAction\(true\)/)
+    assert.match(reconciliation, /RobHrFulfillmentBridgeV2\(\)\.getCaseTaskEvidence/)
+    assert.match(reconciliation, /RobHrFulfillmentBridgeV2\(\)\.closeEligibleCase/)
+    assert.match(reconciliation, /details\.setValue\('status', 'active'\)/)
+    assert.doesNotMatch(reconciliation, /new GlideRecord\('sn_hr_core_case/)
 })
 
 test('M4 source contains no direct external provisioning integration artifacts', () => {

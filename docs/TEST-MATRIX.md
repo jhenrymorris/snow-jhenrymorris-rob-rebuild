@@ -359,3 +359,20 @@ expansion were not used.
 | TM-233 | Reuse idempotency | Completed lifecycle replay retained one task/execution/working attachment and unchanged terminal evidence | PASS |
 | TM-234 | Historical immutability | Live synthetic title/Department/Manager mutation did not change `ROBA0001012` snapshots, signers, timestamps, or final PDF hash; live context restored | PASS |
 | TM-235 | Final regression/build | M2 19/19; R1 9/9; Security 22/22; Deployment 16/16; R3 30/30; adapter 13/13; R4 64/64; M4 26/26; template 7/7; normal/frozen builds PASS; generated-key unexpected changes 0 | PASS |
+
+### C2 M4 runtime acceptance
+
+| ID | Test | Method | Status |
+|---|---|---|---|
+| TM-236 | HR Core bridge allowlist | Positive supported case creation and negative arbitrary case/task/field/state/identity checks | SOURCE 31/31 PASS; PDI NOT RUN |
+| TM-237 | Systems-only grouping | One Staffing task; no Analytics/OM/Exception duplicate | NOT RUN |
+| TM-238 | Data/report grouping | One Analytics task; no Staffing/OM duplicate | NOT RUN |
+| TM-239 | Mixed grouping | Exactly one Staffing and one Analytics task | NOT RUN |
+| TM-240 | WPC ARM/OAS routing | One Analytics plus one governed OM ARM assignment | NOT RUN |
+| TM-241 | Missing OM blocking | One Exception Review task; normal OM absent; case open | NOT RUN |
+| TM-242 | Bridge idempotency | Planner replay and final bridge check create zero duplicates | NOT RUN |
+| TM-243 | Completion/detail scope | Authorized evidence activates only covered details | NOT RUN |
+| TM-244 | Parent closure | Partial remains open; all required closes through HR Core bridge | NOT RUN |
+| TM-245 | Authorized waiver | ROB Admin actor, reason, time and affected task retained | NOT RUN |
+| TM-246 | Least privilege | Exact bridge Execute only; broad API/native Write zero | NOT RUN |
+| TM-247 | No external provisioning | External API calls remain zero | NOT RUN |

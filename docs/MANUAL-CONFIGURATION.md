@@ -1244,3 +1244,38 @@ initiation and native-signature evidence Business Rules after the bridge source
 refresh invalidated its earlier caller fingerprint. Do not approve generic
 scope callers, table writes, or GlideRecord APIs. M4 entry rules remain
 inactive for C1 closeout.
+
+## C2 HR Core fulfillment bridge and environment binding
+
+Create exactly one HR Core-owned Script Include named
+`RobHrFulfillmentBridgeV2` in **Human Resources: Core** from the reviewed source
+at `manual/hr-core/RobHrFulfillmentBridgeV2.server.js`.
+
+- Active: true; Client callable: false.
+- Accessible from: All application scopes; Caller access: Caller Restriction.
+- Preserve its HR Core API name so V2 calls
+  `sn_hr_core.RobHrFulfillmentBridgeV2`.
+- Do not add arbitrary table, field, query, or state parameters.
+
+After the candidate V2 install invokes the bridge, allow only the exact V2
+Business Rule callers required for task creation, completion validation,
+evidence retrieval, and eligible case closure. Reject generic scope callers,
+generic GlideRecord APIs, native table Write grants, and unrelated scripts.
+
+Before runtime, bind the single active ROB Configuration record to active
+synthetic PDI Staffing, Analytics, and Exception Review groups. Set bounded
+non-negative Operations Manager and Exception task due-day values. Use
+synthetic users only; group membership does not grant ROB repository browse.
+The governed Operations Manager is assigned directly only for WPC. Preserve
+ARM as provisioning system and OAS as target platform.
+
+Expose the governed completion fields on the authorized native HR Task form:
+outcome, completion evidence, provisioning completed, waiver reason, exception
+reason, task type, related Authorization, and ROB access items. Native close
+notes are required. Completion timestamp and waiver actor/time remain
+system-managed/read-only. Fulfillers must not edit approval/signature evidence.
+
+The bridge and all five environment bindings must be complete before exercising
+the active M4 entry rules. Runtime retries use the unique key
+`<HR Case sys_id>:<ROB task type>`; the bridge performs the final
+query-before-insert check.

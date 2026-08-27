@@ -2536,3 +2536,42 @@ Not exposed by session/tool — no estimate recorded.
   --check` PASS and unexpected generated-key changes = `0`.
 - Final state: **C0 — COMPLETE. C1 — COMPLETE. M1 — COMPLETE. M2 — COMPLETE.
   M3 — COMPLETE. C2 / M4 Runtime — READY. C3 / M5 — NOT STARTED.**
+
+## C2 - M4 Runtime + Closeout
+
+- Package: `C2 - M4 Runtime + Closeout`; measurement shape: `one-pass`.
+- Start date: `2026-08-27`; branch: `codex/dev437-rebuild-identity`;
+  starting commit: `5ae9ce2`.
+- Target: `dev437065`; scope: `x_2166123_rob_auth`; SDK: `4.11.0`.
+- C0 M4 certification: `REUSED`; new capability investigations: `0`;
+  architecture changes: `0`.
+- Starting assertions: Australia Patch 3 and HR Core capabilities unchanged;
+  M3 COMPLETE; custom business tables `4`; broad native case/task Write `0`;
+  broad GlideRecord API privileges `0`; external provisioning integrations `0`.
+- Full inventory found one consolidated implementation boundary: the inactive
+  V2 adapter directly inserted protected HR Tasks, while the certified HR Core
+  fulfillment bridge and completion reconciliation were absent.
+- Batched candidate correction delegates task creation, terminal validation,
+  waiver stamping, evidence retrieval, and eligible case closure to
+  `sn_hr_core.RobHrFulfillmentBridgeV2`. Two task lifecycle rules reconcile
+  only V2-owned Authorized Access Details. Both M4 case entry rules are active
+  in the candidate build.
+- Pre-install: focused M4 `31/31` PASS; normal SDK 4.11.0 build PASS; `git diff
+  --check` PASS. Generated-key additions are limited to the two approved new
+  task-lifecycle Business Rule identities. Effective installs used: `0/2`.
+
+| C2 acceptance gate | Status |
+|---|---|
+| Systems-only | NOT RUN |
+| Data/report-only | NOT RUN |
+| Mixed | NOT RUN |
+| WPC | NOT RUN |
+| Retry/idempotency | NOT RUN |
+| Missing OM Exception | NOT RUN |
+| Task completion evidence | NOT RUN |
+| Partial completion keeps case open | NOT RUN |
+| All required complete closes case | NOT RUN |
+| Access Detail activation | NOT RUN |
+| Waiver | NOT RUN |
+| External integrations = 0 | NOT RUN |
+| Least privilege | NOT RUN |

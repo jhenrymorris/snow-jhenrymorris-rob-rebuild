@@ -9,6 +9,7 @@ function text(value) {
 function assess(task) {
     const outcome = text(task.fulfillmentOutcome).toLowerCase()
     const evidencePresent = Boolean(text(task.completionEvidence))
+    const closeNotesPresent = Boolean(text(task.closeNotes))
     const timestampPresent = Boolean(text(task.completionTimestamp))
 
     if (task.isClosed !== true) {
@@ -17,7 +18,10 @@ function assess(task) {
     if (!SATISFYING_OUTCOMES.has(outcome)) {
         return { satisfied: false, reasonCode: 'OUTCOME_NOT_SATISFYING' }
     }
-    if (!evidencePresent || !timestampPresent) {
+    if (task.authorizedFulfiller !== true) {
+        return { satisfied: false, reasonCode: 'FULFILLER_NOT_AUTHORIZED' }
+    }
+    if (!evidencePresent || !closeNotesPresent || !timestampPresent) {
         return { satisfied: false, reasonCode: 'COMPLETION_EVIDENCE_INCOMPLETE' }
     }
     if (outcome === 'provisioning_completed' && task.provisioningCompleted !== true) {

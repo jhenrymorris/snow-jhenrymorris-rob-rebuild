@@ -6,27 +6,27 @@ const fulfillmentFilter =
 export const orchestratePayrollFulfillment = BusinessRule({
     $id: Now.ID['orchestrate-payroll-fulfillment'],
     name: 'ROB Orchestrate Payroll Fulfillment',
-    active: false,
+    active: true,
     table: 'sn_hr_core_case_payroll',
     when: 'after',
     action: ['update'],
     order: 400,
     filterCondition: fulfillmentFilter,
     description:
-        'Inactive M4 entry point. Creates retry-safe native HR fulfillment tasks only after the production authorization gate is proven.',
+        'Active M4 entry point. Plans grouped fulfillment work and delegates retry-safe native HR Task creation to the narrow HR Core bridge only after the authorization gate is complete.',
     script: Now.include('../server/fulfillment-orchestration.server.js'),
 })
 
 export const orchestrateWorkforceAdministrationFulfillment = BusinessRule({
     $id: Now.ID['orchestrate-workforce-administration-fulfillment'],
     name: 'ROB Orchestrate Workforce Administration Fulfillment',
-    active: false,
+    active: true,
     table: 'sn_hr_core_case_workforce_admin',
     when: 'after',
     action: ['update'],
     order: 400,
     filterCondition: fulfillmentFilter,
     description:
-        'Inactive M4 entry point. Creates retry-safe native HR fulfillment tasks only after the production authorization gate is proven.',
+        'Active M4 entry point. Plans grouped fulfillment work and delegates retry-safe native HR Task creation to the narrow HR Core bridge only after the authorization gate is complete.',
     script: Now.include('../server/fulfillment-orchestration.server.js'),
 })

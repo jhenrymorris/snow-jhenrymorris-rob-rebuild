@@ -1,77 +1,50 @@
 (function executeRule(current) {
-    if (current.getValue('x_2166123_rob_auth_fulfillment_gate_complete') !== '1') {
+    if (
+        current.getValue('x_2166123_rob_auth_fulfillment_gate_complete') !== '1' ||
+        current.getValue('x_2166123_rob_auth_authorization_processing_blocked') === '1'
+    ) {
         return
     }
 
     var decision = current.getValue('x_2166123_rob_auth_authorization_path')
-    if (decision !== 'new' && decision !== 'reuse' && decision !== 'amendment' && decision !== 'renewal') {
-        return
-    }
+    if (!({ new: true, reuse: true, amendment: true, renewal: true })[decision]) return
 
     var caseId = current.getUniqueValue()
     var details = new GlideRecord('x_2166123_rob_auth_auth_detail')
     if (decision === 'reuse') {
         var reusedAuthorization = current.getValue('x_2166123_rob_auth_evaluated_authorization')
-        if (!reusedAuthorization) {
-            return
-        }
+        if (!reusedAuthorization) return
         details.addQuery('rob_authorization_form', reusedAuthorization)
-        details.addQuery(
-            'access_item',
-            'IN',
-            current.getValue('x_2166123_rob_auth_requested_items')
-        )
+        details.addQuery('access_item', 'IN', current.getValue('x_2166123_rob_auth_requested_items'))
     } else {
         details.addQuery('source_hrsd_case', caseId)
         details.addQuery('status', 'pending_fulfillment')
     }
     details.query()
 
-    var staffingItems = []
-    var analyticsItems = []
-    var operationsManagerItems = []
+    var buckets = { staffing_fulfillment: [], analytics_fulfillment: [], operations_manager_arm_assignment: [] }
     var authorizationId = ''
-
     while (details.next()) {
         var accessItemId = details.getValue('access_item')
         authorizationId = authorizationId || details.getValue('rob_authorization_form')
-        if (details.getValue('staffing_task_required_snapshot') === '1') {
-            staffingItems.push(accessItemId)
-        }
-        if (details.getValue('analytics_task_required_snapshot') === '1') {
-            analyticsItems.push(accessItemId)
-        }
+        if (details.getValue('staffing_task_required_snapshot') === '1') buckets.staffing_fulfillment.push(accessItemId)
+        if (details.getValue('analytics_task_required_snapshot') === '1') buckets.analytics_fulfillment.push(accessItemId)
         if (details.getValue('operations_manager_task_required_snapshot') === '1') {
-            if (
-                details.getValue('provisioning_system_snapshot') !== 'arm' ||
-                details.getValue('target_system_snapshot') !== 'oas'
-            ) {
+            if (details.getValue('provisioning_system_snapshot') !== 'arm' || details.getValue('target_system_snapshot') !== 'oas') {
                 gs.error('ROB fulfillment stopped: OM routing must preserve ARM provisioning and OAS target.')
                 return
             }
-            operationsManagerItems.push(accessItemId)
+            buckets.operations_manager_arm_assignment.push(accessItemId)
         }
     }
-
-    function unique(values) {
-        var result = []
-        for (var index = 0; index < values.length; index += 1) {
-            if (values[index] && result.indexOf(values[index]) < 0) {
-                result.push(values[index])
-            }
-        }
-        return result
-    }
-
-    staffingItems = unique(staffingItems)
-    analyticsItems = unique(analyticsItems)
-    operationsManagerItems = unique(operationsManagerItems)
+    if (!authorizationId) return
 
     var configuration = new GlideRecord('x_2166123_rob_auth_rob_config')
     configuration.addQuery('active', true)
     configuration.setLimit(2)
     configuration.query()
     if (!configuration.next()) {
+        gs.error('ROB fulfillment stopped: one active ROB Configuration is required.')
         return
     }
     var configurationId = configuration.getUniqueValue()
@@ -81,83 +54,61 @@
     }
     configuration.get(configurationId)
 
-    function addDueDate(task, days) {
-        if (days === '' || days === null) return
-        var parsedDays = parseInt(days, 10)
-        if (isNaN(parsedDays) || parsedDays < 0) return
-        var dueDate = new GlideDateTime()
-        dueDate.addDaysUTC(parsedDays)
-        task.setValue('due_date', dueDate)
-    }
-
-    function ensureTask(taskType, accessItems, options) {
-        var businessKey = caseId + ':' + taskType
-        var existing = new GlideRecord('sn_hr_core_task')
-        existing.addQuery('parent', caseId)
-        existing.addQuery('x_2166123_rob_auth_rob_task_type', taskType)
-        existing.setLimit(1)
-        existing.query()
-        if (existing.next()) return
-
-        var task = new GlideRecord('sn_hr_core_task')
-        task.initialize()
-        task.setValue('parent', caseId)
-        task.setValue('x_2166123_rob_auth_rob_task_type', taskType)
-        task.setValue('x_2166123_rob_auth_fulfillment_business_key', businessKey)
-        task.setValue('x_2166123_rob_auth_related_authorization', authorizationId)
-        task.setValue('x_2166123_rob_auth_rob_access_items', accessItems.join(','))
-        task.setValue('short_description', options.shortDescription)
-        task.setValue('description', options.description)
-        if (options.assignmentGroup) task.setValue('assignment_group', options.assignmentGroup)
-        if (options.assignedTo) task.setValue('assigned_to', options.assignedTo)
-        if (options.provisioningSystem) {
-            task.setValue('x_2166123_rob_auth_external_provisioning_system', options.provisioningSystem)
+    function unique(values) {
+        var result = []
+        for (var index = 0; index < values.length; index += 1) {
+            if (values[index] && result.indexOf(values[index]) < 0) result.push(values[index])
         }
-        if (options.targetSystem) {
-            task.setValue('x_2166123_rob_auth_external_target_system', options.targetSystem)
+        return result.sort()
+    }
+
+    function plan(type, items, options) {
+        if (!items.length) return null
+        options = options || {}
+        return {
+            businessKey: caseId + ':' + type,
+            taskType: type,
+            relatedAuthorizationId: authorizationId,
+            accessItemIds: unique(items),
+            assignmentGroupId: String(options.assignmentGroupId || ''),
+            assignedToId: String(options.assignedToId || ''),
+            dueDays: options.dueDays === '' ? null : parseInt(options.dueDays, 10),
+            provisioningSystem: String(options.provisioningSystem || ''),
+            targetSystem: String(options.targetSystem || ''),
+            exceptionReason: String(options.exceptionReason || ''),
         }
-        if (options.exceptionReason) {
-            task.setValue('x_2166123_rob_auth_exception_reason', options.exceptionReason)
-        }
-        addDueDate(task, options.dueDays)
-        task.insert()
     }
 
-    if (staffingItems.length) {
-        ensureTask('staffing_fulfillment', staffingItems, {
-            shortDescription: 'Complete Staffing ROB access fulfillment',
-            description: 'Complete the grouped Staffing-owned access work and record privacy-safe completion evidence.',
-            assignmentGroup: configuration.getValue('default_staffing_assignment_group'),
-        })
-    }
+    var tasks = []
+    var staffing = plan('staffing_fulfillment', buckets.staffing_fulfillment, {
+        assignmentGroupId: configuration.getValue('default_staffing_assignment_group'),
+    })
+    var analytics = plan('analytics_fulfillment', buckets.analytics_fulfillment, {
+        assignmentGroupId: configuration.getValue('default_analytics_assignment_group'),
+    })
+    if (staffing) tasks.push(staffing)
+    if (analytics) tasks.push(analytics)
 
-    if (analyticsItems.length) {
-        ensureTask('analytics_fulfillment', analyticsItems, {
-            shortDescription: 'Complete Analytics ROB access fulfillment',
-            description: 'Complete the grouped Analytics-owned access work and record privacy-safe completion evidence.',
-            assignmentGroup: configuration.getValue('default_analytics_assignment_group'),
-        })
-    }
-
-    if (operationsManagerItems.length) {
+    var omItems = unique(buckets.operations_manager_arm_assignment)
+    if (omItems.length) {
         var operationsManager = current.getValue('x_2166123_rob_auth_operations_manager')
         if (operationsManager) {
-            ensureTask('operations_manager_arm_assignment', operationsManagerItems, {
-                shortDescription: 'Complete Operations Manager ARM role assignment',
-                description: 'Complete the ARM role assignment for Workforce Profile Charts targeting OAS and record completion evidence.',
-                assignedTo: operationsManager,
+            tasks.push(plan('operations_manager_arm_assignment', omItems, {
+                assignedToId: operationsManager,
                 dueDays: configuration.getValue('operations_manager_task_due_days'),
                 provisioningSystem: 'arm',
                 targetSystem: 'oas',
-            })
+            }))
         } else {
-            ensureTask('exception_review', operationsManagerItems, {
-                shortDescription: 'Review missing Operations Manager for WPC fulfillment',
-                description: 'Resolve the missing Operations Manager. Do not mark OM work complete or close the parent while unresolved.',
-                assignmentGroup: configuration.getValue('default_exception_review_group'),
+            tasks.push(plan('exception_review', omItems, {
+                assignmentGroupId: configuration.getValue('default_exception_review_group'),
                 dueDays: configuration.getValue('exception_task_due_days'),
                 exceptionReason: 'MISSING_OPERATIONS_MANAGER',
-            })
+            }))
         }
     }
+
+    if (!tasks.length) return
+    var result = new sn_hr_core.RobHrFulfillmentBridgeV2().createTasks(current, JSON.stringify(tasks))
+    if (!result) gs.error('ROB fulfillment task creation was rejected by the HR Core bridge.')
 })(current)
