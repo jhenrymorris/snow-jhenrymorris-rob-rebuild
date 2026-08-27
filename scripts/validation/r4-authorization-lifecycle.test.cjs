@@ -623,15 +623,23 @@ test('terminal supervisor evidence is immutable and bound to one native task', (
     assert.match(source, /committed Approved native approval evidence/)
 })
 
-test('accepted native Supervisor task can idempotently retry only a missing final PDF', () => {
+test('accepted native Supervisor terminal replays cannot regenerate the final PDF', () => {
     const source = fs.readFileSync(
         path.join(root, 'src/fluent/server/authorization-signature-evidence.server.js'),
         'utf8'
     )
+    assert.match(source, /current\.state\.changesTo\('3'\)/)
+    assert.match(source, /recordedSupervisorTaskId === current\.getUniqueValue\(\)\) \{\s*return/)
+    assert.doesNotMatch(
+        source,
+        /recordedSupervisorTaskId === current\.getUniqueValue\(\)[\s\S]{0,400}generateFinalPdf\(authorization\)/
+    )
+    assert.match(source, /signed_pdf_generated/)
     assert.match(
         source,
-        /recordedSupervisorTaskId === current\.getUniqueValue\(\)[\s\S]*state === '3'[\s\S]*supervisor_signature_complete[\s\S]*!authorization\.getValue\('final_pdf_attachment'\)[\s\S]*generateFinalPdf\(authorization\)/
+        /setValue\('signed_pdf_generated', '1'\)[\s\S]*authorization\.update\(\)[\s\S]*fillDocumentFieldsAndFlatten/
     )
+    assert.match(source, /setValue\('signed_pdf_generated', '0'\)/)
     assert.match(source, /already bound to another task/)
 })
 

@@ -105,14 +105,31 @@
 
     function generateFinalPdf(authorization) {
         if (authorization.getValue('final_pdf_attachment')) return true
+        if (isTrue(authorization.getValue('signed_pdf_generated'))) return true
+
+        // Claim final generation before invoking the native PDF API. A single
+        // native Submit can produce follow-on updates to the same closed
+        // Document Task; without this persisted claim each update can enter
+        // PDF generation before the attachment-association callback records
+        // final_pdf_attachment.
+        authorization.setValue('signed_pdf_generated', '1')
+        if (!authorization.update()) {
+            gs.error('ROB final Form 1768 generation claim could not be persisted.')
+            return false
+        }
+
         var template = finalPdfTemplate()
         if (!template) {
             gs.error('ROB exact published final Form 1768 template is missing.')
+            authorization.setValue('signed_pdf_generated', '0')
+            authorization.update()
             return false
         }
         var documentId = template.getValue('document')
         if (!documentId) {
             gs.error('ROB production template has no fillable source PDF.')
+            authorization.setValue('signed_pdf_generated', '0')
+            authorization.update()
             return false
         }
 
@@ -132,6 +149,8 @@
                 'ROB final Form 1768 generation failed: ' +
                     (result ? result.message : 'no response')
             )
+            authorization.setValue('signed_pdf_generated', '0')
+            authorization.update()
             return false
         }
         return true
@@ -193,6 +212,12 @@
 
     if (!isEmployeeStage && !isSupervisorStage) {
         gs.error('ROB signature evidence rejected an unexpected participant contract.')
+        return
+    }
+
+    // Process only the native transition into the completed state. Subsequent
+    // updates to a closed task are replays and must not regenerate artifacts.
+    if (!current.state.changesTo('3')) {
         return
     }
 
@@ -267,17 +292,6 @@
         'supervisor_document_task'
     )
     if (recordedSupervisorTaskId === current.getUniqueValue()) {
-        // A caller-access denial or another transient Document Templates
-        // failure can occur after the native terminal evidence is committed
-        // but before the authoritative PDF is attached. Reprocessing the same
-        // accepted native task may retry only that missing idempotent output.
-        if (
-            state === '3' &&
-            isTrue(authorization.getValue('supervisor_signature_complete')) &&
-            !authorization.getValue('final_pdf_attachment')
-        ) {
-            generateFinalPdf(authorization)
-        }
         return
     }
     if (recordedSupervisorTaskId) {
