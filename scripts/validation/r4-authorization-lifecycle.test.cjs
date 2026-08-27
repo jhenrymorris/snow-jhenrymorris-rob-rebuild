@@ -695,13 +695,19 @@ test('native approval response remains inactive until a safe persistence boundar
     )
 })
 
-test('production lifecycle initiation remains disabled until native signing configuration passes', () => {
+test('production lifecycle initiation is active after native signing configuration passes', () => {
     const lifecycleBusinessRules = fs.readFileSync(
         path.join(root, 'src/fluent/business-rules/rob-authorization-lifecycle.now.ts'),
         'utf8'
     )
-    assert.match(lifecycleBusinessRules, /initiatePayrollAuthorizationLifecycle[\s\S]*?active:\s*false/)
-    assert.match(lifecycleBusinessRules, /initiateWorkforceAuthorizationLifecycle[\s\S]*?active:\s*false/)
+    assert.match(
+        lifecycleBusinessRules,
+        /initiatePayrollAuthorizationLifecycle[\s\S]*?active:\s*true[\s\S]*?table:\s*'sn_hr_core_case_payroll'/
+    )
+    assert.match(
+        lifecycleBusinessRules,
+        /initiateWorkforceAuthorizationLifecycle[\s\S]*?active:\s*true[\s\S]*?table:\s*'sn_hr_core_case_workforce_admin'/
+    )
 })
 
 test('Authorization Form has approved native evidence and final PDF references', () => {

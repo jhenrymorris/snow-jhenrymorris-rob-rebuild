@@ -132,23 +132,25 @@ test('R3 runtime module dependencies use exact installed JavaScript paths', () =
     )
 })
 
-test('Payroll and Workforce entry rules are source-owned, idempotent, and inactive until native bootstrap', () => {
+test('Payroll and Workforce entry rules are source-owned, idempotent, and active after certified native bootstrap', () => {
     assert.match(
         businessRules,
-        /evaluatePayrollAuthorizationDecision[\s\S]*?active: false[\s\S]*?table: 'sn_hr_core_case_payroll'[\s\S]*?script: Now\.include\('\.\.\/server\/authorization-decision-entry\.server\.js'\)/
+        /evaluatePayrollAuthorizationDecision[\s\S]*?active: true[\s\S]*?table: 'sn_hr_core_case_payroll'[\s\S]*?script: Now\.include\('\.\.\/server\/authorization-decision-entry\.server\.js'\)/
     )
     assert.match(
         businessRules,
-        /evaluateWorkforceAuthorizationDecision[\s\S]*?active: false[\s\S]*?table: 'sn_hr_core_case_workforce_admin'[\s\S]*?script: Now\.include\('\.\.\/server\/authorization-decision-entry\.server\.js'\)/
+        /evaluateWorkforceAuthorizationDecision[\s\S]*?active: true[\s\S]*?table: 'sn_hr_core_case_workforce_admin'[\s\S]*?script: Now\.include\('\.\.\/server\/authorization-decision-entry\.server\.js'\)/
     )
     assert.match(
         adapter,
         /var requestedItems = String\([\s\S]*?current\.getValue\(prefix \+ 'requested_items'\)[\s\S]*?if \(!requestedItems\.trim\(\)\) return/
     )
-    assert.equal(
-        (businessRules.match(/action: \['insert', 'update'\]/g) || []).length,
-        4
-    )
+    const entryRuleActions = [...businessRules.matchAll(/(?:evaluate|initiate)(?:Payroll|Workforce)Authorization(?:Decision|Lifecycle)[\s\S]*?action: \[([^\]]+)\]/g)]
+    assert.equal(entryRuleActions.length, 4)
+    for (const [, actions] of entryRuleActions) {
+        assert.match(actions, /'insert'/)
+        assert.match(actions, /'update'/)
+    }
     assert.match(businessRules, /order: 150/)
 })
 
@@ -194,10 +196,12 @@ test('configuration and authorization scope extraction fail closed', () => {
 })
 
 test('downstream lifecycle accepts a decision persisted during insert or mapped-field update', () => {
-    assert.equal(
-        (businessRules.match(/action: \['insert', 'update'\]/g) || []).length,
-        4
-    )
+    const entryRuleActions = [...businessRules.matchAll(/(?:evaluate|initiate)(?:Payroll|Workforce)Authorization(?:Decision|Lifecycle)[\s\S]*?action: \[([^\]]+)\]/g)]
+    assert.equal(entryRuleActions.length, 4)
+    for (const [, actions] of entryRuleActions) {
+        assert.match(actions, /'insert'/)
+        assert.match(actions, /'update'/)
+    }
     assert.match(lifecycle, /previous\s*&&[\s\S]*decisionTimeField/)
 })
 

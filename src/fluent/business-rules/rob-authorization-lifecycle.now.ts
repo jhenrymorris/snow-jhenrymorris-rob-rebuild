@@ -16,7 +16,7 @@ export const evaluatePayrollAuthorizationDecision = BusinessRule({
 export const evaluateWorkforceAuthorizationDecision = BusinessRule({
     $id: Now.ID['evaluate-workforce-authorization-decision'],
     name: 'ROB Evaluate Workforce Authorization Decision',
-    active: false,
+    active: true,
     table: 'sn_hr_core_case_workforce_admin',
     when: 'before',
     action: ['insert', 'update'],
@@ -44,7 +44,7 @@ export const initiatePayrollAuthorizationLifecycle = BusinessRule({
 export const initiateWorkforceAuthorizationLifecycle = BusinessRule({
     $id: Now.ID['initiate-workforce-authorization-lifecycle'],
     name: 'ROB Initiate Workforce Authorization Lifecycle',
-    active: false,
+    active: true,
     table: 'sn_hr_core_case_workforce_admin',
     when: 'after',
     action: ['insert', 'update'],
