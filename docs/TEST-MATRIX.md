@@ -376,3 +376,13 @@ expansion were not used.
 | TM-245 | Authorized waiver | ROB Admin actor, reason, time and affected task retained | NOT RUN |
 | TM-246 | Least privilege | Exact bridge Execute only; broad API/native Write zero | NOT RUN |
 | TM-247 | No external provisioning | External API calls remain zero | NOT RUN |
+# C2 runtime disposition — 2026-08-27
+
+- Systems-only routing: PASS (`HRC0001045` → one Staffing task
+  `HRT0001002`).
+- Retry/idempotency: PASS (replay retained one deterministic business key).
+- Remaining fixed C2 gates: NOT RUN after the supported final IDE install
+  failed with zero applied changes because `sys_plugins` has no
+  `x_2166123_rob_auth` record.
+- Post-C0 blocker: `M5-12` disproven; no alternate deployment or metadata
+  workaround was attempted.

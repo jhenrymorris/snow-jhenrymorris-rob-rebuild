@@ -2562,11 +2562,11 @@ Not exposed by session/tool — no estimate recorded.
 
 | C2 acceptance gate | Status |
 |---|---|
-| Systems-only | NOT RUN |
+| Systems-only | PASS |
 | Data/report-only | NOT RUN |
 | Mixed | NOT RUN |
 | WPC | NOT RUN |
-| Retry/idempotency | NOT RUN |
+| Retry/idempotency | PASS |
 | Missing OM Exception | NOT RUN |
 | Task completion evidence | NOT RUN |
 | Partial completion keeps case open | NOT RUN |
@@ -2575,3 +2575,39 @@ Not exposed by session/tool — no estimate recorded.
 | Waiver | NOT RUN |
 | External integrations = 0 | NOT RUN |
 | Least privilege | NOT RUN |
+
+### C2 post-C0 deployment blocker — 2026-08-27
+
+- Runtime evidence obtained before the stop: Payroll case `HRC0001045`
+  (`9c1e8610838f4f104f5193a6feaad39d`) created exactly one native Staffing
+  task, `HRT0001002` (`3d9e8290838f4f104f5193a6feaad327`), with business key
+  `9c1e8610838f4f104f5193a6feaad39d:staffing_fulfillment`. Replaying the case
+  update retained exactly one task. Systems-only and retry/idempotency PASS.
+- The live Payroll and Workforce entry rules contain the batched C2
+  post-filter reconciliation from `a7bb49c`; no direct custom-reference query
+  remains in those installed adapters.
+- Final normal IDE Build and Install for the reviewed current source built
+  successfully but failed before applying metadata. Instance log entries at
+  `2026-08-27 21:50:22` and `21:51:07` report `Could not find sys_plugins
+  record for x_2166123_rob_auth`.
+- Upgrade history `230596d483cf4f104f5193a6feaad301` and
+  `e2351a9883cf4f104f5193a6feaad3e8` recorded plugin installation attempts
+  with `changes_processed = 0` and `changes_applied = 0`. The V2 `sys_app` and
+  `sys_scope` identity `4aba8657837a43104f5193a6feaad3c5` remains present,
+  while `sys_plugins.source = x_2166123_rob_auth` returns zero records.
+- Exact C0 capability disproven: `M5-12`, classified `PDI-PROVEN`, expected
+  normal IDE Sync/Build/Install on the unchanged Australia Patch 3 PDI. The
+  actual supported operation cannot locate the platform application bootstrap
+  record and makes no instance change under equivalent scope/version
+  preconditions.
+- Security consequence: no manual bootstrap record, direct metadata repair,
+  Reinstall, Force Install, local SDK install, broad privilege, or native
+  case/task Write was introduced. The remaining 11 runtime gates cannot be
+  accepted against a package that the supported deployment path cannot
+  reconcile.
+- Effective installs used: `1/2`. The final failed deployment applied zero
+  changes and is recorded as environment friction, not a second effective
+  install.
+- Result: **C2 BLOCKED — C0 capability M5-12 disproven on dev437065. M4 NOT
+  COMPLETE. C3 NOT READY.** No C2.x package or alternate architecture is
+  authorized.

@@ -1279,3 +1279,12 @@ The bridge and all five environment bindings must be complete before exercising
 the active M4 entry rules. Runtime retries use the unique key
 `<HR Case sys_id>:<ROB task type>`; the bridge performs the final
 query-before-insert check.
+# C2 supported-deployment stop — 2026-08-27
+
+Do not manually create or repair `sys_plugins`, delete/recreate the V2
+application, use Reinstall/Force Install, or edit generated keys. The normal
+IDE installer logged `Could not find sys_plugins record for
+x_2166123_rob_auth` and applied zero changes while the V2 `sys_app`/`sys_scope`
+record remained present. Resumption requires restoration of the supported
+platform application bootstrap path; it is not an ordinary Class C
+configuration step.

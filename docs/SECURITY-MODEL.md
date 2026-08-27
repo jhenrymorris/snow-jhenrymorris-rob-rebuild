@@ -319,3 +319,11 @@ lifecycle and signature-evidence Business Rule callers are Allowed to execute
 the allowlisted bridge. Direct-URL final Authorization PDF access was denied to
 the unrelated synthetic employee and remained available to the authorized
 compliance/admin persona. M4 production task generation remained zero.
+# C2 blocker security disposition — 2026-08-27
+
+The C2 stop introduced no security expansion: broad GlideRecord API Execute,
+broad native HR Case Write, broad native HR Task Write, temporary elevated
+roles, custom fulfillment tables, and external provisioning integrations
+remain zero. No manual `sys_plugins` bootstrap or direct metadata repair was
+performed. Persona isolation gates remain NOT RUN rather than inferred from
+source evidence.

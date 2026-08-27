@@ -929,3 +929,21 @@ Build evidence is package-specific and must remain distinct from install, runtim
   adapter 13/13, R4 64/64, M4 26/26, template 7/7, normal SDK build, frozen-key
   build, and diff check PASS. Unexpected generated-key changes = 0.
 - Result: **C1 COMPLETE. M3 COMPLETE. C2 / M4 Runtime READY.**
+
+### 2026-08-27 C2 runtime and supported-install blocker
+
+- Batched C2 source correction: focused M4 `31/31`, normal SDK 4.11.0 build,
+  frozen-key build, diff check, and generated-key review PASS.
+- Live systems-only proof: `HRC0001045` created exactly one native Staffing
+  task `HRT0001002`; replay retained one task, so systems-only and
+  retry/idempotency PASS.
+- Final normal IDE Build and Install failed before metadata application with
+  `Could not find sys_plugins record for x_2166123_rob_auth`. Upgrade histories
+  `230596d483cf4f104f5193a6feaad301` and
+  `e2351a9883cf4f104f5193a6feaad3e8` processed/applied `0/0` changes.
+- The active V2 `sys_app`/`sys_scope` record remains
+  `4aba8657837a43104f5193a6feaad3c5`; the corresponding `sys_plugins` record is
+  absent. This disproves C0 capability `M5-12` on the unchanged target.
+- No direct bootstrap repair, Reinstall, Force Install, local SDK install,
+  broad privilege, native-case Write, or native-task Write was introduced.
+- Result: **C2 BLOCKED. M4 NOT COMPLETE. C3 NOT READY.**

@@ -425,3 +425,11 @@ remain prohibited.
 | Least privilege | Exact HR Core bridge Execute callers only; broad GlideRecord/native-case/native-task privileges and temporary roles remain zero | PASS |
 | Regression/build | M2 19, R1 9, Security 22, Deployment 16, R3 30, adapter 13, R4 64, M4 26, template 7; normal/frozen builds PASS; keys clean | PASS |
 | Milestone | C1 and M3 complete; M4 production runtime not activated | COMPLETE / C2 READY |
+# C2 runtime disposition — 2026-08-27
+
+C2 proved systems-only routing and retry idempotency on `HRC0001045` /
+`HRT0001002`. The remaining M4 runtime requirements retain their existing
+traceability but remain unaccepted because C0 capability `M5-12` was disproven:
+normal IDE Build and Install could not find the scope's `sys_plugins` bootstrap
+record and applied zero changes. See `docs/M4-RUNTIME-EVIDENCE.md`. No M3
+requirement or M4 architecture was changed.
