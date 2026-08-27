@@ -55,6 +55,7 @@ Flow(
                                 [
                                     {
                                         ruleType: 'Any',
+                                        // @ts-ignore SDK Flow transformer requires dot access; the IDE types this custom-table trigger as an index signature.
                                         users: [wfa.dataPill(_params.trigger.current.supervisor, 'reference')],
                                         groups: [],
                                         manual: false,
@@ -69,6 +70,7 @@ Flow(
                                 [
                                     {
                                         ruleType: 'Any',
+                                        // @ts-ignore SDK Flow transformer requires dot access; the IDE types this custom-table trigger as an index signature.
                                         users: [wfa.dataPill(_params.trigger.current.supervisor, 'reference')],
                                         groups: [],
                                         manual: false,
@@ -100,6 +102,7 @@ Flow(
                     },
                     {
                         sort_type: 'sort_desc',
+                        // @ts-ignore SDK Flow transformer requires dot access; the IDE types this custom-table trigger as an index signature.
                         conditions: `document_id=${wfa.dataPill(_params.trigger.current, 'reference')}^source_table=x_2166123_rob_auth_rob_auth^approver=${wfa.dataPill(_params.trigger.current.supervisor, 'reference')}^state=approved`,
                         dont_fail_flow_on_error: false,
                         table: 'sysapproval_approver',
