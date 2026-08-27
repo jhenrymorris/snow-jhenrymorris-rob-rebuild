@@ -5,9 +5,53 @@ declare global {
         namespace Internal {
             interface Keys extends KeysRegistry {
                 explicit: {
+                    '0dc6b6e383f647104f5193a6feaad3b0': {
+                        table: 'sys_hub_action_instance_v2'
+                        id: '0dc6b6e383f647104f5193a6feaad3b0'
+                    }
+                    '1274ca2383fe07104f5193a6feaad307': {
+                        table: 'sys_hub_flow_logic_instance_v2'
+                        id: '1274ca2383fe07104f5193a6feaad307'
+                    }
+                    '29a9a5e7833e07104f5193a6feaad3c9': {
+                        table: 'sys_hub_trigger_instance_v2'
+                        id: '29a9a5e7833e07104f5193a6feaad3c9'
+                    }
+                    '342d79ab833e07104f5193a6feaad3bb': {
+                        table: 'sys_hub_action_instance_v2'
+                        id: '342d79ab833e07104f5193a6feaad3bb'
+                    }
+                    '41e64ee7833247104f5193a6feaad3d9': {
+                        table: 'sys_hub_action_instance_v2'
+                        id: '41e64ee7833247104f5193a6feaad3d9'
+                    }
                     '568959738336c7104f5193a6feaad37a': {
                         table: 'sys_scope_privilege'
                         id: '568959738336c7104f5193a6feaad37a'
+                    }
+                    '5facc267837247104f5193a6feaad391': {
+                        table: 'sys_hub_action_instance_v2'
+                        id: '5facc267837247104f5193a6feaad391'
+                    }
+                    '73105d6b833a07104f5193a6feaad363': {
+                        table: 'sys_hub_flow'
+                        id: '73105d6b833a07104f5193a6feaad363'
+                    }
+                    '89e7f6a783f647104f5193a6feaad35f': {
+                        table: 'sys_hub_flow_snapshot'
+                        id: '89e7f6a783f647104f5193a6feaad35f'
+                    }
+                    '8d4636a383f647104f5193a6feaad36a': {
+                        table: 'sys_hub_flow_logic_instance_v2'
+                        id: '8d4636a383f647104f5193a6feaad36a'
+                    }
+                    '8d613ae783b647104f5193a6feaad3e8': {
+                        table: 'sys_hub_flow_logic_instance_v2'
+                        id: '8d613ae783b647104f5193a6feaad3e8'
+                    }
+                    '95d5366383f647104f5193a6feaad3d8': {
+                        table: 'sys_hub_action_instance_v2'
+                        id: '95d5366383f647104f5193a6feaad3d8'
                     }
                     'authorized-access-details-module': {
                         table: 'sys_app_module'
@@ -37,6 +81,10 @@ declare global {
                         table: 'sys_script'
                         id: 'b1c93494ae1a49ba9dfc4d87313bd0a5'
                     }
+                    da92f2ab83b647104f5193a6feaad350: {
+                        table: 'sys_hub_action_instance_v2'
+                        id: 'da92f2ab83b647104f5193a6feaad350'
+                    }
                     'default-rob-configuration': {
                         table: 'x_2166123_rob_auth_rob_config'
                         id: '24ef713e7a4941baa1aab57a057db25b'
@@ -52,6 +100,10 @@ declare global {
                     'evaluate-workforce-authorization-decision': {
                         table: 'sys_script'
                         id: '795fabaf203843a79117c1e346a57290'
+                    }
+                    f8e2beab83b647104f5193a6feaad300: {
+                        table: 'sys_hub_action_instance_v2'
+                        id: 'f8e2beab83b647104f5193a6feaad300'
                     }
                     'finalize-authorization-after-pdf-association': {
                         table: 'sys_script'
@@ -990,6 +1042,16 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '06a9e5e7833e07104f5193a6feaad355'
+                        deleted: true
+                        key: {
+                            name: 'var__m_sys_hub_flow_input_73105d6b833a07104f5193a6feaad363'
+                            element: 'current'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '06ab894b274245d590bd77858c29d207'
                         key: {
@@ -1244,6 +1306,15 @@ declare global {
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_reuse_supervisor_signature_at'
+                        }
+                    },
+                    {
+                        table: 'sys_hub_flow_input'
+                        id: '0aa9e5e7833e07104f5193a6feaad359'
+                        deleted: true
+                        key: {
+                            model: '73105d6b833a07104f5193a6feaad363'
+                            element: 'changed_fields'
                         }
                     },
                     {
@@ -1518,6 +1589,15 @@ declare global {
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_organization_snapshot'
+                        }
+                    },
+                    {
+                        table: 'sys_hub_flow_input'
+                        id: '11e7f6a783f647104f5193a6feaad37a'
+                        deleted: true
+                        key: {
+                            model: '89e7f6a783f647104f5193a6feaad35f'
+                            element: 'changed_fields'
                         }
                     },
                     {
@@ -1945,6 +2025,16 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '19e7f6a783f647104f5193a6feaad375'
+                        deleted: true
+                        key: {
+                            name: 'var__m_sys_hub_flow_input_89e7f6a783f647104f5193a6feaad35f'
+                            element: 'current'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '1a5e527e287d4dafb284086a4331ea0e'
                         key: {
@@ -2142,6 +2232,16 @@ declare global {
                         key: {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_reuse_supervisor_signer'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '1de7f6a783f647104f5193a6feaad399'
+                        deleted: true
+                        key: {
+                            name: 'var__m_sys_hub_flow_input_89e7f6a783f647104f5193a6feaad35f'
+                            element: 'table_name'
+                            language: 'en'
                         }
                     },
                     {
@@ -4701,6 +4801,16 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '4aa9e5e7833e07104f5193a6feaad348'
+                        deleted: true
+                        key: {
+                            name: 'var__m_sys_hub_flow_input_73105d6b833a07104f5193a6feaad363'
+                            element: 'table_name'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '4ae11681a6ea467b898af6a2f59c5079'
                         key: {
@@ -5143,6 +5253,15 @@ declare global {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_exception_reason'
                             value: 'EX_CONFLICTING_ACTIVE_FORMS'
+                        }
+                    },
+                    {
+                        table: 'sys_hub_flow_input'
+                        id: '51e7f6a783f647104f5193a6feaad362'
+                        deleted: true
+                        key: {
+                            model: '89e7f6a783f647104f5193a6feaad35f'
+                            element: 'current'
                         }
                     },
                     {
@@ -6955,6 +7074,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_hub_flow_input'
+                        id: '75a9a5e7833e07104f5193a6feaad3e3'
+                        deleted: true
+                        key: {
+                            model: '73105d6b833a07104f5193a6feaad363'
+                            element: 'table_name'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '75c19aa41b184456a4275febe686f556'
                         key: {
@@ -8016,6 +8144,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_hub_flow_input'
+                        id: '86a9e5e7833e07104f5193a6feaad34e'
+                        deleted: true
+                        key: {
+                            model: '73105d6b833a07104f5193a6feaad363'
+                            element: 'current'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '86bbdf3574404d8498414b4e20ce012c'
                         deleted: true
@@ -8618,6 +8755,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_hub_flow_input'
+                        id: '91e7f6a783f647104f5193a6feaad386'
+                        deleted: true
+                        key: {
+                            model: '89e7f6a783f647104f5193a6feaad35f'
+                            element: 'table_name'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '9226d0470cc34422a09dbc4d8bbab01f'
                         key: {
@@ -8647,6 +8793,16 @@ declare global {
                             name: 'sn_hr_core_case_payroll'
                             element: 'x_2166123_rob_auth_authorization_path'
                             value: 'exception'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '92a9e5e7833e07104f5193a6feaad361'
+                        deleted: true
+                        key: {
+                            name: 'var__m_sys_hub_flow_input_73105d6b833a07104f5193a6feaad363'
+                            element: 'changed_fields'
+                            language: 'en'
                         }
                     },
                     {
@@ -9095,6 +9251,16 @@ declare global {
                             name: 'x_2166123_rob_auth_rob_auth'
                             element: 'employment_type'
                             value: 'other_time_limited'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '99e7f6a783f647104f5193a6feaad381'
+                        deleted: true
+                        key: {
+                            name: 'var__m_sys_hub_flow_input_89e7f6a783f647104f5193a6feaad35f'
+                            element: 'changed_fields'
+                            language: 'en'
                         }
                     },
                     {
