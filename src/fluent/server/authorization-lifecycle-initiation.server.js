@@ -161,8 +161,13 @@
         current.getValue(decisionTimeField) ===
         previous.getValue(decisionTimeField)
     ) {
-        resumeAuthorizationSigning(existingAuthorizationForCase())
-        return
+        // New, Amendment, and Renewal resume through their governed
+        // Authorization Form. Reuse has no new Authorization Form, so it must
+        // continue into its request-specific native attestation guard below.
+        if (current.getValue(decisionField) !== 'reuse') {
+            resumeAuthorizationSigning(existingAuthorizationForCase())
+            return
+        }
     }
 
     if (

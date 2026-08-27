@@ -226,6 +226,14 @@ test('downstream lifecycle safely resumes the split employee signing execution',
     )
     assert.match(
         lifecycle,
+        /current\.getValue\(decisionField\)\s*!==\s*'reuse'[\s\S]*resumeAuthorizationSigning\(existingAuthorizationForCase\(\)\)[\s\S]*return/
+    )
+    assert.match(
+        lifecycle,
+        /decision\s*===\s*'reuse'[\s\S]*ROB Reuse Supervisor Attestation[\s\S]*beginRobReuseAttestation/
+    )
+    assert.match(
+        lifecycle,
         /existingAuthorizationForCase[\s\S]*setLimit\(2\)[\s\S]*duplicate governed Authorization Forms/
     )
     assert.match(
