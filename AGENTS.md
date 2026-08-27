@@ -7,6 +7,98 @@ Codex must follow these instructions for every task in this repository.
 
 ---
 
+## Australia Capability Certification Gate
+
+Before proposing or implementing any milestone plan that depends on
+native ServiceNow behavior, the agent MUST review the current official
+ServiceNow Australia documentation for every native capability used by
+the proposed architecture.
+
+This requirement applies in addition to repository documentation.
+
+For every native capability, record:
+
+- requirement
+- exact ServiceNow feature
+- Australia documentation source
+- supported operations
+- unsupported operations / documented constraints
+- required plugin/version
+- required role
+- owning application/scope
+- table/inheritance requirement
+- cross-scope requirement
+- required manual configuration
+- PDI proof when documentation is insufficient
+- final classification:
+  DOCUMENTED-SUPPORTED
+  PDI-PROVEN
+  SUPPORTED-WITH-CONSTRAINT
+  UNSUPPORTED
+  UNKNOWN
+
+No implementation plan may be approved while any required capability
+is UNKNOWN.
+
+If a capability is UNSUPPORTED, resolve the architecture before coding.
+
+Do not discover documented native-platform limitations during
+implementation when they could have been identified during this gate.
+
+Once the capability matrix is approved, the architecture is frozen for
+the milestone. Ordinary defects are corrected within the execution;
+they do not create new micro-packages.
+
+
+---
+
+## Post-Certification Blocker Threshold
+
+The purpose of capability certification is to move foreseeable Australia platform constraints to planning, not to create another stopping mechanism.
+
+After an architecture has passed the Australia Capability Certification Gate, an integrated runtime failure is **not** a new platform blocker unless evidence proves at least one of the following:
+
+1. A capability classified `DOCUMENTED-SUPPORTED` behaves differently on the target Australia environment when invoked through the documented mechanism.
+2. A capability classified `PDI-PROVEN` fails when invoked through the same supported mechanism and equivalent preconditions used by the proof.
+3. A new requirement outside the certified architecture is introduced.
+4. The certification evidence or interpretation is proven factually incorrect.
+
+Otherwise classify the issue as an ordinary:
+
+- implementation defect
+- configuration defect
+- integration defect
+- test-data defect
+
+Resolve ordinary defects inside the current milestone execution and retest. Do not create a new micro-package merely because an integrated test failed.
+
+Before architecture freeze, an `UNSUPPORTED` capability requires architecture resolution before coding. After architecture freeze, do not reopen the architecture unless one of the four conditions above is met.
+
+The agent's primary objective is completion of the approved implementation. The certification gate exists to prevent foreseeable rework, not to maximize stop conditions.
+
+---
+
+## Completion Execution Model
+
+For the remaining V2 completion effort, use exactly these bounded executions unless the user explicitly approves a scope change:
+
+1. **C0 — Australia Capability Certification + Final Architecture Freeze**
+2. **C1 — M3 Final Runtime + Closeout**
+3. **C2 — M4 Runtime + Closeout**
+4. **C3 — M5 Security / UAT / Release**
+
+Do not create `M3.x`, `C1.x`, `C2.x`, or similar remediation packages for ordinary defects. Fix those defects inside the active execution.
+
+A new package is justified only by:
+
+- a user-approved scope change;
+- a genuinely new requirement;
+- or a platform blocker satisfying the Post-Certification Blocker Threshold above.
+
+Do not begin the next execution automatically unless the current package instructions or the user explicitly authorize it.
+
+---
+
 ## 1. Required Reading
 
 Before planning or modifying files, read:
@@ -34,7 +126,8 @@ Content under `docs/archive/zurich-development/` is historical evidence only. Do
 - Target release: ServiceNow Australia
 - Development target: Personal Developer Instance
 - Authentication alias: `pdi`
-- SDK baseline: `4.8.1`
+- SDK baseline: `4.11.0` for the V2 / `dev437065` line
+- Do not downgrade to SDK 4.8.1 based on historical branch documentation; use the version pinned by the current V2 project and verify with `package.json` / lockfile before SDK work
 - Scope: `x_2166123_rob_auth` (use the scope already defined in `now.config.json`)
 - MVP submission model: Self-submission only
 
@@ -187,7 +280,7 @@ Use descriptive file names. Keep one logical artifact group per file when practi
 14. Use synthetic test data only.
 15. Preserve stable generated keys. Investigate any change to `src/fluent/generated/keys.ts` before staging or deployment.
 16. Keep Source, Build, Install, Runtime, Security, and UAT evidence distinct. Source review or build success is not runtime proof.
-17. If a required native capability is unsupported, stop and document the limitation instead of creating substitute architecture.
+17. Before architecture freeze, if a required native capability is `UNSUPPORTED`, resolve the architecture and update the capability matrix before coding. After certification, apply the Post-Certification Blocker Threshold; do not treat ordinary implementation/configuration/integration failures as new platform blockers.
 
 ---
 
@@ -324,26 +417,41 @@ Do not run installation against the PDI until the user has reviewed the diff and
 
 ## 13. Mandatory Work Pattern
 
-For each task:
+For each task that depends on native ServiceNow behavior:
 
-1. Read the required documentation.
-2. Inspect existing files and current Git status.
-3. Use current SDK guidance when needed.
-4. Query the PDI read-only when schema or sys_id information is needed.
-5. Prepare a plan before making substantial changes.
-6. Modify only the approved wave or artifact group.
-7. Run the SDK build.
-8. Fix build errors without redesigning working architecture.
-9. Review the Git diff.
-10. Summarize:
+1. Read the required repository documentation.
+2. Inspect existing files, current Git status, current branch, and the project-pinned SDK version.
+3. Review current official ServiceNow **Australia** documentation for every native feature used by the proposed solution.
+4. Review current SDK/Fluent guidance and installed SDK types for SDK-managed artifacts.
+5. Complete or update `docs/AUSTRALIA-CAPABILITY-CERTIFICATION.md`.
+6. Classify every required capability as `DOCUMENTED-SUPPORTED`, `PDI-PROVEN`, `SUPPORTED-WITH-CONSTRAINT`, `UNSUPPORTED`, or `UNKNOWN`.
+7. Execute one minimal isolated synthetic proof for every required `UNKNOWN` that documentation cannot resolve.
+8. Resolve every `UNSUPPORTED` capability architecturally before implementation.
+9. Do not approve an implementation plan while any required capability remains `UNKNOWN`.
+10. Obtain architecture approval when required, then freeze the milestone architecture.
+11. Prepare one complete milestone implementation plan.
+12. Implement the approved milestone once; do not split ordinary defects into micro-packages.
+13. Query the PDI read-only whenever exact schema, table ownership, sys_id, caller-access, plugin, role, or installed-state information is needed.
+14. Run focused tests and the SDK build.
+15. Fix build, implementation, configuration, integration, and test-data defects without redesigning certified architecture.
+16. If an integrated runtime failure occurs, apply the **Post-Certification Blocker Threshold** before using `BLOCKED-PLATFORM`.
+17. Run the complete milestone acceptance suite, not just the test that previously failed.
+18. Review `git diff`, `git diff --check`, generated-key changes, and scope/count assertions.
+19. Summarize:
     - files changed
-    - artifacts created
+    - artifacts created or modified
+    - capability certifications used
     - build result
-    - tests added or run
+    - tests and runtime scenarios run
     - manual PDI work remaining
+    - security/cross-scope changes
     - known risks
-11. Do not install until authorized.
-12. Update traceability and test documentation when implementation status changes.
+20. Do not install until the user has reviewed the diff and explicitly authorized installation.
+21. After authorized installation, verify installed instance state separately from Source/Build evidence.
+22. Update traceability, test, manual-configuration, capability-certification, and measurement documentation when implementation status changes.
+23. Close the milestone only when its defined runtime/security acceptance criteria are met or a blocker satisfies the Post-Certification Blocker Threshold.
+
+For planning-only requests, stop after the plan and do not modify files.
 
 ---
 
@@ -396,10 +504,14 @@ Do not modify files during a planning-only request.
 A task is complete only when:
 
 - Source changes are scoped to the approved work.
-- SDK build succeeds.
+- Required native capabilities are certified and no required capability remains `UNKNOWN`.
+- The approved architecture remains frozen unless a documented blocker meets the Post-Certification Blocker Threshold.
+- The project-pinned SDK build succeeds.
 - No prohibited architecture was introduced.
-- Git diff has been reviewed.
-- Traceability is updated.
+- Git diff and generated-key changes have been reviewed.
+- Traceability, test, capability-certification, and measurement documentation are updated.
 - Tests are added or updated.
 - Manual configuration is documented.
+- When the task includes deployment/runtime behavior, installation and instance verification are completed and recorded separately from Source/Build evidence.
 - Remaining limitations are stated clearly.
+- Ordinary defects discovered during the milestone have been resolved and retested rather than deferred into micro-packages.

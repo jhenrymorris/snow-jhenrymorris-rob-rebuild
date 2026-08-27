@@ -14,3 +14,10 @@ target/
 orchestration/output/
 orchestration/prompts/
 orchestration/*.before-*
+
+# Local Document Templates rendering and visual-QA artifacts.
+output/
+tmp/
+
+# Empty file produced by the native Document Templates download surface.
+/javascript

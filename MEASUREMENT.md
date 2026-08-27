@@ -2398,3 +2398,46 @@ Not exposed by session/tool — no estimate recorded.
   manufactured, no privilege was broadened, and M4 remains inactive.
 - Result: **M3 - BLOCKED-PLATFORM**. **Native Supervisor Fill/Refuse denial -
   UNSUPPORTED ON AUSTRALIA. M4 - NOT READY.**
+
+## C0 Australia capability certification and final architecture freeze
+
+- Date: `2026-08-26`.
+- Scope: pre-implementation certification only for remaining M3, M4, and M5
+  on V2 `x_2166123_rob_auth` / Australia Patch 3 / `dev437065`. Production
+  behavior, active states, native templates, generated keys, and PDI records
+  were not changed.
+- Required reading: current governance documents, PRD/architecture/field/
+  security/test/manual configuration documents, Appendices A–O, and the full
+  V2 M3 evidence chain were reconciled. Historical Zurich content was not used
+  as current design authority.
+- Official Australia result: ServiceNow Sign PDF `Fill` supports signature and
+  Submit but is not a denial control; native Ask for Approval provides Approved
+  and Rejected outcomes and `sysapproval_approver` evidence; participant
+  authoring for the selected native signing flow must be performed on templates
+  created in Document Templates (`sn_doc`).
+- Final M3 architecture: employee-only native Fill/Submit, then the proven
+  ROB-owned Ask for Approval Flow. Rejected persists Denied and stops. Approved
+  launches one `sn_doc`-owned supervisor-only Fill/Submit template. Committed
+  task evidence then drives the existing 28-map post-signature renderer, one
+  final PDF on the Authorization Form, activation, and supersession. Reuse
+  remains unchanged.
+- Final M4 architecture: native `sn_hr_core_task` records remain required, but
+  the current inactive direct V2 insert path is not certified for activation.
+  C2 must use one HR Core-owned, allowlisted fulfillment bridge/subflow for task
+  create/update/close and eligible parent close, with one exact V2 Execute path
+  and no broad GlideRecord or native-table Write grant.
+- Final M5 architecture: one configuration-driven daily scheduled execution,
+  existing evidence fields for idempotent renewal/lapse notices, privacy-safe
+  native notifications, ACL/report-view secured analytics, restricted
+  dashboards, ATF for deterministic non-production coverage, and manual native
+  signing/PDF/direct-URL UAT.
+- Master evidence: `docs/AUSTRALIA-CAPABILITY-CERTIFICATION.md` classifies all
+  38 required capabilities. Required `UNKNOWN` = 0; selected `UNSUPPORTED` = 0.
+  Unsupported alternatives are explicitly excluded so they are not retried.
+- Preserved source/unit baseline: M2 19/19, R1 9/9, Wave 2 security 22/22,
+  deployment configuration 16/16, R3 30/30, current R3 adapter 13/13, current
+  R4 63/63, and M4 26/26 PASS. The current 4/4 template-validator suite also
+  passes but asserts the superseded continuous template contract and is
+  assigned for reconciliation in C1; it is not split-stage runtime proof.
+- Result: **C0 — COMPLETE. FINAL REMAINING ARCHITECTURE — FROZEN. C1 / M3
+  IMPLEMENTATION — READY.** No C1 implementation was started.
