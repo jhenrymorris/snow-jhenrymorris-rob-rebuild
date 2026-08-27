@@ -11,13 +11,17 @@
 
     var caseId = current.getUniqueValue()
     var details = new GlideRecord('x_2166123_rob_auth_auth_detail')
+    var requestedAccess = {}
+    var reusedAuthorization = ''
     if (decision === 'reuse') {
-        var reusedAuthorization = current.getValue('x_2166123_rob_auth_evaluated_authorization')
+        reusedAuthorization = current.getValue('x_2166123_rob_auth_evaluated_authorization')
         if (!reusedAuthorization) return
         details.addQuery('rob_authorization_form', reusedAuthorization)
-        details.addQuery('access_item', 'IN', current.getValue('x_2166123_rob_auth_requested_items'))
+        var requestedItems = String(current.getValue('x_2166123_rob_auth_requested_items') || '').split(',')
+        for (var requestedIndex = 0; requestedIndex < requestedItems.length; requestedIndex += 1) {
+            if (requestedItems[requestedIndex]) requestedAccess[requestedItems[requestedIndex]] = true
+        }
     } else {
-        details.addQuery('source_hrsd_case', caseId)
         details.addQuery('status', 'pending_fulfillment')
     }
     details.query()
@@ -26,6 +30,11 @@
     var authorizationId = ''
     while (details.next()) {
         var accessItemId = details.getValue('access_item')
+        if (decision === 'reuse') {
+            if (!requestedAccess[accessItemId]) continue
+        } else if (details.getValue('source_hrsd_case') !== caseId) {
+            continue
+        }
         authorizationId = authorizationId || details.getValue('rob_authorization_form')
         if (details.getValue('staffing_task_required_snapshot') === '1') buckets.staffing_fulfillment.push(accessItemId)
         if (details.getValue('analytics_task_required_snapshot') === '1') buckets.analytics_fulfillment.push(accessItemId)
