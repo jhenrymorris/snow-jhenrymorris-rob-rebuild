@@ -66,45 +66,36 @@
         return true
     }
 
-    function requestSupervisorDecision(authorizationId, supervisorId) {
-        if (!authorizationId || !supervisorId) {
-            fail('the governed supervisor decision context is incomplete')
-            return false
-        }
+    function normalizeSysIds(value) {
+        var values = String(value || '')
+            .split(',')
+            .filter(Boolean)
+            .sort()
+        return values.filter(function (item, index) {
+            return index === 0 || item !== values[index - 1]
+        })
+    }
 
-        var existingApproval = new GlideRecord('sysapproval_approver')
-        existingApproval.addQuery('sysapproval', current.getUniqueValue())
-        existingApproval.addQuery(
-            'source_table',
-            'x_2166123_rob_auth_rob_auth'
-        )
-        existingApproval.addQuery('document_id', authorizationId)
-        existingApproval.addQuery('approver', supervisorId)
-        existingApproval.setLimit(2)
-        existingApproval.query()
-        if (existingApproval.next()) {
-            var existingApprovalId = existingApproval.getUniqueValue()
-            if (existingApproval.next()) {
-                fail('duplicate native supervisor decisions exist')
-                return false
-            }
-            return Boolean(existingApprovalId)
-        }
-
-        var approval = new GlideRecord('sysapproval_approver')
-        approval.initialize()
-        // The table-level Create privilege is the narrow supported boundary.
-        // Do not request the generic GlideRecord.setValue cross-scope API.
-        approval.sysapproval = current.getUniqueValue()
-        approval.source_table = 'x_2166123_rob_auth_rob_auth'
-        approval.document_id = authorizationId
-        approval.approver = supervisorId
-        approval.state = 'requested'
-        if (!approval.insert()) {
-            fail('the native supervisor decision could not be requested')
-            return false
-        }
-        return true
+    function reuseContextKey(authorization, supervisorId) {
+        return JSON.stringify({
+            caseId: current.getUniqueValue(),
+            decisionEvaluatedAt: current.getValue(
+                'x_2166123_rob_auth_decision_evaluated_at'
+            ),
+            subjectId:
+                current.getValue('subject_person') ||
+                current.getValue('opened_for'),
+            supervisorId: supervisorId,
+            relatedAuthorizationId: authorization.getUniqueValue(),
+            authorizationStatus: authorization.getValue('status'),
+            authorizationFormVersion: authorization.getValue('form_version'),
+            authorizationExpirationDate: authorization.getValue(
+                'expiration_date'
+            ),
+            requestedAccess: normalizeSysIds(
+                current.getValue('x_2166123_rob_auth_requested_items')
+            ),
+        })
     }
 
     function listValues(value) {
@@ -215,10 +206,50 @@
             fail('Reuse requires exactly one governed Authorization Form')
             return
         }
-        requestSupervisorDecision(
-            reusedAuthorizationId,
+        var reusedAuthorization = new GlideRecord(
+            'x_2166123_rob_auth_rob_auth'
+        )
+        if (
+            !reusedAuthorization.get(reusedAuthorizationId) ||
+            reusedAuthorization.getValue('status') !== 'active'
+        ) {
+            fail('Reuse requires an Active governed Authorization Form')
+            return
+        }
+
+        var contextKey = reuseContextKey(
+            reusedAuthorization,
             profileContext.supervisorId
         )
+        if (
+            current.getValue(
+                'x_2166123_rob_auth_reuse_attestation_status'
+            ) === 'approved' &&
+            current.getValue(
+                'x_2166123_rob_auth_reuse_attestation_context'
+            ) === contextKey
+        ) {
+            return
+        }
+
+        if (
+            !initiateAuthorizationSigning(
+                'ROB Reuse Supervisor Attestation',
+                'ROB-Reuse-Supervisor-Attestation-' +
+                    current.getValue('number')
+            )
+        ) {
+            return
+        }
+
+        if (
+            !new sn_hr_core.RobHrCasePersistenceBridge().beginRobReuseAttestation(
+                current,
+                contextKey
+            )
+        ) {
+            fail('the Reuse attestation state could not be persisted')
+        }
         return
     }
 

@@ -649,6 +649,21 @@ test('security scripts never recursively update or insert the parent case', () =
         /new sn_hr_core\.RobHrCasePersistenceBridge\(\)\.setRobIntakeGate/
     )
     assert.doesNotMatch(hrCoreBridgeScript, /caseRecord\.setValue\(/)
+    assert.match(hrCoreBridgeScript, /beginRobReuseAttestation/)
+    assert.match(hrCoreBridgeScript, /completeRobReuseAttestation/)
+    assert.match(hrCoreBridgeScript, /invalidateRobReuseAttestation/)
+
+    const lifecycleSource = fs.readFileSync(
+        path.join(
+            root,
+            'src/fluent/server/authorization-lifecycle-initiation.server.js'
+        ),
+        'utf8'
+    )
+    assert.doesNotMatch(
+        lifecycleSource,
+        /new GlideRecord\('sysapproval_approver'\)/
+    )
 
     const context = {
         Class: {

@@ -1,6 +1,7 @@
 (function executeRule(current) {
     var employeeTemplateName = 'ROB Form 1768 Employee Signature'
     var supervisorTemplateName = 'ROB Form 1768 Supervisor Signature'
+    var reuseTemplateName = 'ROB Reuse Supervisor Attestation'
     var finalRendererName = 'ROB Form 1768 Authorization'
     function isTrue(value) {
         return value === '1' || value === 'true'
@@ -8,6 +9,38 @@
 
     function checkbox(value) {
         return value ? 'Yes' : 'Off'
+    }
+
+    function normalizeSysIds(value) {
+        var values = String(value || '')
+            .split(',')
+            .filter(Boolean)
+            .sort()
+        return values.filter(function (item, index) {
+            return index === 0 || item !== values[index - 1]
+        })
+    }
+
+    function reuseContextKey(sourceCase, authorization, supervisorId) {
+        return JSON.stringify({
+            caseId: sourceCase.getUniqueValue(),
+            decisionEvaluatedAt: sourceCase.getValue(
+                'x_2166123_rob_auth_decision_evaluated_at'
+            ),
+            subjectId:
+                sourceCase.getValue('subject_person') ||
+                sourceCase.getValue('opened_for'),
+            supervisorId: supervisorId,
+            relatedAuthorizationId: authorization.getUniqueValue(),
+            authorizationStatus: authorization.getValue('status'),
+            authorizationFormVersion: authorization.getValue('form_version'),
+            authorizationExpirationDate: authorization.getValue(
+                'expiration_date'
+            ),
+            requestedAccess: normalizeSysIds(
+                sourceCase.getValue('x_2166123_rob_auth_requested_items')
+            ),
+        })
     }
 
     function localDate(dateTimeValue) {
@@ -162,13 +195,122 @@
 
     if (
         templateName !== employeeTemplateName &&
-        templateName !== supervisorTemplateName
+        templateName !== supervisorTemplateName &&
+        templateName !== reuseTemplateName
     ) {
         return
     }
 
     var sourceCaseId = current.getValue('parent')
     if (!sourceCaseId) {
+        return
+    }
+
+    if (templateName === reuseTemplateName) {
+        if (!current.state.changesTo('3')) return
+
+        var reuseCase = current.parent.getRefRecord()
+        if (
+            !reuseCase.isValidRecord() ||
+            reuseCase.getValue(
+                'x_2166123_rob_auth_authorization_path'
+            ) !== 'reuse'
+        ) {
+            gs.error('ROB Reuse attestation is not linked to a current Reuse case.')
+            return
+        }
+
+        var reuseExecutionId = current.getValue('document_task_execution')
+        var reuseSignerId = current.getValue('closed_by')
+        var reuseCompletedAt = current.getValue('closed_at')
+        var reuseParticipant = current.participant.getRefRecord()
+        if (
+            !reuseExecutionId ||
+            !current.getValue('pdf_document') ||
+            !reuseCompletedAt ||
+            !reuseParticipant.isValidRecord() ||
+            reuseParticipant.getValue('name') !== 'Supervisor' ||
+            reuseParticipant.getValue('action') !== 'fill'
+        ) {
+            gs.error('ROB Reuse attestation is missing complete native evidence.')
+            return
+        }
+
+        var reuseContext = new RobProfileAuthorizationContext().resolveFromCase(
+            reuseCase
+        )
+        if (
+            !reuseContext.valid ||
+            !reuseSignerId ||
+            reuseSignerId !== reuseContext.supervisorId
+        ) {
+            gs.error('ROB Reuse attestation signer is not the current governed Supervisor.')
+            return
+        }
+
+        var reusedAuthorizationId = reuseCase.getValue(
+            'x_2166123_rob_auth_evaluated_authorization'
+        )
+        var reusedAuthorization = new GlideRecord(
+            'x_2166123_rob_auth_rob_auth'
+        )
+        var currentContextKey = ''
+        if (
+            reusedAuthorizationId &&
+            reusedAuthorization.get(reusedAuthorizationId)
+        ) {
+            currentContextKey = reuseContextKey(
+                reuseCase,
+                reusedAuthorization,
+                reuseContext.supervisorId
+            )
+        }
+        var bridge = new sn_hr_core.RobHrCasePersistenceBridge()
+        if (
+            !currentContextKey ||
+            currentContextKey !==
+                reuseCase.getValue(
+                    'x_2166123_rob_auth_reuse_attestation_context'
+                )
+        ) {
+            bridge.invalidateRobReuseAttestation(
+                reuseCase,
+                currentContextKey || 'invalid-current-context'
+            )
+            gs.error('ROB Reuse attestation context became stale before completion.')
+            return
+        }
+
+        if (
+            reuseCase.getValue(
+                'x_2166123_rob_auth_reuse_document_task'
+            ) === current.getUniqueValue()
+        ) {
+            return
+        }
+        if (
+            reuseCase.getValue(
+                'x_2166123_rob_auth_reuse_document_task'
+            )
+        ) {
+            gs.error('ROB Reuse attestation is already bound to another task.')
+            return
+        }
+
+        var reusePayload = JSON.stringify({
+            signerId: reuseSignerId,
+            completedAt: reuseCompletedAt,
+            documentTaskId: current.getUniqueValue(),
+            documentTaskExecutionId: reuseExecutionId,
+            contextKey: reuseCase.getValue(
+                'x_2166123_rob_auth_reuse_attestation_context'
+            ),
+        })
+        if (
+            !bridge.completeRobReuseAttestation(reuseCase, reusePayload)
+        ) {
+            gs.error('ROB Reuse attestation evidence could not be persisted.')
+        }
         return
     }
 

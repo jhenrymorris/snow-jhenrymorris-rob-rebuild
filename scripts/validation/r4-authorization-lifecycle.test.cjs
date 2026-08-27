@@ -568,8 +568,9 @@ test('runtime launch uses the certified split templates and final renderer roles
     assert.doesNotMatch(initiationSource, /ROB Form 1768 Supervisor Signature/)
     assert.match(supervisorLaunchSource, /ROB Form 1768 Supervisor Signature/)
     assert.doesNotMatch(supervisorLaunchSource, /ROB Form 1768 Authorization/)
-    assert.doesNotMatch(evidenceSource, /ROB Reuse Supervisor Attestation/)
-    assert.match(initiationSource, /sysapproval_approver/)
+    assert.match(evidenceSource, /ROB Reuse Supervisor Attestation/)
+    assert.match(initiationSource, /ROB Reuse Supervisor Attestation/)
+    assert.doesNotMatch(initiationSource, /sysapproval_approver/)
     assert.match(initiationSource, /GenerateDocumentAPI\(\)\.initiateDocumentTasks/)
     assert.match(
         initiationSource,
@@ -674,15 +675,28 @@ test('post-signature final PDF fills and flattens the governed Form 1768 on Auth
     assert.doesNotMatch(source, /GlideSysAttachment|assigned_to/)
 })
 
-test('Reuse begins with a native decision and creates no governed form', () => {
+test('Reuse launches only the native attestation template and creates no governed form', () => {
     const source = fs.readFileSync(
         path.join(root, 'src/fluent/server/authorization-lifecycle-initiation.server.js'),
         'utf8'
     )
-    assert.match(source, /new GlideRecord\('sysapproval_approver'\)/)
-    assert.match(source, /approval\.state = 'requested'/)
-    assert.doesNotMatch(source, /approval\.setValue\(/)
-    assert.match(source, /requestSupervisorDecision/)
+    assert.match(source, /ROB Reuse Supervisor Attestation/)
+    assert.match(source, /beginRobReuseAttestation/)
+    assert.doesNotMatch(source, /new GlideRecord\('sysapproval_approver'\)/)
+})
+
+test('Reuse completion persists only native attestation evidence through the HR Core bridge', () => {
+    const source = fs.readFileSync(
+        path.join(root, 'src/fluent/server/authorization-signature-evidence.server.js'),
+        'utf8'
+    )
+    assert.match(source, /ROB Reuse Supervisor Attestation/)
+    assert.match(source, /completeRobReuseAttestation/)
+    assert.match(source, /invalidateRobReuseAttestation/)
+    assert.match(source, /currentContextKey/)
+    assert.match(source, /reuseContext\.supervisorId/)
+    assert.match(source, /reuseParticipant\.getValue\('action'\) !== 'fill'/)
+    assert.doesNotMatch(source, /reuseCase\.update\(/)
 })
 
 test('native approval response remains inactive until a safe persistence boundary exists', () => {

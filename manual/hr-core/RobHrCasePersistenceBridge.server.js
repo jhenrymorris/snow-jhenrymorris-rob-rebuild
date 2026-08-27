@@ -277,5 +277,155 @@ RobHrCasePersistenceBridge.prototype = {
         return true
     },
 
+    beginRobReuseAttestation: function (caseRecord, contextKey) {
+        var allowedTables = {
+            sn_hr_core_case_payroll: true,
+            sn_hr_core_case_workforce_admin: true,
+        }
+        if (
+            !caseRecord ||
+            !allowedTables[String(caseRecord.getTableName() || '')] ||
+            !/^[0-9a-f]{32}$/.test(String(caseRecord.getUniqueValue() || '')) ||
+            caseRecord.getValue('x_2166123_rob_auth_authorization_path') !==
+                'reuse' ||
+            !caseRecord.getValue(
+                'x_2166123_rob_auth_evaluated_authorization'
+            ) ||
+            typeof contextKey !== 'string' ||
+            !contextKey ||
+            contextKey.length > 1000
+        ) {
+            return false
+        }
+
+        var prefix = 'x_2166123_rob_auth_'
+        if (
+            caseRecord.getValue(prefix + 'reuse_attestation_status') ===
+                'pending' &&
+            caseRecord.getValue(prefix + 'reuse_attestation_context') ===
+                contextKey
+        ) {
+            return true
+        }
+
+        caseRecord[prefix + 'reuse_attestation_status'] = 'pending'
+        caseRecord[prefix + 'reuse_supervisor_decision'] = ''
+        caseRecord[prefix + 'reuse_supervisor_signer'] = ''
+        caseRecord[prefix + 'reuse_supervisor_signature_at'] = ''
+        caseRecord[prefix + 'reuse_document_task'] = ''
+        caseRecord[prefix + 'reuse_document_execution'] = ''
+        caseRecord[prefix + 'reuse_attestation_completed_at'] = ''
+        caseRecord[prefix + 'reuse_attestation_context'] = contextKey
+        caseRecord[prefix + 'fulfillment_gate_complete'] = '0'
+        return Boolean(caseRecord.update())
+    },
+
+    completeRobReuseAttestation: function (caseRecord, evidencePayload) {
+        var allowedTables = {
+            sn_hr_core_case_payroll: true,
+            sn_hr_core_case_workforce_admin: true,
+        }
+        var evidence
+        try {
+            evidence = JSON.parse(String(evidencePayload || ''))
+        } catch (error) {
+            return false
+        }
+        function validSysId(value) {
+            return /^[0-9a-f]{32}$/.test(String(value || ''))
+        }
+        if (
+            !caseRecord ||
+            !allowedTables[String(caseRecord.getTableName() || '')] ||
+            !validSysId(caseRecord.getUniqueValue()) ||
+            caseRecord.getValue('x_2166123_rob_auth_authorization_path') !==
+                'reuse' ||
+            !validSysId(
+                caseRecord.getValue(
+                    'x_2166123_rob_auth_evaluated_authorization'
+                )
+            ) ||
+            !evidence ||
+            !validSysId(evidence.signerId) ||
+            !validSysId(evidence.documentTaskId) ||
+            !validSysId(evidence.documentTaskExecutionId) ||
+            typeof evidence.completedAt !== 'string' ||
+            !evidence.completedAt ||
+            typeof evidence.contextKey !== 'string' ||
+            !evidence.contextKey ||
+            evidence.contextKey !==
+                caseRecord.getValue(
+                    'x_2166123_rob_auth_reuse_attestation_context'
+                )
+        ) {
+            return false
+        }
+
+        var prefix = 'x_2166123_rob_auth_'
+        if (
+            caseRecord.getValue(prefix + 'reuse_attestation_status') ===
+                'approved' &&
+            caseRecord.getValue(prefix + 'reuse_document_task') ===
+                evidence.documentTaskId
+        ) {
+            return true
+        }
+        if (
+            caseRecord.getValue(prefix + 'reuse_attestation_status') !==
+                'pending' ||
+            caseRecord.getValue(prefix + 'reuse_document_task')
+        ) {
+            return false
+        }
+
+        caseRecord[prefix + 'reuse_attestation_status'] = 'approved'
+        caseRecord[prefix + 'reuse_supervisor_decision'] = 'approved'
+        caseRecord[prefix + 'reuse_supervisor_signer'] = evidence.signerId
+        caseRecord[prefix + 'reuse_supervisor_signature_at'] =
+            evidence.completedAt
+        caseRecord[prefix + 'reuse_document_task'] = evidence.documentTaskId
+        caseRecord[prefix + 'reuse_document_execution'] =
+            evidence.documentTaskExecutionId
+        caseRecord[prefix + 'reuse_attestation_completed_at'] =
+            evidence.completedAt
+        caseRecord[prefix + 'requires_supervisor_approval'] = '0'
+        caseRecord[prefix + 'requires_supervisor_signature'] = '0'
+        caseRecord[prefix + 'fulfillment_gate_complete'] = '1'
+        return Boolean(caseRecord.update())
+    },
+
+    invalidateRobReuseAttestation: function (caseRecord, currentContextKey) {
+        var allowedTables = {
+            sn_hr_core_case_payroll: true,
+            sn_hr_core_case_workforce_admin: true,
+        }
+        if (
+            !caseRecord ||
+            !allowedTables[String(caseRecord.getTableName() || '')] ||
+            !/^[0-9a-f]{32}$/.test(String(caseRecord.getUniqueValue() || '')) ||
+            caseRecord.getValue('x_2166123_rob_auth_authorization_path') !==
+                'reuse' ||
+            typeof currentContextKey !== 'string' ||
+            !currentContextKey ||
+            currentContextKey.length > 1000
+        ) {
+            return false
+        }
+
+        var prefix = 'x_2166123_rob_auth_'
+        caseRecord[prefix + 'reuse_attestation_status'] = 'invalidated'
+        caseRecord[prefix + 'reuse_supervisor_decision'] = ''
+        caseRecord[prefix + 'reuse_supervisor_signer'] = ''
+        caseRecord[prefix + 'reuse_supervisor_signature_at'] = ''
+        caseRecord[prefix + 'reuse_document_task'] = ''
+        caseRecord[prefix + 'reuse_document_execution'] = ''
+        caseRecord[prefix + 'reuse_attestation_completed_at'] = ''
+        caseRecord[prefix + 'reuse_attestation_context'] = currentContextKey
+        caseRecord[prefix + 'requires_supervisor_approval'] = '1'
+        caseRecord[prefix + 'requires_supervisor_signature'] = '1'
+        caseRecord[prefix + 'fulfillment_gate_complete'] = '0'
+        return Boolean(caseRecord.update())
+    },
+
     type: 'RobHrCasePersistenceBridge',
 }

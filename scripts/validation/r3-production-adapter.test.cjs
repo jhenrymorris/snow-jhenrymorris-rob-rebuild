@@ -66,7 +66,7 @@ function caseRecord(overrides = {}) {
         opened_by: 'employee',
         ...overrides,
     }
-    return {
+    const record = {
         values,
         getTableName() {
             return values.sys_class_name
@@ -81,6 +81,16 @@ function caseRecord(overrides = {}) {
             return values[name] || ''
         },
     }
+    return new Proxy(record, {
+        set(target, name, value) {
+            if (name in target) {
+                target[name] = value
+            } else {
+                values[name] = String(value)
+            }
+            return true
+        },
+    })
 }
 
 function decision(overrides = {}) {
@@ -381,7 +391,9 @@ test('HR Core bridge rejects unsupported tables, malformed ids, and unknown outp
 })
 
 test('bridge allowlist excludes native identity and arbitrary field mutation', () => {
-    const decisionMethod = bridgeSource.split('setRobDecision: function')[1]
+    const decisionMethod = bridgeSource
+        .split('setRobDecision: function')[1]
+        .split('beginRobReuseAttestation: function')[0]
     assert.doesNotMatch(decisionMethod, /setValue\(\s*['"]opened_by/)
     assert.doesNotMatch(decisionMethod, /setValue\(\s*['"]opened_for/)
     assert.doesNotMatch(decisionMethod, /setValue\(\s*['"]subject_person/)
