@@ -680,7 +680,8 @@ test('Reuse begins with a native decision and creates no governed form', () => {
         'utf8'
     )
     assert.match(source, /new GlideRecord\('sysapproval_approver'\)/)
-    assert.match(source, /setValue\('state', 'requested'\)/)
+    assert.match(source, /approval\.state = 'requested'/)
+    assert.doesNotMatch(source, /approval\.setValue\(/)
     assert.match(source, /requestSupervisorDecision/)
 })
 

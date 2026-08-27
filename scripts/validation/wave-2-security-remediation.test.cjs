@@ -648,6 +648,7 @@ test('security scripts never recursively update or insert the parent case', () =
         snapshotScript,
         /new sn_hr_core\.RobHrCasePersistenceBridge\(\)\.setRobIntakeGate/
     )
+    assert.doesNotMatch(hrCoreBridgeScript, /caseRecord\.setValue\(/)
 
     const context = {
         Class: {
@@ -668,8 +669,8 @@ test('security scripts never recursively update or insert the parent case', () =
         ),
         true
     )
-    assert.equal(payroll.getValue(names.exception), '1')
-    assert.equal(payroll.getValue(names.blocked), '1')
+    assert.equal(payroll[names.exception], '1')
+    assert.equal(payroll[names.blocked], '1')
     assert.equal(payroll.getValue('opened_by'), 'requester')
     assert.equal(
         bridge.setRobIntakeGate(

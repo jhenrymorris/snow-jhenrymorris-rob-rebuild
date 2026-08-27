@@ -21,8 +21,7 @@ RobHrCasePersistenceBridge.prototype = {
         if (
             !caseRecord ||
             typeof caseRecord.getTableName !== 'function' ||
-            typeof caseRecord.getUniqueValue !== 'function' ||
-            typeof caseRecord.setValue !== 'function'
+            typeof caseRecord.getUniqueValue !== 'function'
         ) {
             return false
         }
@@ -53,18 +52,16 @@ RobHrCasePersistenceBridge.prototype = {
             return false
         }
 
-        caseRecord.setValue(
-            'x_2166123_rob_auth_exception_review_required',
-            required ? '1' : '0'
-        )
-        caseRecord.setValue(
-            'x_2166123_rob_auth_exception_reason',
-            required ? reason : ''
-        )
-        caseRecord.setValue(
-            'x_2166123_rob_auth_authorization_processing_blocked',
-            required ? '1' : '0'
-        )
+        // Assign the allowlisted scoped elements from the HR Core-owned bridge.
+        // Calling GlideRecord.setValue on the V2-created GlideRecord would make
+        // the caller request the broad GlideRecord.setValue cross-scope API.
+        caseRecord.x_2166123_rob_auth_exception_review_required = required
+            ? '1'
+            : '0'
+        caseRecord.x_2166123_rob_auth_exception_reason = required ? reason : ''
+        caseRecord.x_2166123_rob_auth_authorization_processing_blocked = required
+            ? '1'
+            : '0'
 
         return true
     },
@@ -151,8 +148,7 @@ RobHrCasePersistenceBridge.prototype = {
         if (
             !caseRecord ||
             typeof caseRecord.getTableName !== 'function' ||
-            typeof caseRecord.getUniqueValue !== 'function' ||
-            typeof caseRecord.setValue !== 'function'
+            typeof caseRecord.getUniqueValue !== 'function'
         ) {
             return reject('invalid_case_record')
         }
@@ -245,69 +241,38 @@ RobHrCasePersistenceBridge.prototype = {
         }
 
         var prefix = 'x_2166123_rob_auth_'
-        caseRecord.setValue(
-            prefix + 'authorization_path',
+        // Keep every write inside this HR Core-owned allowlist. Element
+        // assignment avoids granting the V2 scope a generic setValue API.
+        caseRecord[prefix + 'authorization_path'] =
             allowedDecisionClasses[decisionClass]
-        )
-        caseRecord.setValue(prefix + 'decision_reason', reasonCode)
-        caseRecord.setValue(
-            prefix + 'decision_evaluated_at',
+        caseRecord[prefix + 'decision_reason'] = reasonCode
+        caseRecord[prefix + 'decision_evaluated_at'] =
             new GlideDateTime().getValue()
+        caseRecord[prefix + 'existing_authorization_status'] = status
+        caseRecord[prefix + 'evaluated_authorization'] = String(
+            decision.relatedAuthorizationId || ''
         )
-        caseRecord.setValue(prefix + 'existing_authorization_status', status)
-        caseRecord.setValue(
-            prefix + 'evaluated_authorization',
-            String(decision.relatedAuthorizationId || '')
-        )
-        caseRecord.setValue(
-            prefix + 'covered_access',
-            (decision.coveredAccess || []).join(',')
-        )
-        caseRecord.setValue(
-            prefix + 'uncovered_access',
-            (decision.uncoveredAccess || []).join(',')
-        )
-        caseRecord.setValue(
-            prefix + 'proposed_expiration_date',
-            proposedExpirationDate
-        )
-        caseRecord.setValue(
-            prefix + 'requires_supervisor_approval',
+        caseRecord[prefix + 'covered_access'] = (decision.coveredAccess || []).join(',')
+        caseRecord[prefix + 'uncovered_access'] = (decision.uncoveredAccess || []).join(',')
+        caseRecord[prefix + 'proposed_expiration_date'] = proposedExpirationDate
+        caseRecord[prefix + 'requires_supervisor_approval'] =
             decision.supervisorApprovalRequired === true ? '1' : '0'
-        )
-        caseRecord.setValue(
-            prefix + 'requires_employee_signature',
+        caseRecord[prefix + 'requires_employee_signature'] =
             decision.employeeSignatureRequired === true ? '1' : '0'
-        )
-        caseRecord.setValue(
-            prefix + 'requires_supervisor_signature',
+        caseRecord[prefix + 'requires_supervisor_signature'] =
             decision.supervisorSignatureRequired === true ? '1' : '0'
-        )
-        caseRecord.setValue(
-            prefix + 'material_context_change',
+        caseRecord[prefix + 'material_context_change'] =
             decision.materialContextChange === true ? '1' : '0'
+        caseRecord[prefix + 'renewal_reason'] = renewalReason
+        caseRecord[prefix + 'duplicate_case'] = String(
+            decision.duplicateCaseId || ''
         )
-        caseRecord.setValue(
-            prefix + 'renewal_reason',
-            renewalReason
-        )
-        caseRecord.setValue(
-            prefix + 'duplicate_case',
-            String(decision.duplicateCaseId || '')
-        )
-        caseRecord.setValue(
-            prefix + 'exception_review_required',
-            isException ? '1' : '0'
-        )
-        caseRecord.setValue(
-            prefix + 'exception_reason',
-            isException ? reasonCode : ''
-        )
-        caseRecord.setValue(
-            prefix + 'authorization_processing_blocked',
-            isException ? '1' : '0'
-        )
-        caseRecord.setValue(prefix + 'fulfillment_gate_complete', '0')
+        caseRecord[prefix + 'exception_review_required'] = isException ? '1' : '0'
+        caseRecord[prefix + 'exception_reason'] = isException ? reasonCode : ''
+        caseRecord[prefix + 'authorization_processing_blocked'] = isException
+            ? '1'
+            : '0'
+        caseRecord[prefix + 'fulfillment_gate_complete'] = '0'
 
         return true
     },

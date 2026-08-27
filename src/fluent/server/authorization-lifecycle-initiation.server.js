@@ -93,11 +93,13 @@
 
         var approval = new GlideRecord('sysapproval_approver')
         approval.initialize()
-        approval.setValue('sysapproval', current.getUniqueValue())
-        approval.setValue('source_table', 'x_2166123_rob_auth_rob_auth')
-        approval.setValue('document_id', authorizationId)
-        approval.setValue('approver', supervisorId)
-        approval.setValue('state', 'requested')
+        // The table-level Create privilege is the narrow supported boundary.
+        // Do not request the generic GlideRecord.setValue cross-scope API.
+        approval.sysapproval = current.getUniqueValue()
+        approval.source_table = 'x_2166123_rob_auth_rob_auth'
+        approval.document_id = authorizationId
+        approval.approver = supervisorId
+        approval.state = 'requested'
         if (!approval.insert()) {
             fail('the native supervisor decision could not be requested')
             return false
