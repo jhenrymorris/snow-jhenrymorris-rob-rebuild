@@ -155,8 +155,8 @@
             authorization.getValue('status') === 'pending_employee_signature'
         ) {
             return initiateAuthorizationSigning(
-                'ROB Form 1768 Authorization',
-                'ROB-Form-1768-Authorization-' +
+                'ROB Form 1768 Employee Signature',
+                'ROB-Employee-Authorization-Signature-' +
                     authorization.getValue('number')
             )
         }
@@ -444,8 +444,8 @@
             return
         }
         initiateAuthorizationSigning(
-            'ROB Form 1768 Authorization',
-            'ROB-Form-1768-Authorization-' +
+            'ROB Form 1768 Employee Signature',
+            'ROB-Employee-Authorization-Signature-' +
                 authorization.getValue('number')
         )
     }

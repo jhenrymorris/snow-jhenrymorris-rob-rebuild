@@ -195,7 +195,7 @@ test('downstream lifecycle accepts a decision persisted during insert or mapped-
     assert.match(lifecycle, /previous\s*&&[\s\S]*decisionTimeField/)
 })
 
-test('downstream lifecycle safely resumes the continuous native signing execution', () => {
+test('downstream lifecycle safely resumes the split employee signing execution', () => {
     assert.match(
         lifecycle,
         /function resumeAuthorizationSigning\(authorization\)[\s\S]*pending_employee_signature[\s\S]*initiateAuthorizationSigning/
@@ -212,8 +212,8 @@ test('downstream lifecycle safely resumes the continuous native signing executio
         lifecycle,
         /GenerateDocumentAPI\(\)\.initiateDocumentTasks\([\s\S]*current[\s\S]*template\.getUniqueValue\(\)[\s\S]*outputName/
     )
-    assert.match(lifecycle, /ROB Form 1768 Authorization/)
-    assert.doesNotMatch(lifecycle, /ROB Form 1768 Employee Signature/)
+    assert.match(lifecycle, /ROB Form 1768 Employee Signature/)
+    assert.doesNotMatch(lifecycle, /ROB Form 1768 Authorization/)
     assert.doesNotMatch(lifecycle, /DocumentTaskUtils\(\)\.createDocumentTask/)
 })
 

@@ -10,7 +10,6 @@ const {
     recordEmployeeSignature,
     recordSupervisorDecision,
     recordSupervisorSignature,
-    recordSupervisorAction,
 } = require('../../src/server/authorization/SignatureExecutionService')
 const { finalize } = require('../../src/server/authorization/AuthorizationFinalizationService')
 const {
@@ -459,37 +458,18 @@ test('approved supervisor signature persists separately from decision', () => {
     assert.equal(result.supervisorDocumentTaskId, 'task_2')
 })
 
-test('accepted native Supervisor Sign atomically records approval and signature', () => {
-    const result = recordSupervisorAction({
-        supervisorId: 'supervisor_1', signerId: 'supervisor_1',
-        outcome: 'APPROVED', signatureComplete: true,
-        completedAt: '2026-08-16 12:25:00', documentTaskId: 'task_2',
-        documentTaskExecutionId: 'execution_1',
-    })
-    assert.equal(result.supervisorApprovalComplete, true)
-    assert.equal(result.supervisorApprovalOutcome, 'approved')
-    assert.equal(result.supervisorSignatureComplete, true)
-    assert.equal(result.supervisorApproverId, 'supervisor_1')
-    assert.equal(result.supervisorSignerId, 'supervisor_1')
-    assert.equal(result.supervisorDocumentTaskId, 'task_2')
-    assert.equal(result.documentTaskExecutionId, 'execution_1')
-})
-
-test('refused native Supervisor Sign retains denial task without signature', () => {
-    const result = recordSupervisorAction({
-        supervisorId: 'supervisor_1', signerId: 'supervisor_1',
-        outcome: 'REFUSED', signatureComplete: false,
-        completedAt: '2026-08-16 12:25:00', documentTaskId: 'task_2',
-        documentTaskExecutionId: 'execution_1',
-        declineReason: 'Synthetic denial reason.',
+test('native Supervisor rejection is recorded before any signature task', () => {
+    const result = recordSupervisorDecision({
+        supervisorId: 'supervisor_1', approverId: 'supervisor_1',
+        outcome: 'DENIED', decidedAt: '2026-08-16 12:25:00',
     })
     assert.equal(result.status, 'denied')
-    assert.equal(result.supervisorApprovalComplete, false)
+    assert.equal(result.supervisorApprovalComplete, true)
     assert.equal(result.supervisorApprovalOutcome, 'denied')
     assert.equal(result.supervisorSignatureComplete, false)
     assert.equal(result.supervisorSignerId, '')
-    assert.equal(result.supervisorDocumentTaskId, 'task_2')
-    assert.equal(result.documentTaskExecutionId, 'execution_1')
+    assert.equal(result.supervisorDocumentTaskId, '')
+    assert.equal(result.launchSupervisorSignature, false)
 })
 
 test('finalization waits for employee signature evidence', () => {
@@ -576,13 +556,18 @@ test('runtime scripts create no fulfillment, renewal, ARM, or OAS work', () => {
     assert.doesNotMatch(source, /sn_hr_core_task|Scheduled|GlideSchedule|RESTMessage|sn_ws|ARM assignment|OAS provisioning/)
 })
 
-test('runtime launch is limited to a stable production template name', () => {
+test('runtime launch uses the certified split templates and final renderer roles', () => {
     const evidenceSource = fs.readFileSync(path.join(root, 'src/fluent/server/authorization-signature-evidence.server.js'), 'utf8')
     const initiationSource = fs.readFileSync(path.join(root, 'src/fluent/server/authorization-lifecycle-initiation.server.js'), 'utf8')
+    const supervisorLaunchSource = fs.readFileSync(path.join(root, 'src/fluent/server/supervisor-signature-launch.server.js'), 'utf8')
     assert.match(evidenceSource, /ROB Form 1768 Authorization/)
-    assert.match(initiationSource, /ROB Form 1768 Authorization/)
-    assert.doesNotMatch(evidenceSource, /ROB Form 1768 Employee Signature/)
-    assert.doesNotMatch(initiationSource, /ROB Form 1768 Employee Signature/)
+    assert.match(evidenceSource, /ROB Form 1768 Employee Signature/)
+    assert.match(evidenceSource, /ROB Form 1768 Supervisor Signature/)
+    assert.match(initiationSource, /ROB Form 1768 Employee Signature/)
+    assert.doesNotMatch(initiationSource, /ROB Form 1768 Authorization/)
+    assert.doesNotMatch(initiationSource, /ROB Form 1768 Supervisor Signature/)
+    assert.match(supervisorLaunchSource, /ROB Form 1768 Supervisor Signature/)
+    assert.doesNotMatch(supervisorLaunchSource, /ROB Form 1768 Authorization/)
     assert.doesNotMatch(evidenceSource, /ROB Reuse Supervisor Attestation/)
     assert.match(initiationSource, /sysapproval_approver/)
     assert.match(initiationSource, /GenerateDocumentAPI\(\)\.initiateDocumentTasks/)
@@ -595,11 +580,12 @@ test('runtime launch is limited to a stable production template name', () => {
     assert.doesNotMatch(evidenceSource, /new GlideRecord\('sysapproval_approver'\)/)
     assert.doesNotMatch(evidenceSource, /requestSupervisorDecision/)
     assert.doesNotMatch(initiationSource, /assigned_to/)
-    const source = evidenceSource + initiationSource
+    assert.doesNotMatch(supervisorLaunchSource, /assigned_to/)
+    const source = evidenceSource + initiationSource + supervisorLaunchSource
     assert.doesNotMatch(source, /41103ca0|bbd3e8e0|c34e242c|e4f117e8/)
 })
 
-test('employee completion remains inside the ordered native signing execution', () => {
+test('employee completion hands off to native approval before separate Supervisor signing', () => {
     const source = fs.readFileSync(
         path.join(root, 'src/fluent/server/authorization-signature-evidence.server.js'),
         'utf8'
@@ -608,21 +594,22 @@ test('employee completion remains inside the ordered native signing execution', 
     assert.match(source, /participantName === 'Employee'.*participantAction === 'fill'/s)
     assert.match(source, /participantName === 'Supervisor'.*participantAction === 'fill'/s)
     assert.match(source, /document_task_execution/)
-    assert.doesNotMatch(source, /ROB-owned approval Flow/)
+    assert.match(source, /ROB Form 1768 Employee Signature/)
+    assert.match(source, /ROB Form 1768 Supervisor Signature/)
     assert.doesNotMatch(source, /requestSupervisorDecision/)
     assert.doesNotMatch(source, /new GlideRecord\('sysapproval_approver'\)/)
 })
 
-test('the split-execution supervisor relaunch remains inactive', () => {
+test('the split-execution supervisor launcher is active only after approved evidence', () => {
     const rulesSource = fs.readFileSync(
         path.join(root, 'src/fluent/business-rules/rob-authorization-lifecycle.now.ts'),
         'utf8'
     )
     assert.match(
         rulesSource,
-        /launchSupervisorSignatureAfterApproval[\s\S]*?active:\s*false[\s\S]*?table:\s*'x_2166123_rob_auth_rob_auth'/
+        /launchSupervisorSignatureAfterApproval[\s\S]*?active:\s*true[\s\S]*?table:\s*'x_2166123_rob_auth_rob_auth'/
     )
-    assert.match(rulesSource, /Inactive historical split-execution launcher/)
+    assert.match(rulesSource, /Launches exactly one Supervisor-only native Fill\/signature execution/)
 })
 
 test('terminal supervisor evidence is immutable and bound to one native task', () => {
@@ -632,7 +619,8 @@ test('terminal supervisor evidence is immutable and bound to one native task', (
     )
     assert.match(source, /recordedSupervisorTaskId === current\.getUniqueValue\(\)/)
     assert.match(source, /already bound to another task/)
-    assert.match(source, /not part of the Employee signing execution/)
+    assert.match(source, /document_task_execution/)
+    assert.match(source, /committed Approved native approval evidence/)
 })
 
 test('accepted native Supervisor task can idempotently retry only a missing final PDF', () => {
@@ -642,22 +630,19 @@ test('accepted native Supervisor task can idempotently retry only a missing fina
     )
     assert.match(
         source,
-        /recordedSupervisorTaskId === current\.getUniqueValue\(\)[\s\S]*state === '3'[\s\S]*supervisor_approval_complete[\s\S]*supervisor_approval_outcome'\) === 'approved'[\s\S]*supervisor_signature_complete[\s\S]*!authorization\.getValue\('final_pdf_attachment'\)[\s\S]*generateFinalPdf\(authorization\)/
+        /recordedSupervisorTaskId === current\.getUniqueValue\(\)[\s\S]*state === '3'[\s\S]*supervisor_signature_complete[\s\S]*!authorization\.getValue\('final_pdf_attachment'\)[\s\S]*generateFinalPdf\(authorization\)/
     )
     assert.match(source, /already bound to another task/)
 })
 
-test('native Supervisor Fill/signature atomically records approval and signature', () => {
+test('native Supervisor Fill records signature only after committed approval', () => {
     const source = fs.readFileSync(
         path.join(root, 'src/fluent/server/authorization-signature-evidence.server.js'),
         'utf8'
     )
-    assert.match(source, /state === '7'/)
-    assert.match(source, /decline_reason/)
-    assert.match(source, /supervisor_approval_outcome', 'denied'/)
-    assert.match(source, /status', 'denied'/)
-    assert.match(source, /deniedDetails\.setValue\('status', 'denied'\)/)
-    assert.match(source, /supervisor_approval_outcome', 'approved'/)
+    assert.doesNotMatch(source, /state === '7'|decline_reason/)
+    assert.doesNotMatch(source, /supervisor_approval_outcome', 'approved'/)
+    assert.match(source, /supervisor_approval_outcome'\) !== 'approved'/)
     assert.match(source, /supervisor_signature_complete', '1'/)
     assert.match(source, /generateFinalPdf\(authorization\)/)
 })
@@ -668,7 +653,7 @@ test('post-signature final PDF fills and flattens the governed Form 1768 on Auth
         'utf8'
     )
     assert.match(source, /fillDocumentFieldsAndFlatten/)
-    assert.match(source, /authorizationTemplateName = 'ROB Form 1768 Authorization'/)
+    assert.match(source, /finalRendererName = 'ROB Form 1768 Authorization'/)
     assert.match(source, /x_2166123_rob_auth_rob_auth/)
     assert.match(source, /FlattenType:\s*'fully_flatten'/)
     assert.match(source, /Employee Signature Date\/Time/)

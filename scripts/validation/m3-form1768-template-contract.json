@@ -1,71 +1,89 @@
 {
-    "schemaVersion": 1,
+    "schemaVersion": 2,
     "table": "sn_hr_core_case",
-    "productionName": "ROB Form 1768 Authorization",
-    "mappingCount": 28,
-    "bodyMappings": [
-        "Employee Name",
-        "Position Title",
-        "Directorate/Office",
-        "Federal",
-        "Contractor",
-        "IPA",
-        "Auditor/Investigator",
-        "Contractor End Date",
-        "Auditor End Date",
-        "Justification",
-        "FPPS/WTTS",
-        "eOPF",
-        "USA Staffing",
-        "OAS/DataMart",
-        "Human Capital Reports",
-        "Workforce Profile Charts",
-        "Date",
-        "Authorization Number",
-        "HR Case Number",
-        "Form Version",
-        "Employee Signature Date/Time",
-        "Supervisor Signature Date/Time",
-        "Effective Date",
-        "Expiration Date",
-        "Decision Type",
-        "Generated Date/Time"
-    ],
-    "participants": [
-        {
-            "name": "Employee",
-            "order": "1",
-            "action": "fill",
-            "optional": false,
-            "advanced": false,
-            "userField": "subject_person",
-            "scriptTokens": []
+    "documentTemplatesScope": "sn_doc",
+    "applicationScope": "x_2166123_rob_auth",
+    "templates": {
+        "employee": {
+            "name": "ROB Form 1768 Employee Signature",
+            "purpose": "employee_signature_only",
+            "scope": "sn_doc",
+            "participant": {
+                "name": "Employee",
+                "order": "1",
+                "action": "fill",
+                "optional": false,
+                "advanced": false,
+                "userField": "subject_person",
+                "scriptTokens": []
+            },
+            "signatureMappings": 1
         },
-        {
-            "name": "Supervisor",
-            "order": "2",
-            "action": "fill",
-            "optional": false,
-            "advanced": true,
-            "userField": "",
-            "scriptTokens": [
-                "x_2166123_rob_auth_rob_auth",
-                "source_hrsd_case",
-                "supervisor",
-                "active"
+        "supervisor": {
+            "name": "ROB Form 1768 Supervisor Signature",
+            "purpose": "supervisor_signature_only_after_approval",
+            "scope": "sn_doc",
+            "participant": {
+                "name": "Supervisor",
+                "order": "1",
+                "action": "fill",
+                "optional": false,
+                "advanced": true,
+                "userField": "",
+                "scriptTokens": [
+                    "x_2166123_rob_auth_rob_auth",
+                    "source_hrsd_case",
+                    "supervisor",
+                    "active"
+                ]
+            },
+            "signatureMappings": 1
+        },
+        "finalRenderer": {
+            "name": "ROB Form 1768 Authorization",
+            "purpose": "post_signature_final_rendering_only",
+            "scope": "x_2166123_rob_auth",
+            "mappingCount": 28,
+            "bodyMappings": [
+                "Employee Name",
+                "Position Title",
+                "Directorate/Office",
+                "Federal",
+                "Contractor",
+                "IPA",
+                "Auditor/Investigator",
+                "Contractor End Date",
+                "Auditor End Date",
+                "Justification",
+                "FPPS/WTTS",
+                "eOPF",
+                "USA Staffing",
+                "OAS/DataMart",
+                "Human Capital Reports",
+                "Workforce Profile Charts",
+                "Date",
+                "Authorization Number",
+                "HR Case Number",
+                "Form Version",
+                "Employee Signature Date/Time",
+                "Supervisor Signature Date/Time",
+                "Effective Date",
+                "Expiration Date",
+                "Decision Type",
+                "Generated Date/Time"
+            ],
+            "signatureMappings": [
+                {
+                    "participant": "Employee",
+                    "type": "signature",
+                    "mandatory": true
+                },
+                {
+                    "participant": "Supervisor",
+                    "type": "signature",
+                    "mandatory": true
+                }
             ]
         }
-    ],
-    "signatureMappings": [
-        {
-            "participant": "Employee",
-            "type": "signature",
-            "mandatory": true
-        },
-        {
-            "participant": "Supervisor",
-            "type": "signature",
-            "mandatory": true
-        }
-    ]
+    }
 }

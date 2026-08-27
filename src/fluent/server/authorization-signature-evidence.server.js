@@ -1,5 +1,7 @@
 (function executeRule(current) {
-    var authorizationTemplateName = 'ROB Form 1768 Authorization'
+    var employeeTemplateName = 'ROB Form 1768 Employee Signature'
+    var supervisorTemplateName = 'ROB Form 1768 Supervisor Signature'
+    var finalRendererName = 'ROB Form 1768 Authorization'
     function isTrue(value) {
         return value === '1' || value === 'true'
     }
@@ -89,7 +91,7 @@
 
     function finalPdfTemplate() {
         var template = new GlideRecord('sn_doc_pdf_template')
-        template.addQuery('name', authorizationTemplateName)
+        template.addQuery('name', finalRendererName)
         template.addQuery('table', 'sn_hr_core_case')
         template.addQuery('state', 'published')
         template.addQuery('active', true)
@@ -139,7 +141,10 @@
         ? template.getValue('name')
         : ''
 
-    if (templateName !== authorizationTemplateName) {
+    if (
+        templateName !== employeeTemplateName &&
+        templateName !== supervisorTemplateName
+    ) {
         return
     }
 
@@ -178,17 +183,21 @@
         ? participant.getValue('action')
         : ''
     var isEmployeeStage =
-        participantName === 'Employee' && participantAction === 'fill'
+        templateName === employeeTemplateName &&
+        participantName === 'Employee' &&
+        participantAction === 'fill'
     var isSupervisorStage =
-        participantName === 'Supervisor' && participantAction === 'fill'
+        templateName === supervisorTemplateName &&
+        participantName === 'Supervisor' &&
+        participantAction === 'fill'
 
     if (!isEmployeeStage && !isSupervisorStage) {
         gs.error('ROB signature evidence rejected an unexpected participant contract.')
         return
     }
 
-    if (!executionId) {
-        gs.error('ROB signature evidence is missing the native execution reference.')
+    if (!executionId || !current.getValue('pdf_document')) {
+        gs.error('ROB signature evidence is missing its native execution or PDF document reference.')
         return
     }
 
@@ -232,7 +241,11 @@
         return
     }
 
-    if (signerId !== authorization.getValue('supervisor') || !completedAt) {
+    if (
+        state !== '3' ||
+        signerId !== authorization.getValue('supervisor') ||
+        !completedAt
+    ) {
         gs.error('ROB supervisor Fill/signature evidence did not satisfy the lifecycle gate.')
         return
     }
@@ -242,9 +255,12 @@
         return
     }
     if (
-        authorization.getValue('document_task_execution') !== executionId
+        !isTrue(authorization.getValue('supervisor_approval_complete')) ||
+        authorization.getValue('supervisor_approval_outcome') !== 'approved' ||
+        !authorization.getValue('supervisor_approver') ||
+        !authorization.getValue('supervisor_approval_date_time')
     ) {
-        gs.error('ROB supervisor action is not part of the Employee signing execution.')
+        gs.error('ROB supervisor signature arrived without committed Approved native approval evidence.')
         return
     }
     var recordedSupervisorTaskId = authorization.getValue(
@@ -257,8 +273,6 @@
         // accepted native task may retry only that missing idempotent output.
         if (
             state === '3' &&
-            isTrue(authorization.getValue('supervisor_approval_complete')) &&
-            authorization.getValue('supervisor_approval_outcome') === 'approved' &&
             isTrue(authorization.getValue('supervisor_signature_complete')) &&
             !authorization.getValue('final_pdf_attachment')
         ) {
@@ -271,51 +285,11 @@
         return
     }
 
-    authorization.setValue('supervisor_approver', signerId)
-    authorization.setValue('supervisor_approval_date_time', completedAt)
     authorization.setValue(
         'supervisor_document_task',
         current.getUniqueValue()
     )
     authorization.setValue('document_task_execution', executionId)
-
-    if (state === '7') {
-        if (!current.getValue('decline_reason')) {
-            gs.error('ROB Supervisor refusal requires a native decline reason.')
-            return
-        }
-        authorization.setValue('supervisor_approval_complete', '0')
-        authorization.setValue('supervisor_approval_outcome', 'denied')
-        authorization.setValue('supervisor_signature_complete', '0')
-        authorization.setValue('supervisor_signer', '')
-        authorization.setValue('supervisor_signature_date_time', '')
-        authorization.setValue('status', 'denied')
-        if (!authorization.update()) {
-            gs.error('ROB denied Authorization Form evidence could not be persisted.')
-            return
-        }
-
-        var deniedDetails = new GlideRecord('x_2166123_rob_auth_auth_detail')
-        deniedDetails.addQuery(
-            'rob_authorization_form',
-            authorization.getUniqueValue()
-        )
-        deniedDetails.addQuery('status', 'pending_authorization')
-        deniedDetails.query()
-        while (deniedDetails.next()) {
-            deniedDetails.setValue('status', 'denied')
-            deniedDetails.update()
-        }
-        return
-    }
-
-    if (state !== '3') {
-        gs.error('ROB Supervisor Fill ended in an unsupported terminal state.')
-        return
-    }
-
-    authorization.setValue('supervisor_approval_complete', '1')
-    authorization.setValue('supervisor_approval_outcome', 'approved')
     authorization.setValue('supervisor_signature_complete', '1')
     authorization.setValue('supervisor_signer', signerId)
     authorization.setValue('supervisor_signature_date_time', completedAt)

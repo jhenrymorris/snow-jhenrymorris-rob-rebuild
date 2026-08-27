@@ -38,7 +38,7 @@ function recordSupervisorDecision(input) {
 
     if (outcome === 'DENIED' || outcome === 'REFUSED') {
         return {
-            supervisorApprovalComplete: false,
+            supervisorApprovalComplete: true,
             supervisorApprovalOutcome: 'denied',
             supervisorApproverId: approverId,
             supervisorApprovalDateTime: decidedAt,
@@ -98,44 +98,8 @@ function recordSupervisorSignature(input) {
     }
 }
 
-// Production native Sign facade. One terminal ServiceNow Sign task supplies
-// the explicit Supervisor decision and, when accepted, the required signature.
-// A refused task is retained as denial evidence but never becomes a signature.
-function recordSupervisorAction(input) {
-    const decision = recordSupervisorDecision({
-        supervisorId: input.supervisorId,
-        approverId: input.signerId,
-        outcome: input.outcome,
-        decidedAt: input.completedAt,
-    })
-    if (!decision.launchSupervisorSignature) {
-        required(input.declineReason, 'supervisor decline reason')
-        return {
-            ...decision,
-            supervisorDocumentTaskId: required(
-                input.documentTaskId,
-                'supervisor document task'
-            ),
-            documentTaskExecutionId: required(
-                input.documentTaskExecutionId,
-                'document task execution'
-            ),
-        }
-    }
-
-    return {
-        ...decision,
-        ...recordSupervisorSignature({
-            ...input,
-            supervisorApprovalComplete: decision.supervisorApprovalComplete,
-            supervisorApprovalOutcome: decision.supervisorApprovalOutcome,
-        }),
-    }
-}
-
 module.exports = {
     recordEmployeeSignature,
     recordSupervisorDecision,
     recordSupervisorSignature,
-    recordSupervisorAction,
 }

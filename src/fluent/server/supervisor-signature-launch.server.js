@@ -1,5 +1,5 @@
 (function executeRule(current) {
-    var supervisorTemplateName = 'ROB Form 1768 Authorization'
+    var supervisorTemplateName = 'ROB Form 1768 Supervisor Signature'
 
     function isTrue(value) {
         return value === '1' || value === 'true'
@@ -57,7 +57,6 @@
     var existingTask = new GlideRecord('sn_doc_task')
     existingTask.addQuery('parent', sourceCase.getUniqueValue())
     existingTask.addQuery('document_template', templateId)
-    existingTask.addQuery('assigned_to', supervisorId)
     existingTask.addQuery('state', 'IN', '1,2,3')
     existingTask.addNotNullQuery('document_task_execution')
     existingTask.addNotNullQuery('pdf_document')

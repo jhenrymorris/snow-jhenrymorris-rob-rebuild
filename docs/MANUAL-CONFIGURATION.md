@@ -1199,3 +1199,33 @@ and M4 entry rules inactive while applying the configuration.
 ServiceNow Sign participant action `Fill` plus its mandatory signature mapping
 is the electronic-signature mechanism. Supervisor task state `3` is accepted
 Submit (Approved + Signed); state `7` is Refuse (Denied without signature).
+
+### Authoritative C1 split-stage configuration — supersedes Fill/Refuse
+
+The historical Fill/Refuse section above is retained as evidence only. C1 uses
+the C0-certified split control flow and does not use PDF Fill for denial.
+
+1. Keep `ROB Form 1768 Employee Signature` in `Document Templates` (`sn_doc`)
+   active and Published with exactly one required order-1 Employee `Fill`
+   participant sourced from `subject_person` and one mandatory Employee-bound
+   signature mapping.
+2. Keep `ROB Form 1768 Supervisor Signature` in `Document Templates` active
+   and Published with exactly one required order-1 governed Supervisor `Fill`
+   participant and one mandatory Supervisor-bound signature mapping.
+3. Preserve `ROB Form 1768 Authorization` as the active Published 28-map final
+   renderer. Do not launch it as a signing workflow.
+4. Keep `ROB Authorization Supervisor Approval` inactive until the split-stage
+   source is installed and verified. It must use Ask for Approval on the
+   governed Authorization Form with its Supervisor as approver.
+5. Rejected approval must persist native approval identity/time and Denied on
+   the Authorization Form and its pending Access Details. It must not launch a
+   Supervisor signing task or finalization.
+6. Approved approval may launch only the Supervisor-only template. Finalization
+   requires employee signature, native Approved evidence, and Supervisor
+   signature.
+7. Keep lifecycle entry rules and all M4 entry rules inactive until the focused
+   Approved New and Denial gates begin. Confirm temporary `sn_doc.admin` and
+   `sn_doc.writer` assignments are zero.
+8. Run `npm run verify:m3-template:production` before activating any lifecycle
+   entry rule. The expected result is employee 1, supervisor 1, final mappings
+   28.

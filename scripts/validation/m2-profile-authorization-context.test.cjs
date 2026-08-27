@@ -14,7 +14,8 @@ const resolverSource = fs.readFileSync(
 )
 const { initiate } = require('../../src/server/authorization/AuthorizationLifecycleService')
 const {
-    recordSupervisorAction,
+    recordSupervisorDecision,
+    recordSupervisorSignature,
 } = require('../../src/server/authorization/SignatureExecutionService')
 
 function baseTables() {
@@ -329,7 +330,7 @@ test('later profile changes do not mutate Authorization Form snapshots', () => {
     assert.equal(result.form.supervisorId, 'supervisor_default')
 })
 
-test('supervisor action routes to the snapshotted Authorization Form Supervisor', () => {
+test('supervisor approval and signature route to the snapshotted Authorization Form Supervisor', () => {
     const { resolver, tables } = makeResolver()
     const context = contextForLifecycle(resolver.resolve('employee_primary', '', ''))
     const form = initiate(lifecycleInput(context)).form
@@ -337,10 +338,21 @@ test('supervisor action routes to the snapshotted Authorization Form Supervisor'
         'supervisor_selected'
     assert.throws(
         () =>
-            recordSupervisorAction({
+            recordSupervisorDecision({
+                supervisorId: form.supervisorId,
+                approverId: 'supervisor_selected',
+                outcome: 'APPROVED',
+                decidedAt: '2026-08-20 20:05:00',
+            }),
+        /does not match/
+    )
+    assert.throws(
+        () =>
+            recordSupervisorSignature({
                 supervisorId: form.supervisorId,
                 signerId: 'supervisor_selected',
-                outcome: 'APPROVED',
+                supervisorApprovalComplete: true,
+                supervisorApprovalOutcome: 'approved',
                 signatureComplete: true,
                 completedAt: '2026-08-20 20:10:00',
                 documentTaskId: 'task_1',

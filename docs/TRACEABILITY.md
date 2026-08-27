@@ -356,6 +356,18 @@ remain prohibited.
 | Split runtime removal | Post-approval relaunch rule source-inactive; approval response rule remains inactive | SOURCE/BUILD PASS; INSTALL PENDING |
 | Security and scope | No new table, field, role, broad privilege, native-case Write, or M4 activation | PASS |
 
+## C1 split-stage implementation traceability (2026-08-27)
+
+| Requirement | C1 implementation/evidence | Status |
+|---|---|---|
+| Employee signature | Active Published `sn_doc` template with one required Employee `Fill` participant sourced from `subject_person` and one mandatory signature mapping | PDI CONFIG PASS; RUNTIME PENDING |
+| Supervisor approval | One ROB-owned Ask for Approval Flow on the governed Authorization Form; native approval record remains authoritative | CONFIG REVIEW PASS; FLOW INACTIVE |
+| Denial | Rejected branch stores native approver/update evidence, marks approval complete with canonical Denied outcome, and denies the form plus pending details | CONFIG REVIEW PASS; RUNTIME PENDING |
+| Supervisor signature | Active Published `sn_doc` template with one required governed Supervisor `Fill` participant and one mandatory signature mapping | PDI CONFIG PASS; RUNTIME PENDING |
+| Final governed PDF | Existing active Published `ROB Form 1768 Authorization` retained as the 28-map renderer only | PDI CONFIG PASS; RUNTIME PENDING |
+| Source lifecycle | Employee completion hands off to approval; Approved alone launches Supervisor signing; Supervisor completion requires prior approval before finalization | SOURCE/UNIT/BUILD PASS; INSTALL PENDING |
+| M4 separation | M4 entry rules remain inactive and C1 creates no fulfillment tasks | SAFE STATE PASS |
+
 ## V2 continuous native Sign configuration boundary (2026-08-26)
 
 | Requirement | Evidence | Status |

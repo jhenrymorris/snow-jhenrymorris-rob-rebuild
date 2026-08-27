@@ -223,3 +223,25 @@ These are implementation work, not unresolved capability questions:
 **C0 — COMPLETE**<br>
 **FINAL REMAINING ARCHITECTURE — FROZEN**<br>
 **C1 / M3 IMPLEMENTATION — READY**
+
+## C1 split-stage implementation evidence (2026-08-27)
+
+- The C0-selected split architecture remains unchanged. No capability row is
+  reclassified and no excluded alternative has been reopened.
+- Production readiness validation now passes against two active Published
+  `sn_doc` signing templates: one required Employee `Fill` participant sourced
+  from `subject_person`, and one required governed Supervisor `Fill`
+  participant. Each template has exactly one mandatory participant-bound
+  signature mapping.
+- The active Published `ROB Form 1768 Authorization` remains the post-signature
+  renderer with 28 mappings and is not used to orchestrate signing.
+- The ROB-owned approval Flow remains inactive pending source installation and
+  focused runtime proof. Its Approved and Rejected branches use native
+  `sysapproval_approver` evidence; the Rejected branch persists Denied on the
+  Authorization Form and its pending Access Details.
+- Local pre-install acceptance is PASS: M2 19/19, R1 9/9, Security 22/22,
+  Deployment 16/16, R3 30/30, R3 adapter 13/13, R4 62/62, M4 26/26,
+  split-template validator 7/7, normal build, and frozen-key build. Generated
+  key diff is empty.
+- Runtime classification remains pending until the supported IDE install and
+  focused Approved New and Denial proofs are complete.

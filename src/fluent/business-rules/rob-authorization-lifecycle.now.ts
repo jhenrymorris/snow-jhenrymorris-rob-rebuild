@@ -63,9 +63,9 @@ export const captureAuthorizationSignatureEvidence = BusinessRule({
     when: 'after',
     action: ['update'],
     order: 300,
-    filterCondition: 'stateIN3,7^closed_atISNOTEMPTY',
+    filterCondition: 'state=3^closed_atISNOTEMPTY',
     description:
-        'Captures committed employee and supervisor evidence only from the controlled production ServiceNow Sign template; refusal denies the pending authorization.',
+        'Captures committed employee-only or approved Supervisor-only ServiceNow Sign Fill evidence. Native approval rejection, not PDF Fill, denies the authorization.',
     script: Now.include('../server/authorization-signature-evidence.server.js'),
 })
 
@@ -87,7 +87,7 @@ export const captureSupervisorApprovalDecision = BusinessRule({
 export const launchSupervisorSignatureAfterApproval = BusinessRule({
     $id: Now.ID['launch-supervisor-signature-after-approval'],
     name: 'ROB Launch Supervisor Signature After Approval',
-    active: false,
+    active: true,
     table: 'x_2166123_rob_auth_rob_auth',
     when: 'after',
     action: ['update'],
@@ -95,7 +95,7 @@ export const launchSupervisorSignatureAfterApproval = BusinessRule({
     filterCondition:
         'status=pending_supervisor_approval_signature^employee_signature_complete=true^supervisor_approval_complete=true^supervisor_approval_outcome=approved^supervisor_signature_complete=false',
     description:
-        'Inactive historical split-execution launcher. The production Form 1768 now remains in one ordered Employee-to-Supervisor native Sign execution.',
+        'Launches exactly one Supervisor-only native Fill/signature execution after the governed Authorization Form contains committed Employee signature and Approved native approval evidence.',
     script: Now.include('../server/supervisor-signature-launch.server.js'),
 })
 

@@ -336,3 +336,16 @@ expansion were not used.
 | TM-220 | Australia contract verification | Official Fill documentation supports Save/Submit; native Decline is documented for `Sign` participants, not PDF `Fill` | CONFIRMED UNSUPPORTED |
 | TM-221 | Denial safe stop | `DOCT0001014` preserved Ready/untouched; no manufactured state `7`, direct metadata write, custom denial engine, broad privilege, or M4 activation | PASS |
 | TM-222 | Remaining M3 matrix | Amendment, Renewal, Reuse, Exception, immutability, and final closeout not continued after focused Denial hard stop | NOT RUN / BLOCKED-PLATFORM |
+
+### C1 split-stage native approval and signing
+
+| ID | Test | Method | Status |
+|---|---|---|---|
+| TM-223 | Split-template contract | Unit validator requires separate Employee and Supervisor `sn_doc` Fill templates plus the 28-map renderer; shared execution, Fill state-7 denial, `Sign`, and optional-skip assertions are absent | PASS 7/7 |
+| TM-224 | Production template readiness | Read-only validator finds exactly one active Published employee template, one active Published supervisor template, one participant/signature mapping on each, and the final renderer with 28 mappings | PDI PASS |
+| TM-225 | Employee participant residue | Employee is non-advanced `subject_person`; hidden copied Supervisor resolver script is empty | PDI PASS |
+| TM-226 | Native approval branches | Ask for Approval uses the governed Authorization Form and Supervisor; Approved and Rejected branch lookups resolve the matching native approval record | CONFIG REVIEW PASS; RUNTIME PENDING |
+| TM-227 | Rejected persistence | Rejected branch records native approver/update time, canonical Denied outcome, and denies only pending Access Details for the current Authorization Form | CONFIG REVIEW PASS; RUNTIME PENDING |
+| TM-228 | Focused Approved New | Employee signs, native approval Approved, governed Supervisor signs, one final PDF is attached only to the Authorization Form, Active, fulfillment zero | PENDING AFTER INSTALL |
+| TM-229 | Focused Denial | Employee signs, native approval Rejected with comments, Authorization Form/details Denied, no Supervisor signing task/PDF/Active/supersession/fulfillment | PENDING AFTER INSTALL |
+| TM-230 | C1 local acceptance | M2 19/19; R1 9/9; Security 22/22; Deployment 16/16; R3 30/30; adapter 13/13; R4 62/62; M4 26/26; normal/frozen builds; generated-key diff empty | PASS |

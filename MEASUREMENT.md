@@ -2441,3 +2441,60 @@ Not exposed by session/tool — no estimate recorded.
   assigned for reconciliation in C1; it is not split-stage runtime proof.
 - Result: **C0 — COMPLETE. FINAL REMAINING ARCHITECTURE — FROZEN. C1 / M3
   IMPLEMENTATION — READY.** No C1 implementation was started.
+
+## C1 — M3 Final Runtime + Closeout
+
+- Package: `C1 — M3 Final Runtime + Closeout`.
+- Measurement shape: `one-pass`.
+- Start timestamp: `2026-08-26T20:07:07-04:00`.
+- Active session start: `2026-08-26T20:07:07-04:00`.
+- Branch: `codex/dev437-rebuild-identity`.
+- Starting commit: `e87e6fd`.
+- Target PDI: `dev437065`.
+- Scope: `x_2166123_rob_auth`.
+- SDK baseline: `4.11.0`.
+- C0 architecture status: `FROZEN`.
+- Required `UNKNOWN` capabilities: `0`.
+- Expected count assertions:
+  - custom business tables = `4`;
+  - new custom approval tables = `0`;
+  - new custom signature tables = `0`;
+  - new custom task tables = `0`;
+  - new custom audit tables = `0`;
+  - broad GlideRecord privileges = `0`;
+  - broad native-case Write privileges = `0`;
+  - broad native-task Write privileges = `0`;
+  - M4 production task generation during C1 = `0`.
+- Starting state: implementation in progress; no source install or PDI runtime
+  acceptance is claimed by this start record.
+
+### C1 split-stage preflight evidence
+
+- Date: `2026-08-27`.
+- Native signing templates: `ROB Form 1768 Employee Signature`
+  (`31efa184834b8b104f5193a6feaad35e`) and
+  `ROB Form 1768 Supervisor Signature`
+  (`a2cb0d4483078b104f5193a6feaad35c`) are active Published `sn_doc`
+  templates on `sn_hr_core_case`. Each has one required order-1 `fill`
+  participant and one mandatory participant-bound signature mapping.
+- Employee participant `3defe584834b8b104f5193a6feaad357` is non-advanced,
+  resolves `subject_person`, and has no residual advanced script. Supervisor
+  participant `675d414883078b104f5193a6feaad332` retains the governed advanced
+  resolver.
+- Final renderer `ROB Form 1768 Authorization`
+  (`7119926383f247104f5193a6feaad318`) remains active Published with 28
+  mappings and is not used as a signing workflow.
+- Read-only production readiness validator: PASS (`employee 1`, `supervisor
+  1`, `final mappings 28`).
+- Approval Flow `73105d6b833a07104f5193a6feaad363` remains inactive and Draft.
+  The Approved branch already persisted the native approver and approval
+  record update time. The Rejected branch now marks approval complete, stores
+  the native approver and native update time, sets the Authorization Form and
+  its pending details to Denied, and retains native `sysapproval_approver` as
+  the comments/evidence authority.
+- Local regression pre-install: M2 19/19, R1 9/9, Security 22/22, Deployment
+  16/16, R3 30/30, R3 adapter 13/13, R4 62/62, M4 26/26, and split-template
+  validator 7/7 PASS. Normal and frozen SDK 4.11.0 builds PASS. Generated-key
+  diff remains empty.
+- Lifecycle entry rules and M4 rules remain inactive. Source installation and
+  runtime acceptance have not yet been performed.
