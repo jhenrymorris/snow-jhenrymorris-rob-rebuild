@@ -695,6 +695,23 @@ test('native approval response remains inactive until a safe persistence boundar
     )
 })
 
+test('governed approval Flow persists canonical choice values without scripted markers', () => {
+    const source = fs.readFileSync(
+        path.join(
+            root,
+            'src/fluent/generated/automation/flow/sys_hub_flow_73105d6b833a07104f5193a6feaad363.now.ts'
+        ),
+        'utf8'
+    )
+    assert.match(source, /supervisor_approval_outcome:\s*'approved'/)
+    assert.match(source, /supervisor_approval_outcome:\s*'denied'/)
+    assert.match(source, /status:\s*'denied'/)
+    assert.doesNotMatch(
+        source,
+        /(?:supervisor_approval_outcome|status):\s*wfa\.inlineScript\(\"return '(?:approved|denied)';\"\)/
+    )
+})
+
 test('production lifecycle initiation is active after native signing configuration passes', () => {
     const lifecycleBusinessRules = fs.readFileSync(
         path.join(root, 'src/fluent/business-rules/rob-authorization-lifecycle.now.ts'),

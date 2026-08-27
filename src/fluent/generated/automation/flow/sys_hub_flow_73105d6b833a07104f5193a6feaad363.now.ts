@@ -121,7 +121,7 @@ Flow(
                         record: wfa.dataPill(_params.trigger.current, 'reference'),
                         values: TemplateValue({
                             supervisor_approval_complete: 'true',
-                            supervisor_approval_outcome: wfa.inlineScript("return 'approved';"),
+                            supervisor_approval_outcome: 'approved',
                             supervisor_approver: wfa.dataPill(actionInstance_3.Record.approver, 'reference'),
                             supervisor_approval_date_time: wfa.dataPill(
                                 actionInstance_3.Record.sys_updated_on,
@@ -167,9 +167,9 @@ return 'document_id=' + authorization.sys_id + '^source_table=x_2166123_rob_auth
                         table_name: 'x_2166123_rob_auth_rob_auth',
                         record: wfa.dataPill(_params.trigger.current, 'reference'),
                         values: TemplateValue({
-                            status: wfa.inlineScript("return 'denied';"),
+                            status: 'denied',
                             supervisor_approval_complete: 'true',
-                            supervisor_approval_outcome: wfa.inlineScript("return 'denied';"),
+                            supervisor_approval_outcome: 'denied',
                             supervisor_approver: wfa.dataPill(actionInstance_6.Record.approver, 'reference'),
                             supervisor_approval_date_time: wfa.dataPill(
                                 actionInstance_6.Record.sys_updated_on,
@@ -211,7 +211,7 @@ return 'rob_authorization_form=' + authorization.sys_id + '^status=pending_autho
                                 table_name: 'x_2166123_rob_auth_auth_detail',
                                 record: wfa.dataPill(item_9, 'string'),
                                 values: TemplateValue({
-                                    status: wfa.inlineScript("return 'denied';"),
+                                    status: 'denied',
                                 }),
                             }
                         )
