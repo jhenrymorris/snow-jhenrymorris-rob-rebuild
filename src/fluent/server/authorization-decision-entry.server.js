@@ -129,6 +129,29 @@
         }[String(status || '')] === true
     }
 
+    function annualRenewalDisposition(authorizations, evaluationDate) {
+        var active = []
+        var index
+
+        for (index = 0; index < authorizations.length; index += 1) {
+            if (authorizations[index].status === 'active') {
+                active.push(authorizations[index])
+            }
+        }
+
+        if (active.length !== 1) return 'unknown'
+
+        var expirationDate = String(active[0].expirationDate || '')
+        if (
+            !/^\d{4}-\d{2}-\d{2}$/.test(expirationDate) ||
+            !/^\d{4}-\d{2}-\d{2}$/.test(evaluationDate)
+        ) {
+            return 'unknown'
+        }
+
+        return expirationDate <= evaluationDate
+    }
+
     function subjectAuthorizations(subjectId) {
         var records = []
         var authorization = new GlideRecord('x_2166123_rob_auth_rob_auth')
@@ -271,6 +294,7 @@
     var businessJustification = String(
         current.getValue('rich_description') || ''
     )
+    var evaluationDate = new GlideDateTime().getValue().substring(0, 10)
     var context = {
         request: {
             subjectId: subjectId,
@@ -300,11 +324,15 @@
             invalidAccessItems: accessContext.invalidAccessItems,
         },
         configuration: activeConfiguration(),
-        evaluationDate: new GlideDateTime().getValue().substring(0, 10),
+        evaluationDate: evaluationDate,
         authorizations: authorizations,
-        // DEC-MAP-03 remains unresolved. Do not infer an annual-renewal
-        // disposition from proximity to the configured recertification date.
-        annualRenewalDue: 'unknown',
+        // Use the governed Authorization expiration date as the deterministic
+        // annual-renewal boundary. Missing or ambiguous active history remains
+        // unknown and is blocked by the committed decision service.
+        annualRenewalDue: annualRenewalDisposition(
+            authorizations,
+            evaluationDate
+        ),
         materialContext: materialContext(
             profileContext,
             businessJustification,

@@ -152,9 +152,15 @@ test('Payroll and Workforce entry rules are source-owned, idempotent, and inacti
     assert.match(businessRules, /order: 150/)
 })
 
-test('unknown DEC-MAP annual-renewal input remains unknown', () => {
-    assert.match(adapter, /annualRenewalDue: 'unknown'/)
-    assert.doesNotMatch(adapter, /annualRenewalDue:\s*(?:true|false)/)
+test('annual renewal is derived from the governed expiration boundary and fails closed', () => {
+    assert.match(adapter, /function annualRenewalDisposition/)
+    assert.match(adapter, /active\.length !== 1\) return 'unknown'/)
+    assert.match(adapter, /return expirationDate <= evaluationDate/)
+    assert.match(
+        adapter,
+        /annualRenewalDue:\s*annualRenewalDisposition\(\s*authorizations,\s*evaluationDate\s*\)/
+    )
+    assert.doesNotMatch(adapter, /annualRenewalDue:\s*(?:true|false|'unknown')/)
     assert.match(adapter, /DEC-MAP-01\/02/)
     assert.doesNotMatch(adapter, /\?\s*'unchanged'\s*:\s*'changed'/)
 })
