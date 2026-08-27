@@ -1193,3 +1193,20 @@ or M4 activation occurred.
 **M3 - BLOCKED-PLATFORM. Native Supervisor Fill/Refuse denial - UNSUPPORTED ON
 AUSTRALIA. This is an application-contract/platform-capability mismatch, not a
 V2 bootstrap or installer defect. M4 - NOT READY.**
+
+## C1 superseding final runtime evidence (2026-08-27)
+
+The historical Fill/Refuse blocker above is retained but superseded by the
+C0-certified split-stage architecture. C1 accepted Approved New, native
+approval Denial, Amendment, Renewal, Reuse, and Exception. Reuse case
+`HRC0001044` resolved `REUSE_FULLY_COVERED`; `DOCT0001034` closed once by the
+governed Supervisor with native execution evidence, and the case persisted the
+approved attestation and fulfillment gate. Replay created no duplicate task,
+attachment, form, detail, final Authorization PDF, supersession, or M4 task.
+
+Historical immutability was proven by changing and restoring the synthetic
+live title/Department/Manager while `ROBA0001012`, its signer/approval evidence,
+and final PDF SHA-256 remained unchanged. Final regression and normal/frozen
+build gates pass with zero unexpected generated-key changes.
+
+**C1 — COMPLETE. M3 — COMPLETE. C2 / M4 RUNTIME — READY.**

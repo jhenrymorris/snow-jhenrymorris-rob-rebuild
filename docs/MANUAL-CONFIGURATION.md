@@ -1229,3 +1229,18 @@ the C0-certified split control flow and does not use PDF Fill for denial.
 8. Run `npm run verify:m3-template:production` before activating any lifecycle
    entry rule. The expected result is employee 1, supervisor 1, final mappings
    28.
+
+### C1 accepted Reuse configuration
+
+The active Published native Reuse template is `ROB Reuse Supervisor
+Attestation` (`2036ad9483874f104f5193a6feaad340`) in Document Templates. It
+contains one required governed Supervisor Fill participant and one mandatory
+signature mapping. Earlier V2-owned/copy candidates are inactive historical
+records and must not be reactivated.
+
+The HR Core-owned `RobHrCasePersistenceBridge` remains Caller Restriction. The
+only C1 additions were Allowed Execute API records for the exact V2 lifecycle
+initiation and native-signature evidence Business Rules after the bridge source
+refresh invalidated its earlier caller fingerprint. Do not approve generic
+scope callers, table writes, or GlideRecord APIs. M4 entry rules remain
+inactive for C1 closeout.

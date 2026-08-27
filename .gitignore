@@ -21,3 +21,6 @@ tmp/
 
 # Empty file produced by the native Document Templates download surface.
 /javascript
+
+# Local read-only PDI query capture produced during C1 acceptance.
+/HRC0001035

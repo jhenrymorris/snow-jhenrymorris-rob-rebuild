@@ -349,3 +349,13 @@ expansion were not used.
 | TM-228 | Focused Approved New | Employee signs, native approval Approved, governed Supervisor signs, one final PDF is attached only to the Authorization Form, Active, fulfillment zero | PENDING AFTER INSTALL |
 | TM-229 | Focused Denial | Employee signs, native approval Rejected with comments, Authorization Form/details Denied, no Supervisor signing task/PDF/Active/supersession/fulfillment | PENDING AFTER INSTALL |
 | TM-230 | C1 local acceptance | M2 19/19; R1 9/9; Security 22/22; Deployment 16/16; R3 30/30; adapter 13/13; R4 62/62; M4 26/26; normal/frozen builds; generated-key diff empty | PASS |
+
+### C1 final acceptance (2026-08-27)
+
+| ID | Test | Runtime evidence | Status |
+|---|---|---|---|
+| TM-231 | Final lifecycle matrix | Approved New, Denial, Amendment (approved and rejected replacement), Renewal, Reuse, and Exception completed against frozen requirements | PASS |
+| TM-232 | Reuse zero-governed-artifact contract | `HRC0001044`; `REUSE_FULLY_COVERED`; `DOCT0001034`; no new Authorization Form, Access Detail, governed final Authorization PDF, supersession, or M4 task | PASS |
+| TM-233 | Reuse idempotency | Completed lifecycle replay retained one task/execution/working attachment and unchanged terminal evidence | PASS |
+| TM-234 | Historical immutability | Live synthetic title/Department/Manager mutation did not change `ROBA0001012` snapshots, signers, timestamps, or final PDF hash; live context restored | PASS |
+| TM-235 | Final regression/build | M2 19/19; R1 9/9; Security 22/22; Deployment 16/16; R3 30/30; adapter 13/13; R4 64/64; M4 26/26; template 7/7; normal/frozen builds PASS; generated-key unexpected changes 0 | PASS |

@@ -412,3 +412,16 @@ remain prohibited.
 | State `7` evidence | Decline is documented for `Sign`, not PDF `Fill`; no supported Fill operation can produce required state/reason | BLOCKED-PLATFORM |
 | Safe state | `DOCT0001014` untouched; no direct write, custom engine, broad privilege, or M4 activation | PASS |
 | M3/M4 status | Full matrix stopped after focused Denial failed as required | M3 BLOCKED-PLATFORM; M4 NOT READY |
+
+## C1 final M3 closeout (2026-08-27)
+
+| Requirement | Final evidence | Status |
+|---|---|---|
+| Split signing and approval | Employee-only Fill, native Ask for Approval Approved/Rejected, Supervisor-only Fill, and 28-map final renderer all produced accepted evidence | PASS |
+| New / Denial / Amendment / Renewal / Exception | Existing accepted C1 evidence retained; no closed scenario was restarted | PASS |
+| Reuse | `HRC0001044` / `DOCT0001034`; current governed Supervisor attestation; no new governed form/detail/final PDF/supersession/M4 task | PASS |
+| Retry/idempotency | Replayed completed Reuse event retained one task/execution/attachment and unchanged terminal evidence | PASS |
+| Historical immutability | Live synthetic context mutation left `ROBA0001012` and final attachment hash unchanged; source context restored | PASS |
+| Least privilege | Exact HR Core bridge Execute callers only; broad GlideRecord/native-case/native-task privileges and temporary roles remain zero | PASS |
+| Regression/build | M2 19, R1 9, Security 22, Deployment 16, R3 30, adapter 13, R4 64, M4 26, template 7; normal/frozen builds PASS; keys clean | PASS |
+| Milestone | C1 and M3 complete; M4 production runtime not activated | COMPLETE / C2 READY |

@@ -2498,3 +2498,41 @@ Not exposed by session/tool — no estimate recorded.
   diff remains empty.
 - Lifecycle entry rules and M4 rules remain inactive. Source installation and
   runtime acceptance have not yet been performed.
+
+### C1 final acceptance and closeout evidence
+
+- Final acceptance date: `2026-08-27`.
+- Accepted runtime matrix: Approved New `PASS`, Denial `PASS`, Amendment
+  `PASS` (including rejected replacement), Renewal `PASS`, Reuse `PASS`, and
+  deterministic Exception Review `PASS`.
+- Reuse proof: `HRC0001044` resolved `REUSE_FULLY_COVERED` against active
+  `ROBA0001012`. Native task `DOCT0001034` used the one active Published
+  `sn_doc` template `2036ad9483874f104f5193a6feaad340`, closed once by the
+  governed `V2 Supervisor B`, and retained execution
+  `b58b61d483c74f104f5193a6feaad3a4`. The case persisted `approved` status,
+  signer/time, task/execution, context key, and fulfillment gate `true`.
+- Reuse frozen result: new Authorization Forms `0`, new Authorized Access
+  Details `0`, new governed final Authorization PDFs `0`, supersessions `0`,
+  and M4 fulfillment tasks `0`. The native attestation working PDF remains
+  native task evidence and is not a governed final Authorization PDF.
+- Retry/idempotency proof: replaying the completed `HRC0001044` lifecycle
+  retained exactly one task, execution, working attachment, signer, and
+  completion time; duplicate governed artifacts and supersessions remained
+  `0`.
+- Historical immutability proof: the synthetic live title, Department, and
+  Manager were changed and then restored. Finalized `ROBA0001012` retained
+  position `Fallback Analyst`, organization `90ce5f5f83b6c3104f5193a6feaad3af`,
+  Supervisor/signers `9cee5b9f83b6c3104f5193a6feaad3f7`, and final PDF
+  `92d7c8d483830f104f5193a6feaad329` with SHA-256
+  `a130efebd83ef4644d2c60a7ed3c278f0d366e6234c9db3fc136b5dc8c58ab64`.
+- The HR Core bridge source refresh caused ServiceNow Caller Restriction to
+  generate two new exact Execute API requests. Only the two precise V2
+  Business Rule callers were Allowed; no table write or generic GlideRecord
+  privilege was added.
+- Final regression: M2 `19/19`, R1 `9/9`, Security `22/22`, Deployment
+  `16/16`, R3 `30/30`, R3 adapter `13/13`, R4 `64/64`, M4 `26/26`, and split
+  template validator `7/7` all PASS.
+- Normal SDK 4.11.0 build and sequential frozen-key build PASS. `git diff
+  --check` PASS and unexpected generated-key changes = `0`.
+- Final state: **C0 — COMPLETE. C1 — COMPLETE. M1 — COMPLETE. M2 — COMPLETE.
+  M3 — COMPLETE. C2 / M4 Runtime — READY. C3 / M5 — NOT STARTED.**

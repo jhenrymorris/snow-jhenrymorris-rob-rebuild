@@ -308,3 +308,14 @@ Authorization Form context fields are read-only and audited. Legacy case fields
 remain protected but are inactive compatibility metadata; the correction UI
 action is disabled. No temporary role, broad privilege, snapshot bypass, or
 new business table is part of this architecture.
+
+## 15. C1 final runtime security evidence
+
+C1 retained exactly four custom business tables and added no approval,
+signature, audit, task, or attachment table. Broad GlideRecord Execute,
+broad native-case Write, broad native-task Write, and temporary elevated roles
+remain zero. The HR Core bridge uses Caller Restriction; only the exact V2
+lifecycle and signature-evidence Business Rule callers are Allowed to execute
+the allowlisted bridge. Direct-URL final Authorization PDF access was denied to
+the unrelated synthetic employee and remained available to the authorized
+compliance/admin persona. M4 production task generation remained zero.

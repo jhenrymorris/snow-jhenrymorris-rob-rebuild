@@ -913,3 +913,19 @@ Build evidence is package-specific and must remain distinct from install, runtim
 - Result: **M3 BLOCKED-PLATFORM - native Supervisor Fill/Refuse denial is
   unsupported on Australia. M4 NOT READY.** Documentation-only blocker
   checkpoint follows; no application reinstall is required.
+
+### 2026-08-27 C1 final acceptance and M3 closeout
+
+- The historical Fill/Refuse stop above was superseded by the C0-certified
+  split Employee signing, native approval, Supervisor signing, and final
+  renderer architecture.
+- Final runtime matrix: Approved New, Denial, Amendment, Renewal, Reuse, and
+  Exception PASS. Reuse `HRC0001044` / `DOCT0001034` retained one current
+  Supervisor attestation and created no governed Authorization Form, Access
+  Detail, final Authorization PDF, supersession, or M4 task.
+- Retry/idempotency, historical immutability, direct-URL attachment security,
+  and least privilege PASS.
+- Final gates: M2 19/19, R1 9/9, Security 22/22, Deployment 16/16, R3 30/30,
+  adapter 13/13, R4 64/64, M4 26/26, template 7/7, normal SDK build, frozen-key
+  build, and diff check PASS. Unexpected generated-key changes = 0.
+- Result: **C1 COMPLETE. M3 COMPLETE. C2 / M4 Runtime READY.**

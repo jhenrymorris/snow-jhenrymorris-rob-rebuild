@@ -245,3 +245,15 @@ These are implementation work, not unresolved capability questions:
   key diff is empty.
 - Runtime classification remains pending until the supported IDE install and
   focused Approved New and Denial proofs are complete.
+
+### C1 runtime certification closure
+
+C1 converted every remaining runtime-required M3 capability from pending proof
+to accepted PDI evidence. Approved New, Denial, Amendment, Renewal, Reuse,
+Exception, retry/idempotency, historical immutability, direct-URL attachment
+security, least privilege, regression, and normal/frozen build gates PASS.
+Reuse `HRC0001044` retained one native attestation task and no new governed
+Authorization Form, Access Detail, final Authorization PDF, supersession, or
+M4 task. No required capability is UNKNOWN and no C0 capability was disproven.
+
+**C0 — COMPLETE. C1 — COMPLETE. M3 — COMPLETE. C2 / M4 RUNTIME — READY.**
