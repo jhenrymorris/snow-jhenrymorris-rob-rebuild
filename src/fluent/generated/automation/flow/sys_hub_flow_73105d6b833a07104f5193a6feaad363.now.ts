@@ -161,9 +161,11 @@ return 'document_id=' + authorization.sys_id + '^source_table=x_2166123_rob_auth
                         uuid: '0a7a738b-2e85-4141-a417-ba64f0afe512',
                     },
                     {
+                        table_name: 'x_2166123_rob_auth_rob_auth',
+                        record: wfa.dataPill(_params.trigger.current, 'reference'),
                         values: TemplateValue({
                             status: wfa.inlineScript("return 'denied';"),
-                            supervisor_approval_complete: wfa.inlineScript('return true;'),
+                            supervisor_approval_complete: 'true',
                             supervisor_approval_outcome: wfa.inlineScript("return 'denied';"),
                             supervisor_approver: wfa.dataPill(actionInstance_6.Record.approver, 'reference'),
                             supervisor_approval_date_time: wfa.dataPill(
@@ -172,8 +174,6 @@ return 'document_id=' + authorization.sys_id + '^source_table=x_2166123_rob_auth
                             ),
                             supervisor_signature_complete: 'false',
                         }),
-                        record: wfa.dataPill(_params.trigger.current, 'reference'),
-                        table_name: 'x_2166123_rob_auth_rob_auth',
                     }
                 )
                 const actionInstance_8 = wfa.action(
@@ -205,11 +205,11 @@ return 'rob_authorization_form=' + authorization.sys_id + '^status=pending_autho
                                 uuid: '2da9a8c8-6a33-4573-ab2f-73621334f110',
                             },
                             {
+                                table_name: 'x_2166123_rob_auth_auth_detail',
+                                record: wfa.dataPill(item_9, 'string'),
                                 values: TemplateValue({
                                     status: wfa.inlineScript("return 'denied';"),
                                 }),
-                                record: wfa.dataPill(item_9, 'string'),
-                                table_name: 'x_2166123_rob_auth_auth_detail',
                             }
                         )
                     }
