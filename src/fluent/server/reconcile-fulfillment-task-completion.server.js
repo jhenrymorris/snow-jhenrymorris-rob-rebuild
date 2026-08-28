@@ -63,7 +63,11 @@
         if (isTrue(details.getValue('operations_manager_task_required_snapshot'))) satisfied = satisfied && taskSatisfied('operations_manager_arm_assignment', accessItemId)
         if (details.getValue('status') === 'pending_fulfillment' && satisfied) {
             details.setValue('status', 'active')
-            details.update()
+            if (!details.update()) {
+                gs.error('ROB fulfillment reconciliation stopped: matching Access Detail activation did not persist.')
+                allActive = false
+                continue
+            }
         }
         if (details.getValue('status') !== 'active' && !(details.getValue('status') === 'pending_fulfillment' && satisfied)) allActive = false
     }

@@ -108,7 +108,7 @@ export const x_2166123_rob_auth_auth_detail = Table({
         status: ChoiceColumn({
             label: 'Status',
             mandatory: true,
-            readOnly: true,
+            readOnlyOption: 'display_read_only',
             audit: true,
             default: 'pending_authorization',
             choices: {

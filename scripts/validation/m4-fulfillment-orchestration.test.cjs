@@ -442,6 +442,13 @@ test('task lifecycle delegates protected validation and closure to the narrow HR
         path.join(root, 'src/fluent/server/reconcile-fulfillment-task-completion.server.js'),
         'utf8'
     )
+    const detailTable = fs.readFileSync(
+        path.join(root, 'src/fluent/tables/authorized-access-detail.now.ts'),
+        'utf8'
+    )
+    const statusColumn = detailTable.match(
+        /status:\s*ChoiceColumn\(\{([\s\S]*?)choices:/
+    )[1]
     assert.equal((rules.match(/active:\s*true/g) || []).length, 2)
     assert.match(rules, /stateCHANGESTO3/)
     assert.match(validation, /RobHrFulfillmentBridgeV2\(\)\.validateTaskCompletion/)
@@ -469,6 +476,10 @@ test('task lifecycle delegates protected validation and closure to the narrow HR
     )
     assert.match(reconciliation, /RobHrFulfillmentBridgeV2\(\)\.closeEligibleCase/)
     assert.match(reconciliation, /details\.setValue\('status', 'active'\)/)
+    assert.match(reconciliation, /details\.update\(\)/)
+    assert.match(reconciliation, /matching Access Detail activation did not persist/)
+    assert.match(statusColumn, /readOnlyOption:\s*'display_read_only'/)
+    assert.doesNotMatch(statusColumn, /readOnly:\s*true/)
     assert.doesNotMatch(reconciliation, /new GlideRecord\('sn_hr_core_case/)
 })
 
