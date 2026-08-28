@@ -3,6 +3,9 @@ import { BusinessRule } from '@servicenow/sdk/core'
 const terminalRobTask =
     'x_2166123_rob_auth_rob_task_typeISNOTEMPTY^stateCHANGESTO3'
 
+const closedRobTask =
+    'x_2166123_rob_auth_rob_task_typeISNOTEMPTY^state=3'
+
 export const validateRobFulfillmentTaskCompletion = BusinessRule({
     $id: Now.ID['validate-rob-fulfillment-task-completion'],
     name: 'ROB Validate Fulfillment Task Completion',
@@ -25,7 +28,7 @@ export const reconcileRobFulfillmentTaskCompletion = BusinessRule({
     when: 'after',
     action: ['update'],
     order: 350,
-    filterCondition: terminalRobTask,
+    filterCondition: closedRobTask,
     description:
         'Activates only covered Authorized Access Details and requests guarded HR Case closure after complete native fulfillment evidence is committed.',
     script: Now.include('../server/reconcile-fulfillment-task-completion.server.js'),

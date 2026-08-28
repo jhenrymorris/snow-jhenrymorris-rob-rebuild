@@ -12,14 +12,39 @@
         return
     }
 
-    function taskSatisfied(type) {
+    function taskSatisfied(type, accessItemId) {
         for (var index = 0; index < taskEvidence.length; index += 1) {
             var task = taskEvidence[index]
-            if (task.taskType !== type || task.isClosed !== true || !task.completionEvidence || !task.closeNotes || !task.completionTimestamp) continue
-            if (task.fulfillmentOutcome === 'provisioning_completed' && task.provisioningCompleted === true) return true
-            if (task.fulfillmentOutcome === 'waived' && task.formallyWaived === true && task.waiverReason && task.waivedBy && task.waiverDateTime) return true
+            var coveredItems = task.accessItemIds || []
+            if (typeof coveredItems.indexOf !== 'function') {
+                coveredItems = String(coveredItems || '').split(',')
+            }
+            if (
+                task.taskType !== type ||
+                task.relatedAuthorizationId !== authorizationId ||
+                coveredItems.indexOf(accessItemId) < 0 ||
+                !(task.isClosed === true || String(task.isClosed) === 'true') ||
+                !task.completionEvidence ||
+                !task.closeNotes ||
+                !task.completionTimestamp
+            ) continue
+            if (
+                task.fulfillmentOutcome === 'provisioning_completed' &&
+                (task.provisioningCompleted === true || String(task.provisioningCompleted) === 'true')
+            ) return true
+            if (
+                task.fulfillmentOutcome === 'waived' &&
+                (task.formallyWaived === true || String(task.formallyWaived) === 'true') &&
+                task.waiverReason &&
+                task.waivedBy &&
+                task.waiverDateTime
+            ) return true
         }
         return false
+    }
+
+    function isTrue(value) {
+        return value === true || value === '1' || String(value) === 'true'
     }
 
     var details = new GlideRecord('x_2166123_rob_auth_auth_detail')
@@ -30,9 +55,10 @@
     while (details.next()) {
         found = true
         var satisfied = true
-        if (details.getValue('staffing_task_required_snapshot') === '1') satisfied = satisfied && taskSatisfied('staffing_fulfillment')
-        if (details.getValue('analytics_task_required_snapshot') === '1') satisfied = satisfied && taskSatisfied('analytics_fulfillment')
-        if (details.getValue('operations_manager_task_required_snapshot') === '1') satisfied = satisfied && taskSatisfied('operations_manager_arm_assignment')
+        var accessItemId = details.getValue('access_item')
+        if (isTrue(details.getValue('staffing_task_required_snapshot'))) satisfied = satisfied && taskSatisfied('staffing_fulfillment', accessItemId)
+        if (isTrue(details.getValue('analytics_task_required_snapshot'))) satisfied = satisfied && taskSatisfied('analytics_fulfillment', accessItemId)
+        if (isTrue(details.getValue('operations_manager_task_required_snapshot'))) satisfied = satisfied && taskSatisfied('operations_manager_arm_assignment', accessItemId)
         if (details.getValue('status') === 'pending_fulfillment' && satisfied) {
             details.setValue('status', 'active')
             details.update()
@@ -43,7 +69,10 @@
     for (var taskIndex = 0; taskIndex < taskEvidence.length; taskIndex += 1) {
         if (
             taskEvidence[taskIndex].taskType === 'exception_review' &&
-            !taskSatisfied('exception_review')
+            !taskSatisfied(
+                'exception_review',
+                taskEvidence[taskIndex].accessItemIds[0]
+            )
         ) {
             allActive = false
         }

@@ -169,6 +169,34 @@ RobHrFulfillmentBridgeV2.prototype = {
         return JSON.stringify({ ok: true, tasks: created })
     },
 
+    blockMissingOperationsManager: function (caseRecord) {
+        if (!this._validCase(caseRecord)) return this._reject('block', 'INVALID_CASE')
+        if (caseRecord.getValue('x_2166123_rob_auth_fulfillment_gate_complete') !== '1') {
+            return this._reject('block', 'FULFILLMENT_GATE_CLOSED')
+        }
+
+        var caseId = String(caseRecord.getUniqueValue())
+        var exception = new GlideRecord('sn_hr_core_task')
+        exception.addQuery('parent', caseId)
+        exception.addQuery(
+            'x_2166123_rob_auth_fulfillment_business_key',
+            caseId + ':exception_review'
+        )
+        exception.addQuery('x_2166123_rob_auth_rob_task_type', 'exception_review')
+        exception.addQuery(
+            'x_2166123_rob_auth_exception_reason',
+            'MISSING_OPERATIONS_MANAGER'
+        )
+        exception.setLimit(1)
+        exception.query()
+        if (!exception.hasNext()) return this._reject('block', 'EXCEPTION_TASK_REQUIRED')
+
+        caseRecord.x_2166123_rob_auth_exception_review_required = '1'
+        caseRecord.x_2166123_rob_auth_exception_reason = 'missing_operations_manager'
+        caseRecord.x_2166123_rob_auth_authorization_processing_blocked = '1'
+        return Boolean(caseRecord.update())
+    },
+
     _shortDescription: function (type) {
         return {
             staffing_fulfillment: 'Complete Staffing ROB access fulfillment',
@@ -260,6 +288,14 @@ RobHrFulfillmentBridgeV2.prototype = {
             result.push({
                 id: String(tasks.getUniqueValue()),
                 taskType: String(tasks.getValue('x_2166123_rob_auth_rob_task_type') || ''),
+                relatedAuthorizationId: String(
+                    tasks.getValue('x_2166123_rob_auth_related_authorization') || ''
+                ),
+                accessItemIds: String(
+                    tasks.getValue('x_2166123_rob_auth_rob_access_items') || ''
+                )
+                    .split(',')
+                    .filter(Boolean),
                 isClosed: String(tasks.getValue('state')) === '3',
                 fulfillmentOutcome: String(tasks.getValue('x_2166123_rob_auth_fulfillment_outcome') || ''),
                 completionEvidence: String(tasks.getValue('x_2166123_rob_auth_completion_evidence') || ''),

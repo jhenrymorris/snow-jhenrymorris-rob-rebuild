@@ -7,17 +7,29 @@ function taskMap(tasks) {
     const map = new Map()
     for (const task of tasks || []) {
         const type = String(task.taskType || '')
-        if (!type || map.has(type)) continue
-        map.set(type, task)
+        if (!type) continue
+        if (!map.has(type)) map.set(type, [])
+        map.get(type).push(task)
     }
     return map
+}
+
+function taskCoversDetail(task, detail) {
+    const coveredItems = (task.accessItemIds || []).map(String)
+    if (!coveredItems.includes(String(detail.accessItemId || ''))) return false
+    if (
+        task.relatedAuthorizationId &&
+        detail.authorizationId &&
+        String(task.relatedAuthorizationId) !== String(detail.authorizationId)
+    ) return false
+    return assess(task).satisfied
 }
 
 function detailResult(detail, tasksByType) {
     const requirements = requiredTaskTypes(detail)
     const incompleteTaskTypes = requirements.filter((type) => {
-        const task = tasksByType.get(type)
-        return !task || !assess(task).satisfied
+        const tasks = tasksByType.get(type) || []
+        return !tasks.some((task) => taskCoversDetail(task, detail))
     })
 
     const canActivate =

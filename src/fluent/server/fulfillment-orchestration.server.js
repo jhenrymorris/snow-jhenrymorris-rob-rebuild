@@ -118,6 +118,12 @@
     }
 
     if (!tasks.length) return
-    var result = new sn_hr_core.RobHrFulfillmentBridgeV2().createTasks(current, JSON.stringify(tasks))
+    var bridge = new sn_hr_core.RobHrFulfillmentBridgeV2()
+    var result = bridge.createTasks(current, JSON.stringify(tasks))
     if (!result) gs.error('ROB fulfillment task creation was rejected by the HR Core bridge.')
+    if (result && omItems.length && !operationsManager) {
+        if (!bridge.blockMissingOperationsManager(current)) {
+            gs.error('ROB fulfillment exception task was created, but the missing Operations Manager block was rejected.')
+        }
+    }
 })(current)

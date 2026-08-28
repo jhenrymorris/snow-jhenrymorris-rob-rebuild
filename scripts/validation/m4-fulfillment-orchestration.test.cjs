@@ -74,6 +74,8 @@ function request(overrides = {}) {
 function completed(taskType, overrides = {}) {
     return {
         taskType,
+        relatedAuthorizationId: 'authorization_1',
+        accessItemIds: ['eopf', 'fpps_wtts', 'human_capital_reports', 'workforce_profile_charts'],
         isClosed: true,
         authorizedFulfiller: true,
         fulfillmentOutcome: 'provisioning_completed',
@@ -162,6 +164,21 @@ test('missing Operations Manager creates one Exception task and no OM task', () 
     assert.equal(result.missingOperationsManager, true)
 })
 
+test('missing Operations Manager adapter persists the protected case block through the HR Core bridge', () => {
+    const adapter = fs.readFileSync(
+        path.join(root, 'src/fluent/server/fulfillment-orchestration.server.js'),
+        'utf8'
+    )
+    const bridge = fs.readFileSync(
+        path.join(root, 'manual/hr-core/RobHrFulfillmentBridgeV2.server.js'),
+        'utf8'
+    )
+    assert.match(adapter, /bridge\.blockMissingOperationsManager\(current\)/)
+    assert.match(bridge, /blockMissingOperationsManager: function \(caseRecord\)/)
+    assert.match(bridge, /missing_operations_manager/)
+    assert.match(bridge, /EXCEPTION_TASK_REQUIRED/)
+})
+
 test('stable Parent Case plus Task Type key prevents retry duplicates', () => {
     const existingTasks = [
         { taskType: TASK_TYPES.STAFFING, businessKey: taskKey('case_1', TASK_TYPES.STAFFING) },
@@ -224,6 +241,31 @@ test('Staffing completion activates only Staffing detail', () => {
         tasks: [completed(TASK_TYPES.STAFFING)],
     })
     assert.deepEqual(result.detailUpdates.map((update) => update.accessItemId), ['eopf'])
+    assert.equal(result.parentCanClose, false)
+})
+
+test('a completed team task cannot activate an uncovered Access Detail', () => {
+    const result = evaluate({
+        requestStatus: 'approved',
+        details: [staffing('eopf')],
+        tasks: [completed(TASK_TYPES.STAFFING, { accessItemIds: ['fpps_wtts'] })],
+    })
+    assert.equal(result.detailUpdates.length, 0)
+    assert.equal(result.parentCanClose, false)
+})
+
+test('a task from another Authorization cannot activate the current Access Detail', () => {
+    const result = evaluate({
+        requestStatus: 'approved',
+        details: [{ ...staffing('eopf'), authorizationId: 'authorization_1' }],
+        tasks: [
+            completed(TASK_TYPES.STAFFING, {
+                relatedAuthorizationId: 'authorization_2',
+                accessItemIds: ['eopf'],
+            }),
+        ],
+    })
+    assert.equal(result.detailUpdates.length, 0)
     assert.equal(result.parentCanClose, false)
 })
 
@@ -350,7 +392,8 @@ test('active production entry points and native HR Task metadata are source-cont
     assert.match(adapter, /requestedAccess\[accessItemId\]/)
     assert.doesNotMatch(adapter, /details\.addQuery\('source_hrsd_case'/)
     assert.doesNotMatch(adapter, /details\.addQuery\('access_item'/)
-    assert.match(adapter, /new sn_hr_core\.RobHrFulfillmentBridgeV2\(\)\.createTasks/)
+    assert.match(adapter, /var bridge = new sn_hr_core\.RobHrFulfillmentBridgeV2\(\)/)
+    assert.match(adapter, /bridge\.createTasks\(current, JSON\.stringify\(tasks\)\)/)
     assert.doesNotMatch(adapter, /new GlideRecord\('sn_hr_core_task'\)/)
     assert.doesNotMatch(adapter, /task\.insert\(\)/)
 })
@@ -373,6 +416,8 @@ test('HR Core fulfillment bridge is allowlisted and performs the final insert id
     assert.match(bridge, /INVALID_EXCEPTION_REASON/)
     assert.match(bridge, /UNAUTHORIZED_OR_INVALID_PARENT/)
     assert.match(bridge, /WAIVER_NOT_AUTHORIZED/)
+    assert.match(bridge, /relatedAuthorizationId/)
+    assert.match(bridge, /accessItemIds/)
     assert.doesNotMatch(bridge, /RESTMessageV2|IntegrationHub/)
 })
 
@@ -394,6 +439,14 @@ test('task lifecycle delegates protected validation and closure to the narrow HR
     assert.match(validation, /RobHrFulfillmentBridgeV2\(\)\.validateTaskCompletion/)
     assert.match(validation, /setAbortAction\(true\)/)
     assert.match(reconciliation, /RobHrFulfillmentBridgeV2\(\)\.getCaseTaskEvidence/)
+    assert.doesNotMatch(reconciliation, /instanceof Array/)
+    assert.match(reconciliation, /typeof coveredItems\.indexOf !== 'function'/)
+    assert.match(reconciliation, /String\(task\.provisioningCompleted\) === 'true'/)
+    assert.match(reconciliation, /function isTrue\(value\)/)
+    assert.match(
+        rules,
+        /x_2166123_rob_auth_rob_task_typeISNOTEMPTY\^state=3/
+    )
     assert.match(reconciliation, /RobHrFulfillmentBridgeV2\(\)\.closeEligibleCase/)
     assert.match(reconciliation, /details\.setValue\('status', 'active'\)/)
     assert.doesNotMatch(reconciliation, /new GlideRecord\('sn_hr_core_case/)
