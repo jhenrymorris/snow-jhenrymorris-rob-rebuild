@@ -1,6 +1,8 @@
 (function executeRule(current) {
-    var parentId = current.getValue('parent')
-    var authorizationId = current.getValue('x_2166123_rob_auth_related_authorization')
+    var parentId = String(current.getValue('parent') || '')
+    var authorizationId = String(
+        current.getValue('x_2166123_rob_auth_related_authorization') || ''
+    )
     if (!parentId || !authorizationId) return
 
     var evidenceJson = new sn_hr_core.RobHrFulfillmentBridgeV2().getCaseTaskEvidence(parentId)
@@ -55,7 +57,7 @@
     while (details.next()) {
         found = true
         var satisfied = true
-        var accessItemId = details.getValue('access_item')
+        var accessItemId = String(details.getValue('access_item') || '')
         if (isTrue(details.getValue('staffing_task_required_snapshot'))) satisfied = satisfied && taskSatisfied('staffing_fulfillment', accessItemId)
         if (isTrue(details.getValue('analytics_task_required_snapshot'))) satisfied = satisfied && taskSatisfied('analytics_fulfillment', accessItemId)
         if (isTrue(details.getValue('operations_manager_task_required_snapshot'))) satisfied = satisfied && taskSatisfied('operations_manager_arm_assignment', accessItemId)

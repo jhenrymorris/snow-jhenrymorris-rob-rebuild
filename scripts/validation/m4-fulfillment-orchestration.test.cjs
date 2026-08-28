@@ -444,6 +444,18 @@ test('task lifecycle delegates protected validation and closure to the narrow HR
     assert.match(reconciliation, /String\(task\.provisioningCompleted\) === 'true'/)
     assert.match(reconciliation, /function isTrue\(value\)/)
     assert.match(
+        reconciliation,
+        /var parentId = String\(current\.getValue\('parent'\) \|\| ''\)/
+    )
+    assert.match(
+        reconciliation,
+        /var authorizationId = String\([\s\S]*?current\.getValue\('x_2166123_rob_auth_related_authorization'\) \|\| ''[\s\S]*?\)/
+    )
+    assert.match(
+        reconciliation,
+        /var accessItemId = String\(details\.getValue\('access_item'\) \|\| ''\)/
+    )
+    assert.match(
         rules,
         /x_2166123_rob_auth_rob_task_typeISNOTEMPTY\^state=3/
     )
