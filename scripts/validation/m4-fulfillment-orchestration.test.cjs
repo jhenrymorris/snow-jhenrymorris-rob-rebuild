@@ -418,6 +418,14 @@ test('HR Core fulfillment bridge is allowlisted and performs the final insert id
     assert.match(bridge, /WAIVER_NOT_AUTHORIZED/)
     assert.match(bridge, /relatedAuthorizationId/)
     assert.match(bridge, /accessItemIds/)
+    assert.equal(
+        (bridge.match(/addNotNullQuery\('x_2166123_rob_auth_rob_task_type'\)/g) || []).length,
+        2
+    )
+    assert.doesNotMatch(
+        bridge,
+        /addQuery\('x_2166123_rob_auth_rob_task_type', 'ISNOTEMPTY'\)/
+    )
     assert.doesNotMatch(bridge, /RESTMessageV2|IntegrationHub/)
 })
 

@@ -2611,3 +2611,31 @@ Not exposed by session/tool — no estimate recorded.
 - Result: **C2 BLOCKED — C0 capability M5-12 disproven on dev437065. M4 NOT
   COMPLETE. C3 NOT READY.** No C2.x package or alternate architecture is
   authorized.
+### 2026-08-28 C2 resumed final acceptance stop
+
+- Workspace identity: `ROB V2 C2 RECOVERY`, V2 root/scopeId
+  `4aba8657837a43104f5193a6feaad3c5`, branch
+  `codex/dev437-rebuild-identity`, SDK `4.11.0`; PASS.
+- Closed runtime gates: Systems-only, Data/report-only, Mixed, WPC,
+  Retry/idempotency, Missing OM Exception, Task completion evidence, Partial
+  completion, External integrations = 0, and Least privilege (`10/13`).
+- Authorized exceptional normal install applied commit `481c6cb`; installed
+  reconciliation source was verified current and application identity was
+  preserved. Effective installs: `3` including the explicitly approved
+  exception.
+- The HR Core bridge's two task queries were corrected from literal
+  two-argument `addQuery(field, 'ISNOTEMPTY')` calls to
+  `addNotNullQuery(field)` through the supported Script Include editor. The
+  manual source and focused regression assert both corrected queries; focused
+  M4 remains `34/34` PASS.
+- Governed replay: `HRT0001003` was recommitted Closed Complete with matching
+  Authorization/access item and complete authorized waiver evidence. Exact
+  caller RCA remained approved. `ROBD0001028` nevertheless remained
+  `pending_fulfillment` and `HRC0001048` remained open.
+- No further install, direct record-state repair, broad privilege, external
+  provisioning, architecture change, capability investigation, or C2.x loop
+  was performed. Gates 9-11 remain `NOT RUN`.
+- Result: **C2 BLOCKED under the post-C0 threshold: the certified M4-02 narrow
+  HR Core bridge reconciliation/closure result was not produced by the
+  supported mechanism under the frozen preconditions. M4 NOT COMPLETE. C3 NOT
+  READY.**

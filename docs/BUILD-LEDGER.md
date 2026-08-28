@@ -947,3 +947,23 @@ Build evidence is package-specific and must remain distinct from install, runtim
 - No direct bootstrap repair, Reinstall, Force Install, local SDK install,
   broad privilege, native-case Write, or native-task Write was introduced.
 - Result: **C2 BLOCKED. M4 NOT COMPLETE. C3 NOT READY.**
+### 2026-08-28 C2 resumed final acceptance
+
+- Clean workspace identity gate: PASS; V2 scope, scopeId, repository, branch,
+  and SDK remained unchanged.
+- Focused M4: `34/34` PASS. Normal and frozen SDK 4.11.0 builds, diff check,
+  and generated-key review passed before the explicitly authorized exceptional
+  normal install.
+- Installed commit `481c6cb` was verified live in Business Rule
+  `31b6f6fe7198436d8d6600355948fe70`; upgrade history
+  `c3fc1124838fcf104f5193a6feaad3b9` recorded the effective install.
+- The manually governed HR Core bridge task-evidence and closure queries were
+  corrected in place to use `addNotNullQuery`; no application reinstall was
+  required for that HR Core-owned Script Include.
+- Runtime acceptance reached `10/13` PASS. The final authorized waiver replay
+  retained complete native evidence but did not activate `ROBD0001028` or
+  close `HRC0001048`. The full regression was not run because the fixed runtime
+  matrix never reached `13/13`.
+- Result: **C2 BLOCKED; M4 NOT COMPLETE; C3 NOT READY.** No additional install,
+  alternate architecture, broad privilege, or follow-up remediation package
+  was created.

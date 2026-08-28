@@ -281,7 +281,7 @@ RobHrFulfillmentBridgeV2.prototype = {
         if (!caseId) return '[]'
         var tasks = new GlideRecord('sn_hr_core_task')
         tasks.addQuery('parent', caseId)
-        tasks.addQuery('x_2166123_rob_auth_rob_task_type', 'ISNOTEMPTY')
+        tasks.addNotNullQuery('x_2166123_rob_auth_rob_task_type')
         tasks.query()
         var result = []
         while (tasks.next()) {
@@ -321,7 +321,7 @@ RobHrFulfillmentBridgeV2.prototype = {
         }
         var tasks = new GlideRecord('sn_hr_core_task')
         tasks.addQuery('parent', caseId)
-        tasks.addQuery('x_2166123_rob_auth_rob_task_type', 'ISNOTEMPTY')
+        tasks.addNotNullQuery('x_2166123_rob_auth_rob_task_type')
         tasks.query()
         var found = false
         while (tasks.next()) {

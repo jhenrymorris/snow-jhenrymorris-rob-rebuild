@@ -1251,6 +1251,11 @@ Create exactly one HR Core-owned Script Include named
 `RobHrFulfillmentBridgeV2` in **Human Resources: Core** from the reviewed source
 at `manual/hr-core/RobHrFulfillmentBridgeV2.server.js`.
 
+The C2 final runtime review corrected both bridge task enumeration queries to
+use `addNotNullQuery('x_2166123_rob_auth_rob_task_type')`. Do not restore the
+two-argument literal `addQuery(field, 'ISNOTEMPTY')` form; it does not express
+the intended not-empty operator.
+
 - Active: true; Client callable: false.
 - Accessible from: All application scopes; Caller access: Caller Restriction.
 - Preserve its HR Core API name so V2 calls
