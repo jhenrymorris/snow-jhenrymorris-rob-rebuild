@@ -388,16 +388,16 @@ builds and diff/generated-key gates passed with zero unexpected key changes.
 
 | ID | Test | Method | Status |
 |---|---|---|---|
-| TM-248 | Daily renewal boundary matrix | 90/60/30, late daily execution, invalid dates, non-active immutability | Focused source `PASS` |
-| TM-249 | Reminder/lapse idempotency | Existing timestamp evidence suppresses retries; one cycle key; no ledger table | Focused source `PASS`; PDI pending |
-| TM-250 | Active replacement suppression | Expired predecessor with active replacement receives no lapse/notice | Focused source `PASS`; PDI pending |
-| TM-251 | Privacy-safe renewal/lapse notifications | Secure link; no attachment/PDF/signature/justification/SSN | Focused source `PASS`; native preview pending |
-| TM-252 | Governed-record ACL metadata | Subject/Admin/Compliance plus exact Staffing/Analytics task context; OM repository denial | Focused source `PASS`; PDI persona matrix pending |
-| TM-253 | Final PDF direct URL | Authorized compliance/admin allowed; unrelated employee denied | PDI impersonation | Not Run |
-| TM-254 | Eight-persona UAT matrix | Employee, Supervisor, Staffing, Analytics, OM, Admin, unrelated, Compliance across approved channels | PDI manual/ATF | Not Run |
-| TM-255 | Secured reports/dashboard | RPT-1â€“RPT-8 counts, filters, audience, aggregate and drilldown isolation | PDI report/UAT | Not Run |
-| TM-256 | Privacy/schema/retention release review | Synthetic-only, no SSN, no notification attachment, no automatic deletion/deprovisioning | Source/PDI/manual | Source partial PASS; runtime pending |
-| TM-257 | C3 final release regression | Complete prior suites, M5 suite, normal/frozen build, keys/security counts | Local/PDI | Not Run |
+| TM-248 | Daily renewal boundary matrix | 90/60/30, late daily execution, invalid dates, non-active immutability | Focused source and PDI runtime `PASS` |
+| TM-249 | Reminder/lapse idempotency | Existing timestamp evidence suppresses retries; one cycle key; no ledger table | PDI runtime `PASS` |
+| TM-250 | Active replacement suppression | Expired predecessor with active replacement receives no lapse/notice | PDI runtime `PASS` |
+| TM-251 | Privacy-safe renewal/lapse notifications | Secure link; no attachment/PDF/signature/justification/SSN | Native preview `PASS` |
+| TM-252 | Governed-record ACL metadata | Subject/Admin/Compliance plus exact Staffing/Analytics task context; OM repository denial | PDI persona matrix `PASS` |
+| TM-253 | Final PDF direct URL | Authorized compliance/admin allowed; unrelated employee denied | PDI impersonation | PASS |
+| TM-254 | Eight-persona UAT matrix | Employee, Supervisor, Staffing, Analytics, OM, Admin, unrelated, Compliance across approved channels | PDI manual/ATF | PASS |
+| TM-255 | Secured reports/dashboard | Authorization/renewal/lapse and fulfillment visibility; restricted audience and ACL-enforced drilldown | PDI report/UAT | PASS |
+| TM-256 | Privacy/schema/retention release review | Synthetic-only, no SSN, no notification attachment, no automatic deletion/deprovisioning | Source/PDI/manual | PASS |
+| TM-257 | C3 final release regression | Complete prior suites, M5 suite, normal/frozen build, keys/security counts | Local/PDI | PASS |
 # C2 runtime disposition — 2026-08-27
 
 - Systems-only routing: PASS (`HRC0001045` → one Staffing task

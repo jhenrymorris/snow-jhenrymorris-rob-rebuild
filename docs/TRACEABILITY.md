@@ -460,3 +460,15 @@ requirement or M4 architecture was changed.
 | RPT-1â€“RPT-8 | Eight native secured-report definitions and dashboard audience matrix documented | NATIVE CONFIGURATION/UAT pending |
 | AUD-1â€“AUD-3 / RET-1 | Existing audit/history fields and no-delete model retained | SOURCE PASS; historical retrieval/retention review pending |
 | M5 release | Focused M5 `11/11`, normal build PASS, expected new keys only | PRE-INSTALL PASS |
+
+## C3 / M5 final release traceability (2026-08-29)
+
+| Requirement | Final evidence | Status |
+|---|---|---|
+| FR-23 / AC-22 | Active daily job; 90/60/30 reminder and replay evidence on `ROBA0001040` | PASS |
+| FR-24 / AC-23 | One-time lapse on `ROBA0001039`, replacement suppression by `ROBA0001041`, retained history/PDF, zero external calls | PASS |
+| SEC-1 / SEC-2 | Eight-persona UAT and unrelated-user Authorization, Detail, PDF, and direct-URL denial | PASS |
+| SEC-3 / AC-17 | Privacy-safe renewal/lapse notification previews with attachments disabled | PASS |
+| RPT-1–RPT-8 outcomes | Restricted authorization/renewal/lapse and fulfillment reports plus owner-restricted operational dashboard | PASS |
+| AUD-1–AUD-3 / RET-1 | Historical authorization, Detail, PDF, replacement, reminder, and lapse evidence retained | PASS |
+| M5 release | C3 10/10; full regression and normal/frozen builds PASS; counts clean | COMPLETE |

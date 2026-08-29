@@ -2930,3 +2930,13 @@ Not exposed by session/tool — no estimate recorded.
 - Current C3 acceptance: source-focused gates PASS; PDI install, renewal/lapse
   runtime, persona security/UAT, direct-URL PDF, notification preview,
   reports/dashboard, and release closeout remain pending.
+
+## C3 / M5 Security, UAT, and Release — final closeout
+
+- Installed candidate: `0501cde9e873c1864b0623ff4871fa3bb98fff18` through one normal IDE Build and Install from `ROB V2 C2 RECOVERY`; V2 application identity remained unchanged.
+- C3 acceptance: **10/10 PASS**. Daily renewal/lapse runtime proved 90/60/30 reminder idempotency, configured grace and recertification dates, earlier approved end-date precedence, active-replacement suppression, one-time lapse notification, retained history/PDFs, and zero external deprovisioning calls.
+- Privacy/security UAT: notification previews contained only allowed content. Eight synthetic personas passed governed-record access, contextual fulfiller access, OM repository denial, approval/signature protection, compliance read-only access, unrelated-user isolation, and direct attachment URL denial.
+- Secured reporting: native reports `ROB Authorization Status and Renewal` (`d6e586b883c7c3504f5193a6feaad320`) and `ROB Fulfillment Status` (`1e574ebc83c7c3504f5193a6feaad33b`) are restricted. Owner-restricted dashboard `ROB Authorization and Fulfillment Operations` (`5a980a70830bc3504f5193a6feaad321`) contains governed Authorization and Detail visualizations; underlying ACLs remain authoritative.
+- Final regression: M2 `19/19`; R1 `9/9`; Security `22/22`; Deployment `16/16`; R3 `30/30`; R3 adapter `13/13`; R4 `64/64`; M4 `34/34`; template `7/7`; M5 `11/11`. Normal/frozen SDK 4.11.0 builds and diff check PASS; unexpected generated-key changes `0`.
+- Final counts: broad privileges `0`; unexpected RCA `0`; temporary roles `0`; custom business tables `4`; custom fulfillment tables `0`; external integrations `0`; architecture changes `0`; new capability investigations `0`.
+- Final state: C0, C1, C2, C3 and M1–M5 COMPLETE. Application ready for release / production implementation handoff.

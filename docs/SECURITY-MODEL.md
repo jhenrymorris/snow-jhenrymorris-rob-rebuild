@@ -349,3 +349,9 @@ No delete ACL, broad native-table Write, generic GlideRecord Execute privilege,
 unexpected RCA, custom audit table, or attachment table is introduced. Final
 acceptance requires the eight-persona matrix and direct attachment URL tests on
 the installed PDI; source/build evidence alone is not a runtime PASS.
+
+### C3 final security acceptance
+
+Installed-PDI testing completed the eight-persona matrix with synthetic users. Employees can access their governed records but not another employee's Authorization, Detail, final PDF, or direct attachment URL. Staffing and Analytics fulfillers receive only exact task-context Detail access and cannot modify approval or signature evidence. Operations Managers receive required WPC/ARM task context without repository browse access. Compliance access is read-only.
+
+Notification previews contained no signed PDF, signature value, business justification, SSN, or unnecessary sensitive PII. Operational reports and the owner-restricted dashboard retain row/field ACL enforcement. Temporary UAT roles, broad GlideRecord/native-case/native-task privileges, and unexpected RCA are zero. The exact V2-to-`sn_hr_core_task` Read path remains the approved narrow contextual-task dependency.

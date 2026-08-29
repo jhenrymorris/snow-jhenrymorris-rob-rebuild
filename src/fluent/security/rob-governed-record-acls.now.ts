@@ -9,36 +9,37 @@ const detailTable = 'x_2166123_rob_auth_auth_detail'
 const configurationTable = 'x_2166123_rob_auth_rob_config'
 
 const authorizationReadScript = `var userId = gs.getUserID();
-return gs.getUser().hasAssignedRole('x_2166123_rob_auth.rob_admin') ||
-    gs.getUser().hasAssignedRole('x_2166123_rob_auth.rob_compliance_viewer') ||
+answer = gs.hasRole('x_2166123_rob_auth.rob_admin') ||
+    gs.hasRole('x_2166123_rob_auth.rob_compliance_viewer') ||
     current.getValue('subject_person') == userId;`
 
 const detailReadScript = `var userId = gs.getUserID();
-if (gs.getUser().hasAssignedRole('x_2166123_rob_auth.rob_admin') ||
-    gs.getUser().hasAssignedRole('x_2166123_rob_auth.rob_compliance_viewer') ||
+answer = false;
+if (gs.hasRole('x_2166123_rob_auth.rob_admin') ||
+    gs.hasRole('x_2166123_rob_auth.rob_compliance_viewer') ||
     current.getValue('subject_person') == userId) {
-    return true;
-}
-var staffing = gs.getUser().hasAssignedRole('x_2166123_rob_auth.rob_staffing_fulfiller');
-var analytics = gs.getUser().hasAssignedRole('x_2166123_rob_auth.rob_analytics_fulfiller');
-if (!staffing && !analytics) {
-    return false;
-}
-var task = new GlideRecord('sn_hr_core_task');
-task.addActiveQuery();
-task.addQuery('x_2166123_rob_auth_related_authorization', current.getValue('rob_authorization_form'));
-task.addQuery('x_2166123_rob_auth_rob_access_items', 'LIKE', current.getValue('access_item'));
-task.query();
-while (task.next()) {
-    var assigned = task.getValue('assigned_to') == userId ||
-        (task.getValue('assignment_group') && gs.getUser().isMemberOf(task.getValue('assignment_group')));
-    var taskType = task.getValue('x_2166123_rob_auth_rob_task_type');
-    if (assigned && ((staffing && taskType == 'staffing_fulfillment') ||
-        (analytics && taskType == 'analytics_fulfillment'))) {
-        return true;
+    answer = true;
+} else {
+    var staffing = gs.hasRole('x_2166123_rob_auth.rob_staffing_fulfiller');
+    var analytics = gs.hasRole('x_2166123_rob_auth.rob_analytics_fulfiller');
+    if (staffing || analytics) {
+        var task = new GlideRecord('sn_hr_core_task');
+        task.addActiveQuery();
+        task.addQuery('x_2166123_rob_auth_related_authorization', current.getValue('rob_authorization_form'));
+        task.addQuery('x_2166123_rob_auth_rob_access_items', 'LIKE', current.getValue('access_item'));
+        task.query();
+        while (task.next()) {
+            var assigned = task.getValue('assigned_to') == userId ||
+                (task.getValue('assignment_group') && gs.getUser().isMemberOf(task.getValue('assignment_group')));
+            var taskType = task.getValue('x_2166123_rob_auth_rob_task_type');
+            if (assigned && ((staffing && taskType == 'staffing_fulfillment') ||
+                (analytics && taskType == 'analytics_fulfillment'))) {
+                answer = true;
+                break;
+            }
+        }
     }
-}
-return false;`
+}`
 
 export const authorizationRead = Acl({
     $id: Now.ID['rob-authorization-read'],

@@ -1334,21 +1334,20 @@ external integration, or application identity change was introduced.
 
 ### Daily renewal/lapse operation
 
-- [ ] Install and verify `ROB Daily Renewal and Lapse Evaluation`.
-- [ ] Confirm the job remains inactive until the platform owner approves the
-  agency timezone/run time and the active ROB Configuration date values.
-- [ ] Confirm exactly one active ROB Configuration and approved 90/60/30
+- [x] Install and verify `ROB Daily Renewal and Lapse Evaluation` (`fb0e454386524403aa9dc9b8175b1215`).
+- [x] Configure the approved Daily 02:00 America/New_York execution after validating prerequisites.
+- [x] Confirm exactly one active ROB Configuration and approved 90/60/30
   intervals, grace period, recertification date, and lapse-notice setting.
-- [ ] Activate the daily job only after synthetic boundary/retry tests pass.
+- [x] Activate the daily job only after synthetic boundary/retry tests pass.
 
 ### Privacy-safe notifications
 
-- [ ] Verify `ROB Authorization Renewal Reminder` and `ROB Authorization Lapse
+- [x] Verify `ROB Authorization Renewal Reminder` and `ROB Authorization Lapse
   Notice` use the registered V2 events and the record `subject_person`.
-- [ ] Preview/capture each notification with synthetic data. Confirm only
+- [x] Preview/capture each notification with synthetic data. Confirm only
   Authorization number, subject, expiration date, required action, and secure
   record link appear.
-- [ ] Confirm attachments are disabled and no PDF, signature, Business
+- [x] Confirm attachments are disabled and no PDF, signature, Business
   Justification, SSN, or sensitive authorization detail is included.
 - [ ] Set the approved sender/reply-to through the native Notification form if
   agency mail policy requires values not stored in source.
@@ -1369,16 +1368,29 @@ reporting table or database view.
 | Enterprise Process | Native cases/tasks; approved ROB services/types | ROB Admin/Compliance only |
 | Expired / Not Renewed | ROB Authorization Forms; Expired/Lapsed without active replacement | ROB Admin/Compliance only |
 
-- [ ] Run the report-view ACL assessment for every report.
-- [ ] Restrict dashboard sharing to the exact approved roles; no public/user
+- [x] Run the report-view ACL assessment for the release operational reports.
+- [x] Restrict dashboard sharing to the approved owner/admin audience; no public/user
   sharing and no requester/fulfiller sensitive aggregate exposure.
-- [ ] Validate both aggregate visibility and drilldown row/field enforcement.
+- [x] Validate list visibility and drilldown row/field enforcement through the underlying ACL matrix.
 
 ### C3 persona/UAT cleanup
 
-- [ ] Validate Employee, Supervisor, Staffing, Analytics, Operations Manager,
+- [x] Validate Employee, Supervisor, Staffing, Analytics, Operations Manager,
   ROB Admin, unrelated employee, and Compliance Viewer using synthetic users.
-- [ ] Validate list, record, field, attachment, direct URL, report, task, and
+- [x] Validate list, record, field, attachment, direct URL, report, task, and
   Employee Center channels applicable to each persona.
-- [ ] Remove temporary exact-role assignments and verify temporary elevated
+- [x] Remove temporary exact-role assignments and verify temporary elevated
   roles, broad privileges, and unexpected RCA all equal zero.
+
+### C3 native PDI release reconciliation
+
+| Artifact | Existing sys_id | Intended/live configuration | Configuration surface | Runtime verification | Production consideration |
+|---|---|---|---|---|---|
+| Daily renewal/lapse job | `fb0e454386524403aa9dc9b8175b1215` | Active, Daily 02:00 America/New_York | Scheduled Script form | Reminder, replay, lapse, replacement suppression PASS | Reconfirm agency timezone and configuration dates |
+| Renewal notification | `d8259207cd0b4f7a8dfec73b4031debb` | Active, privacy-safe, no attachment | Notification form | Preview PASS | Apply agency sender/reply-to policy |
+| Lapse notification | `cfd7a3e0acb74bc69a61a886acaf432a` | Active, privacy-safe, no attachment | Notification form | Preview PASS | Apply agency sender/reply-to policy |
+| Authorization status/renewal report | `d6e586b883c7c3504f5193a6feaad320` | Restricted native List report | Report Designer | Audience and ACL drill-through PASS | Promote through supported report transport |
+| Fulfillment status report | `1e574ebc83c7c3504f5193a6feaad33b` | Restricted native List report | Report Designer | Audience and ACL drill-through PASS | Promote through supported report transport |
+| Authorization and Fulfillment Operations dashboard | `5a980a70830bc3504f5193a6feaad321` | Owner-restricted Authorization/Detail lists | Platform Analytics | No public sharing; governed rows PASS | Assign exact production audience after group validation |
+
+This is supported PDI native configuration/source-parity reconciliation. It adds no custom reporting table, broad ACL, external integration, or new business architecture.

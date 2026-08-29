@@ -1092,3 +1092,12 @@ Build evidence is package-specific and must remain distinct from install, runtim
 - Generated-key review: additions only for approved C3 artifacts; pre-existing
   key mutation/deletion `0`; broad privilege additions `0`.
 - Install/runtime evidence: pending user review and explicit authorization.
+
+## 2026-08-29 — C3/M5 final release closeout
+
+- One normal IDE Build and Install from `ROB V2 C2 RECOVERY` installed candidate `0501cde9e873c1864b0623ff4871fa3bb98fff18`; application identity remained unchanged.
+- C3 acceptance reached `10/10 PASS`: installed M5 inventory, renewal/lapse runtime, notification/privacy previews, eight-persona/direct-URL security UAT, and secured reporting/dashboard readiness.
+- Final regression PASS: M2 `19/19`; R1 `9/9`; Security `22/22`; Deployment `16/16`; R3 `30/30`; adapter `13/13`; R4 `64/64`; M4 `34/34`; template `7/7`; M5 `11/11`.
+- SDK 4.11.0 normal and frozen-key builds PASS; diff check PASS; unexpected generated-key changes `0`.
+- Final counts: broad privileges `0`; unexpected RCA `0`; temporary roles `0`; custom business tables `4`; custom fulfillment tables `0`; external integrations `0`.
+- Milestone: C3 COMPLETE; M5 COMPLETE; application ready for release / production implementation handoff.

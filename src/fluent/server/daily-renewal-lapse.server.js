@@ -14,11 +14,9 @@
     }
 
     function daysUntil(dateValue, evaluationDate) {
-        return Math.floor(gs.dateDiff(
-            evaluationDate + ' 00:00:00',
-            dateValue + ' 00:00:00',
-            true
-        ) / 86400)
+        var evaluation = new GlideDateTime(evaluationDate + ' 00:00:00')
+        var expiration = new GlideDateTime(dateValue + ' 00:00:00')
+        return Math.floor(GlideDateTime.subtract(evaluation, expiration).getNumericValue() / 86400000)
     }
 
     function activeReplacementExists(authorization) {
@@ -32,12 +30,21 @@
         return replacement.hasNext()
     }
 
-    function persistAuthorization(authorization, expectedStatus) {
+    function persistAuthorization(authorization, values, expectedStatus) {
         var id = authorization.getUniqueValue()
-        var result = authorization.update()
-        if (!result) {
-            throw new Error('Authorization update returned no sys_id for ' + id)
-        }
+        sn_fd.FlowAPI.getRunner()
+            .subflow('x_2166123_rob_auth.rob_persist_authorization_lifecycle_native')
+            .inForeground()
+            .withInputs({
+                authorization_sys_id: id,
+                status_value: values.status,
+                reminder_1_value: values.reminder1,
+                reminder_2_value: values.reminder2,
+                reminder_3_value: values.reminder3,
+                lapse_notice_value: values.lapseNotice,
+                cycle_identifier: values.cycle,
+            })
+            .run()
         var committed = new GlideRecord(AUTH_TABLE)
         if (!committed.get(id)) {
             throw new Error('Authorization disappeared after update: ' + id)
@@ -48,17 +55,32 @@
         return committed
     }
 
+    function authorizationValues(authorization) {
+        return {
+            status: authorization.getValue('status'),
+            reminder1: authorization.getValue('reminder_1_sent_date_time'),
+            reminder2: authorization.getValue('reminder_2_sent_date_time'),
+            reminder3: authorization.getValue('reminder_3_sent_date_time'),
+            lapseNotice: authorization.getValue('lapse_notice_sent_date_time'),
+            cycle: authorization.getValue('reminder_cycle_identifier'),
+        }
+    }
+
     function lapseDetails(authorizationId) {
         var detail = new GlideRecord(DETAIL_TABLE)
         detail.addQuery('rob_authorization_form', authorizationId)
         detail.addQuery('status', 'active')
         detail.query()
         while (detail.next()) {
-            detail.setValue('status', 'lapsed')
             var detailId = detail.getUniqueValue()
-            if (!detail.update()) {
-                throw new Error('Detail lapse update returned no sys_id for ' + detailId)
-            }
+            sn_fd.FlowAPI.getRunner()
+                .subflow('x_2166123_rob_auth.rob_lapse_authorized_access_detail_native')
+                .inForeground()
+                .withInputs({
+                    access_detail: detail,
+                    status_value: 'lapsed',
+                })
+                .run()
             var committed = new GlideRecord(DETAIL_TABLE)
             if (!committed.get(detailId) || committed.getValue('status') !== 'lapsed') {
                 throw new Error('Detail lapse status did not persist for ' + detailId)
@@ -105,15 +127,16 @@
                 if (activeReplacementExists(authorization)) {
                     continue
                 }
-                authorization.setValue('status', 'lapsed')
-                authorization.setValue('reminder_cycle_identifier', expirationDate)
+                var lapseValues = authorizationValues(authorization)
+                lapseValues.status = 'lapsed'
+                lapseValues.cycle = expirationDate
                 var sendLapse =
                     configuration.getValue('lapse_notification_enabled') === '1' &&
                     !authorization.getValue('lapse_notice_sent_date_time')
                 if (sendLapse) {
-                    authorization.setValue('lapse_notice_sent_date_time', new GlideDateTime())
+                    lapseValues.lapseNotice = new GlideDateTime().getValue()
                 }
-                var lapsed = persistAuthorization(authorization, 'lapsed')
+                var lapsed = persistAuthorization(authorization, lapseValues, 'lapsed')
                 lapseDetails(lapsed.getUniqueValue())
                 if (sendLapse) {
                     gs.eventQueue(LAPSE_EVENT, lapsed, '', '')
@@ -122,19 +145,20 @@
             }
 
             var changed = false
+            var reminderValues = authorizationValues(authorization)
             for (var index = 0; index < thresholds.length; index++) {
                 var threshold = thresholds[index]
                 if (isNaN(threshold.days) || threshold.days < 0) {
                     continue
                 }
                 if (remaining <= threshold.days && !authorization.getValue(threshold.field)) {
-                    authorization.setValue(threshold.field, new GlideDateTime())
-                    authorization.setValue('reminder_cycle_identifier', expirationDate)
+                    reminderValues['reminder' + threshold.sequence] = new GlideDateTime().getValue()
+                    reminderValues.cycle = expirationDate
                     changed = true
                 }
             }
             if (changed) {
-                var reminded = persistAuthorization(authorization, 'active')
+                var reminded = persistAuthorization(authorization, reminderValues, 'active')
                 gs.eventQueue(REMINDER_EVENT, reminded, String(remaining), '')
             }
         } catch (error) {
