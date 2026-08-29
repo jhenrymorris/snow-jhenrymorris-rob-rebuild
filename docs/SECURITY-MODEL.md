@@ -327,3 +327,25 @@ roles, custom fulfillment tables, and external provisioning integrations
 remain zero. No manual `sys_plugins` bootstrap or direct metadata repair was
 performed. Persona isolation gates remain NOT RUN rather than inferred from
 source evidence.
+
+## 16. C3 governed-record release controls
+
+The C3 candidate adds explicit record and wildcard-field read ACLs for ROB
+Authorization Form and Authorized Access Detail plus administrator/configuration
+ACLs. Authorization repository read is limited to ROB Admin, Compliance Viewer,
+or the record subject. Supervisors continue to use native approval/signature
+tasks rather than repository browse access. Operations Managers remain native
+task-only and receive no Authorization or Detail ACL.
+
+Authorized Access Detail contextual read is limited to an assigned user or
+assignment-group member on an active, exact related Staffing or Analytics task,
+with the matching Authorization and Access Item. The script is intentionally
+query-based because declarative roles alone cannot express record/task context;
+it narrows first by the indexed related Authorization and required Access Item.
+No fulfiller Detail write is granted; fulfillment evidence stays on the native
+HR Task and lifecycle activation remains system-managed.
+
+No delete ACL, broad native-table Write, generic GlideRecord Execute privilege,
+unexpected RCA, custom audit table, or attachment table is introduced. Final
+acceptance requires the eight-persona matrix and direct attachment URL tests on
+the installed PDI; source/build evidence alone is not a runtime PASS.

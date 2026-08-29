@@ -373,6 +373,20 @@ production runtime remains blocked by M2/M3. No external provisioning API,
 custom fulfillment table, renewal scheduler, or production notification is
 introduced.
 
+## M5 Security, Renewal, and Release Boundary
+
+M5 adds one configuration-driven daily Scheduled Script, existing-record
+reminder/lapse evidence, two privacy-safe event notifications, and explicit
+least-privilege ACLs for the governed V2 tables. It adds no reminder ledger,
+audit table, custom task, attachment table, or external integration. An active
+replacement suppresses lapse; historical authorization/PDF evidence is never
+deleted or overwritten, and ServiceNow does not deprovision external access.
+
+Native reports and dashboards query only the secured V2/native tables. Report
+sharing never replaces record/field ACLs; aggregate and drilldown access must
+both pass the C3 persona matrix. Native signing/PDF paths remain frozen and are
+reused only where UAT needs persona/security evidence.
+
 ## M2 Approved Profile Resolution and Authorization Snapshot Boundary
 
 `RobProfileAuthorizationContext` is the single deterministic server boundary.

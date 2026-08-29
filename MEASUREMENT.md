@@ -2903,3 +2903,30 @@ Not exposed by session/tool — no estimate recorded.
   provisioning integrations `0`.
 - Final milestone state: C0 COMPLETE; C1 COMPLETE; C2 COMPLETE; M1 COMPLETE;
   M2 COMPLETE; M3 COMPLETE; M4 COMPLETE; C3/M5 READY and not started.
+
+## C3 / M5 Security, UAT, and Release â€” start
+
+- Start date: `2026-08-28`.
+- Starting checkpoint: `f90df3226a1e7735e1f5cd8eb09229210449f737`, pushed to
+  `rebuild/codex/dev437-rebuild-identity`; working tree clean at checkpoint.
+- C2/M4 is frozen at `13/13 PASS`. Architecture changes and new capability
+  investigations remain `0`.
+- Consolidated implementation inventory:
+
+| Surface | Current state | C3 requirement | Gap / batched correction |
+|---|---|---|---|
+| Renewal/lapse | Expiration and reminder evidence fields exist; no accepted daily processor | Configuration-driven daily evaluation, 90/60/30 idempotency, replacement suppression, one lapse notice | Add one daily Scheduled Script, deterministic renewal/lapse service, and focused tests; keep job inactive until PDI operating time/configuration is approved |
+| Notifications | No accepted renewal/lapse notifications | Privacy-safe native email, secure link, no PDF/signature/justification | Add two registered events and two native Email Notifications; runtime preview remains required |
+| Governed-record security | Access-item and native-case ACLs exist; Authorization/Detail/Configuration release ACLs absent | Subject isolation, contextual fulfiller access, compliance/admin access, OM repository denial | Add least-privilege table/field ACLs; require PDI persona and direct-URL validation |
+| UAT | C1/C2 lifecycle evidence accepted | Persona-oriented release validation without reopening closed paths | Reuse accepted fixtures where safe; execute only access/channel/persona evidence needed for release |
+| Reports/dashboards | No accepted production reports/dashboard | Eight secured report outcomes and restricted dashboards | Configure existing platform reports/dashboard through supported native UI after ACL deployment; validate aggregate and drilldown isolation |
+| Release evidence | C0-C2 evidence complete | M5 runbook, security/UAT evidence, one final release regression | Update governing documents and perform final regression once after C3 runtime acceptance |
+
+- Initial focused C3 source result: M5 renewal/privacy/security suite `11/11`
+  PASS and SDK 4.11.0 normal build PASS. The build added only expected stable
+  keys for the new approved Scheduled Script, two events, two notifications,
+  eleven ACLs, their role links, and the renewal service module; pre-existing
+  key mutation/deletion is `0`.
+- Current C3 acceptance: source-focused gates PASS; PDI install, renewal/lapse
+  runtime, persona security/UAT, direct-URL PDF, notification preview,
+  reports/dashboard, and release closeout remain pending.

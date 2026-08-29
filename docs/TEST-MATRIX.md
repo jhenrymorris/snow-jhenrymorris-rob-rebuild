@@ -383,6 +383,21 @@ C2 runtime acceptance is 13/13 PASS. Final regression passed M2 19/19, R1
 9/9, Security 22/22, Deployment 16/16, R3 30/30, R3 adapter 13/13, R4
 64/64, M4 34/34, and split-template validator 7/7. Normal/frozen SDK 4.11.0
 builds and diff/generated-key gates passed with zero unexpected key changes.
+
+### C3 / M5 security, UAT, and release
+
+| ID | Test | Method | Status |
+|---|---|---|---|
+| TM-248 | Daily renewal boundary matrix | 90/60/30, late daily execution, invalid dates, non-active immutability | Focused source `PASS` |
+| TM-249 | Reminder/lapse idempotency | Existing timestamp evidence suppresses retries; one cycle key; no ledger table | Focused source `PASS`; PDI pending |
+| TM-250 | Active replacement suppression | Expired predecessor with active replacement receives no lapse/notice | Focused source `PASS`; PDI pending |
+| TM-251 | Privacy-safe renewal/lapse notifications | Secure link; no attachment/PDF/signature/justification/SSN | Focused source `PASS`; native preview pending |
+| TM-252 | Governed-record ACL metadata | Subject/Admin/Compliance plus exact Staffing/Analytics task context; OM repository denial | Focused source `PASS`; PDI persona matrix pending |
+| TM-253 | Final PDF direct URL | Authorized compliance/admin allowed; unrelated employee denied | PDI impersonation | Not Run |
+| TM-254 | Eight-persona UAT matrix | Employee, Supervisor, Staffing, Analytics, OM, Admin, unrelated, Compliance across approved channels | PDI manual/ATF | Not Run |
+| TM-255 | Secured reports/dashboard | RPT-1â€“RPT-8 counts, filters, audience, aggregate and drilldown isolation | PDI report/UAT | Not Run |
+| TM-256 | Privacy/schema/retention release review | Synthetic-only, no SSN, no notification attachment, no automatic deletion/deprovisioning | Source/PDI/manual | Source partial PASS; runtime pending |
+| TM-257 | C3 final release regression | Complete prior suites, M5 suite, normal/frozen build, keys/security counts | Local/PDI | Not Run |
 # C2 runtime disposition — 2026-08-27
 
 - Systems-only routing: PASS (`HRC0001045` → one Staffing task

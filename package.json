@@ -19,6 +19,7 @@
         "test:r3-runtime": "node --test scripts/validation/r3-production-adapter.test.cjs",
         "test:r4": "node --test scripts/validation/r4-authorization-lifecycle.test.cjs",
         "test:m4": "node --test scripts/validation/m4-fulfillment-orchestration.test.cjs",
+        "test:m5": "node --test scripts/validation/m5-security-release.test.cjs",
         "test:m2": "node --test scripts/validation/m2-profile-authorization-context.test.cjs",
         "test:m3-template": "node --test scripts/validation/m3-native-template-readiness.test.cjs",
         "verify:wave2:pdi": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validation/verify-wave-2-deployment.ps1 -Auth pdi",

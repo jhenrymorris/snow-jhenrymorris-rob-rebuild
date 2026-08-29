@@ -448,3 +448,15 @@ requirement or M4 architecture was changed.
 | External boundary | ARM/OAS/FPPS-WTTS/eOPF/USA Staffing provisioning calls zero; notify-and-track only | PASS |
 | Regression/build | M2 19, R1 9, Security 22, Deployment 16, R3 30, adapter 13, R4 64, M4 34, template 7; normal/frozen SDK builds and key/diff gates | PASS |
 | Milestone | C2 and M4 complete; C3/M5 ready but not started | COMPLETE / C3 READY |
+
+## C3 / M5 implementation start (2026-08-28)
+
+| Requirement | Candidate implementation/evidence | Status |
+|---|---|---|
+| FR-23 / AC-22 | Daily Scheduled Script plus deterministic 90/60/30 and retry-safe service | SOURCE/FOCUSED TEST PASS; PDI runtime pending |
+| FR-24 / AC-23 | Replacement-aware lapse, one notice, preserved history, no external deprovisioning | SOURCE/FOCUSED TEST PASS; PDI runtime pending |
+| SEC-1 / SEC-2 | Governed Authorization/Detail/Configuration ACLs and parent-secured final PDF | SOURCE PASS; persona/direct-URL runtime pending |
+| SEC-3 / AC-17 | Two event-driven notifications with attachments disabled and privacy-safe content | SOURCE PASS; native preview pending |
+| RPT-1â€“RPT-8 | Eight native secured-report definitions and dashboard audience matrix documented | NATIVE CONFIGURATION/UAT pending |
+| AUD-1â€“AUD-3 / RET-1 | Existing audit/history fields and no-delete model retained | SOURCE PASS; historical retrieval/retention review pending |
+| M5 release | Focused M5 `11/11`, normal build PASS, expected new keys only | PRE-INSTALL PASS |

@@ -1329,3 +1329,56 @@ action, caller, or runtime effect. Do not activate it.
 
 No broad GlideRecord privilege, native-case/native-task Write grant, new table,
 external integration, or application identity change was introduced.
+
+## C3 / M5 native release configuration
+
+### Daily renewal/lapse operation
+
+- [ ] Install and verify `ROB Daily Renewal and Lapse Evaluation`.
+- [ ] Confirm the job remains inactive until the platform owner approves the
+  agency timezone/run time and the active ROB Configuration date values.
+- [ ] Confirm exactly one active ROB Configuration and approved 90/60/30
+  intervals, grace period, recertification date, and lapse-notice setting.
+- [ ] Activate the daily job only after synthetic boundary/retry tests pass.
+
+### Privacy-safe notifications
+
+- [ ] Verify `ROB Authorization Renewal Reminder` and `ROB Authorization Lapse
+  Notice` use the registered V2 events and the record `subject_person`.
+- [ ] Preview/capture each notification with synthetic data. Confirm only
+  Authorization number, subject, expiration date, required action, and secure
+  record link appear.
+- [ ] Confirm attachments are disabled and no PDF, signature, Business
+  Justification, SSN, or sensitive authorization detail is included.
+- [ ] Set the approved sender/reply-to through the native Notification form if
+  agency mail policy requires values not stored in source.
+
+### Secured reports and dashboards
+
+Create or reconcile the existing native report records; do not create a custom
+reporting table or database view.
+
+| Report | Source/filter | Audience |
+|---|---|---|
+| Staffing Workload | Native HR Tasks; ROB Task Type = Staffing Fulfillment | Staffing role plus ROB Admin/Compliance; row ACLs remain authoritative |
+| Analytics Workload | Native HR Tasks; ROB Task Type = Analytics Fulfillment | Analytics role plus ROB Admin/Compliance |
+| Operations Manager Action | Native HR Tasks; ROB Task Type = OM ARM Assignment | Assigned OM context plus ROB Admin/Compliance |
+| Supervisor Approval | ROB Authorization Forms; approval outcome/time | ROB Admin/Compliance only |
+| Authorization Renewal | ROB Authorization Forms; Active and relative expiration | ROB Admin/Compliance only |
+| Audit Retrieval | ROB Authorization Forms/Details; subject and organization filters | ROB Admin/Compliance only |
+| Enterprise Process | Native cases/tasks; approved ROB services/types | ROB Admin/Compliance only |
+| Expired / Not Renewed | ROB Authorization Forms; Expired/Lapsed without active replacement | ROB Admin/Compliance only |
+
+- [ ] Run the report-view ACL assessment for every report.
+- [ ] Restrict dashboard sharing to the exact approved roles; no public/user
+  sharing and no requester/fulfiller sensitive aggregate exposure.
+- [ ] Validate both aggregate visibility and drilldown row/field enforcement.
+
+### C3 persona/UAT cleanup
+
+- [ ] Validate Employee, Supervisor, Staffing, Analytics, Operations Manager,
+  ROB Admin, unrelated employee, and Compliance Viewer using synthetic users.
+- [ ] Validate list, record, field, attachment, direct URL, report, task, and
+  Employee Center channels applicable to each persona.
+- [ ] Remove temporary exact-role assignments and verify temporary elevated
+  roles, broad privileges, and unexpected RCA all equal zero.

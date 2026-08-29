@@ -1079,3 +1079,16 @@ Build evidence is package-specific and must remain distinct from install, runtim
   tables; broad GlideRecord/native-case/native-task privileges `0`; unexpected
   RCA additions `0`; external provisioning integrations `0`.
 - Milestone: C2 COMPLETE; M4 COMPLETE; C3/M5 READY and not started.
+
+## 2026-08-28 â€” C3/M5 batched source pre-install gate
+
+- Durable C2 checkpoint `f90df3226a1e7735e1f5cd8eb09229210449f737`
+  committed and pushed; checkpoint tree clean.
+- Added one configuration-driven daily renewal/lapse Scheduled Script, a pure
+  decision service, two registered notification events, two privacy-safe Email
+  Notifications, and governed Authorization/Detail/Configuration ACLs.
+- Focused M5 suite: `11/11 PASS`.
+- SDK 4.11.0 normal build: PASS; `git diff --check`: PASS.
+- Generated-key review: additions only for approved C3 artifacts; pre-existing
+  key mutation/deletion `0`; broad privilege additions `0`.
+- Install/runtime evidence: pending user review and explicit authorization.

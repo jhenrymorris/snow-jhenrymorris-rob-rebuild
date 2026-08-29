@@ -405,25 +405,89 @@ declare global {
                         table: 'sys_ui_related_list_entry'
                         id: '137ded1fbfeb41599b698f5d983756fd'
                     }
+                    'rob-authorization-admin-create': {
+                        table: 'sys_security_acl'
+                        id: '6b49da8dac2d43b890a7cbfaa0c42024'
+                    }
+                    'rob-authorization-admin-write': {
+                        table: 'sys_security_acl'
+                        id: 'dd902fa17e5b4623861ab6da027552a1'
+                    }
                     'rob-authorization-business-justification-label': {
                         table: 'sys_ui_annotation'
                         id: '0fb08a457c524f888f0982398a9d12d3'
+                    }
+                    'rob-authorization-detail-admin-create': {
+                        table: 'sys_security_acl'
+                        id: '734aad39f2dc469a9752d24629a11543'
+                    }
+                    'rob-authorization-detail-admin-write': {
+                        table: 'sys_security_acl'
+                        id: 'c9510b8f2de44c07b237be4b2d6be8e5'
+                    }
+                    'rob-authorization-detail-field-read': {
+                        table: 'sys_security_acl'
+                        id: '1d4438d9eec04b2a97e36ca271f38985'
+                    }
+                    'rob-authorization-detail-read': {
+                        table: 'sys_security_acl'
+                        id: 'bc524a338a924ce6a1651d0ad7990dc1'
+                    }
+                    'rob-authorization-field-read': {
+                        table: 'sys_security_acl'
+                        id: 'a4000ccec45d45da9448256393e98be2'
                     }
                     'rob-authorization-forms-module': {
                         table: 'sys_app_module'
                         id: '759f6950b7354506af4e0be61284193f'
                     }
+                    'rob-authorization-read': {
+                        table: 'sys_security_acl'
+                        id: '24d429009f39432087bf1be205cf266c'
+                    }
                     'rob-common-intake-variable-set': {
                         table: 'item_option_new_set'
                         id: '0668d48652614fe6b1c5846140a341c6'
+                    }
+                    'rob-configuration-admin-create': {
+                        table: 'sys_security_acl'
+                        id: '47d103acc9bf4dc39e9789994fb03818'
+                    }
+                    'rob-configuration-admin-read': {
+                        table: 'sys_security_acl'
+                        id: 'baeb490e5f5f4416b12e78ef88890756'
+                    }
+                    'rob-configuration-admin-write': {
+                        table: 'sys_security_acl'
+                        id: '5010f78d1c404c59a788975e43ff8637'
                     }
                     'rob-configuration-module': {
                         table: 'sys_app_module'
                         id: '9e75932e206943eca10f57fa32d35de5'
                     }
+                    'rob-daily-renewal-lapse': {
+                        table: 'sysauto_script'
+                        id: 'fb0e454386524403aa9dc9b8175b1215'
+                    }
+                    'rob-lapse-notice-event': {
+                        table: 'sysevent_register'
+                        id: '29d57605c15048bb99bce0baa936579e'
+                    }
+                    'rob-lapse-notification': {
+                        table: 'sysevent_email_action'
+                        id: 'cfd7a3e0acb74bc69a61a886acaf432a'
+                    }
                     'rob-profile-authorization-context': {
                         table: 'sys_script_include'
                         id: 'adb660f45ca4495eba511efe70c9487e'
+                    }
+                    'rob-renewal-notice-event': {
+                        table: 'sysevent_register'
+                        id: '48d47634fe654e77b91520562b59bf93'
+                    }
+                    'rob-renewal-notification': {
+                        table: 'sysevent_email_action'
+                        id: 'd8259207cd0b4f7a8dfec73b4031debb'
                     }
                     'rob-require-access-end-date-for-time-limited-workers': {
                         table: 'catalog_ui_policy'
@@ -484,6 +548,10 @@ declare global {
                     src_server_fulfillment_FulfillmentRoutingService_js: {
                         table: 'sys_module'
                         id: 'a0c4f1427e79403b85d7ac897c2d466f'
+                    }
+                    src_server_renewal_RenewalLapseService_js: {
+                        table: 'sys_module'
+                        id: 'c2fc50979d374f1fb0be5a89ebb534b7'
                     }
                     'validate-rob-fulfillment-task-completion': {
                         table: 'sys_script'
@@ -2100,6 +2168,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: '1b213864a3d743748adf5814b92cdbdf'
+                        key: {
+                            sys_security_acl: '47d103acc9bf4dc39e9789994fb03818'
+                            sys_user_role: {
+                                id: '281a0263b28640fcbe0ee110d9617908'
+                                key: {
+                                    name: 'x_2166123_rob_auth.rob_admin'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '1b2952f6b9a04d02b44a3631e8aab242'
                         deleted: true
@@ -3487,6 +3568,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: '33f98a37b121493c810aedf240035149'
+                        key: {
+                            sys_security_acl: 'c9510b8f2de44c07b237be4b2d6be8e5'
+                            sys_user_role: {
+                                id: '281a0263b28640fcbe0ee110d9617908'
+                                key: {
+                                    name: 'x_2166123_rob_auth.rob_admin'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '343706b3f0064f738ef21b19cf5cb115'
                         key: {
@@ -3557,6 +3651,19 @@ declare global {
                             name: 'sn_hr_core_task'
                             element: 'x_2166123_rob_auth_fulfillment_outcome'
                             value: 'failed_exception'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '35b7bc6a636f423ab942c67f11e55037'
+                        key: {
+                            sys_security_acl: '6b49da8dac2d43b890a7cbfaa0c42024'
+                            sys_user_role: {
+                                id: '281a0263b28640fcbe0ee110d9617908'
+                                key: {
+                                    name: 'x_2166123_rob_auth.rob_admin'
+                                }
+                            }
                         }
                     },
                     {
@@ -5826,6 +5933,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: '5d9982d5fa7648a9adbacefab14451c1'
+                        key: {
+                            sys_security_acl: 'baeb490e5f5f4416b12e78ef88890756'
+                            sys_user_role: {
+                                id: '660e847e025a4156ade6d7321c20536e'
+                                key: {
+                                    name: 'x_2166123_rob_auth.rob_compliance_viewer'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_ui_form_section'
                         id: '5db2b1bf33184fdc8a02288b57bfb5c0'
                         key: {
@@ -7862,6 +7982,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: '816c27de39b04f4a89317539621ecc19'
+                        key: {
+                            sys_security_acl: 'baeb490e5f5f4416b12e78ef88890756'
+                            sys_user_role: {
+                                id: '281a0263b28640fcbe0ee110d9617908'
+                                key: {
+                                    name: 'x_2166123_rob_auth.rob_admin'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '817bfcb5bbf548ed976eb70665fcbd43'
                         key: {
@@ -7952,6 +8085,19 @@ declare global {
                             value: 'missing_organization'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '82b60bfd829e472d8e78ac5b8ea1b114'
+                        key: {
+                            sys_security_acl: '5010f78d1c404c59a788975e43ff8637'
+                            sys_user_role: {
+                                id: '281a0263b28640fcbe0ee110d9617908'
+                                key: {
+                                    name: 'x_2166123_rob_auth.rob_admin'
+                                }
+                            }
                         }
                     },
                     {
@@ -11861,6 +12007,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: 'cc8c53e96a4e408d8df7d99d60ad4e92'
+                        key: {
+                            sys_security_acl: '734aad39f2dc469a9752d24629a11543'
+                            sys_user_role: {
+                                id: '281a0263b28640fcbe0ee110d9617908'
+                                key: {
+                                    name: 'x_2166123_rob_auth.rob_admin'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: 'cca2d16d1a41417fbd8856f1d8ce2e9b'
                         deleted: true
@@ -12811,6 +12970,19 @@ declare global {
                             name: 'sn_hr_core_case_workforce_admin'
                             element: 'x_2166123_rob_auth_existing_authorization_status'
                             value: 'obsolete_version'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'de3f42d7b2ff42ed9e5963abf4e5b467'
+                        key: {
+                            sys_security_acl: 'dd902fa17e5b4623861ab6da027552a1'
+                            sys_user_role: {
+                                id: '281a0263b28640fcbe0ee110d9617908'
+                                key: {
+                                    name: 'x_2166123_rob_auth.rob_admin'
+                                }
+                            }
                         }
                     },
                     {
