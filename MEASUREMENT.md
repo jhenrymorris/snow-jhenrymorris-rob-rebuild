@@ -2611,6 +2611,110 @@ Not exposed by session/tool — no estimate recorded.
 - Result: **C2 BLOCKED — C0 capability M5-12 disproven on dev437065. M4 NOT
   COMPLETE. C3 NOT READY.** No C2.x package or alternate architecture is
   authorized.
+
+## E0-R — V2 installer registration root-cause resolution
+
+- Date: `2026-08-27`; measurement shape: one bounded comparison and recovery
+  classification.
+- Source identity: branch `codex/dev437-rebuild-identity`, checkpoint
+  `5d16b27f0f6d796b1f6502e5d93b3e8b655fd02d`, scope
+  `x_2166123_rob_auth`, scopeId `4aba8657837a43104f5193a6feaad3c5`, package
+  `x-2166123-hr-access-rob-authorization-v-2`, version `0.0.4`, SDK `4.11.0`.
+  No material identity drift from the successful C1 line was found.
+- Single comparison: V2 and healthy Fluent control `x_2166123_ird` are active
+  custom `sys_app`/`sys_scope`/`sys_package` identities with installed modules
+  and metadata owned by their application records. Neither has a
+  `sys_plugins` row. Missing `sys_plugins` is not independently anomalous.
+- Forensics: failed histories `230596d483cf4f104f5193a6feaad301` and
+  `e2351a9883cf4f104f5193a6feaad3e8` both show `0/0` changes, `from_version =
+  n/a`, and `to_version = x_2166123_rob_auth`. The error was recorded by
+  `com.glide.ui.ServletErrorListener`; the underlying installer component that
+  selected the plugin lookup is not exposed and is classified `UNKNOWN`.
+- Primary root cause: server-side IDE deployment registration/routing defect
+  causing this custom application request to enter a plugin lookup path.
+  Confidence is medium because the failing internal registration component is
+  not visible through the supported read-only surfaces.
+- Official Australia documentation provides no identity-preserving custom
+  Fluent registration repair. Workspace add/remove is supported organization,
+  not a documented installer repair, so no correction met the attempt gate.
+- Metrics: broad documentation searches `1`; comparison passes `1`;
+  hypotheses `5`; correction attempts `0`; install attempts `0`; C2 fixtures
+  `0`; regressions `0`; M4 source changes `0`; architecture changes `0`.
+- Outcome: **PLATFORM SUPPORT REQUIRED**. Clean-PDI rebuild remains a fallback
+  only. C2 remains Systems-only `PASS`, Retry/idempotency `PASS`, and eleven
+  gates `NOT RUN`.
+
+## E0-D - V2 installer delta analysis and bounded correction
+
+- Date: `2026-08-27`; measurement shape: one exact successful-to-failed
+  comparison and at most one supported workspace correction.
+- Checkpoints: installed source `8b339391`; documentation-only C1 closeout
+  `5ae9ce2`; first failed C2 checkpoint `5d16b27`.
+- Artifact comparison: both checkpoints built successfully with SDK `4.11.0`
+  in disposable directories. Generated `sys_app` XML was byte-for-byte
+  identical. SDK BOM package/scopeId/version identity matched; only generated
+  UUID/time differed. Failed-package inventory added exactly two expected C2
+  Business Rule update records.
+- Generated keys: two logical additions (`31b6f6fe7198436d8d6600355948fe70`
+  and `ac053c7003d6498ab045cc1cc7ffa7ec`); existing mutation/deletion `0`.
+- `sys_restricted_caller_access` in `ignoreTransformTableList` produced no
+  application-identity change and is non-causal.
+- Live comparison: V2 and healthy control remain active Custom Applications;
+  neither has a `sys_plugins` row. V2 sys_id/scopeId, scope, package, source,
+  and version remain unchanged. Failed histories remain `0/0`; the actual
+  installer emitter remains `UNKNOWN` beyond
+  `com.glide.ui.ServletErrorListener`.
+- Concrete IDE delta: the current workspace contained only old application
+  root `b0d63cedc2d34e0ca4c05d6eb7acf61e` on
+  `feature/05-fulfillment-orchestration`, not the V2 application/project.
+- Supported correction attempt `1/1`: **Add to Workspace -> Open
+  applications** selected the existing V2 application. The IDE reported one
+  folder added, but after V2 selection and reload it still exposed only the
+  old project root. No V2 project/source-control root was established.
+- Identity after attempt: application sys_id, scope, scopeId, package, version,
+  repository source, and generated keys preserved.
+- Normal install attempts: `0`; C2 fixtures `0`; full regressions `0`; M4
+  source changes `0`; architecture changes `0`.
+- Outcome: **SERVER-SIDE ROUTING ANOMALY REMAINS**. C2 remains Systems-only
+  `PASS`, Retry/idempotency `PASS`, and eleven gates `NOT RUN`. Operational
+  choices are to preserve/freeze this PDI at `2/13 PASS`, or use a clean-PDI
+  rebuild of the same V2 identity as a controlled fallback; the fallback is
+  not classified as required.
+
+## E0-W - clean IDE workspace reconstruction
+
+- Date: `2026-08-27`; execution shape: one workspace, one association, one
+  Build, one explicitly authorized normal Build and Install.
+- Preserved stale workspace evidence: old root
+  `b0d63cedc2d34e0ca4c05d6eb7acf61e`, branch
+  `feature/05-fulfillment-orchestration`, V2 project absent.
+- Created `ROB V2 C2 RECOVERY` and associated the authoritative rebuild
+  repository/branch with the existing V2 application. The clean workspace
+  established root `4aba8657837a43104f5193a6feaad3c5` at exact checkpoint
+  `5d16b27f0f6d796b1f6502e5d93b3e8b655fd02d`.
+- Readiness: source drift `0`; IDE staged/unstaged `0/0`; unexpected
+  generated-key drift `0`; key blob
+  `fe18dc0211c8912ed5514b4a0cd11b3c526061f7`; application identity drift
+  `NONE`.
+- Build: PASS in `26722 ms`. Authorized installation build: PASS in
+  `25477 ms`. Generated `sys_app` hash:
+  `7D47E3E3D9A32A7AA5EEA18471A07A371E0953815B17A78659EE135F0ABCF646`.
+- Normal Build and Install: PASS in `252620 ms`; rollback context
+  `95c367dc838b8f104f5193a6feaad3be`; upgrade history
+  `0204a79483cb8f104f5193a6feaad313`; Flow activation `1/1`; prior
+  `sys_plugins` lookup error repeated: `NO`.
+- Installed-state verification: V2 sys_id/scope/scopeId/version preserved; C2
+  task lifecycle Business Rules `31b6f6fe7198436d8d6600355948fe70`
+  and `ac053c7003d6498ab045cc1cc7ffa7ec` present and active; broad
+  GlideRecord/native-case/native-task write privileges `0`; generated-key
+  unexpected changes `0`.
+- Metrics: workspace creations `1`; repository/application associations `1`;
+  Builds `1` pre-install plus the normal install's mandatory build; install
+  attempts `1`; C2 fixtures `0`; full regressions `0`; M4 source changes `0`;
+  architecture changes `0`.
+- Outcome: **INSTALLER PATH RECOVERED. C2 READY TO RESUME.** C2 remains
+  Systems-only `PASS`, Retry/idempotency `PASS`, and eleven gates `NOT RUN`.
+
 ### 2026-08-28 C2 resumed final acceptance stop
 
 - Workspace identity: `ROB V2 C2 RECOVERY`, V2 root/scopeId
@@ -2639,3 +2743,163 @@ Not exposed by session/tool — no estimate recorded.
   HR Core bridge reconciliation/closure result was not produced by the
   supported mechanism under the frozen preconditions. M4 NOT COMPLETE. C3 NOT
   READY.**
+
+### 2026-08-28 C2-T final M4 reconciliation execution trace
+
+- Execution shape: read-only four-layer trace; no source, HR Core, record,
+  build, install, fixture, regression, or capability-classification change.
+- Workspace identity: PASS for `ROB V2 C2 RECOVERY`, V2 root/scopeId
+  `4aba8657837a43104f5193a6feaad3c5`, authoritative branch, and SDK `4.11.0`.
+- `HRT0001003` persisted complete Analytics waiver evidence and resolves to
+  `ROBD0001028` / `HRC0001048` through matching Authorization and Access Item
+  references. The live HR Core bridge matches the corrected governed source.
+- System log `1d91252883cfcf104f5193a6feaad32c` proves Business Rule
+  `31b6f6fe7198436d8d6600355948fe70` executed at `2026-08-28 12:43:58`.
+- The rule passed bridge evidence and Detail matching, then stopped exactly at
+  `details.setValue('status', 'active')` with
+  `CrossScopeAccessNotAllowedException`. Parent closure was not reached.
+- Primary root cause: **C — V2 Detail match/activation failure**; ordinary C2
+  implementation/configuration defect. M4-02, M4-06, and M4-07 classifications
+  and the preserved `10/13` gate state were not changed during C2-T.
+
+### 2026-08-28 C2-F Authorized Access Detail persistence correction
+
+- Workspace identity passed for `ROB V2 C2 RECOVERY`, V2 root/scopeId
+  `4aba8657837a43104f5193a6feaad3c5`, branch
+  `codex/dev437-rebuild-identity`, and SDK `4.11.0`.
+- The bounded correction replaced only
+  `details.setValue('status', 'active')` with direct same-scope assignment
+  `details.status = 'active'`; focused M4 remained `34/34` PASS, normal and
+  frozen SDK builds passed, `git diff --check` passed, and generated-key
+  unexpected changes remained `0`.
+- The normal IDE install completed successfully. The web SDK lost the upload
+  response (`TypeError: Failed to fetch`), but the native success banner and
+  live Business Rule `31b6f6fe7198436d8d6600355948fe70` confirm the corrected
+  source was installed. No retry, Force Install, Reinstall, or local SDK
+  install was used.
+- Governed replay updated `HRT0001003` at `2026-08-28 15:08:01` while
+  preserving the authorized waiver actor, timestamp, reason, completion
+  evidence, and close notes. The previous `GlideRecord.setValue` exception did
+  not recur and no new restricted-caller record was generated.
+- Actual result: `ROBD0001028` remained `pending_fulfillment` and
+  `HRC0001048` remained open. Direct property assignment on the V2-owned,
+  package-private table did not mark/persist the Detail change; parent closure
+  was therefore not reached.
+- Ownership evidence: the Business Rule and Authorized Access Detail table are
+  both owned by V2 scope/package `4aba8657837a43104f5193a6feaad3c5`.
+  Generated broad privileges remain `0`; exact replacement exception: none.
+- Per the C2-F stop rule, no second persistence mechanism, helper, bridge,
+  privilege, install, fixture, or full regression was attempted. The accepted
+  runtime state remains `10/13` PASS; gates 9, 10, and 11 remain not accepted.
+- Result: **C2-F BLOCKED; C2 and M4 are NOT COMPLETE; C3 is NOT READY.**
+
+### 2026-08-28 C2-P same-scope Detail persistence proof
+
+- Execution shape: one isolated same-scope persistence proof; production C2
+  source edits `0`, installs `0`, C2 runtime replays `0`, and full regressions
+  `0`. The accepted C2 state remains `10/13` PASS.
+- Identity gate: authoritative branch `codex/dev437-rebuild-identity`, V2 scope
+  `x_2166123_rob_auth`, scopeId `4aba8657837a43104f5193a6feaad3c5`,
+  version `0.0.4`, and SDK `4.11.0` remained unchanged.
+- Live ownership: table `x_2166123_rob_auth_auth_detail` is owned by the V2
+  scope/application/package and is `package_private`. Its `status` dictionary
+  element is system-managed/read-only. Cross-application create/read/update/
+  delete flags are disabled.
+- A new disposable Detail could not be inserted: `GlideRecord.insert` was
+  rejected by `CrossScopeAccessNotAllowedException`; execution history
+  `03e80a6c83c703504f5193a6feaad32e` created no record and no privilege.
+- The controlled proof therefore used synthetic `ROBD0001015`
+  (`8358cc1883830f104f5193a6feaad3e6`), whose Authorization is non-active and
+  whose parent case `HRC0001024` is cancelled. Its before/after status remained
+  `fd-scripted`, so the proof could not advance an authorization or close a
+  case.
+- Test A loaded the record by query, assigned `status = 'active'`, and called
+  `update()`. Test B loaded a fresh GlideRecord by the exact sys_id and repeated
+  the assignment/update. Both calls raised
+  `CrossScopeAccessNotAllowedException: Access to GlideRecord.update from scope
+  x_2166123_rob_auth not allowed`; both returned blank and reread
+  `fd-scripted` with the unchanged update timestamp.
+- No eligible alternate V2 repository/service exists: existing V2 persistence
+  paths use the same generic GlideRecord assignment/setValue plus update/insert
+  APIs. No active Detail Business Rule, ACL-specific write path, Data Policy,
+  UI Policy, audit mutation, generated RCA, or broad GlideRecord scope
+  privilege was found. The database value was never committed and was not
+  subsequently reverted.
+- Primary result: **C — all tested supported same-scope V2 GlideRecord writes
+  fail to persist on this installed package-private table configuration.** A
+  fresh exact-sys_id reload fails identically, disproving record/execution-
+  context contamination. This proof does not itself authorize an M4-06
+  architecture change or a broad privilege.
+
+### 2026-08-28 C2-S Australia supported-pattern reconciliation
+
+- Official Australia guidance and SDK 4.11.0 metadata types identify the
+  canonical pattern for a system-managed field that remains read-only to users
+  but must accept controlled server lifecycle writes: Dictionary
+  `read_only_option = display_read_only`, represented in Fluent as
+  `readOnlyOption: 'display_read_only'`.
+- Current V2 source declared Detail `status` as `readOnly: true`. SDK 4.11.0
+  deterministically emits that as `read_only_option = instance_configured`.
+  Live property `glide.read_only.legacy_read_only_behavior` is
+  `client_script_modifiable`, which blocks server-side updates to those fields.
+- Working C1 precedent was inspected: the ROB Supervisor Approval Flow runs as
+  System and uses the native Update Record action for Authorization/Detail
+  lifecycle changes. M4 instead uses a scoped Business Rule plus GlideRecord
+  against a field whose installed read-only option disallows that server write.
+- Exact correction: Detail `status` now declares
+  `readOnlyOption: 'display_read_only'`; reconciliation uses the documented
+  scoped `setValue('status', 'active')` plus `update()` path and fails closed if
+  persistence returns blank.
+- Focused M4 `34/34`, normal SDK 4.11.0 build, frozen-key build, and diff check
+  passed. Built metadata confirms `read_only=true` and
+  `read_only_option=display_read_only`; generated-key unexpected changes are
+  `0`.
+- Architecture changes `0`; platform-wide property changes `0`; broad
+  privileges/RCA additions `0`; implementation attempts `1/1`; installs `0`;
+  C2 runtime remains `10/13` PASS. A further normal install is exceptional and
+  requires explicit user authorization.
+### 2026-08-28 C2-S authorized install — pre-install stop
+
+- Local/repository checkpoint `47dc053` contains the reviewed supported-pattern correction.
+- Mandatory local gates passed: focused M4 `34/34`, normal build PASS, frozen-key build PASS, generated Dictionary `read_only_option=display_read_only`, unexpected generated-key changes `0`, broad privilege additions `0`.
+- IDE workspace identity passed after reopening `ROB V2 C2 RECOVERY`: V2 root/scopeId `4aba8657837a43104f5193a6feaad3c5`, scope `x_2166123_rob_auth`, branch `codex/dev437-rebuild-identity`.
+- The IDE Git Source Control Pull and its single offered retry both returned `HTTP Error: 500 Internal Server Error`. IDE source search confirmed `display_read_only` remained absent.
+- Mandatory source gate therefore failed before IDE Build. IDE Build attempts: `0`; normal Build and Install attempts: `0`; runtime gates rerun: `0`.
+- C2 remains `10/13 PASS`; gates 9, 10, and 11 remain unexecuted.
+
+### 2026-08-28 C2 final completion — native lifecycle persistence
+
+- Package: C2 / M4 final runtime and closeout; architecture changes `0`; new
+  capability investigations `0`; new custom tables `0`.
+- Native lifecycle configuration: published subflow
+  `ROB Activate Fulfilled Access Detail Native`
+  (`da2e07ac838743504f5193a6feaad339`) accepts one exact Authorized Access
+  Detail record and uses native Update Record to set only `status=active`.
+  The existing reconciliation Business Rule invokes it synchronously and
+  verifies the committed state before permitting parent closure.
+- Gate 10 PASS: governed waiver replay of `HRT0001003` activated exact Detail
+  `ROBD0001028` at `2026-08-28 21:00:47`; unrelated Details were unchanged.
+- Gate 11 PASS: authorized waiver actor, timestamp, reason, close notes,
+  completion evidence, and terminal task state remained intact and auditable.
+- The `HRC0001048` waiver fixture correctly remained open because its linked
+  Authorization contained two additional unsatisfied Staffing Details. This
+  was synthetic test-data contamination, not a close-path defect.
+- Gate 9 PASS: the eligible Mixed fixture used `HRT0001004` and `HRT0001005`.
+  Native reconciliation activated exact Details `ROBD0001036` and
+  `ROBD0001037`; the existing HR Core bridge completed the HRSD acceptance
+  transition and closed `HRC0001049` at `2026-08-28 21:08:53` with state `3`,
+  `active=false`, closed timestamp, and governed close notes.
+- The reviewed HR Core manual source now uses same-scope `setValue` for native
+  case state/close notes and verifies the committed terminal state. No direct
+  V2 native-case write, broad privilege, external integration, routing change,
+  waiver change, or case-close ordering change was introduced.
+- C2 runtime: **13/13 PASS**. Full regression: M2 `19/19`; R1 `9/9`; Security
+  `22/22`; Deployment `16/16`; R3 `30/30`; R3 adapter `13/13`; R4 `64/64`;
+  M4 `34/34`; split-template validator `7/7`.
+- Build/security: normal and frozen-key SDK 4.11.0 builds PASS; `git diff
+  --check` PASS; unexpected generated-key changes `0`; broad
+  GlideRecord/native-case/native-task privileges `0`; unexpected RCA additions
+  `0`; custom business tables `4`; custom fulfillment tables `0`; external
+  provisioning integrations `0`.
+- Final milestone state: C0 COMPLETE; C1 COMPLETE; C2 COMPLETE; M1 COMPLETE;
+  M2 COMPLETE; M3 COMPLETE; M4 COMPLETE; C3/M5 READY and not started.

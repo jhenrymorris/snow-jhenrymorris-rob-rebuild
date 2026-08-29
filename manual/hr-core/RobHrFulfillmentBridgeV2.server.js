@@ -343,9 +343,18 @@ RobHrFulfillmentBridgeV2.prototype = {
             }
         }
         if (!found) return this._reject('close', 'NO_FULFILLMENT_TASKS')
-        parent.state = '3'
-        parent.close_notes = 'All governed ROB fulfillment requirements completed or formally waived.'
-        return Boolean(parent.update())
+        parent.setValue('state', '3')
+        parent.setValue(
+            'close_notes',
+            'All governed ROB fulfillment requirements completed or formally waived.'
+        )
+        if (!parent.update()) return this._reject('close', 'UPDATE_FAILED')
+
+        var closed = new GlideRecord('sn_hr_core_case')
+        if (!closed.get(caseId) || String(closed.getValue('state')) !== '3') {
+            return this._reject('close', 'TERMINAL_STATE_NOT_PERSISTED')
+        }
+        return true
     },
 
     type: 'RobHrFulfillmentBridgeV2',

@@ -433,3 +433,18 @@ traceability but remain unaccepted because C0 capability `M5-12` was disproven:
 normal IDE Build and Install could not find the scope's `sys_plugins` bootstrap
 record and applied zero changes. See `docs/M4-RUNTIME-EVIDENCE.md`. No M3
 requirement or M4 architecture was changed.
+
+## C2 final M4 closeout (2026-08-28)
+
+| Requirement | Final implementation/evidence | Status |
+|---|---|---|
+| Deterministic fulfillment routing | Systems-only, data/report-only, Mixed, WPC, and missing-OM outputs matched the frozen routing matrix | PASS |
+| Retry/idempotency | Case/type business keys and bridge query-before-insert produced zero duplicate Staffing, Analytics, OM, or Exception tasks | PASS |
+| Completion evidence | Correct parent/type/assignment, authorized fulfiller, terminal state, time, close notes, evidence, and outcome/waiver proof are required | PASS |
+| Authorized Access Detail activation | Published native Update Record subflow activates only the exact Detail already matched by Authorization and Access Item; committed state is reread and verified | PASS |
+| Waiver | `HRT0001003` retained authorized actor/reason/time/evidence and activated only `ROBD0001028` | PASS |
+| Parent case closure | Partial completion retained an open case; eligible Mixed completion closed `HRC0001049` through `sn_hr_core.RobHrFulfillmentBridgeV2` | PASS |
+| Least privilege | Broad GlideRecord/native-case/native-task privileges zero; unexpected RCA zero; four custom business tables; no fulfillment table | PASS |
+| External boundary | ARM/OAS/FPPS-WTTS/eOPF/USA Staffing provisioning calls zero; notify-and-track only | PASS |
+| Regression/build | M2 19, R1 9, Security 22, Deployment 16, R3 30, adapter 13, R4 64, M4 34, template 7; normal/frozen SDK builds and key/diff gates | PASS |
+| Milestone | C2 and M4 complete; C3/M5 ready but not started | COMPLETE / C3 READY |

@@ -1293,3 +1293,39 @@ x_2166123_rob_auth` and applied zero changes while the V2 `sys_app`/`sys_scope`
 record remained present. Resumption requires restoration of the supported
 platform application bootstrap path; it is not an ordinary Class C
 configuration step.
+
+## C2 PDI native configuration / source parity reconciliation — 2026-08-28
+
+The following existing dev437065 records were reconciled through their normal
+ServiceNow administration forms after the IDE incremental deployment omitted
+the already-reviewed metadata updates. No duplicate record, generated-key edit,
+install, new privilege, or architecture change was used.
+
+| Artifact | Existing sys_id | Source intended value | Live configured value | Configuration surface used | Reason native configuration was required | Runtime verification | Production migration consideration |
+|---|---|---|---|---|---|---|---|
+| Authorized Access Detail `status` Dictionary | `cdc6079783be83104f5193a6feaad380` | `read_only=true`; `readOnlyOption: 'display_read_only'` | `read_only=true`; `read_only_option=display_read_only` | Existing Dictionary Entry form in `HR Access ROB Authorization V2` | The normal IDE package contained the intended value but did not present this update to the installer. | Existing sys_id retained and live reread passed. Governed replay then reached the Detail persistence boundary but `GlideRecord.update()` was denied by scoped API fencing, so Gate 10 remains not accepted. | Reconcile the source-generated Dictionary identity with the existing target identity before promoted packaging; do not create a duplicate Dictionary or edit generated keys merely to match this PDI. |
+| `ROB Reconcile Fulfillment Task Completion` Business Rule | `31b6f6fe7198436d8d6600355948fe70` | `setValue('status', 'active')`, `update()`, and fail-closed persistence verification | Existing active rule contains the reviewed source with unchanged table, timing, order, and condition | Existing Business Rule form in `HR Access ROB Authorization V2` | The identity-matched packaged update was omitted from the installer-facing selection. | Existing sys_id retained and live source reread passed. Replaying `HRT0001003` produced `CrossScopeAccessNotAllowedException` for `GlideRecord.update`; `ROBD0001028` remained `pending_fulfillment` and `HRC0001048` remained open. | Preserve the reviewed source. Do not approve a generic `GlideRecord.update` Execute privilege; production deployment needs a least-privilege persistence path within the approved architecture. |
+
+This is classified as **PDI native configuration / source parity
+reconciliation**. Git remains the intended deployable definition and the live
+PDI records are authoritative for the recorded runtime result. The remaining
+runtime failure is not resolved by another IDE install because both live
+records already match the reviewed source semantically.
+
+## C2 final native lifecycle configuration — 2026-08-28
+
+This section supersedes the pending runtime statements above while preserving
+their deployment-history evidence.
+
+| Artifact | Existing sys_id | Configuration | Runtime result | Production migration consideration |
+|---|---|---|---|---|
+| `ROB Activate Fulfilled Access Detail Native` subflow | `da2e07ac838743504f5193a6feaad339` | V2 published/active subflow; one mandatory `Access Detail` record input for `x_2166123_rob_auth_auth_detail`; one native Update Record action sets only `Status = Active`; synchronous caller execution | Governed replay activated only `ROBD0001028`; eligible Mixed replay activated only `ROBD0001036` and `ROBD0001037` | Recreate/promote through the supported Workflow Studio application transport. Preserve the exact input/table/action contract and do not add generic record/table inputs. |
+| `ROB Reconcile Fulfillment Task Completion` Business Rule | `31b6f6fe7198436d8d6600355948fe70` | Existing timing/order/condition retained; invokes `x_2166123_rob_auth.rob_activate_fulfilled_access_detail_native` in foreground with the already-matched Detail; rereads committed state and fails closed | Gate 10 PASS; unrelated Details unchanged | Source-controlled script is authoritative. The subflow remains Class C/native configuration until represented by supported promotion metadata. |
+| `sn_hr_core.RobHrFulfillmentBridgeV2` Script Include | `e434069c838b4f104f5193a6feaad3e1` | Existing allowlist/evidence logic retained; eligible-case close uses same-scope `setValue` for `state`/`close_notes` and verifies committed state `3` | `HRC0001049` reached native Closed Complete, inactive, with closed timestamp and governed close notes | Apply the reviewed `manual/hr-core/RobHrFulfillmentBridgeV2.server.js` through the existing HR Core Script Include form; preserve Caller Restriction and the exact V2 callers. |
+
+The unused discovery shell `ROB Activate Fulfilled Access Detail`
+(`91dbcb28838743504f5193a6feaad388`) remains Draft/inactive and has no trigger,
+action, caller, or runtime effect. Do not activate it.
+
+No broad GlideRecord privilege, native-case/native-task Write grant, new table,
+external integration, or application identity change was introduced.

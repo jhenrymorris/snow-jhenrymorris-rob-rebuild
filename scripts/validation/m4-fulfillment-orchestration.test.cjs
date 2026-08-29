@@ -446,6 +446,10 @@ test('task lifecycle delegates protected validation and closure to the narrow HR
         path.join(root, 'src/fluent/tables/authorized-access-detail.now.ts'),
         'utf8'
     )
+    const bridge = fs.readFileSync(
+        path.join(root, 'manual/hr-core/RobHrFulfillmentBridgeV2.server.js'),
+        'utf8'
+    )
     const statusColumn = detailTable.match(
         /status:\s*ChoiceColumn\(\{([\s\S]*?)choices:/
     )[1]
@@ -475,12 +479,24 @@ test('task lifecycle delegates protected validation and closure to the narrow HR
         /x_2166123_rob_auth_rob_task_typeISNOTEMPTY\^state=3/
     )
     assert.match(reconciliation, /RobHrFulfillmentBridgeV2\(\)\.closeEligibleCase/)
-    assert.match(reconciliation, /details\.setValue\('status', 'active'\)/)
-    assert.match(reconciliation, /details\.update\(\)/)
-    assert.match(reconciliation, /matching Access Detail activation did not persist/)
+    assert.match(reconciliation, /sn_fd\.FlowAPI\.getRunner\(\)/)
+    assert.match(
+        reconciliation,
+        /\.subflow\('x_2166123_rob_auth\.rob_activate_fulfilled_access_detail_native'\)/
+    )
+    assert.match(reconciliation, /\.inForeground\(\)/)
+    assert.match(reconciliation, /\.withInputs\(\{ access_detail: details \}\)/)
+    assert.match(reconciliation, /activatedDetail\.get\(detailId\)/)
+    assert.match(reconciliation, /native Access Detail activation did not persist/)
+    assert.doesNotMatch(reconciliation, /details\.setValue\('status', 'active'\)/)
+    assert.doesNotMatch(reconciliation, /details\.update\(\)/)
     assert.match(statusColumn, /readOnlyOption:\s*'display_read_only'/)
     assert.doesNotMatch(statusColumn, /readOnly:\s*true/)
     assert.doesNotMatch(reconciliation, /new GlideRecord\('sn_hr_core_case/)
+    assert.match(bridge, /parent\.setValue\('state', '3'\)/)
+    assert.match(bridge, /parent\.setValue\([\s\S]*?'close_notes'/)
+    assert.match(bridge, /closed\.get\(caseId\)/)
+    assert.match(bridge, /TERMINAL_STATE_NOT_PERSISTED/)
 })
 
 test('M4 source contains no direct external provisioning integration artifacts', () => {

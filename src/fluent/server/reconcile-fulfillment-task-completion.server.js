@@ -62,9 +62,26 @@
         if (isTrue(details.getValue('analytics_task_required_snapshot'))) satisfied = satisfied && taskSatisfied('analytics_fulfillment', accessItemId)
         if (isTrue(details.getValue('operations_manager_task_required_snapshot'))) satisfied = satisfied && taskSatisfied('operations_manager_arm_assignment', accessItemId)
         if (details.getValue('status') === 'pending_fulfillment' && satisfied) {
-            details.setValue('status', 'active')
-            if (!details.update()) {
-                gs.error('ROB fulfillment reconciliation stopped: matching Access Detail activation did not persist.')
+            var detailId = String(details.getUniqueValue() || '')
+            try {
+                sn_fd.FlowAPI.getRunner()
+                    .subflow('x_2166123_rob_auth.rob_activate_fulfilled_access_detail_native')
+                    .inForeground()
+                    .withInputs({ access_detail: details })
+                    .run()
+            } catch (activationError) {
+                gs.error('ROB fulfillment reconciliation stopped: native Access Detail lifecycle update failed.')
+                allActive = false
+                continue
+            }
+
+            var activatedDetail = new GlideRecord('x_2166123_rob_auth_auth_detail')
+            if (
+                !detailId ||
+                !activatedDetail.get(detailId) ||
+                activatedDetail.getValue('status') !== 'active'
+            ) {
+                gs.error('ROB fulfillment reconciliation stopped: native Access Detail activation did not persist.')
                 allActive = false
                 continue
             }

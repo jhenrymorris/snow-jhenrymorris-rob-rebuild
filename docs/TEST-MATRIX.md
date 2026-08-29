@@ -364,18 +364,25 @@ expansion were not used.
 
 | ID | Test | Method | Status |
 |---|---|---|---|
-| TM-236 | HR Core bridge allowlist | Positive supported case creation and negative arbitrary case/task/field/state/identity checks | SOURCE 31/31 PASS; PDI NOT RUN |
-| TM-237 | Systems-only grouping | One Staffing task; no Analytics/OM/Exception duplicate | NOT RUN |
-| TM-238 | Data/report grouping | One Analytics task; no Staffing/OM duplicate | NOT RUN |
-| TM-239 | Mixed grouping | Exactly one Staffing and one Analytics task | NOT RUN |
-| TM-240 | WPC ARM/OAS routing | One Analytics plus one governed OM ARM assignment | NOT RUN |
-| TM-241 | Missing OM blocking | One Exception Review task; normal OM absent; case open | NOT RUN |
-| TM-242 | Bridge idempotency | Planner replay and final bridge check create zero duplicates | NOT RUN |
-| TM-243 | Completion/detail scope | Authorized evidence activates only covered details | NOT RUN |
-| TM-244 | Parent closure | Partial remains open; all required closes through HR Core bridge | NOT RUN |
-| TM-245 | Authorized waiver | ROB Admin actor, reason, time and affected task retained | NOT RUN |
-| TM-246 | Least privilege | Exact bridge Execute only; broad API/native Write zero | NOT RUN |
-| TM-247 | No external provisioning | External API calls remain zero | NOT RUN |
+| TM-236 | HR Core bridge allowlist | Positive supported case creation and negative arbitrary case/task/field/state/identity checks | PASS |
+| TM-237 | Systems-only grouping | One Staffing task; no Analytics/OM/Exception duplicate | PASS |
+| TM-238 | Data/report grouping | One Analytics task; no Staffing/OM duplicate | PASS |
+| TM-239 | Mixed grouping | Exactly one Staffing and one Analytics task | PASS |
+| TM-240 | WPC ARM/OAS routing | One Analytics plus one governed OM ARM assignment | PASS |
+| TM-241 | Missing OM blocking | One Exception Review task; normal OM absent; case open | PASS |
+| TM-242 | Bridge idempotency | Planner replay and final bridge check create zero duplicates | PASS |
+| TM-243 | Completion/detail scope | Native Update Record subflow activated only covered Details; incomplete/unauthorized evidence failed closed | PASS |
+| TM-244 | Parent closure | Partial Mixed completion remained open; after both obligations completed, `HRC0001049` closed through the HR Core bridge | PASS |
+| TM-245 | Authorized waiver | `HRT0001003` retained actor, reason, time, close notes, and evidence; matching `ROBD0001028` became Active | PASS |
+| TM-246 | Least privilege | Exact bridge Execute only; broad API/native Write zero; unexpected RCA zero | PASS |
+| TM-247 | No external provisioning | External API calls remain zero | PASS |
+
+### C2 final closeout — 2026-08-28
+
+C2 runtime acceptance is 13/13 PASS. Final regression passed M2 19/19, R1
+9/9, Security 22/22, Deployment 16/16, R3 30/30, R3 adapter 13/13, R4
+64/64, M4 34/34, and split-template validator 7/7. Normal/frozen SDK 4.11.0
+builds and diff/generated-key gates passed with zero unexpected key changes.
 # C2 runtime disposition — 2026-08-27
 
 - Systems-only routing: PASS (`HRC0001045` → one Staffing task
