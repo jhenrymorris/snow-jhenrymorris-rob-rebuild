@@ -1,0 +1,239 @@
+name: C3 pinned ServiceNow deployment
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: c3-pinned-servicenow-deploy-dev437065
+  cancel-in-progress: false
+
+jobs:
+  validate-and-install:
+    name: Validate 25c6a98 and install once
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment: c3-dev437065
+    env:
+      APPROVED_SHA: 25c6a981578197a741fdeaa1d886c4048960e47e
+      EXPECTED_KEYS_SHA256: 42f5e55b502d634063713fbee22fc457fdb6f95453d320562eb9a41d1f331948
+      EXPECTED_SCOPE: x_2166123_rob_auth
+      EXPECTED_SCOPE_ID: 4aba8657837a43104f5193a6feaad3c5
+      EXPECTED_PACKAGE: x-2166123-hr-access-rob-authorization-v-2
+      EXPECTED_VERSION: 0.0.4
+      SN_SDK_NODE_ENV: SN_SDK_CI_INSTALL
+      SN_SDK_AUTH_TYPE: basic
+      SN_SDK_INSTANCE_URL: ${{ secrets.SN_SDK_INSTANCE_URL }}
+      SN_SDK_USER: ${{ secrets.SN_SDK_USER }}
+      SN_SDK_USER_PWD: ${{ secrets.SN_SDK_USER_PWD }}
+
+    steps:
+      - name: Check out the approved product commit
+        uses: actions/checkout@v4
+        with:
+          ref: 25c6a981578197a741fdeaa1d886c4048960e47e
+          fetch-depth: 1
+
+      - name: Verify pinned source and application identity
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          test "${GITHUB_REPOSITORY}" = "jhenrymorris/snow-jhenrymorris-rob-rebuild"
+          test "$(git rev-parse HEAD)" = "${APPROVED_SHA}"
+          test -z "$(git status --porcelain)"
+
+          node <<'NODE'
+          const fs = require('node:fs')
+          const config = JSON.parse(fs.readFileSync('now.config.json', 'utf8'))
+          const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'))
+
+          const expected = {
+            scope: process.env.EXPECTED_SCOPE,
+            scopeId: process.env.EXPECTED_SCOPE_ID,
+            packageName: process.env.EXPECTED_PACKAGE,
+            version: process.env.EXPECTED_VERSION,
+            sdk: '4.11.0',
+          }
+
+          if (config.scope !== expected.scope) throw new Error('Unexpected application scope')
+          if (config.scopeId !== expected.scopeId) throw new Error('Unexpected application scopeId')
+          if (pkg.name !== expected.packageName) throw new Error('Unexpected package identity')
+          if (pkg.version !== expected.version) throw new Error('Unexpected package version')
+          if (pkg.devDependencies?.['@servicenow/sdk'] !== expected.sdk) {
+            throw new Error('ServiceNow SDK is not pinned to 4.11.0')
+          }
+          NODE
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install pinned dependencies
+        run: npm ci
+
+      - name: Verify ServiceNow SDK version
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(npx --no-install now-sdk --version)" = "4.11.0"
+
+      - name: R4 focused suite (80 of 80)
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run test:r4 | tee "${RUNNER_TEMP}/r4.tap"
+          grep -Eq '(^|[[:space:]])tests 80$' "${RUNNER_TEMP}/r4.tap"
+          grep -Eq '(^|[[:space:]])pass 80$' "${RUNNER_TEMP}/r4.tap"
+          grep -Eq '(^|[[:space:]])fail 0$' "${RUNNER_TEMP}/r4.tap"
+
+      - name: M2 suite (19 of 19)
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run test:m2 | tee "${RUNNER_TEMP}/m2.tap"
+          grep -Eq '(^|[[:space:]])tests 19$' "${RUNNER_TEMP}/m2.tap"
+          grep -Eq '(^|[[:space:]])pass 19$' "${RUNNER_TEMP}/m2.tap"
+          grep -Eq '(^|[[:space:]])fail 0$' "${RUNNER_TEMP}/m2.tap"
+
+      - name: Security suite (22 of 22)
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run test:security | tee "${RUNNER_TEMP}/security.tap"
+          grep -Eq '(^|[[:space:]])tests 22$' "${RUNNER_TEMP}/security.tap"
+          grep -Eq '(^|[[:space:]])pass 22$' "${RUNNER_TEMP}/security.tap"
+          grep -Eq '(^|[[:space:]])fail 0$' "${RUNNER_TEMP}/security.tap"
+
+      - name: Deployment suite (16 of 16)
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run test:wave2-deployment | tee "${RUNNER_TEMP}/deployment.tap"
+          grep -Eq '(^|[[:space:]])tests 16$' "${RUNNER_TEMP}/deployment.tap"
+          grep -Eq '(^|[[:space:]])pass 16$' "${RUNNER_TEMP}/deployment.tap"
+          grep -Eq '(^|[[:space:]])fail 0$' "${RUNNER_TEMP}/deployment.tap"
+
+      - name: R3 adapter suite (13 of 13)
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run test:r3-runtime | tee "${RUNNER_TEMP}/r3-adapter.tap"
+          grep -Eq '(^|[[:space:]])tests 13$' "${RUNNER_TEMP}/r3-adapter.tap"
+          grep -Eq '(^|[[:space:]])pass 13$' "${RUNNER_TEMP}/r3-adapter.tap"
+          grep -Eq '(^|[[:space:]])fail 0$' "${RUNNER_TEMP}/r3-adapter.tap"
+
+      - name: Verify authoritative generated keys and event identities
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          test "$(sha256sum src/fluent/generated/keys.ts | awk '{print $1}')" = "${EXPECTED_KEYS_SHA256}"
+          for id in \
+            19abf48d044c4580858417d63ba651aa \
+            1b186fbf987e49feaabbf2e3f95f9427 \
+            721fb030a08a4ff3ab0844d67a0f76e4 \
+            ea303e44d86a4d3abacd0c1029b1b292
+          do
+            test "$(grep -Foc "${id}" src/fluent/generated/keys.ts)" -eq 1
+          done
+
+      - name: Normal SDK build
+        run: npm run build
+
+      - name: Verify normal-build integrity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(sha256sum src/fluent/generated/keys.ts | awk '{print $1}')" = "${EXPECTED_KEYS_SHA256}"
+          git diff --check
+          git diff --exit-code -- src/fluent/generated/keys.ts
+          test -z "$(git status --porcelain)"
+
+      - name: Frozen-key SDK build
+        run: npx --no-install now-sdk build --errorOnConflict true --frozenKeys
+
+      - name: Verify built metadata and package parity
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          test "$(sha256sum src/fluent/generated/keys.ts | awk '{print $1}')" = "${EXPECTED_KEYS_SHA256}"
+          git diff --check
+          git diff --exit-code -- src/fluent/generated/keys.ts
+          test -z "$(git status --porcelain)"
+
+          create_event='dist/app/update/sysevent_register_19abf48d044c4580858417d63ba651aa.xml'
+          verify_event='dist/app/update/sysevent_register_1b186fbf987e49feaabbf2e3f95f9427.xml'
+          create_action='dist/app/update/sysevent_script_action_721fb030a08a4ff3ab0844d67a0f76e4.xml'
+          verify_action='dist/app/update/sysevent_script_action_ea303e44d86a4d3abacd0c1029b1b292.xml'
+          payroll_br='dist/app/update/sys_script_b9973651027140a68e3f2d1ed1beabfc.xml'
+          workforce_br='dist/app/update/sys_script_046c74b9ce424a8f9b504f739506e62e.xml'
+
+          for file in "${create_event}" "${verify_event}" "${create_action}" "${verify_action}" "${payroll_br}" "${workforce_br}"
+          do
+            test -f "${file}"
+          done
+
+          grep -Fq '<caller_access>2</caller_access>' "${create_event}"
+          grep -Fq '<event_name>x_2166123_rob_auth.lifecycle.create</event_name>' "${create_event}"
+          grep -Fq '<caller_access>2</caller_access>' "${verify_event}"
+          grep -Fq '<event_name>x_2166123_rob_auth.lifecycle.verify</event_name>' "${verify_event}"
+
+          grep -Fq '<active>true</active>' "${create_action}"
+          grep -Fq '<event_name>x_2166123_rob_auth.lifecycle.create</event_name>' "${create_action}"
+          grep -Fq '<active>true</active>' "${verify_action}"
+          grep -Fq '<event_name>x_2166123_rob_auth.lifecycle.verify</event_name>' "${verify_action}"
+
+          for file in "${payroll_br}" "${workforce_br}"
+          do
+            grep -Fq '<active>false</active>' "${file}"
+            grep -Fq '<when>after</when>' "${file}"
+            grep -Fq '<order>300</order>' "${file}"
+            grep -Fq 'gs.eventQueue(CREATE_EVENT' "${file}"
+          done
+
+          if grep -R -n -E '\.insert[[:space:]]*\(' \
+            src/fluent/server/authorization-lifecycle-event-enqueue.server.js \
+            src/fluent/server/authorization-lifecycle-create-event.server.js \
+            src/fluent/server/authorization-lifecycle-verify-event.server.js
+          then
+            echo 'Generic insert detected in the event-pipeline adapters' >&2
+            exit 1
+          fi
+
+          npx --no-install now-sdk pack
+          mapfile -t packages < <(find target -maxdepth 1 -type f -name '*.zip' -print)
+          test "${#packages[@]}" -eq 1
+
+          package_dir="${RUNNER_TEMP}/c3-package"
+          mkdir -p "${package_dir}"
+          unzip -q "${packages[0]}" -d "${package_dir}"
+          inventory="${package_dir}/package_inventory.csv"
+          test -f "${inventory}"
+
+          for id in \
+            19abf48d044c4580858417d63ba651aa \
+            1b186fbf987e49feaabbf2e3f95f9427 \
+            721fb030a08a4ff3ab0844d67a0f76e4 \
+            ea303e44d86a4d3abacd0c1029b1b292
+          do
+            test "$(find "${package_dir}/update" -maxdepth 1 -type f -name "*_${id}.xml" | wc -l)" -eq 1
+            test "$(grep -Foc "${id}" "${inventory}")" -eq 1
+          done
+
+      - name: Verify protected CI credentials and target
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${SN_SDK_INSTANCE_URL:-}"
+          test -n "${SN_SDK_USER:-}"
+          test -n "${SN_SDK_USER_PWD:-}"
+          test "${SN_SDK_INSTANCE_URL%/}" = 'https://dev437065.service-now.com'
+
+      - name: Install approved candidate once
+        run: npx --no-install now-sdk install
