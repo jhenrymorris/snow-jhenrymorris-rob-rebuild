@@ -13,7 +13,7 @@ concurrency:
 jobs:
   validate-and-install:
     name: Validate 25c6a98 and install once
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     timeout-minutes: 60
     environment: c3-dev437065
     env:
