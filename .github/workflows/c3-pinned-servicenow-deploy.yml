@@ -30,6 +30,12 @@ jobs:
       SN_SDK_USER_PWD: ${{ secrets.SN_SDK_USER_PWD }}
 
     steps:
+      - name: Configure LF-preserving checkout
+        shell: bash
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+
       - name: Check out the approved product commit
         uses: actions/checkout@v4
         with:
