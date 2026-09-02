@@ -1,9 +1,227 @@
 const assert = require('node:assert/strict')
 const fs = require('node:fs')
 const path = require('node:path')
+const vm = require('node:vm')
 const { test } = require('node:test')
 
 const root = path.resolve(__dirname, '..', '..')
+const lifecycleEntrySource = fs.readFileSync(
+    path.join(root, 'src/fluent/server/rob-authorization-lifecycle-entry.server.js'),
+    'utf8'
+)
+const lifecycleAdapterSource = fs.readFileSync(
+    path.join(root, 'src/fluent/server/authorization-lifecycle-initiation.server.js'),
+    'utf8'
+)
+const lifecycleEntryMetadata = fs.readFileSync(
+    path.join(root, 'src/fluent/script-includes/rob-authorization-lifecycle-entry.now.ts'),
+    'utf8'
+)
+const lifecycleActionMetadata = fs.readFileSync(
+    path.join(root, 'src/fluent/actions/rob-execute-authorization-lifecycle.now.ts'),
+    'utf8'
+)
+const lifecycleActionSource = fs.readFileSync(
+    path.join(
+        root,
+        'src/fluent/server/rob-execute-authorization-lifecycle-action.server.js'
+    ),
+    'utf8'
+)
+const signingVerificationActionMetadata = fs.readFileSync(
+    path.join(
+        root,
+        'src/fluent/actions/rob-verify-authorization-signing-gate.now.ts'
+    ),
+    'utf8'
+)
+const signingVerificationActionSource = fs.readFileSync(
+    path.join(
+        root,
+        'src/fluent/server/rob-verify-authorization-signing-gate-action.server.js'
+    ),
+    'utf8'
+)
+const lifecycleEventMetadata = fs.readFileSync(
+    path.join(
+        root,
+        'src/fluent/events/rob-authorization-lifecycle-events.now.ts'
+    ),
+    'utf8'
+)
+const lifecycleEventActionsMetadata = fs.readFileSync(
+    path.join(
+        root,
+        'src/fluent/script-actions/rob-authorization-lifecycle-event-actions.now.ts'
+    ),
+    'utf8'
+)
+const lifecycleEventEnqueueSource = fs.readFileSync(
+    path.join(
+        root,
+        'src/fluent/server/authorization-lifecycle-event-enqueue.server.js'
+    ),
+    'utf8'
+)
+const lifecycleCreateEventSource = fs.readFileSync(
+    path.join(
+        root,
+        'src/fluent/server/authorization-lifecycle-create-event.server.js'
+    ),
+    'utf8'
+)
+const lifecycleVerifyEventSource = fs.readFileSync(
+    path.join(
+        root,
+        'src/fluent/server/authorization-lifecycle-verify-event.server.js'
+    ),
+    'utf8'
+)
+
+function callableLifecycle(records = {}) {
+    const tablesRead = []
+    const context = {
+        Class: {
+            create: () =>
+                function ScriptIncludeClass() {
+                    if (this.initialize) this.initialize()
+                },
+        },
+        GlideRecord: function GlideRecord(table) {
+            tablesRead.push(table)
+            let values = null
+            this.get = (sysId) => {
+                values = records[`${table}:${sysId}`] || null
+                return Boolean(values)
+            }
+            this.getValue = (field) => (values && values[field]) || ''
+            this.getUniqueValue = () => (values && values.sys_id) || ''
+        },
+        gs: { error() {} },
+    }
+    vm.runInNewContext(lifecycleEntrySource, context)
+    return {
+        entry: new context.RobAuthorizationLifecycleEntry(),
+        tablesRead,
+    }
+}
+
+function callableLifecycleAction(inputs, methodOutcomes = {}) {
+    const calls = []
+    const outputs = {}
+    const context = {
+        inputs,
+        outputs,
+        RobAuthorizationLifecycleEntry: function RobAuthorizationLifecycleEntry() {
+            this.executePayroll = (caseSysId) => {
+                calls.push(['payroll', caseSysId])
+                return methodOutcomes.payroll || {
+                    success: true,
+                    disposition: 'authorization_created',
+                    case_sys_id: caseSysId,
+                }
+            }
+            this.executeWorkforce = (caseSysId) => {
+                calls.push(['workforce', caseSysId])
+                return methodOutcomes.workforce || {
+                    success: true,
+                    disposition: 'authorization_created',
+                    case_sys_id: caseSysId,
+                }
+            }
+        },
+    }
+    vm.runInNewContext(lifecycleActionSource, context)
+    return { calls, outputs }
+}
+
+function callableSigningVerificationAction(inputs, methodOutcome) {
+    const calls = []
+    const outputs = {}
+    const context = {
+        inputs,
+        outputs,
+        RobAuthorizationLifecycleEntry: function RobAuthorizationLifecycleEntry() {
+            this.verifyAuthorizationSigning = (authorizationSysId) => {
+                calls.push(authorizationSysId)
+                return methodOutcome || {
+                    success: true,
+                    disposition: 'post_commit_signing_started',
+                    case_sys_id: 'b'.repeat(32),
+                    authorization_sys_id: authorizationSysId,
+                    signing_started: true,
+                }
+            }
+        },
+    }
+    vm.runInNewContext(signingVerificationActionSource, context)
+    return { calls, outputs }
+}
+
+function queuedLifecycleEvent(table, caseSysId) {
+    const queued = []
+    const errors = []
+    const current = {
+        getTableName: () => table,
+        getUniqueValue: () => caseSysId,
+    }
+    vm.runInNewContext(lifecycleEventEnqueueSource, {
+        current,
+        gs: {
+            error: (message) => errors.push(message),
+            eventQueue: (...args) => queued.push(args),
+        },
+    })
+    return { current, queued, errors }
+}
+
+function callableLifecycleCreateEvent(parm1, parm2, methodOutcomes = {}) {
+    const calls = []
+    const queued = []
+    const current = { getUniqueValue: () => parm1 }
+    const context = {
+        current,
+        event: { parm1, parm2 },
+        gs: { eventQueue: (...args) => queued.push(args) },
+        RobAuthorizationLifecycleEntry: function RobAuthorizationLifecycleEntry() {
+            this.executePayroll = (caseSysId) => {
+                calls.push(['payroll', caseSysId])
+                return methodOutcomes.payroll
+            }
+            this.executeWorkforce = (caseSysId) => {
+                calls.push(['workforce', caseSysId])
+                return methodOutcomes.workforce
+            }
+        },
+    }
+    let error
+    try {
+        vm.runInNewContext(lifecycleCreateEventSource, context)
+    } catch (caught) {
+        error = caught
+    }
+    return { calls, queued, error }
+}
+
+function callableLifecycleVerifyEvent(authorizationSysId, methodOutcome) {
+    const calls = []
+    const context = {
+        event: { parm1: authorizationSysId },
+        RobAuthorizationLifecycleEntry: function RobAuthorizationLifecycleEntry() {
+            this.verifyAuthorizationSigning = (exactAuthorizationSysId) => {
+                calls.push(exactAuthorizationSysId)
+                return methodOutcome
+            }
+        },
+    }
+    let error
+    try {
+        vm.runInNewContext(lifecycleVerifyEventSource, context)
+    } catch (caught) {
+        error = caught
+    }
+    return { calls, error }
+}
 const { initiate } = require('../../src/server/authorization/AuthorizationLifecycleService')
 const { completeScope } = require('../../src/server/authorization/AuthorizationScopeService')
 const {
@@ -547,6 +765,7 @@ test('WPC remains a distinct scope item', () => {
 test('runtime scripts create no fulfillment, renewal, ARM, or OAS work', () => {
     const files = [
         'src/fluent/server/authorization-lifecycle-initiation.server.js',
+        'src/fluent/server/rob-authorization-lifecycle-entry.server.js',
         'src/fluent/server/authorization-signature-evidence.server.js',
         'src/fluent/server/supervisor-approval-evidence.server.js',
         'src/fluent/server/supervisor-signature-launch.server.js',
@@ -556,9 +775,434 @@ test('runtime scripts create no fulfillment, renewal, ARM, or OAS work', () => {
     assert.doesNotMatch(source, /sn_hr_core_task|Scheduled|GlideSchedule|RESTMessage|sn_ws|ARM assignment|OAS provisioning/)
 })
 
+test('lifecycle creation uses narrow native persistence and no generic write APIs', () => {
+    const source = lifecycleEntrySource
+    assert.doesNotMatch(source, /\.setValue\(/)
+    assert.doesNotMatch(source, /\.insert\(\)/)
+    assert.doesNotMatch(source, /\.deleteRecord\(\)/)
+    assert.doesNotMatch(source, /authorization\.update\(\)|detail\.update\(\)/)
+    assert.match(source, /nativeCreatedRecordId\([\s\S]*?'x_2166123_rob_auth\.rob_create_authorization_form_native'/)
+    assert.match(source, /nativeCreatedRecordId\([\s\S]*?'x_2166123_rob_auth\.rob_create_authorized_access_detail_native'/)
+    assert.match(source, /\.subflow\(\s*'x_2166123_rob_auth\.rob_persist_authorization_lifecycle_native'\s*\)/)
+    assert.match(source, /\.inForeground\(\)/)
+    assert.match(source, /execution\.getOutputs\(\)/)
+    assert.match(source, /created_authorization_sys_id/)
+    assert.match(source, /created_detail_sys_id/)
+    assert.match(source, /authorization\.get\(authorizationId\)/)
+    assert.match(source, /committedDetail\.get\(detailId\)/)
+    assert.match(source, /duplicate governed Access Details exist for the scope/)
+    assert.match(source, /the committed Authorization Form signing gate could not be verified/)
+})
+
+test('package-private callable entry enforces fixed tables and exact committed reread', () => {
+    const rules = fs.readFileSync(
+        path.join(root, 'src/fluent/business-rules/rob-authorization-lifecycle.now.ts'),
+        'utf8'
+    )
+    const source = lifecycleEntrySource
+
+    for (const rule of [
+        'initiatePayrollAuthorizationLifecycle',
+        'initiateWorkforceAuthorizationLifecycle',
+    ]) {
+        const block = rules.match(
+            new RegExp(`export const ${rule} = BusinessRule\\(\\{[\\s\\S]*?\\n\\}\\)`)
+        )
+        assert.ok(block, `${rule} definition must exist`)
+        assert.match(
+            block[0],
+            /active:\s*false[\s\S]*?when:\s*'after'[\s\S]*?order:\s*300/
+        )
+        assert.match(
+            block[0],
+            /authorization_pathINnew,reuse,amendment,renewal/
+        )
+        assert.match(
+            block[0],
+            /authorization-lifecycle-event-enqueue\.server\.js/
+        )
+        assert.doesNotMatch(block[0], /priority:\s*100|when:\s*'async'/)
+    }
+    assert.match(lifecycleEntryMetadata, /name:\s*'RobAuthorizationLifecycleEntry'/)
+    assert.match(lifecycleEntryMetadata, /active:\s*true/)
+    assert.match(lifecycleEntryMetadata, /clientCallable:\s*false/)
+    assert.match(lifecycleEntryMetadata, /accessibleFrom:\s*'package_private'/)
+    assert.match(lifecycleEntryMetadata, /sandboxCallable:\s*false/)
+    assert.match(source, /executePayroll:\s*function \(caseSysId\)/)
+    assert.match(source, /executeWorkforce:\s*function \(caseSysId\)/)
+    assert.doesNotMatch(source, /executeLifecycle|executeScript|encodedQuery/)
+    assert.doesNotMatch(source, /execute:\s*function/)
+    assert.match(source, /function committedSourceCase\(\)/)
+    assert.match(source, /sourceCaseId = String\(caseSysId \|\| ''\)\.trim\(\)/)
+    assert.match(source, /executeFixed\(caseSysId, 'sn_hr_core_case_payroll'\)/)
+    assert.match(source, /executeFixed\(caseSysId, 'sn_hr_core_case_workforce_admin'\)/)
+    assert.match(source, /committedCase\.get\(sourceCaseId\)/)
+    assert.match(source, /could not be reread after commit/)
+    assert.match(lifecycleAdapterSource, /new RobAuthorizationLifecycleEntry\(\)/)
+    assert.match(lifecycleAdapterSource, /executePayroll\(caseSysId\)/)
+    assert.match(lifecycleAdapterSource, /executeWorkforce\(caseSysId\)/)
+})
+
+test('post-commit events are registered with exact cross-scope caller restriction', () => {
+    assert.equal(
+        (lifecycleEventMetadata.match(/table:\s*'sysevent_register'/g) || []).length,
+        2
+    )
+    assert.match(
+        lifecycleEventMetadata,
+        /x_2166123_rob_auth\.lifecycle\.create/
+    )
+    assert.match(
+        lifecycleEventMetadata,
+        /x_2166123_rob_auth\.lifecycle\.verify/
+    )
+    assert.equal(
+        (lifecycleEventMetadata.match(/caller_access:\s*'2'/g) || []).length,
+        2
+    )
+    assert.equal((lifecycleEventMetadata.match(/priority:\s*100/g) || []).length, 2)
+    assert.doesNotMatch(lifecycleEventMetadata, /queue\s*:/)
+    for (const eventName of [
+        'x_2166123_rob_auth.lifecycle.create',
+        'x_2166123_rob_auth.lifecycle.verify',
+    ]) {
+        assert.ok(eventName.length <= 40)
+    }
+})
+
+test('event Script Actions are two fixed active V2 handlers with no false access claim', () => {
+    assert.equal(
+        (lifecycleEventActionsMetadata.match(/ScriptAction\(\{/g) || []).length,
+        2
+    )
+    assert.equal(
+        (lifecycleEventActionsMetadata.match(/active:\s*true/g) || []).length,
+        2
+    )
+    assert.match(
+        lifecycleEventActionsMetadata,
+        /authorization-lifecycle-create-event\.server\.js/
+    )
+    assert.match(
+        lifecycleEventActionsMetadata,
+        /authorization-lifecycle-verify-event\.server\.js/
+    )
+    assert.doesNotMatch(
+        lifecycleEventActionsMetadata,
+        /access:\s*'package_private'|accessibleFrom|clientCallable/
+    )
+})
+
+test('after Business Rules enqueue only one fixed create event for the exact source table', () => {
+    const payrollId = '1'.repeat(32)
+    const payroll = queuedLifecycleEvent('sn_hr_core_case_payroll', payrollId)
+    assert.equal(payroll.queued.length, 1)
+    assert.deepEqual(payroll.queued[0], [
+        'x_2166123_rob_auth.lifecycle.create',
+        payroll.current,
+        payrollId,
+        'payroll',
+    ])
+
+    const workforceId = '2'.repeat(32)
+    const workforce = queuedLifecycleEvent(
+        'sn_hr_core_case_workforce_admin',
+        workforceId
+    )
+    assert.equal(workforce.queued.length, 1)
+    assert.equal(workforce.queued[0][2], workforceId)
+    assert.equal(workforce.queued[0][3], 'workforce')
+
+    const unsupported = queuedLifecycleEvent('sn_hr_core_case', '3'.repeat(32))
+    assert.equal(unsupported.queued.length, 0)
+    assert.equal(unsupported.errors.length, 1)
+    const malformed = queuedLifecycleEvent('sn_hr_core_case_payroll', 'bad')
+    assert.equal(malformed.queued.length, 0)
+    assert.equal(malformed.errors.length, 1)
+    assert.doesNotMatch(
+        lifecycleEventEnqueueSource,
+        /GlideRecord|FlowAPI|\.insert\s*\(|\.update\s*\(|\.setValue\s*\(/
+    )
+})
+
+test('create-event handler uses fixed dispatch and queues verify only after phase-one success', () => {
+    const caseSysId = '4'.repeat(32)
+    const authorizationSysId = '5'.repeat(32)
+    const created = callableLifecycleCreateEvent(caseSysId, 'payroll', {
+        payroll: {
+            success: true,
+            disposition: 'authorization_persisted',
+            authorization_sys_id: authorizationSysId,
+        },
+    })
+    assert.equal(created.error, undefined)
+    assert.deepEqual(created.calls, [['payroll', caseSysId]])
+    assert.equal(created.queued.length, 1)
+    assert.equal(created.queued[0][0], 'x_2166123_rob_auth.lifecycle.verify')
+    assert.equal(created.queued[0][2], authorizationSysId)
+
+    const existing = callableLifecycleCreateEvent(caseSysId, 'workforce', {
+        workforce: { success: true, disposition: 'existing_authorization' },
+    })
+    assert.deepEqual(existing.calls, [['workforce', caseSysId]])
+    assert.equal(existing.queued.length, 0)
+    assert.equal(existing.error, undefined)
+
+    const invalid = callableLifecycleCreateEvent(caseSysId, 'other')
+    assert.equal(invalid.calls.length, 0)
+    assert.match(invalid.error.message, /unsupported path/)
+    const failed = callableLifecycleCreateEvent(caseSysId, 'payroll', {
+        payroll: { success: false },
+    })
+    assert.match(failed.error.message, /failed closed/)
+    assert.equal(failed.queued.length, 0)
+
+    assert.match(lifecycleCreateEventSource, /executePayroll\(caseSysId\)/)
+    assert.match(lifecycleCreateEventSource, /executeWorkforce\(caseSysId\)/)
+    assert.doesNotMatch(
+        lifecycleCreateEventSource,
+        /GlideRecord|FlowAPI|eval\s*\(|encodedQuery|\.insert\s*\(|\.update\s*\(|\.setValue\s*\(/
+    )
+})
+
+test('verify-event handler accepts only one exact Authorization sys_id and fails closed', () => {
+    const authorizationSysId = '6'.repeat(32)
+    const verified = callableLifecycleVerifyEvent(authorizationSysId, {
+        success: true,
+        disposition: 'post_commit_signing_started',
+    })
+    assert.deepEqual(verified.calls, [authorizationSysId])
+    assert.equal(verified.error, undefined)
+
+    const malformed = callableLifecycleVerifyEvent('bad', { success: true })
+    assert.equal(malformed.calls.length, 0)
+    assert.match(malformed.error.message, /exact Authorization sys_id/)
+    const failed = callableLifecycleVerifyEvent(authorizationSysId, {
+        success: false,
+    })
+    assert.match(failed.error.message, /failed closed/)
+    assert.doesNotMatch(
+        lifecycleVerifyEventSource,
+        /GlideRecord|FlowAPI|eval\s*\(|encodedQuery|\.insert\s*\(|\.update\s*\(|\.setValue\s*\(/
+    )
+})
+
+test('package-private lifecycle Action exposes only fixed path and sys_id inputs', () => {
+    assert.match(lifecycleActionMetadata, /name:\s*'ROB Execute Authorization Lifecycle'/)
+    assert.match(lifecycleActionMetadata, /access:\s*'package_private'/)
+    assert.match(lifecycleActionMetadata, /case_sys_id:\s*StringColumn/)
+    assert.match(lifecycleActionMetadata, /lifecycle_path:\s*ChoiceColumn/)
+    assert.match(lifecycleActionMetadata, /payroll:\s*'Payroll'/)
+    assert.match(lifecycleActionMetadata, /workforce:\s*'Workforce Administration'/)
+    assert.match(lifecycleActionMetadata, /actionStep\.script/)
+    assert.match(
+        lifecycleActionMetadata,
+        /rob-execute-authorization-lifecycle-action\.server\.js/
+    )
+    assert.doesNotMatch(
+        lifecycleActionMetadata,
+        /(?:table|encoded_query|query|field_name|script_name):\s*(?:String|Choice|Reference)Column/
+    )
+    assert.doesNotMatch(lifecycleActionMetadata, /ReferenceColumn|FlowObject|FlowArray/)
+})
+
+test('lifecycle Action dispatches only to the fixed Payroll or Workforce method', () => {
+    const payroll = callableLifecycleAction({
+        case_sys_id: 'payroll_case',
+        lifecycle_path: 'payroll',
+    })
+    assert.deepEqual(payroll.calls, [['payroll', 'payroll_case']])
+    assert.equal(payroll.outputs.success, true)
+
+    const workforce = callableLifecycleAction({
+        case_sys_id: 'workforce_case',
+        lifecycle_path: 'workforce',
+    })
+    assert.deepEqual(workforce.calls, [['workforce', 'workforce_case']])
+    assert.equal(workforce.outputs.success, true)
+
+    const invalid = callableLifecycleAction({
+        case_sys_id: 'other_case',
+        lifecycle_path: 'other',
+    })
+    assert.deepEqual(invalid.calls, [])
+    assert.equal(invalid.outputs.success, false)
+    assert.match(invalid.outputs.reason, /path is unsupported/)
+
+})
+
+test('lifecycle Action is an invocation adapter with no duplicated lifecycle or persistence', () => {
+    assert.match(
+        lifecycleActionSource,
+        /new RobAuthorizationLifecycleEntry\(\)\.executePayroll\(caseSysId\)/
+    )
+    assert.match(
+        lifecycleActionSource,
+        /new RobAuthorizationLifecycleEntry\(\)\.executeWorkforce\(caseSysId\)/
+    )
+    assert.doesNotMatch(lifecycleActionSource, /GlideRecord|FlowAPI|GenerateDocumentAPI/)
+    assert.doesNotMatch(lifecycleActionSource, /\.insert\s*\(|\.update\s*\(/)
+    assert.doesNotMatch(lifecycleActionSource, /eval\s*\(|encodedQuery|tableName/)
+    assert.doesNotMatch(
+        lifecycleActionSource,
+        /authorization_path|decision_evaluated_at|RobProfileAuthorizationContext/
+    )
+})
+
+test('governed creation returns for commit before signing-gate verification or launch', () => {
+    const source = lifecycleEntrySource
+    const persistCall = source.indexOf(
+        "'x_2166123_rob_auth.rob_persist_authorization_lifecycle_native'"
+    )
+    const phaseOneReturn = source.indexOf(
+        "return succeed('authorization_persisted', authorizationId, false)"
+    )
+    const publicVerifier = source.indexOf('verifyAuthorizationSigning: function')
+
+    assert.ok(persistCall >= 0)
+    assert.ok(phaseOneReturn > persistCall)
+    assert.ok(publicVerifier > phaseOneReturn)
+    const phaseOneTail = source.slice(persistCall, phaseOneReturn)
+    assert.doesNotMatch(phaseOneTail, /pending_employee_signature'[\s\S]*?initiateAuthorizationSigning/)
+    assert.doesNotMatch(phaseOneTail, /signing gate could not be verified/)
+})
+
+test('post-commit verifier accepts only one exact Authorization sys_id and fixed tables', () => {
+    const source = lifecycleEntrySource
+    assert.match(source, /verifyAuthorizationSigning:\s*function \(authorizationSysId\)/)
+    assert.match(source, /\^\[0-9a-f\]\{32\}\$/)
+    assert.match(source, /new GlideRecord\(\s*'x_2166123_rob_auth_rob_auth'\s*\)/)
+    assert.match(source, /new GlideRecord\('sn_hr_core_case_payroll'\)/)
+    assert.match(source, /new GlideRecord\(\s*'sn_hr_core_case_workforce_admin'\s*\)/)
+    assert.match(source, /verifiedAuthorization\.getValue\('source_hrsd_case'\)/)
+    assert.match(source, /verifiedAuthorization\.getValue\('status'\)[\s\S]*?'pending_employee_signature'/)
+    assert.match(source, /resumeAuthorizationSigning\(verifiedAuthorization\)/)
+    assert.match(source, /post_commit_signing_started/)
+    assert.doesNotMatch(source, /verifyAuthorizationSigning:\s*function \([^)]*,/)
+})
+
+test('post-commit verification Action is package-private and Authorization-only', () => {
+    assert.match(
+        signingVerificationActionMetadata,
+        /name:\s*'ROB Verify Authorization Signing Gate'/
+    )
+    assert.match(signingVerificationActionMetadata, /access:\s*'package_private'/)
+    assert.match(
+        signingVerificationActionMetadata,
+        /inputs:\s*\{\s*authorization_sys_id:\s*StringColumn/
+    )
+    assert.doesNotMatch(
+        signingVerificationActionMetadata,
+        /(?:table|query|field|script|record):\s*(?:String|Choice|Reference)Column/
+    )
+    assert.match(
+        signingVerificationActionSource,
+        /new RobAuthorizationLifecycleEntry\(\)\.verifyAuthorizationSigning\(\s*authorizationSysId\s*\)/
+    )
+    assert.doesNotMatch(
+        signingVerificationActionSource,
+        /GlideRecord|FlowAPI|GenerateDocumentAPI|eval\s*\(|encodedQuery|tableName/
+    )
+    assert.doesNotMatch(signingVerificationActionSource, /\.insert\s*\(|\.update\s*\(/)
+})
+
+test('post-commit verification Action dispatches once and fails closed on invalid sys_id', () => {
+    const authorizationId = 'a'.repeat(32)
+    const valid = callableSigningVerificationAction({
+        authorization_sys_id: authorizationId,
+    })
+    assert.deepEqual(valid.calls, [authorizationId])
+    assert.equal(valid.outputs.success, true)
+    assert.equal(valid.outputs.signing_started, true)
+
+    const blank = callableSigningVerificationAction({ authorization_sys_id: '' })
+    assert.deepEqual(blank.calls, [])
+    assert.equal(blank.outputs.success, false)
+    assert.match(blank.outputs.reason, /exact Authorization Form sys_id is required/)
+
+    const malformed = callableSigningVerificationAction({
+        authorization_sys_id: 'not-a-sys-id',
+    })
+    assert.deepEqual(malformed.calls, [])
+    assert.equal(malformed.outputs.success, false)
+})
+
+test('callable boundary deterministically rejects blank missing blocked exception and unsupported service cases', () => {
+    const records = {
+        'sn_hr_core_case_payroll:blocked': {
+            sys_id: 'blocked',
+            hr_service: 'payroll_service',
+            x_2166123_rob_auth_requested_items: 'item_1',
+            x_2166123_rob_auth_decision_evaluated_at: '2026-08-30 12:00:00',
+            x_2166123_rob_auth_authorization_processing_blocked: '1',
+            x_2166123_rob_auth_authorization_path: 'exception',
+        },
+        'sn_hr_core_case_payroll:exception': {
+            sys_id: 'exception',
+            hr_service: 'payroll_service',
+            x_2166123_rob_auth_requested_items: 'item_1',
+            x_2166123_rob_auth_decision_evaluated_at: '2026-08-30 12:00:00',
+            x_2166123_rob_auth_authorization_processing_blocked: '0',
+            x_2166123_rob_auth_authorization_path: 'exception',
+        },
+        'sn_hr_core_case_payroll:wrong_service': {
+            sys_id: 'wrong_service',
+            hr_service: 'unrelated_service',
+            x_2166123_rob_auth_requested_items: 'item_1',
+            x_2166123_rob_auth_decision_evaluated_at: '2026-08-30 12:00:00',
+            x_2166123_rob_auth_authorization_processing_blocked: '0',
+            x_2166123_rob_auth_authorization_path: 'new',
+        },
+        'sn_hr_core_service:payroll_service': {
+            sys_id: 'payroll_service',
+            active: '1',
+            value: 'request_access_to_hr_systems',
+        },
+        'sn_hr_core_service:unrelated_service': {
+            sys_id: 'unrelated_service',
+            active: '1',
+            value: 'unrelated_service',
+        },
+    }
+    const runtime = callableLifecycle(records)
+
+    assert.equal(runtime.entry.executePayroll('').success, false)
+    assert.match(runtime.entry.executePayroll('').reason, /sys_id is required/)
+    assert.match(runtime.entry.executeWorkforce('missing').reason, /could not be reread/)
+    assert.equal(runtime.entry.executePayroll('blocked').disposition, 'blocked')
+    assert.equal(runtime.entry.executePayroll('exception').disposition, 'exception')
+    assert.match(
+        runtime.entry.executePayroll('wrong_service').reason,
+        /not an approved ROB HR Service/
+    )
+    assert.equal(runtime.tablesRead.includes('sn_hr_core_case_payroll'), true)
+    assert.equal(runtime.tablesRead.includes('sn_hr_core_case_workforce_admin'), true)
+    assert.equal(runtime.tablesRead.includes('unrelated_table'), false)
+})
+
+test('deferred lifecycle remains fail-closed and retry-safe', () => {
+    const source = lifecycleEntrySource
+    assert.match(source, /if \(!current\) \{\s*return result\s*\}/)
+    assert.match(source, /if \(decision === 'exception'\)/)
+    assert.match(source, /result\.disposition = 'exception'/)
+    assert.match(source, /the R3 decision is missing or unsupported/)
+    assert.match(source, /the committed R3 decision timestamp is missing/)
+    assert.match(source, /the committed source HR Case is not an approved ROB HR Service/)
+    assert.match(source, /existingAuthorizationForCase\(\)/)
+    assert.match(source, /existingDetail\.addQuery\('rob_authorization_form', authorizationId\)/)
+    assert.match(source, /existingDetail\.addQuery\('access_item', scopeRecord\.id\)/)
+    assert.match(source, /existingTask\.addQuery\('parent', current\.getUniqueValue\(\)\)/)
+    assert.match(source, /reuse_attestation_already_approved/)
+    assert.match(source, /existing_authorization/)
+    assert.match(source, /created_detail_count/)
+    assert.doesNotMatch(source, /\.insert\(\)/)
+    assert.match(source, /rob_create_authorization_form_native/)
+    assert.match(source, /rob_create_authorized_access_detail_native/)
+})
+
 test('runtime launch uses the certified split templates and final renderer roles', () => {
     const evidenceSource = fs.readFileSync(path.join(root, 'src/fluent/server/authorization-signature-evidence.server.js'), 'utf8')
-    const initiationSource = fs.readFileSync(path.join(root, 'src/fluent/server/authorization-lifecycle-initiation.server.js'), 'utf8')
+    const initiationSource = lifecycleEntrySource
     const supervisorLaunchSource = fs.readFileSync(path.join(root, 'src/fluent/server/supervisor-signature-launch.server.js'), 'utf8')
     assert.match(evidenceSource, /ROB Form 1768 Authorization/)
     assert.match(evidenceSource, /ROB Form 1768 Employee Signature/)
@@ -676,10 +1320,7 @@ test('post-signature final PDF fills and flattens the governed Form 1768 on Auth
 })
 
 test('Reuse launches only the native attestation template and creates no governed form', () => {
-    const source = fs.readFileSync(
-        path.join(root, 'src/fluent/server/authorization-lifecycle-initiation.server.js'),
-        'utf8'
-    )
+    const source = lifecycleEntrySource
     assert.match(source, /ROB Reuse Supervisor Attestation/)
     assert.match(source, /beginRobReuseAttestation/)
     assert.doesNotMatch(source, /new GlideRecord\('sysapproval_approver'\)/)
@@ -727,18 +1368,18 @@ test('governed approval Flow persists canonical choice values without scripted m
     )
 })
 
-test('production lifecycle initiation is active after native signing configuration passes', () => {
+test('event enqueue Business Rules remain source-inactive until controlled cutover', () => {
     const lifecycleBusinessRules = fs.readFileSync(
         path.join(root, 'src/fluent/business-rules/rob-authorization-lifecycle.now.ts'),
         'utf8'
     )
     assert.match(
         lifecycleBusinessRules,
-        /initiatePayrollAuthorizationLifecycle[\s\S]*?active:\s*true[\s\S]*?table:\s*'sn_hr_core_case_payroll'/
+        /initiatePayrollAuthorizationLifecycle[\s\S]*?active:\s*false[\s\S]*?table:\s*'sn_hr_core_case_payroll'/
     )
     assert.match(
         lifecycleBusinessRules,
-        /initiateWorkforceAuthorizationLifecycle[\s\S]*?active:\s*true[\s\S]*?table:\s*'sn_hr_core_case_workforce_admin'/
+        /initiateWorkforceAuthorizationLifecycle[\s\S]*?active:\s*false[\s\S]*?table:\s*'sn_hr_core_case_workforce_admin'/
     )
 })
 

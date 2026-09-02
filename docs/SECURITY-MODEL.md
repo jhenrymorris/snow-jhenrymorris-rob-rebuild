@@ -355,3 +355,116 @@ the installed PDI; source/build evidence alone is not a runtime PASS.
 Installed-PDI testing completed the eight-persona matrix with synthetic users. Employees can access their governed records but not another employee's Authorization, Detail, final PDF, or direct attachment URL. Staffing and Analytics fulfillers receive only exact task-context Detail access and cannot modify approval or signature evidence. Operations Managers receive required WPC/ARM task context without repository browse access. Compliance access is read-only.
 
 Notification previews contained no signed PDF, signature value, business justification, SSN, or unnecessary sensitive PII. Operational reports and the owner-restricted dashboard retain row/field ACL enforcement. Temporary UAT roles, broad GlideRecord/native-case/native-task privileges, and unexpected RCA are zero. The exact V2-to-`sn_hr_core_task` Read path remains the approved narrow contextual-task dependency.
+
+### 2026-08-29 post-install intake RCA correction
+
+Manual Employee Center submission reopened C3 release acceptance. The exact
+Workforce validation caller-to-`sn_hr_core_service` Read request
+`e0156cec8307cf104f5193a6feaad35c` and exact Workforce decision caller-to-
+`RobHrCasePersistenceBridge` Execute request
+`c682eef883cbc3504f5193a6feaad39f` were restored from Requested to Allowed.
+The exact Payroll decision Execute request
+`c9a07f2b833287104f5193a6feaad352` was restored from Invalidated to Allowed.
+No scope-wide caller, generic GlideRecord privilege, native-case/native-task
+Write, temporary role, or unrelated pending RCA was allowed.
+
+The corrected inventory removed the reported HR Service and bridge denials. A
+fresh Analytics self-request (`HRC0001058`) then failed at the shared profile
+resolver with `PROFILE_CONTEXT_POSITION_UNRESOLVED`. Exact HR Profile/Position
+caller records and table Read privileges were Allowed, but the resolver still
+did not return the authoritative position. C3 therefore remains reopened and
+release is not ready. C2/M4 acceptance is unaffected.
+
+### 2026-08-29 profile-context superseding evidence
+
+`PROFILE_CONTEXT_POSITION_UNRESOLVED` was caused by incomplete synthetic test
+data, not a missing platform read capability. Populating the existing synthetic
+HR Profile with authoritative Position `NSF V2 Position A` and governed manager
+`V2 Supervisor A` resolved Position, Organization, and Supervisor without a
+resolver or HR Core bridge change. Exact Workforce validation bridge RCA
+`a4037af0838fc3504f5193a6feaad330` was Allowed when that caller became
+reachable; broad and unexpected RCA counts remain zero.
+
+The post-correction intake reached the governed lifecycle and exposed a distinct
+generic API restriction. Direct assignment removed the denied
+`GlideRecord.setValue` call, but both service paths then stopped at denied
+`GlideRecord.insert` (`HRC0001062`, `HRC0001063`). The generic Insert privilege
+remains denied. No broad GlideRecord Execute, native-case/native-task Write,
+temporary role, or HR Core bridge expansion was introduced.
+
+Historical comparison shows that C1 creation relied on the same generic API
+while privilege `ea217fab833287104f5193a6feaad330` was `allowed`; it was not a
+separate caller-restricted mechanism. That privilege was changed to `denied` on
+2026-08-27 and remains denied. Re-enabling it would violate the final security
+contract, so the historical runtime outcome is not valid least-privilege proof
+for the post-install intake smoke.
+
+### 2026-08-30 after-commit lifecycle security boundary
+
+The bounded correction changes orchestration timing only. The existing V2
+Payroll/Workforce lifecycle rules execute asynchronously after the source case
+operation and reread only an exact sys_id from an allowlisted native case table.
+They continue to invoke the two narrow native Create Record subflows and retain
+exact Authorization/Detail duplicate queries plus signature-task suppression.
+
+No generic GlideRecord Insert, Update, or setValue privilege, broad native
+case/task Write, new table, HR Core bridge method, RCA, or role was added.
+Runtime least-privilege acceptance remains pending the authorized install and
+TM-01/TM-02/TM-258 replay.
+## 2026-08-30 native after-commit parity security evidence
+
+The two existing lifecycle Business Rules were reconciled in place without a
+new rule, table, broad privilege, or generic GlideRecord grant. Fresh Analytics
+`HRC0001077` and Staffing `HRC0001078` produced no new generic RCA request. The
+runtime failure occurred before deferred lifecycle execution and therefore does
+not disprove the previously accepted narrow native creation subflows. Generic
+Insert remains unavailable; broad native-case/native-task Write and temporary
+role counts remain zero.
+
+### 2026-08-30 package-private lifecycle entry security contract
+
+`RobAuthorizationLifecycleEntry` is active only inside
+`x_2166123_rob_auth`: `accessibleFrom=package_private`, client callable false,
+and sandbox callable false. The surface accepts only a case sys_id through
+`executePayroll` or `executeWorkforce`; the method fixes the native table and
+performs an exact committed reread. It exposes no generic table, query, field,
+script, or persistence input and returns no sensitive profile, justification,
+signature, or record object. No CrossScopePrivilege, role, bridge method, or
+generic GlideRecord API was added.
+
+### 2026-08-30 fixed lifecycle Action security contract
+
+`ROB Execute Authorization Lifecycle` is package-private and V2-owned. Its only
+inputs are a mandatory 32-character committed-case sys_id and a mandatory
+`payroll`/`workforce` choice. The instance Script step performs fixed dispatch
+to the corresponding method on `RobAuthorizationLifecycleEntry`; it accepts no
+table, query, script, class, method, record, or field map. It contains no
+lifecycle or persistence logic and returns only the approved narrow outcome.
+No CrossScopePrivilege, role, bridge method, or generic GlideRecord access was
+added.
+
+### 2026-09-01 post-commit event caller-control contract
+
+The approved C3 candidate replaces the retired Flow/Action invocation path with
+two registered events in `x_2166123_rob_auth`. Each Event Registry record uses
+`caller_access = 2`. On this platform that value is the registered event's
+**cross-scope Caller Restriction**: callers outside the owning scope are
+restricted and require an approved caller-access relationship. It is not a
+claim that the event or its Script Action is package-private.
+
+The Fluent `ScriptAction` artifact has no `accessibleFrom`, package-private, or
+client-callable runtime property. Runtime control is instead provided by V2
+scope ownership, binding each Script Action to one restricted registered event,
+fixed event parameter positions, exact 32-character sys_id validation, fixed
+Payroll/Workforce dispatch, and the independent committed-state eligibility
+checks in `RobAuthorizationLifecycleEntry`. Developer protection policy, if
+used, controls artifact viewing/editing; it is not caller authorization.
+
+The create event carries only the source HR Case sys_id and fixed lifecycle
+path. The verify event carries only the exact Authorization Form sys_id returned
+by the successful create transaction. Neither event accepts a table, query,
+field, script, class, method, record object, or sensitive employee data. The
+default platform event queue is used. No generic GlideRecord Insert/Update/
+setValue privilege, broad native-case/native-task Write, role, bridge method, or
+CrossScopePrivilege is added. Any unexpected RCA generated at deployment or
+runtime is a stop condition, not an approval target.

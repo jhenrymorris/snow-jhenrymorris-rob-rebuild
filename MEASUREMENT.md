@@ -2940,3 +2940,223 @@ Not exposed by session/tool — no estimate recorded.
 - Final regression: M2 `19/19`; R1 `9/9`; Security `22/22`; Deployment `16/16`; R3 `30/30`; R3 adapter `13/13`; R4 `64/64`; M4 `34/34`; template `7/7`; M5 `11/11`. Normal/frozen SDK 4.11.0 builds and diff check PASS; unexpected generated-key changes `0`.
 - Final counts: broad privileges `0`; unexpected RCA `0`; temporary roles `0`; custom business tables `4`; custom fulfillment tables `0`; external integrations `0`; architecture changes `0`; new capability investigations `0`.
 - Final state: C0, C1, C2, C3 and M1–M5 COMPLETE. Application ready for release / production implementation handoff.
+
+## C3 release correction — intake RCA restoration and smoke (2026-08-29)
+
+- Release acceptance was reopened by an ordinary Employee Center intake test.
+  Exact Workforce HR Service Read RCA `e0156cec8307cf104f5193a6feaad35c`
+  and Workforce decision bridge Execute RCA
+  `c682eef883cbc3504f5193a6feaad39f` were Requested; exact Payroll decision
+  bridge Execute RCA `c9a07f2b833287104f5193a6feaad352` was Invalidated.
+  Each exact, already-approved caller/resource/operation was restored to
+  Allowed through native Restricted Caller Access administration.
+- No broad caller, generic GlideRecord privilege, native-case/native-task Write,
+  unrelated RCA, temporary role, source change, or install was introduced.
+- Fresh Analytics self-request `HRC0001058` retained authenticated self identity,
+  justification, and requested item and no longer emitted the reported HR
+  Service/bridge RCA errors. It stopped at the shared profile resolver with
+  `PROFILE_CONTEXT_POSITION_UNRESOLVED`; Staffing was not replayed because this
+  precondition executes before service-specific routing.
+- Focused results: M2 `19/19`; Deployment `16/16`; Security `22/22`; R3 adapter
+  `13/13` PASS. TM-02 and the permanent post-install intake smoke gate are FAIL;
+  TM-01 remains NOT RUN.
+- Superseding milestone state: C2 COMPLETE (`13/13`) and M4 COMPLETE remain
+  frozen. C3 is REOPENED, M5 implementation is retained, and release is NOT
+  READY pending an approved correction to the protected HR profile-context read
+  boundary and successful Staffing/Analytics post-install smoke.
+
+## C3 release correction — profile context and intake completion continuation (2026-08-29)
+
+- Root cause classification: **A — SYNTHETIC HR PROFILE/POSITION DATA
+  INCOMPLETE**. The subject on `HRC0001058` had an active HR Profile but no
+  authoritative Position; the configured title fallback could not resolve a
+  blank `sys_user.title`.
+- Native synthetic-data correction populated `NSF V2 Position A` and governed
+  manager `V2 Supervisor A` on the test HR Profiles. The platform propagated
+  the corresponding user title/manager. No resolver, HR Core bridge, privilege,
+  or application architecture change was used.
+- The exact Workforce validation caller-to-`RobHrCasePersistenceBridge`
+  Execute request `a4037af0838fc3504f5193a6feaad330`, which became reachable
+  only after profile resolution, was restored to Allowed through native RCA
+  administration. Unexpected RCA remains `0`.
+- Fresh Analytics evaluation reached the normal `NEW_NO_PRIOR_FORM` R3 result,
+  proving Position, Organization, and Supervisor resolution. The release smoke
+  then exposed a separate lifecycle regression: generic
+  `GlideRecord.setValue` was denied in shared lifecycle Business Rule source.
+  The source and the two existing live Payroll/Workforce lifecycle rules were
+  reconciled to direct field assignment; R4 `65/65`, M2 `19/19`, normal/frozen
+  SDK 4.11.0 builds, diff check, and generated-key review PASS.
+- The next exact boundary is now proven: generic `GlideRecord.insert` is denied
+  when the same lifecycle source creates the governed Authorization Form.
+  Analytics `HRC0001062` and Staffing `HRC0001063` both retained authenticated
+  self identity, justification, and requested item but emitted this denial.
+  The generic Insert privilege remains denied because broad GlideRecord API
+  Execute is prohibited.
+- Focused suites: M2 `19/19`, Deployment `16/16`, Security `22/22`, R3 adapter
+  `13/13`, and R4 `65/65` PASS. Source changed; no application install was
+  performed. C2/M4 remain COMPLETE. C3 remains NOT COMPLETE and release NOT
+  READY because TM-01, TM-02, and the post-install smoke gate are FAIL.
+
+### C3 final lifecycle-creation comparison
+
+- Root-cause classification: **E — accepted C1 also used generic Insert, but
+  its security context changed**. Git source at accepted C1 checkpoint
+  `8b339391` creates both governed tables with scoped `GlideRecord.insert()`;
+  there is no Flow, subflow, native Create Record action, or persistence helper
+  for Authorization Form/Detail creation.
+- The exact `GlideRecord.insert` privilege
+  `ea217fab833287104f5193a6feaad330` was recorded as `allowed` on 2026-08-25,
+  remained the enabling context during C1 Approved New on 2026-08-26, and was
+  changed to `denied` on 2026-08-27. Current Payroll/Workforce lifecycle rules
+  retain their accepted sys_ids, V2 scope, native case tables, and order.
+- The broad generic Insert privilege was not restored. Because this API grant
+  is scope-wide rather than caller-specific, the requested historical path
+  cannot be restored while also satisfying the explicit least-privilege
+  constraint. TM-01/TM-02 remain FAIL; C3 and release remain not complete.
+
+### 2026-08-29 C3 native-creation deployment attempt
+
+- The existing `ROB V2 C2 RECOVERY` workspace was rehydrated once and verified
+  against V2 root/scopeId `4aba8657837a43104f5193a6feaad3c5`, scope
+  `x_2166123_rob_auth`, the authoritative repository/branch, and SDK 4.11.0.
+- Reviewed source and R4 tests were reconciled to the V2 IDE checkout without
+  semantic changes. R4 `65/65`, normal/frozen builds, IDE Build, diff check,
+  and generated-key review passed; unexpected key drift and broad privilege
+  additions remained `0`.
+- The one authorized normal Build and Install rebuilt successfully, then failed
+  before installation with `Unable to install application as application was
+  null`. Its installer module path referenced historical root
+  `b0d63cedc2d34e0ca4c05d6eb7acf61e` despite the verified V2 workspace/root.
+- No retry, Reinstall, Force Install, local SDK deployment, source change, or
+  runtime smoke followed. TM-01, TM-02, and TM-258 are `PENDING — DEPLOYMENT
+  PREREQUISITE`; C2/M4 remain COMPLETE; C3 remains NOT COMPLETE and release NOT
+  READY.
+
+### 2026-08-29 C3 stale install-target binding refresh
+
+- Before refresh, the active editor/build context was V2 root
+  `4aba8657837a43104f5193a6feaad3c5`, while the prior installer stack resolved
+  historical root `b0d63cedc2d34e0ca4c05d6eb7acf61e`.
+- V2 Application Details confirmed existing application sys_id
+  `4aba8657837a43104f5193a6feaad3c5`. The single permitted supported IDE reload
+  then reopened persisted workspace URI `Default - admin.code-workspace` and
+  active historical root `b0d63cedc2d34e0ca4c05d6eb7acf61e`.
+- The mandatory build/install target gate therefore failed. Build, Install,
+  Sync, Git, source, package identity, native subflows, and runtime fixtures
+  were not touched in this continuation.
+
+### 2026-08-30 C3 after-commit lifecycle correction — pre-install
+
+- Root cause classification: **TRANSACTION-BOUNDARY DEFECT**. The installed
+  Payroll and Workforce lifecycle rules were synchronous `after` rules (order
+  300), so their already-proven native Create Record subflows participated in
+  the originating HR Case transaction. The governed rows were visible during
+  execution but absent after that transaction completed.
+- One bounded source correction changes those same two rules to supported
+  asynchronous Business Rule timing. The generated records contain
+  `when=async_always`, priority `100`, and retain sys_ids
+  `b9973651027140a68e3f2d1ed1beabfc` and
+  `046c74b9ce424a8f9b504f739506e62e`.
+- Deferred execution begins by allowlisting the two supported HR Case tables
+  and rereading the exact source case by committed sys_id. A missing or
+  unsupported case fails closed. Existing decision, profile-context, native
+  creation, committed reread, signing, and duplicate-suppression logic remains
+  authoritative; a retry with no prior Authorization can now continue, while
+  an existing exact lifecycle resumes without duplication.
+- Focused pre-install evidence: R4 `67/67`, M2 `19/19`, R3 adapter `13/13`,
+  Security `22/22`, Deployment `16/16`, normal SDK 4.11.0 build PASS,
+  frozen-key build PASS, and `git diff --check` PASS. Generated-key blob/hash
+  remained `cd45cbf77be5048d55b57c5210d69489278f6ca7`; unexpected key changes and
+  broad privilege additions are `0`.
+- Install and runtime replays were not performed. TM-01, TM-02, and TM-258
+  remain pending deployment/runtime proof; C2 remains COMPLETE, C3 remains NOT
+  COMPLETE, and release remains NOT READY.
+## 2026-08-30 C3 native Business Rule parity reconciliation
+
+- The reproducible IDE metadata-state deployment defect remains open; no Sync,
+  Build and Install, Reinstall, Force Install, or local SDK deployment was run.
+- Existing Payroll lifecycle Business Rule
+  `b9973651027140a68e3f2d1ed1beabfc` and Workforce lifecycle Business Rule
+  `046c74b9ce424a8f9b504f739506e62e` were reconciled in place through their
+  supported Business Rule forms. Both retained their stable identity, table,
+  active state, condition, and Priority `100`; both reread as Async with the
+  authoritative committed-case reread, native Authorization/Detail subflow
+  calls, idempotency guards, and no production `.insert()`.
+- Fresh synthetic Employee Center cases Analytics `HRC0001077`
+  (`87c8eb81834f87504f5193a6feaad32a`) and Staffing `HRC0001078`
+  (`437bab49834f87504f5193a6feaad37f`) committed with Amos Linnan as the
+  authenticated opened-by/opened-for/subject person and retained OAS/DataMart
+  and FPPS/WTTS respectively. Each case was advanced through the native Ready
+  for Work action.
+- Runtime result: neither exact async lifecycle rule queued or executed. No
+  lifecycle error log, governed Authorization Form, Authorized Access Detail,
+  or signing task was produced for either case. The first failed boundary is
+  deferred lifecycle entry, before either already-proven native creation
+  subflow. No new generic GlideRecord RCA was generated or allowed.
+- TM-01, TM-02, and TM-258 remain FAIL. C2/M4 remain COMPLETE; C3/M5 remain NOT
+  COMPLETE and release remains NOT READY. No product-source correction or
+  application install was performed in this reconciliation.
+
+## 2026-08-30 C3 callable lifecycle entry — source phase
+
+- Source artifact delta: one active package-private, non-client,
+  non-sandbox-callable `RobAuthorizationLifecycleEntry`; two public fixed-table
+  lifecycle methods; no new Business Rule, table, role, bridge, persistence
+  service, or duplicate lifecycle engine.
+- Existing Payroll and Workforce lifecycle Business Rules are source-inactive
+  pending the approved two-Flow native trigger configuration. Their stable
+  identities and historical adapter source remain present.
+- Focused tests prove committed fixed-table reread, exact approved service and
+  committed R3 eligibility, deterministic fail-closed outcomes, retained
+  native creation/persistence verification, and Authorization/Detail/signing
+  idempotency guards. Generic `.insert()` remains absent.
+- Install attempts and runtime gates in this source phase: `0`. C2 remains
+  COMPLETE; C3 remains NOT COMPLETE; release remains NOT READY.
+- Pre-install acceptance: R4 `68/68`, M2 `19/19`, Security `22/22`, Deployment
+  `16/16`, R3 adapter `13/13`, normal build, frozen-key build, and diff check
+  PASS. One expected stable generated key was added for the authorized Script
+  Include; unexpected key drift and broad privilege additions are `0`.
+- Package parity: `RobAuthorizationLifecycleEntry` occurs once; Payroll and
+  Workforce lifecycle Business Rules each package as inactive; native
+  Authorization/Detail subflow calls remain present; generic `.insert()` is
+  absent from the shared production lifecycle.
+
+## 2026-08-30 C3 fixed Action wrapper — source phase
+
+- Source artifact delta: one package-private `ROB Execute Authorization
+  Lifecycle` custom Action with one instance Script step; no Flow, Business
+  Rule, table, role, bridge, persistence service, or second lifecycle engine.
+- Fixed inputs: committed case sys_id and `payroll`/`workforce`. Fixed outputs:
+  the approved non-sensitive lifecycle outcome only. Dynamic table, query,
+  script, class, method, record, and field-map inputs: `0`.
+- Focused acceptance: R4 `71/71`, M2 `19/19`, Security `22/22`, Deployment
+  `16/16`, R3 adapter `13/13`, normal/frozen builds, and diff check PASS.
+- Expected Action/step generated keys were added by SDK build; unexpected key
+  drift and broad privilege additions are `0`.
+- Built package contains the Action exactly once and retains generic Insert as
+  absent/denied. Install attempts and runtime gates: `0`.
+
+## 2026-09-01 C3 post-commit event pipeline — source/package phase
+
+- Product delta: two existing lifecycle Business Rules converted to
+  source-inactive `After`/enqueue-only adapters; two Event Registry records and
+  two fixed Script Actions added. New Flows, Actions, subflows, tables, roles,
+  bridges, persistence services, and lifecycle engines: `0`.
+- Caller-control wording: Event Registry `caller_access = 2` is cross-scope
+  Caller Restriction. Script Actions expose no package-private runtime-access
+  property; their boundary is V2 scope ownership, fixed event binding and
+  parameters, exact sys_id validation, and shared lifecycle eligibility checks.
+- Focused acceptance: R4 `80/80`, M2 `19/19`, Security `22/22`, Deployment
+  `16/16`, and R3 adapter `13/13` PASS. SDK 4.11.0 normal and frozen-key builds
+  PASS; `git diff --check` PASS.
+- Package inspection confirms both exact registered events with
+  `caller_access=2`, both active Script Actions, both stable Business Rule
+  sys_ids with `when=after`, `active=false`, supported filters, and enqueue-only
+  scripts. The create handler uses only fixed Payroll/Workforce dispatch; the
+  verifier accepts only the exact Authorization sys_id.
+- Generated keys added for this boundary are the two Event Registry and two
+  Script Action identities. Unexpected key drift and broad privilege additions
+  are `0`. Generic Insert remains denied/absent from the new adapters.
+- Sync, install, PDI cutover, and runtime tests: `NOT RUN`. C2 remains COMPLETE;
+  C3 remains NOT COMPLETE; release remains NOT READY pending explicit deployment
+  authorization and the fixed Staffing/replay/Analytics/TM-258 matrix.

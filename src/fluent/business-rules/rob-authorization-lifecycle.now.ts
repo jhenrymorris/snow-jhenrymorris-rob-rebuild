@@ -29,31 +29,31 @@ export const evaluateWorkforceAuthorizationDecision = BusinessRule({
 export const initiatePayrollAuthorizationLifecycle = BusinessRule({
     $id: Now.ID['initiate-payroll-authorization-lifecycle'],
     name: 'ROB Initiate Payroll Authorization Lifec',
-    active: true,
+    active: false,
     table: 'sn_hr_core_case_payroll',
     when: 'after',
     action: ['update', 'insert'],
     order: 300,
     filterCondition:
-        'x_2166123_rob_auth_decision_evaluated_atISNOTEMPTY^x_2166123_rob_auth_authorization_processing_blocked=false^x_2166123_rob_auth_authorization_pathINnew,reuse,amendment,renewal,exception^EQ',
+        'x_2166123_rob_auth_decision_evaluated_atISNOTEMPTY^x_2166123_rob_auth_authorization_processing_blocked=false^x_2166123_rob_auth_requested_itemsISNOTEMPTY^x_2166123_rob_auth_authorization_pathINnew,reuse,amendment,renewal^EQ',
     description:
-        'Consumes a newly persisted deterministic R3 decision and idempotently prepares the governed R4 authorization lifecycle without creating fulfillment work.',
-    script: Now.include('../server/authorization-lifecycle-initiation.server.js'),
+        'After the eligible Payroll HR Case database operation, queues only the restricted V2 lifecycle-create event; governed creation occurs in the separate event transaction.',
+    script: Now.include('../server/authorization-lifecycle-event-enqueue.server.js'),
 })
 
 export const initiateWorkforceAuthorizationLifecycle = BusinessRule({
     $id: Now.ID['initiate-workforce-authorization-lifecycle'],
     name: 'ROB Initiate Workforce Authorization Lifecycle',
-    active: true,
+    active: false,
     table: 'sn_hr_core_case_workforce_admin',
     when: 'after',
     action: ['insert', 'update'],
     order: 300,
     filterCondition:
-        'x_2166123_rob_auth_decision_evaluated_atISNOTEMPTY^x_2166123_rob_auth_authorization_processing_blocked=false^x_2166123_rob_auth_authorization_pathINnew,reuse,amendment,renewal,exception',
+        'x_2166123_rob_auth_decision_evaluated_atISNOTEMPTY^x_2166123_rob_auth_authorization_processing_blocked=false^x_2166123_rob_auth_requested_itemsISNOTEMPTY^x_2166123_rob_auth_authorization_pathINnew,reuse,amendment,renewal^EQ',
     description:
-        'Consumes a newly persisted deterministic R3 decision and idempotently prepares the governed R4 authorization lifecycle without creating fulfillment work.',
-    script: Now.include('../server/authorization-lifecycle-initiation.server.js'),
+        'After the eligible Workforce HR Case database operation, queues only the restricted V2 lifecycle-create event; governed creation occurs in the separate event transaction.',
+    script: Now.include('../server/authorization-lifecycle-event-enqueue.server.js'),
 })
 
 export const captureAuthorizationSignatureEvidence = BusinessRule({

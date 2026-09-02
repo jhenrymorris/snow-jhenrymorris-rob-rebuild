@@ -404,7 +404,7 @@ test('Reuse consumes current validated Supervisor without mutating historical sn
 
 test('downstream source no longer reads blocked native-case snapshot fields', () => {
     const lifecycleSource = fs.readFileSync(
-        path.join(root, 'src/fluent/server/authorization-lifecycle-initiation.server.js'),
+        path.join(root, 'src/fluent/server/rob-authorization-lifecycle-entry.server.js'),
         'utf8'
     )
     assert.doesNotMatch(

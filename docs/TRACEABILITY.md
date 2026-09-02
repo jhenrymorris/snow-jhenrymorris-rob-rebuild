@@ -472,3 +472,87 @@ requirement or M4 architecture was changed.
 | RPT-1–RPT-8 outcomes | Restricted authorization/renewal/lapse and fulfillment reports plus owner-restricted operational dashboard | PASS |
 | AUD-1–AUD-3 / RET-1 | Historical authorization, Detail, PDF, replacement, reminder, and lapse evidence retained | PASS |
 | M5 release | C3 10/10; full regression and normal/frozen builds PASS; counts clean | COMPLETE |
+
+## C3 release correction — post-install intake smoke (2026-08-29)
+
+| Requirement | Superseding evidence | Status |
+|---|---|---|
+| FR-1 / TM-01 | Staffing self-request smoke deferred after the shared profile-position precondition failed on Analytics | NOT RUN |
+| FR-2 / TM-02 | Exact Workforce HR Service Read and persistence-bridge Execute RCAs restored; `HRC0001058` then stopped at `PROFILE_CONTEXT_POSITION_UNRESOLVED` | FAIL |
+| SEC least privilege | Exact caller records only; broad GlideRecord/native-case/native-task privileges 0; unexpected RCA 0; temporary roles 0 | PASS |
+| Post-install intake smoke | Both Staffing and Analytics must pass after every final install/source refresh | FAIL |
+| M5 release | Prior M5 implementation evidence retained; C3 reopened pending valid ordinary intake | NOT COMPLETE / RELEASE NOT READY |
+
+## C3 release correction — profile context superseding trace (2026-08-29)
+
+| Requirement | Superseding evidence | Status |
+|---|---|---|
+| FR-1 / TM-01 | Synthetic profile context resolved; Staffing self-request `HRC0001063` retained self identity, justification, and FPPS/WTTS, then stopped at denied generic `GlideRecord.insert` in the shared governed lifecycle | FAIL |
+| FR-2 / TM-02 | Synthetic profile context resolved; Analytics self-request `HRC0001062` retained self identity, justification, and OAS/DataMart, then stopped at the same denied generic Insert boundary | FAIL |
+| M2 profile context | Root cause A: blank synthetic HR Profile Position and blank title; corrected through native HR Profile configuration with Position A and Supervisor A | PASS |
+| SEC least privilege | Exact newly reachable bridge RCA `a4037af0838fc3504f5193a6feaad330` only; generic Insert remains denied; broad/unexpected RCA and temporary roles zero | PASS |
+| Focused regression | M2 19, Deployment 16, Security 22, R3 adapter 13, R4 65; normal/frozen builds and generated-key gate PASS | PASS |
+| Post-install intake smoke | Both critical self-request paths still fail at the governed lifecycle insertion boundary | FAIL |
+| Release | C2/M4 preserved COMPLETE; C3 and M5 release acceptance not complete | NOT READY |
+
+## C3 lifecycle-creation accepted-path comparison (2026-08-29)
+
+| Requirement | Superseding evidence | Status |
+|---|---|---|
+| FR-1 / FR-2 governed creation | C1 source `8b339391` and current source both use generic scoped `GlideRecord.insert()` for Form/Detail creation; no native Create Record Flow/subflow existed | IMPLEMENTATION PATH IDENTIFIED |
+| SEC least privilege | Insert privilege `ea217fab833287104f5193a6feaad330` was Allowed during C1 runtime and Denied on 2026-08-27; it remains denied because it is scope-wide | PASS |
+| TM-01 / TM-02 | Current ordinary Employee Center intake fails closed at the prohibited generic Insert boundary | FAIL |
+| Release | Classification E: the accepted runtime security context changed; no permitted historical mechanism can be restored without re-enabling the prohibited broad API | NOT READY |
+
+## C3 after-commit lifecycle correction (2026-08-30)
+
+| Requirement | Superseding pre-install evidence | Status |
+|---|---|---|
+| FR-1 / FR-2 governed creation | Existing Payroll/Workforce lifecycle rules changed from synchronous `after` to supported `async`; generated metadata is `async_always`, priority 100, same rule identities | SOURCE PASS / RUNTIME PENDING |
+| Committed decision contract | Deferred entry rereads the exact committed HR Case from an allowlist of the two supported case tables and consumes the persisted R3 fields without rerunning the decision engine | PASS |
+| Retry/idempotency | Existing exact case-to-Authorization, Form+Access Item Detail, and case+template signature queries retained; failed prior creation can retry, while an existing lifecycle resumes | PASS (SOURCE) |
+| Fail closed | Missing/unsupported case, blocked/Exception/unsupported decision, absent Authorization, absent Detail, or unverifiable signing gate stops downstream progression | PASS (SOURCE) |
+| SEC least privilege | Native creation subflows unchanged; generic Insert remains denied; broad privileges, new RCA, temporary roles, tables, and architecture changes `0` | PASS |
+| Focused gates | R4 67, M2 19, R3 adapter 13, Security 22, Deployment 16; normal/frozen builds; diff/key gates | PASS |
+| TM-01 / TM-02 / TM-258 | Await authorized install, Analytics replay+retry, and independent Staffing replay | PENDING |
+| TM-01 / TM-02 / TM-258 (2026-08-30 superseding runtime) | Existing Payroll/Workforce Business Rules match reviewed Async source, but fresh `HRC0001077`/`HRC0001078` produced no queued/executed deferred lifecycle and no governed Authorization/Detail/signing records | FAIL |
+| Release | C2 preserved COMPLETE; C3 remains NOT COMPLETE until runtime smoke passes | NOT READY |
+
+## C3 callable lifecycle entry — pre-install source (2026-08-30)
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| Fixed native trigger boundary | One package-private `RobAuthorizationLifecycleEntry`; exact `executePayroll(caseSysId)` and `executeWorkforce(caseSysId)` methods only | SOURCE PASS |
+| Committed eligibility | Fresh fixed-table reread plus exact active HR Service, requested items, committed R3 timestamp/path, and blocked-state checks | SOURCE PASS |
+| One lifecycle engine | Historical BR adapter and future V2 Flows call the same Script Include implementation; no copied decision/lifecycle body | PASS |
+| Retry/fail closed | Existing exact Authorization/Detail/signing lookups retained; blank/missing/blocked/Exception/unapproved-service cases return deterministic failure/exit outcomes | PASS (FOCUSED) |
+| Competing trigger prevention | Existing Payroll and Workforce lifecycle Business Rules are source-inactive; no replacement Business Rule added | PASS |
+| Security | Package-private, non-client, non-sandbox callable; no arbitrary table/query/field API; no generic `.insert()` or broad privilege addition | PASS |
+| Native Flow activation/runtime | Two table-specific V2 Flows planned only after installation authorization | PENDING |
+| Release | TM-01 FAIL; TM-02 requires a fresh eligible case; TM-258 FAIL | NOT READY |
+| Pre-install package gate | R4 68, M2 19, Security 22, Deployment 16, R3 adapter 13; normal/frozen builds and diff check PASS; Script Include exactly once; both old BRs inactive; generic insert absent | PASS |
+
+## C3 fixed Action wrapper — pre-install source (2026-08-30)
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| Narrow Flow adapter | One package-private `ROB Execute Authorization Lifecycle` custom Action | SOURCE PASS |
+| Fixed dispatch | Mandatory sys_id plus `payroll`/`workforce` choice; exact method dispatch; all other values fail closed | PASS |
+| One lifecycle engine | Action contains no R3, profile, persistence, duplicate-query, signing, or lifecycle implementation | PASS |
+| Narrow outputs | Only success, disposition, case/Authorization ids, creation counts/flags, signing flag, and reason | PASS |
+| Security | No table/query/script/class/method input; no generic persistence; no privilege addition | PASS |
+| Package parity | One Action definition `3c43a0b413514057a00e2bc9bc6b2f56`, package-private, expected script step, two choices, fixed output mappings | PASS |
+| Native Flow/runtime | Await explicit Action installation authorization, then two table-specific V2 Flows and TM-01/TM-02/TM-258 | PENDING |
+
+## C3 post-commit event pipeline source contract — 2026-09-01
+
+| Requirement | Source/package evidence | Status |
+|---|---|---|
+| Durable post-commit creation | Existing Payroll/Workforce Business Rules are `After`, enqueue-only, and source-inactive pending controlled cutover; `lifecycle.create` runs the existing callable lifecycle in a separate event transaction | SOURCE PASS / RUNTIME PENDING |
+| Durable signing gate | Successful `authorization_persisted` output queues `lifecycle.verify`; its separate Script Action accepts only the exact Authorization sys_id and invokes the existing committed-state verifier | SOURCE PASS / RUNTIME PENDING |
+| Preserved governed creation | `RobAuthorizationLifecycleEntry` and the three existing native persistence subflows are unchanged; no second lifecycle engine or persistence service is introduced | PASS |
+| Retry/idempotency | Existing exact case-to-Authorization, Form-plus-item Detail, and signing-task suppression remain the sole lifecycle implementation | PASS (SOURCE) |
+| Trigger security | Both registered events use cross-scope `caller_access = 2`; Script Actions are V2-owned, event-bound, fixed-parameter, and fail closed. No unsupported package-private claim is made for Script Actions | PASS |
+| Least privilege | Generic Insert remains denied; new tables, roles, bridges, broad privileges, and expected RCA additions are zero | PASS |
+| Cutover | All lifecycle-entry Flows must be inactive before the two existing enqueue Business Rules are activated | MANUAL / DEPLOYMENT PENDING |
+| TM-01 / TM-02 / TM-258 | Fresh Staffing, create-event replay, fresh Analytics, and release smoke occur only after explicit deployment authorization | PENDING |

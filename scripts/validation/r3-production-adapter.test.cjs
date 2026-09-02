@@ -29,7 +29,7 @@ const businessRules = fs.readFileSync(
 const lifecycle = fs.readFileSync(
     path.join(
         root,
-        'src/fluent/server/authorization-lifecycle-initiation.server.js'
+        'src/fluent/server/rob-authorization-lifecycle-entry.server.js'
     ),
     'utf8'
 )
@@ -205,28 +205,35 @@ test('configuration and authorization scope extraction fail closed', () => {
     )
 })
 
-test('downstream lifecycle accepts a decision persisted during insert or mapped-field update', () => {
+test('callable lifecycle consumes the committed R3 decision without change-state semantics', () => {
     const entryRuleActions = [...businessRules.matchAll(/(?:evaluate|initiate)(?:Payroll|Workforce)Authorization(?:Decision|Lifecycle)[\s\S]*?action: \[([^\]]+)\]/g)]
     assert.equal(entryRuleActions.length, 4)
     for (const [, actions] of entryRuleActions) {
         assert.match(actions, /'insert'/)
         assert.match(actions, /'update'/)
     }
-    assert.match(lifecycle, /previous\s*&&[\s\S]*decisionTimeField/)
+    assert.match(lifecycle, /the committed R3 decision timestamp is missing/)
+    assert.match(lifecycle, /current\.getValue\(decisionTimeField\)/)
+    assert.doesNotMatch(lifecycle, /\bprevious\b|\.changes(?:To|From)?\(/)
 })
 
-test('downstream lifecycle safely resumes the split employee signing execution', () => {
+test('downstream lifecycle resumes signing only through exact post-commit verification', () => {
     assert.match(
         lifecycle,
         /function resumeAuthorizationSigning\(authorization\)[\s\S]*pending_employee_signature[\s\S]*initiateAuthorizationSigning/
     )
+    assert.match(lifecycle, /var existing = existingAuthorizationForCase\(\)/)
     assert.match(
         lifecycle,
-        /previous\s*&&[\s\S]*decisionTimeField[\s\S]*resumeAuthorizationSigning\(existingAuthorizationForCase\(\)\)/
+        /if \(existing\)[\s\S]*existing_authorization[\s\S]*false/
     )
     assert.match(
         lifecycle,
-        /current\.getValue\(decisionField\)\s*!==\s*'reuse'[\s\S]*resumeAuthorizationSigning\(existingAuthorizationForCase\(\)\)[\s\S]*return/
+        /verifyAuthorizationSigning:\s*function \(authorizationSysId\)[\s\S]*executeFixed\([\s\S]*authorizationId/
+    )
+    assert.match(
+        lifecycle,
+        /verificationAuthorizationId[\s\S]*pending_employee_signature[\s\S]*resumeAuthorizationSigning\(verifiedAuthorization\)/
     )
     assert.match(
         lifecycle,

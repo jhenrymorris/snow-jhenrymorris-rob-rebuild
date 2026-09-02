@@ -8,8 +8,8 @@ an unimplemented capability; its negative enforcement tests remain active.
 
 | ID | Scenario | Expected result | Type | Status |
 |---|---|---|---|---|
-| TM-01 | Submit HR systems request | Native HR case created from Staffing entry | ATF | Not Run |
-| TM-02 | Submit data/report request | Native HR case created from Analytics entry | ATF | Not Run |
+| TM-01 | Submit HR systems request | Native HR case created from Staffing entry | ATF | FAIL — fresh `HRC0001078` committed and reached Ready, but the reconciled async lifecycle did not queue/execute; no Authorization, Detail, or signing task was created |
+| TM-02 | Submit data/report request | Native HR case created from Analytics entry | ATF | FAIL — fresh `HRC0001077` committed and reached Ready, but the reconciled async lifecycle did not queue/execute; no Authorization, Detail, or signing task was created |
 | TM-03 | Missing business justification | Submission blocked | ATF | Not Run |
 | TM-04 | Missing required end date | Submission blocked or exception path | ATF | Not Run |
 | TM-05 | Delegated/on-behalf-of submission (deferred capability) | Supervisor, HR user, ROB Admin, platform admin, and every other actor are denied submission for another employee; no delegated role, fields, feature flag, or fallback exists | Local/PDI | Enforcement Local Pass; delegated capability Deferred; PDI Not Run |
@@ -398,6 +398,26 @@ builds and diff/generated-key gates passed with zero unexpected key changes.
 | TM-255 | Secured reports/dashboard | Authorization/renewal/lapse and fulfillment visibility; restricted audience and ACL-enforced drilldown | PDI report/UAT | PASS |
 | TM-256 | Privacy/schema/retention release review | Synthetic-only, no SSN, no notification attachment, no automatic deletion/deprovisioning | Source/PDI/manual | PASS |
 | TM-257 | C3 final release regression | Complete prior suites, M5 suite, normal/frozen build, keys/security counts | Local/PDI | PASS |
+| TM-258 | Post-install intake smoke | Staffing and Analytics self-requests both complete exact HR Service Read and HR Core bridge caller paths; required RCA PASS; unexpected RCA 0 | PDI manual | FAIL — `HRC0001077` and `HRC0001078` prove case commit/self identity but not deferred lifecycle execution; no generic privilege was granted |
+
+TM-258 accepted-path comparison: C1 checkpoint `8b339391` used the same generic
+`GlideRecord.insert()` mechanism. Privilege
+`ea217fab833287104f5193a6feaad330` was Allowed during C1 runtime and Denied on
+2026-08-27. No caller-specific or native Create Record path exists to restore;
+TM-01 and TM-02 therefore remain failed under the required zero-broad-privilege
+release state.
+
+2026-08-30 superseding pre-install evidence: the two narrow native Create
+Record subflows are retained, while lifecycle entry is deferred with supported
+asynchronous Business Rule timing and an exact committed-case reread. Focused
+tests require the async boundary, allowlisted case tables, missing-case
+fail-closed behavior, Exception/unsupported-decision exit, exact Authorization
+and Detail duplicate suppression, retry-safe signing, no production
+`.insert()`, and retention of both native subflow calls. R4 `67/67`, M2 `19/19`,
+R3 adapter `13/13`, Security `22/22`, Deployment `16/16`, normal/frozen builds,
+diff check, and generated-key review PASS. TM-01, TM-02, and TM-258 remain
+`PENDING — DEPLOYMENT/RUNTIME PREREQUISITE`; source/build evidence is not a
+runtime PASS.
 # C2 runtime disposition — 2026-08-27
 
 - Systems-only routing: PASS (`HRC0001045` → one Staffing task
@@ -408,3 +428,45 @@ builds and diff/generated-key gates passed with zero unexpected key changes.
   `x_2166123_rob_auth` record.
 - Post-C0 blocker: `M5-12` disproven; no alternate deployment or metadata
   workaround was attempted.
+
+## C3 callable lifecycle entry source gate — 2026-08-30
+
+R4 verifies the single package-private Script Include, its two fixed-table
+methods, committed reread, approved-service and committed-decision guards,
+deterministic blank/missing/blocked/Exception/unapproved-service outcomes,
+retained native creation calls, Authorization/Detail/signing duplicate
+suppression, source-inactive historical lifecycle Business Rules, and absence
+of a generic persistence API. Native Flow activation and TM-01/TM-02/TM-258
+runtime proof remain pending installation.
+
+Pre-install result: R4 `68/68`, M2 `19/19`, Security `22/22`, Deployment
+`16/16`, R3 adapter `13/13`, normal/frozen builds, diff check, package parity,
+and generated-key/privilege review PASS. The generated-key addition for the new
+Script Include is expected; unexpected drift is zero.
+
+## C3 fixed Action wrapper source gate — 2026-08-30
+
+The single package-private `ROB Execute Authorization Lifecycle` Action accepts
+only mandatory `case_sys_id` and the fixed `payroll`/`workforce` choice. Focused
+tests prove exact dispatch to `executePayroll` or `executeWorkforce`, blank and
+invalid input fail-closed behavior, zero dynamic table/query/script inputs, and
+zero duplicated lifecycle or persistence logic. R4 `71/71`, M2 `19/19`,
+Security `22/22`, Deployment `16/16`, R3 adapter `13/13`, normal build,
+frozen-key build, diff check, and built-package inspection PASS. TM-01, TM-02,
+and TM-258 remain pending deployment and runtime proof.
+
+## C3 post-commit event pipeline source/package gate — 2026-09-01
+
+Focused validation covers both exact registered event names, cross-scope Caller
+Restriction on each Event Registry record, two fixed active Script Actions,
+enqueue-only supported-table Business Rules, exact sys_id validation, fixed
+Payroll/Workforce dispatch, phase-one failure rollback, verify-event creation
+only after a successful `authorization_persisted` result, and one exact
+Authorization-id verifier call. The new adapters contain no GlideRecord
+persistence, arbitrary table/query/script input, or dynamic dispatch.
+
+The current source keeps the two enqueue Business Rules inactive until the
+required Flow deactivation and explicitly authorized installation/cutover.
+TM-01, TM-02, and TM-258 remain `PENDING — DEPLOYMENT/RUNTIME PREREQUISITE`.
+Historical Flow/Action failures remain superseded investigation evidence and
+are not represented as event-pipeline runtime results.

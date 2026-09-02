@@ -1101,3 +1101,185 @@ Build evidence is package-specific and must remain distinct from install, runtim
 - SDK 4.11.0 normal and frozen-key builds PASS; diff check PASS; unexpected generated-key changes `0`.
 - Final counts: broad privileges `0`; unexpected RCA `0`; temporary roles `0`; custom business tables `4`; custom fulfillment tables `0`; external integrations `0`.
 - Milestone: C3 COMPLETE; M5 COMPLETE; application ready for release / production implementation handoff.
+
+## 2026-08-29 — C3 post-install intake RCA correction
+
+- Manual Employee Center intake discovered exact caller-specific RCA drift after
+  the final candidate refresh. Workforce HR Service Read
+  `e0156cec8307cf104f5193a6feaad35c` and Workforce decision bridge Execute
+  `c682eef883cbc3504f5193a6feaad39f` were Requested; Payroll decision bridge
+  Execute `c9a07f2b833287104f5193a6feaad352` was Invalidated. All three exact,
+  previously approved caller/resource/operation records were restored to
+  Allowed through native RCA administration.
+- No application source change or install was performed. Broad privileges,
+  unexpected RCA, and temporary roles remain `0`.
+- Fresh Analytics smoke `HRC0001058` no longer produced the cited HR Service or
+  bridge denial, but failed at the shared authoritative profile resolver with
+  `PROFILE_CONTEXT_POSITION_UNRESOLVED`. Staffing smoke was not run because the
+  same shared precondition fails before service-specific routing.
+- Focused suites remain PASS: M2 `19/19`, Deployment `16/16`, Security `22/22`,
+  R3 adapter `13/13`.
+- Superseding milestone: C2/M4 remain COMPLETE; C3 is REOPENED; release NOT READY.
+
+## 2026-08-29 — C3 profile-context correction and lifecycle insertion stop
+
+- Classified `PROFILE_CONTEXT_POSITION_UNRESOLVED` as incomplete synthetic HR
+  Profile/Position data and corrected only the synthetic native records.
+  `RobProfileAuthorizationContext` and the HR Core bridge were unchanged.
+- Exact newly reachable Workforce validation bridge RCA
+  `a4037af0838fc3504f5193a6feaad330` was Allowed; no broad or unrelated RCA was
+  approved.
+- Replaced the shared lifecycle source's denied generic `setValue` calls with
+  direct field assignment and reconciled the two existing live lifecycle
+  Business Rules through their native forms. No install was performed.
+- Validation PASS: M2 `19/19`, Deployment `16/16`, Security `22/22`, R3 adapter
+  `13/13`, R4 `65/65`, normal SDK 4.11.0 build, frozen-key build, diff check,
+  and unexpected generated-key drift `0`.
+- Runtime stop: Analytics `HRC0001062` and Staffing `HRC0001063` both reached
+  the shared governed lifecycle and were denied at generic
+  `GlideRecord.insert`. Broad Insert Execute was not granted. C3 remains open;
+  release is not ready.
+
+## 2026-08-29 — C3 accepted-path creation comparison
+
+- Accepted C1 source `8b339391` and the current lifecycle use the same scoped
+  `GlideRecord.insert()` calls for Authorization Form and Authorized Access
+  Detail creation; no native Create Record Flow/subflow existed in C1.
+- Update-version evidence proves scope privilege
+  `ea217fab833287104f5193a6feaad330` was `allowed` from 2026-08-25 and was
+  changed to `denied` on 2026-08-27. Thus C1 runtime creation occurred while
+  the generic Insert grant was enabled; the zero-broad-privilege condition was
+  established only after that runtime evidence.
+- Classification: **E — execution/security context changed**. The scope-wide
+  generic Insert grant remains denied, no replacement architecture was added,
+  and no install was performed. C3 remains NOT COMPLETE / release NOT READY.
+
+## 2026-08-29 — C3 native-creation authorized deployment attempt
+
+- Workspace identity PASS after the one approved rehydration of `ROB V2 C2
+  RECOVERY`; V2 root/scopeId `4aba8657837a43104f5193a6feaad3c5`, scope,
+  repository, branch, and SDK 4.11.0 were verified.
+- Pre-install gates PASS: R4 `65/65`, normal build, frozen-key build, IDE Build,
+  diff check, generated-key unexpected drift `0`, broad privilege additions
+  `0`.
+- Authorized normal Build and Install: FAIL after its successful build phase.
+  Exact installer error: `Unable to install application as application was
+  null`; the reported module path referenced historical root
+  `b0d63cedc2d34e0ca4c05d6eb7acf61e`.
+- No second attempt, Sync, Reinstall, Force Install, local SDK deployment, or
+  runtime fixture followed. The reviewed source was not proven installed.
+  TM-01, TM-02, and TM-258 are `PENDING — DEPLOYMENT PREREQUISITE`; C3 is NOT
+  COMPLETE and release is NOT READY.
+
+## 2026-08-29 — C3 stale install-target binding refresh
+
+- Active editor/build context was V2 root
+  `4aba8657837a43104f5193a6feaad3c5`; the prior installer context referenced
+  historical root `b0d63cedc2d34e0ca4c05d6eb7acf61e`.
+- V2 Application Details confirmed the existing V2 application identity. The
+  single supported IDE reload reopened persisted workspace URI `Default -
+  admin.code-workspace` and restored historical root `b0d63cedc2d34e0ca4c05d6eb7acf61e`.
+- Mandatory target verification failed, so no Build, Install, Sync, source
+  change, native-subflow change, or runtime fixture occurred in this
+  continuation.
+
+## 2026-08-30 — C3 after-commit lifecycle pre-install build
+
+- Changed only the existing Payroll/Workforce lifecycle entry timing from
+  synchronous `after` to supported `async` and added an exact committed-case
+  reread/fail-closed guard plus retry-safe prior-lifecycle handling.
+- The build maps both existing Business Rules to `when=async_always`, priority
+  `100`; their stable sys_ids and the two published native Create Record
+  subflows are unchanged.
+- R4 `67/67`, M2 `19/19`, R3 adapter `13/13`, Security `22/22`, and Deployment
+  `16/16` PASS.
+- Normal SDK 4.11.0 build PASS; frozen-key build PASS; diff check PASS.
+  Generated-key hash before/after:
+  `cd45cbf77be5048d55b57c5210d69489278f6ca7`; unexpected drift `0`; broad
+  privilege additions `0`.
+- Install attempts: `0`. Runtime gates: `0`. A new explicit installation
+  authorization is required for this source change.
+## 2026-08-30 C3 native lifecycle parity runtime
+
+- Native configuration only: the existing Payroll
+  `b9973651027140a68e3f2d1ed1beabfc` and Workforce
+  `046c74b9ce424a8f9b504f739506e62e` Business Rules now match the reviewed
+  after-commit source (Async, Priority 100, committed-case reread, native
+  creation subflows, no generic insert). New/replacement Business Rules: 0.
+- IDE installer status: reproducible metadata-state defect, open environment
+  evidence; installer was not retried and no install context was created.
+- Runtime: Analytics `HRC0001077` and Staffing `HRC0001078` committed, but the
+  async lifecycle entry did not queue or execute after insert or the native
+  Ready for Work update. Governed Authorization, Detail, and signing counts
+  were zero for both cases. No generic API access was granted.
+- Result: TM-01/TM-02/TM-258 FAIL; C3/M5 NOT COMPLETE; release NOT READY.
+
+## 2026-08-30 C3 callable lifecycle entry — pre-install
+
+- Added one source-controlled `RobAuthorizationLifecycleEntry` Script Include
+  with only fixed Payroll/Workforce methods and one shared lifecycle engine.
+- The two historical lifecycle Business Rules retain stable metadata identity
+  but are inactive in source; no replacement Business Rule or production Flow
+  was created in this phase.
+- The entry rereads the committed case, validates exact service/items/committed
+  R3 eligibility, preserves native creation and duplicate/signing guards, and
+  returns a narrow deterministic outcome. Generic `.insert()` remains absent.
+- Installation and runtime execution were not attempted. Two table-specific
+  native Flows remain the planned post-install Class C configuration.
+- Pre-install gates: R4 `68/68`, M2 `19/19`, Security `22/22`, Deployment
+  `16/16`, and R3 adapter `13/13` PASS; normal and frozen-key SDK 4.11.0 builds
+  PASS; `git diff --check` PASS. The one expected generated key is
+  `rob-authorization-lifecycle-entry` → `sys_script_include`
+  `d78da619355a45e5baa2957b025a4ea4`; unexpected key drift and broad privilege
+  additions are `0`.
+- Built-package inspection: the Script Include occurs exactly once; both
+  lifecycle Business Rules are inactive; the shared engine retains both native
+  subflow calls and contains zero generic `.insert()` calls.
+
+## 2026-08-30 C3 fixed Action wrapper — pre-install
+
+- Added one package-private custom Action definition, `ROB Execute
+  Authorization Lifecycle` (`3c43a0b413514057a00e2bc9bc6b2f56`), with one
+  instance Script step (`d31c33c5712d42d385642b7248b94a9e`).
+- Inputs are only `case_sys_id` and fixed `payroll`/`workforce`; outputs are the
+  approved narrow lifecycle outcome. No lifecycle or persistence code is
+  duplicated in the Action.
+- Gates: R4 `71/71`, M2 `19/19`, Security `22/22`, Deployment `16/16`, R3
+  adapter `13/13`, normal build, frozen-key build, and diff check PASS.
+- Package inspection confirms one package-private Action, the fixed script
+  dispatch, both choices, expected output mappings, and no generic `.insert()`.
+- Install attempts: `0`. Explicit installation authorization is required.
+
+## 2026-09-01 C3 post-commit event pipeline — pre-install
+
+- Modified only the two stable Payroll/Workforce lifecycle Business Rule
+  definitions for `After`/enqueue-only behavior and added two registered events,
+  two Script Actions, and their three narrow server adapters. The existing
+  lifecycle engine and native persistence subflows are unchanged.
+- R4 `80/80`, M2 `19/19`, Security `22/22`, Deployment `16/16`, and R3 adapter
+  `13/13` PASS.
+- Normal SDK 4.11.0 build: PASS. Frozen-key SDK 4.11.0 build: PASS.
+  `git diff --check`: PASS.
+- Built XML confirms create event `19abf48d044c4580858417d63ba651aa`,
+  verify event `1b186fbf987e49feaabbf2e3f95f9427`, create Script Action
+  `721fb030a08a4ff3ab0844d67a0f76e4`, and verify Script Action
+  `ea303e44d86a4d3abacd0c1029b1b292`, each exactly once.
+- Both event records package `caller_access=2`; both Script Actions are active
+  and fixed-event bound. Payroll BR `b9973651027140a68e3f2d1ed1beabfc`
+  and Workforce BR `046c74b9ce424a8f9b504f739506e62e` package inactive with
+  `when=after`, order 300, exact supported conditions, and enqueue-only scripts.
+- Generated-key hash after normal/frozen build:
+  `42F5E55B502D634063713FBEE22FC457FDB6F95453D320562EB9A41D1F331948`.
+  Four expected boundary identities were added; unexpected drift is `0`.
+- Install/deploy/Sync attempts: `0`. Explicit deployment authorization remains
+  required.
+
+### Identity erratum — Create Script Action
+
+The prior conversational pre-deployment summary transposed characters in the
+Create Script Action sys_id. The authoritative identity is
+`721fb030a08a4ff3ab0844d67a0f76e4`, as consistently recorded by the generated
+key, built update XML, and package inventory. The transposed conversational
+value is not retained in repository evidence. Application source and package
+content were not changed and no rebuild was performed for this
+documentation-only correction.

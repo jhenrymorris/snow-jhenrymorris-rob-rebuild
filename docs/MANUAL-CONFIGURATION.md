@@ -1394,3 +1394,142 @@ reporting table or database view.
 | Authorization and Fulfillment Operations dashboard | `5a980a70830bc3504f5193a6feaad321` | Owner-restricted Authorization/Detail lists | Platform Analytics | No public sharing; governed rows PASS | Assign exact production audience after group validation |
 
 This is supported PDI native configuration/source-parity reconciliation. It adds no custom reporting table, broad ACL, external integration, or new business architecture.
+
+### Post-install intake RCA smoke gate
+
+Run this gate after every final candidate installation or source refresh:
+
+| Check | Required result | 2026-08-29 result |
+|---|---|---|
+| Staffing self-request | One Payroll case; self identity and requested item retained; no RCA denial | NOT RUN — shared profile-position precondition failed first on Analytics |
+| Analytics self-request | One Workforce case; self identity and requested item retained; no RCA denial | FAIL — `HRC0001058`, `PROFILE_CONTEXT_POSITION_UNRESOLVED` |
+| Required caller access | Exact HR Service Read and exact persistence bridge Execute callers Allowed | PASS — `e0156cec8307cf104f5193a6feaad35c`, `c682eef883cbc3504f5193a6feaad39f`, `c9a07f2b833287104f5193a6feaad352` |
+| Unexpected RCA | Zero | PASS |
+
+The exact RCA changes were performed through the native Restricted Caller
+Access administration surface. Do not approve the unrelated
+`DeleteRecordAjax` request, generic GlideRecord APIs, broad HR Core Read, or
+native HR Case/Task Write. The post-install gate is not complete until both
+self-request paths pass.
+
+### Profile-context correction and lifecycle insertion evidence — 2026-08-29
+
+| Artifact | Existing record | Configured/reconciled value | Surface | Result |
+|---|---|---|---|---|
+| Synthetic HR Profile Position/Manager | Existing synthetic HR Profiles only | `NSF V2 Position A`; `V2 Supervisor A` | Native HR Profile form | Position, Organization, and Supervisor resolve through the approved precedence |
+| Workforce validation bridge RCA | `a4037af0838fc3504f5193a6feaad330` | Exact validation Business Rule → `RobHrCasePersistenceBridge` Execute = Allowed | Restricted Caller Access form | Exact bridge call passes; unexpected RCA remains zero |
+| Payroll lifecycle Business Rule | `b9973651027140a68e3f2d1ed1beabfc` | Reviewed source with direct field assignment; no `.setValue(` | Existing Business Rule form | `setValue` denial removed; next denied boundary is generic Insert |
+| Workforce lifecycle Business Rule | `046c74b9ce424a8f9b504f739506e62e` | Reviewed source with direct field assignment; no `.setValue(` | Existing Business Rule form | `setValue` denial removed; next denied boundary is generic Insert |
+
+Do not approve the requested generic `GlideRecord.insert` Execute privilege.
+The fresh Analytics (`HRC0001062`) and Staffing (`HRC0001063`) smoke requests
+prove that this is the remaining release boundary after valid profile context.
+Any continuation must preserve the frozen lifecycle architecture and least
+privilege; no broad native-case/task Write or generic GlideRecord API grant is
+authorized.
+
+Historical update-version evidence supersedes the assumption that C1 governed
+creation operated without generic Insert access. Existing privilege
+`ea217fab833287104f5193a6feaad330` was `allowed` during the 2026-08-26 C1
+runtime and changed to `denied` on 2026-08-27. It is a scope-wide scriptable API
+grant, not a caller-specific RCA, and must remain denied. There is no C1 native
+Flow/Create Record artifact to re-enable for Form or Detail creation.
+
+### After-commit governed lifecycle entry — 2026-08-30
+
+The two published native creation subflows and all field mappings remain
+unchanged. Source now configures the existing Payroll and Workforce lifecycle
+Business Rules as asynchronous rules (generated `when=async_always`, priority
+`100`) so governed creation begins only after the native HR Case operation has
+completed. The first deferred operation allowlists the exact Payroll/Workforce
+case table and rereads the committed case by sys_id; absence fails closed.
+
+After an authorized installation, verify both existing Business Rule sys_ids
+retain their table, actions, conditions, active state, and V2 scope, with only
+the timing changed. Then run TM-02, its exact-trigger retry, TM-01, and TM-258.
+Do not approve generic GlideRecord Insert/Update/setValue or broaden native
+case/task access.
+### C3 native after-commit Business Rule reconciliation (2026-08-30)
+
+- Authoritative source remains the reviewed V2 repository/package.
+- PDI parity was established through the supported forms of existing Payroll
+  Business Rule `b9973651027140a68e3f2d1ed1beabfc` and Workforce Business Rule
+  `046c74b9ce424a8f9b504f739506e62e`; both are Async, Priority 100, and contain
+  the committed-case reread plus the existing native creation subflow calls.
+- This was native PDI configuration/source-parity reconciliation, not an SDK
+  install. Stable record identities were retained and no replacement rule was
+  created.
+- Fresh Analytics `HRC0001077` and Staffing `HRC0001078` did not queue or run
+  the deferred lifecycle after commit, including after the native Ready for
+  Work update. No Authorization, Detail, or signing task was created. Do not
+  represent native creation subflow persistence as failed; the subflows were
+  not reached.
+
+### C3 callable lifecycle entry — pre-install source contract (2026-08-30)
+
+The source candidate adds exactly one package-private, server-only Script
+Include, `RobAuthorizationLifecycleEntry`. Its only lifecycle entry methods are
+`executePayroll(caseSysId)` and `executeWorkforce(caseSysId)`; each method fixes
+the native HR Case table and rereads the exact committed sys_id. The callable
+boundary independently validates the approved active HR Service, requested ROB
+items, committed R3 timestamp/path, and processing-blocked flag before invoking
+the single shared lifecycle engine. It returns only a narrow diagnostic outcome
+and exposes no arbitrary table, query, field map, GlideRecord, profile data, or
+business justification.
+
+The existing Payroll and Workforce lifecycle Business Rules retain their stable
+source identities but are inactive. After a separately authorized install, the
+native configuration phase is limited to two V2-owned record-triggered Flows:
+
+| Planned Flow | Trigger table | Downstream call |
+|---|---|---|
+| ROB Initiate Payroll Authorization Lifecycle Native | `sn_hr_core_case_payroll` | `new RobAuthorizationLifecycleEntry().executePayroll(<committed case sys_id>)` |
+| ROB Initiate Workforce Authorization Lifecycle Native | `sn_hr_core_case_workforce_admin` | `new RobAuthorizationLifecycleEntry().executeWorkforce(<committed case sys_id>)` |
+
+Do not activate either Flow until the callable component is installed and read
+back. Do not reactivate the historical lifecycle Business Rules concurrently.
+The runtime lifecycle-entry topology must remain one logical path.
+
+### C3 fixed Action wrapper — pre-install contract (2026-08-30)
+
+Source defines exactly one package-private Action named `ROB Execute
+Authorization Lifecycle`. It accepts a committed case sys_id and the mandatory
+fixed choice `payroll` or `workforce`; its one instance-runtime Script step
+dispatches only to the corresponding method on
+`RobAuthorizationLifecycleEntry`. It contains no lifecycle, R3, profile,
+persistence, duplicate-query, or signing logic and returns only the approved
+narrow outcome fields.
+
+After a separately authorized installation, publish/read back the Action before
+creating the two table-specific record-triggered Flows. Payroll must pass
+`payroll`; Workforce Administration must pass `workforce`. Never expose a
+table, query, script, class, method, record, or field-map input. Keep both
+historical lifecycle Business Rules inactive.
+
+### C3 post-commit event pipeline — controlled cutover (2026-09-01)
+
+The repository/package now defines two restricted Event Registry records, two
+fixed Script Actions, and the two existing lifecycle Business Rules as
+`After`/enqueue-only adapters. The rules intentionally remain source-inactive
+until an explicitly authorized deployment and controlled runtime cutover.
+
+After installation is separately authorized and the installed records are read
+back, perform the cutover in this order:
+
+1. Deactivate every Payroll and Workforce lifecycle-entry Flow, including the
+   original and V2 replacement records. Retain them inactive as historical
+   evidence.
+2. Verify both historical async lifecycle Business Rules remain inactive and
+   that the two installed enqueue Business Rules retain their existing stable
+   sys_ids, supported tables, filters, `After` timing, and enqueue-only script.
+3. Verify both Event Registry records resolve in `x_2166123_rob_auth`, use
+   `caller_access = 2`, and have their corresponding active Script Action.
+4. Activate only the existing Payroll and Workforce enqueue Business Rules.
+5. Re-read runtime topology: zero active lifecycle-entry Flows, zero active
+   historical async adapters, and exactly one active enqueue path per supported
+   HR Case table.
+
+Do not Sync, install, activate, or run runtime acceptance as part of the current
+source/package review. Do not approve a generic caller privilege. Event
+Registry `caller_access = 2` is cross-scope caller restriction; Script Actions
+do not expose a package-private runtime-access field.
