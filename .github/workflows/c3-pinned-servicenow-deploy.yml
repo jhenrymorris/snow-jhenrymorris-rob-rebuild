@@ -213,24 +213,83 @@ jobs:
           fi
 
           npx --no-install now-sdk pack
-          mapfile -t packages < <(find target -maxdepth 1 -type f -name '*.zip' -print)
-          test "${#packages[@]}" -eq 1
 
-          package_dir="${RUNNER_TEMP}/c3-package"
-          mkdir -p "${package_dir}"
-          unzip -q "${packages[0]}" -d "${package_dir}"
-          inventory="${package_dir}/package_inventory.csv"
-          test -f "${inventory}"
+      - name: Verify package identities read-only
+        shell: pwsh
+        run: |
+          Set-StrictMode -Version Latest
+          $ErrorActionPreference = 'Stop'
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
 
-          for id in \
-            19abf48d044c4580858417d63ba651aa \
-            1b186fbf987e49feaabbf2e3f95f9427 \
-            721fb030a08a4ff3ab0844d67a0f76e4 \
-            ea303e44d86a4d3abacd0c1029b1b292
-          do
-            test "$(find "${package_dir}/update" -maxdepth 1 -type f -name "*_${id}.xml" | wc -l)" -eq 1
-            test "$(grep -Foc "${id}" "${inventory}")" -eq 1
-          done
+          $packages = @(Get-ChildItem -LiteralPath 'target' -Filter '*.zip' -File)
+          if ($packages.Count -ne 1) {
+            throw "Expected exactly one SDK package; found $($packages.Count)."
+          }
+
+          $package = $packages[0]
+          $hashBefore = (Get-FileHash -LiteralPath $package.FullName -Algorithm SHA256).Hash
+          $expectedEntries = [ordered]@{
+            '19abf48d044c4580858417d63ba651aa' = 'update/sysevent_register_19abf48d044c4580858417d63ba651aa.xml'
+            '1b186fbf987e49feaabbf2e3f95f9427' = 'update/sysevent_register_1b186fbf987e49feaabbf2e3f95f9427.xml'
+            '721fb030a08a4ff3ab0844d67a0f76e4' = 'update/sysevent_script_action_721fb030a08a4ff3ab0844d67a0f76e4.xml'
+            'ea303e44d86a4d3abacd0c1029b1b292' = 'update/sysevent_script_action_ea303e44d86a4d3abacd0c1029b1b292.xml'
+          }
+
+          $archive = [System.IO.Compression.ZipFile]::OpenRead($package.FullName)
+          try {
+            $entries = @($archive.Entries)
+            if ($entries.Count -eq 0) {
+              throw 'SDK package contains no entries.'
+            }
+
+            $inventoryEntries = @($entries | Where-Object {
+              $_.FullName.TrimStart('/') -eq 'package_inventory.csv'
+            })
+            if ($inventoryEntries.Count -ne 1) {
+              throw "Expected exactly one package inventory; found $($inventoryEntries.Count)."
+            }
+
+            $reader = [System.IO.StreamReader]::new($inventoryEntries[0].Open())
+            try {
+              $inventory = $reader.ReadToEnd()
+            }
+            finally {
+              $reader.Dispose()
+            }
+
+            foreach ($identity in $expectedEntries.Keys) {
+              $expectedPath = $expectedEntries[$identity]
+              $entryCount = @($entries | Where-Object {
+                $_.FullName.TrimStart('/') -eq $expectedPath
+              }).Count
+              $inventoryCount = [regex]::Matches(
+                $inventory,
+                [regex]::Escape($identity)
+              ).Count
+
+              if ($entryCount -ne 1) {
+                throw "Expected identity $identity exactly once as $expectedPath; found $entryCount."
+              }
+              if ($inventoryCount -ne 1) {
+                throw "Expected identity $identity exactly once in package inventory; found $inventoryCount."
+              }
+
+              Write-Output "IDENTITY=$identity ENTRY_COUNT=$entryCount INVENTORY_COUNT=$inventoryCount"
+            }
+
+            Write-Output "PACKAGE_ENTRY_COUNT=$($entries.Count)"
+          }
+          finally {
+            $archive.Dispose()
+          }
+
+          $hashAfter = (Get-FileHash -LiteralPath $package.FullName -Algorithm SHA256).Hash
+          if ($hashAfter -ne $hashBefore) {
+            throw "Package hash changed during read-only verification: before=$hashBefore after=$hashAfter"
+          }
+
+          Write-Output "PACKAGE_SHA256_BEFORE=$hashBefore"
+          Write-Output "PACKAGE_SHA256_AFTER=$hashAfter"
 
       - name: Verify protected CI credentials and target
         shell: bash
