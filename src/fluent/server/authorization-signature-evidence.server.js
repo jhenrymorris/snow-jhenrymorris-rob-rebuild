@@ -217,13 +217,26 @@
         executionId
     ) {
         var authorizationId = authorization.getUniqueValue()
+        var signer = new GlideRecord('sys_user')
+        var documentTask = new GlideRecord('sn_doc_task')
+        var documentTaskExecution = new GlideRecord('sn_doc_task_execution')
+        if (
+            !signer.get(signerId) ||
+            !documentTask.get(documentTaskId) ||
+            !documentTaskExecution.get(executionId)
+        ) {
+            gs.error(
+                'ROB native signature evidence persistence could not resolve its typed reference inputs.'
+            )
+            return false
+        }
         var inputs = {
             authorization_sys_id: authorizationId,
             signature_stage: signatureStage,
-            signature_signer: signerId,
-            signature_date_time: completedAt,
-            signature_document_task: documentTaskId,
-            signature_document_task_execution: executionId,
+            signature_signer: signer,
+            signature_date_time: new GlideDateTime(completedAt),
+            signature_document_task: documentTask,
+            signature_document_task_execution: documentTaskExecution,
         }
 
         try {

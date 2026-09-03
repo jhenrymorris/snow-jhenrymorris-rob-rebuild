@@ -33,11 +33,11 @@ const persistenceHelper = between(
 )
 const employeeBranch = between(
     'if (isEmployeeStage) {',
-    "if (\n        state !== '3' ||\n        signerId !== authorization.getValue('supervisor')"
+    "signerId !== authorization.getValue('supervisor')"
 )
 const supervisorBranch = evidenceSource.slice(
     evidenceSource.indexOf(
-        "if (\n        state !== '3' ||\n        signerId !== authorization.getValue('supervisor')"
+        "signerId !== authorization.getValue('supervisor')"
     )
 )
 
@@ -68,13 +68,23 @@ test('Employee evidence is passed through explicit typed subflow inputs', () => 
     assert.match(employeeBranch, /current\.getUniqueValue\(\)/)
     assert.match(employeeBranch, /executionId/)
     assert.match(persistenceHelper, /signature_stage: signatureStage/)
-    assert.match(persistenceHelper, /signature_signer: signerId/)
-    assert.match(persistenceHelper, /signature_date_time: completedAt/)
-    assert.match(persistenceHelper, /signature_document_task: documentTaskId/)
+    assert.match(persistenceHelper, /new GlideRecord\('sys_user'\)/)
+    assert.match(persistenceHelper, /new GlideRecord\('sn_doc_task'\)/)
     assert.match(
         persistenceHelper,
-        /signature_document_task_execution: executionId/
+        /new GlideRecord\('sn_doc_task_execution'\)/
     )
+    assert.match(persistenceHelper, /signature_signer: signer/)
+    assert.match(
+        persistenceHelper,
+        /signature_date_time: new GlideDateTime\(completedAt\)/
+    )
+    assert.match(persistenceHelper, /signature_document_task: documentTask/)
+    assert.match(
+        persistenceHelper,
+        /signature_document_task_execution: documentTaskExecution/
+    )
+    assert.match(persistenceHelper, /could not resolve its typed reference inputs/)
 })
 
 test('Employee persistence committed reread preserves the exact governed evidence', () => {
