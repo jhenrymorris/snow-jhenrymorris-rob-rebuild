@@ -12,12 +12,12 @@ concurrency:
 
 jobs:
   validate-and-install:
-    name: Validate 31c1cac and install once
+    name: Validate b1e1d7a and install once
     runs-on: windows-latest
     timeout-minutes: 60
     environment: c3-dev437065
     env:
-      APPROVED_SHA: 31c1cac37b6701b8749c558a97faa0ca36c34ab9
+      APPROVED_SHA: b1e1d7a0534aca7a598fff581d266b4af54e9c3c
       EXPECTED_KEYS_SHA256: ffd21d9c575b0db723128d032329481ab25939f2e848da68f4986aa2c42a6b88
       EXPECTED_SCOPE: x_2166123_rob_auth
       EXPECTED_SCOPE_ID: 4aba8657837a43104f5193a6feaad3c5
@@ -39,7 +39,7 @@ jobs:
       - name: Check out the approved product commit
         uses: actions/checkout@v4
         with:
-          ref: 31c1cac37b6701b8749c558a97faa0ca36c34ab9
+          ref: b1e1d7a0534aca7a598fff581d266b4af54e9c3c
           fetch-depth: 1
 
       - name: Verify pinned source and application identity
@@ -88,6 +88,15 @@ jobs:
           set -euo pipefail
           test "$(npx --no-install now-sdk --version)" = "4.11.0"
 
+      - name: Signature persistence suite (13 of 13)
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run test:c1-signature-persistence | tee "${RUNNER_TEMP}/c1-signature-persistence.tap"
+          grep -Eq '(^|[[:space:]])tests 13$' "${RUNNER_TEMP}/c1-signature-persistence.tap"
+          grep -Eq '(^|[[:space:]])pass 13$' "${RUNNER_TEMP}/c1-signature-persistence.tap"
+          grep -Eq '(^|[[:space:]])fail 0$' "${RUNNER_TEMP}/c1-signature-persistence.tap"
+
       - name: R4 focused suite (81 of 81)
         shell: bash
         run: |
@@ -132,6 +141,15 @@ jobs:
           grep -Eq '(^|[[:space:]])tests 13$' "${RUNNER_TEMP}/r3-adapter.tap"
           grep -Eq '(^|[[:space:]])pass 13$' "${RUNNER_TEMP}/r3-adapter.tap"
           grep -Eq '(^|[[:space:]])fail 0$' "${RUNNER_TEMP}/r3-adapter.tap"
+
+      - name: C1 split-template suite (7 of 7)
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run test:m3-template | tee "${RUNNER_TEMP}/c1-template.tap"
+          grep -Eq '(^|[[:space:]])tests 7$' "${RUNNER_TEMP}/c1-template.tap"
+          grep -Eq '(^|[[:space:]])pass 7$' "${RUNNER_TEMP}/c1-template.tap"
+          grep -Eq '(^|[[:space:]])fail 0$' "${RUNNER_TEMP}/c1-template.tap"
 
       - name: Verify authoritative generated keys and event identities
         shell: bash
