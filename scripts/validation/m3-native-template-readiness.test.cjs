@@ -101,7 +101,7 @@ test('validator rejects duplicate logical templates', () => {
 
 test('source contract requires split launch and excludes Fill refusal and final-renderer initiation', () => {
     const root = path.resolve(__dirname, '..', '..')
-    const initiation = fs.readFileSync(path.join(root, 'src/fluent/server/authorization-lifecycle-initiation.server.js'), 'utf8')
+    const initiation = fs.readFileSync(path.join(root, 'src/fluent/server/rob-authorization-lifecycle-entry.server.js'), 'utf8')
     const evidence = fs.readFileSync(path.join(root, 'src/fluent/server/authorization-signature-evidence.server.js'), 'utf8')
     const launch = fs.readFileSync(path.join(root, 'src/fluent/server/supervisor-signature-launch.server.js'), 'utf8')
     assert.deepEqual(validateSourceContract(initiation, evidence, launch), [])

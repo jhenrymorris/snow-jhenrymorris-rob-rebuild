@@ -1533,3 +1533,61 @@ Do not Sync, install, activate, or run runtime acceptance as part of the current
 source/package review. Do not approve a generic caller privilege. Event
 Registry `caller_access = 2` is cross-scope caller restriction; Script Actions
 do not expose a package-private runtime-access field.
+
+## C1 signature-evidence persistence extension — install prerequisite
+
+Do not apply this change until the matching product source is approved for
+installation. Edit only the existing Published subflow `ROB Persist
+Authorization Lifecycle Native`
+(`dbfbb5fc8347c3504f5193a6feaad335`; reviewed master snapshot
+`459df5f08387c3504f5193a6feaad3b1`). Preserve its fixed target table, current
+seven inputs, no outputs, and existing status/reminder/lapse behavior.
+
+Add these five explicit inputs:
+
+| Input | Type | Constraint |
+|---|---|---|
+| `signature_stage` | String | Only `employee` or `supervisor`; empty retains the existing lifecycle-update branch |
+| `signature_signer` | Reference / `sys_user` | Exact committed native `closed_by` |
+| `signature_date_time` | Date/Time | Exact committed native `closed_at` |
+| `signature_document_task` | Reference / `sn_doc_task` | Exact completed native task |
+| `signature_document_task_execution` | Reference / `sn_doc_task_execution` | Exact native execution |
+
+Place the current Update Record step in the `signature_stage is empty` branch
+without changing its current Status direct-pill binding or reminder/lapse
+mappings. Add two mutually exclusive branches against the same fixed
+Authorization selected by `authorization_sys_id`:
+
+- `employee`: one Update Record sets Employee Signature Complete = `true`,
+  Employee Signer = direct `signature_signer` pill, Employee Signature
+  Date/Time = direct `signature_date_time` pill, Employee Document Task =
+  direct `signature_document_task` pill, Document Task Execution = direct
+  `signature_document_task_execution` pill, and Status = static internal choice
+  `pending_supervisor_approval_signature`.
+- `supervisor`: one Update Record sets Supervisor Signature Complete = `true`,
+  Supervisor Signer = direct `signature_signer` pill, Supervisor Signature
+  Date/Time = direct `signature_date_time` pill, Supervisor Document Task =
+  direct `signature_document_task` pill, and Document Task Execution = direct
+  `signature_document_task_execution` pill. It does not change approval fields
+  or Status.
+
+Do not use scripted or templated Status bindings, a dynamic table, or a generic
+field/value input. Publish once, confirm the internal name remains
+`x_2166123_rob_auth.rob_persist_authorization_lifecycle_native`, and regenerate
+the code snippet to confirm synchronous foreground invocation remains
+available.
+
+After the approved source install and subflow publication, recover the already
+closed Employee task through the subflow **Test** surface exactly once; do not
+reopen the task or directly edit the Authorization. Use committed evidence:
+
+- Authorization: `cf0674a683c707904f5193a6feaad337` (`ROBA0001053`)
+- `signature_stage`: `employee`
+- `signature_signer`: `2316402b837ec3104f5193a6feaad35d`
+- `signature_date_time`: `2026-09-03 20:06:11`
+- `signature_document_task`: `7d627dae83cf07904f5193a6feaad358`
+- `signature_document_task_execution`: `51627dae83cf07904f5193a6feaad328`
+
+Require committed reread of all five evidence fields plus Status
+`pending_supervisor_approval_signature` before allowing the existing native
+approval Flow to continue. A second test invocation is not permitted.

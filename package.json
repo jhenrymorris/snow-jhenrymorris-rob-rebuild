@@ -22,6 +22,7 @@
         "test:m5": "node --test scripts/validation/m5-security-release.test.cjs",
         "test:m2": "node --test scripts/validation/m2-profile-authorization-context.test.cjs",
         "test:m3-template": "node --test scripts/validation/m3-native-template-readiness.test.cjs",
+        "test:c1-signature-persistence": "node --test scripts/validation/c1-signature-persistence.test.cjs",
         "verify:wave2:pdi": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validation/verify-wave-2-deployment.ps1 -Auth pdi",
         "verify:m3-template:production": "node scripts/validation/m3-native-template-readiness.cjs --mode production --auth pdi"
     },

@@ -1325,7 +1325,16 @@ test('native Supervisor Fill records signature only after committed approval', (
     assert.doesNotMatch(source, /state === '7'|decline_reason/)
     assert.doesNotMatch(source, /supervisor_approval_outcome', 'approved'/)
     assert.match(source, /supervisor_approval_outcome'\) !== 'approved'/)
-    assert.match(source, /supervisor_signature_complete', '1'/)
+    assert.match(source, /persistSignatureEvidence\(/)
+    assert.match(source, /'supervisor'/)
+    assert.match(
+        source,
+        /x_2166123_rob_auth\.rob_persist_authorization_lifecycle_native/
+    )
+    assert.doesNotMatch(
+        source,
+        /authorization\.setValue\('supervisor_signature_complete'/
+    )
     assert.match(source, /generateFinalPdf\(authorization\)/)
 })
 

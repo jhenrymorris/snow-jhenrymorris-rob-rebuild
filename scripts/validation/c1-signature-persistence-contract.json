@@ -1,0 +1,79 @@
+{
+  "subflow": {
+    "name": "ROB Persist Authorization Lifecycle Native",
+    "internalName": "x_2166123_rob_auth.rob_persist_authorization_lifecycle_native",
+    "sysId": "dbfbb5fc8347c3504f5193a6feaad335",
+    "reviewedMasterSnapshot": "459df5f08387c3504f5193a6feaad3b1",
+    "table": "x_2166123_rob_auth_rob_auth",
+    "outputs": []
+  },
+  "existingInputs": [
+    "authorization_sys_id",
+    "status_value",
+    "cycle_identifier",
+    "lapse_notice_value",
+    "reminder_1_value",
+    "reminder_2_value",
+    "reminder_3_value"
+  ],
+  "newInputs": [
+    {
+      "name": "signature_stage",
+      "type": "String",
+      "allowedValues": ["employee", "supervisor"]
+    },
+    {
+      "name": "signature_signer",
+      "type": "Reference",
+      "referenceTable": "sys_user"
+    },
+    {
+      "name": "signature_date_time",
+      "type": "DateTime"
+    },
+    {
+      "name": "signature_document_task",
+      "type": "Reference",
+      "referenceTable": "sn_doc_task"
+    },
+    {
+      "name": "signature_document_task_execution",
+      "type": "Reference",
+      "referenceTable": "sn_doc_task_execution"
+    }
+  ],
+  "branches": {
+    "employee": {
+      "condition": "signature_stage is employee",
+      "fieldMappings": {
+        "employee_signature_complete": { "kind": "literal", "value": true },
+        "employee_signer": { "kind": "pill", "input": "signature_signer" },
+        "employee_signature_date_time": { "kind": "pill", "input": "signature_date_time" },
+        "employee_document_task": { "kind": "pill", "input": "signature_document_task" },
+        "document_task_execution": { "kind": "pill", "input": "signature_document_task_execution" },
+        "status": { "kind": "literal", "value": "pending_supervisor_approval_signature" }
+      }
+    },
+    "supervisor": {
+      "condition": "signature_stage is supervisor",
+      "fieldMappings": {
+        "supervisor_signature_complete": { "kind": "literal", "value": true },
+        "supervisor_signer": { "kind": "pill", "input": "signature_signer" },
+        "supervisor_signature_date_time": { "kind": "pill", "input": "signature_date_time" },
+        "supervisor_document_task": { "kind": "pill", "input": "signature_document_task" },
+        "document_task_execution": { "kind": "pill", "input": "signature_document_task_execution" }
+      }
+    },
+    "existingLifecycle": {
+      "condition": "signature_stage is empty",
+      "behavior": "Preserve the current status/reminder/lapse Update Record mappings without change"
+    }
+  },
+  "constraints": {
+    "execution": "synchronous foreground",
+    "dynamicTableInput": false,
+    "genericFieldMapInput": false,
+    "scriptedStatusBinding": false,
+    "approvalFieldsOwnedByNativeApprovalFlow": true
+  }
+}

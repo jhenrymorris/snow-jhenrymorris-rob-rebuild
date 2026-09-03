@@ -3,6 +3,8 @@
     var supervisorTemplateName = 'ROB Form 1768 Supervisor Signature'
     var reuseTemplateName = 'ROB Reuse Supervisor Attestation'
     var finalRendererName = 'ROB Form 1768 Authorization'
+    var signaturePersistenceSubflow =
+        'x_2166123_rob_auth.rob_persist_authorization_lifecycle_native'
     function isTrue(value) {
         return value === '1' || value === 'true'
     }
@@ -206,6 +208,77 @@
         return
     }
 
+    function persistSignatureEvidence(
+        authorization,
+        signatureStage,
+        signerId,
+        completedAt,
+        documentTaskId,
+        executionId
+    ) {
+        var authorizationId = authorization.getUniqueValue()
+        var inputs = {
+            authorization_sys_id: authorizationId,
+            signature_stage: signatureStage,
+            signature_signer: signerId,
+            signature_date_time: completedAt,
+            signature_document_task: documentTaskId,
+            signature_document_task_execution: executionId,
+        }
+
+        try {
+            sn_fd.FlowAPI.getRunner()
+                .subflow(signaturePersistenceSubflow)
+                .inForeground()
+                .withInputs(inputs)
+                .run()
+        } catch (error) {
+            var message =
+                error && typeof error.getMessage === 'function'
+                    ? error.getMessage()
+                    : String(error)
+            gs.error(
+                'ROB native signature evidence persistence failed: ' + message
+            )
+            return false
+        }
+
+        if (!authorization.get(authorizationId)) {
+            gs.error(
+                'ROB native signature evidence persistence could not reread the governed Authorization Form.'
+            )
+            return false
+        }
+
+        var isEmployee = signatureStage === 'employee'
+        var completeField = isEmployee
+            ? 'employee_signature_complete'
+            : 'supervisor_signature_complete'
+        var signerField = isEmployee ? 'employee_signer' : 'supervisor_signer'
+        var signedAtField = isEmployee
+            ? 'employee_signature_date_time'
+            : 'supervisor_signature_date_time'
+        var taskField = isEmployee
+            ? 'employee_document_task'
+            : 'supervisor_document_task'
+        var expectedStatus = 'pending_supervisor_approval_signature'
+
+        if (
+            !isTrue(authorization.getValue(completeField)) ||
+            authorization.getValue(signerField) !== signerId ||
+            authorization.getValue(signedAtField) !== completedAt ||
+            authorization.getValue(taskField) !== documentTaskId ||
+            authorization.getValue('document_task_execution') !== executionId ||
+            authorization.getValue('status') !== expectedStatus
+        ) {
+            gs.error(
+                'ROB native signature evidence persistence failed committed reread validation.'
+            )
+            return false
+        }
+        return true
+    }
+
     if (templateName === reuseTemplateName) {
         if (!current.state.changesTo('3')) return
 
@@ -389,19 +462,16 @@
             return
         }
 
-        authorization.setValue('employee_signature_complete', '1')
-        authorization.setValue('employee_signer', signerId)
-        authorization.setValue('employee_signature_date_time', completedAt)
-        authorization.setValue(
-            'employee_document_task',
-            current.getUniqueValue()
-        )
-        authorization.setValue('document_task_execution', executionId)
-        authorization.setValue(
-            'status',
-            'pending_supervisor_approval_signature'
-        )
-        if (!authorization.update()) {
+        if (
+            !persistSignatureEvidence(
+                authorization,
+                'employee',
+                signerId,
+                completedAt,
+                current.getUniqueValue(),
+                executionId
+            )
+        ) {
             gs.error('ROB employee signature evidence could not be persisted.')
             return
         }
@@ -441,15 +511,16 @@
         return
     }
 
-    authorization.setValue(
-        'supervisor_document_task',
-        current.getUniqueValue()
-    )
-    authorization.setValue('document_task_execution', executionId)
-    authorization.setValue('supervisor_signature_complete', '1')
-    authorization.setValue('supervisor_signer', signerId)
-    authorization.setValue('supervisor_signature_date_time', completedAt)
-    if (!authorization.update()) {
+    if (
+        !persistSignatureEvidence(
+            authorization,
+            'supervisor',
+            signerId,
+            completedAt,
+            current.getUniqueValue(),
+            executionId
+        )
+    ) {
         gs.error('ROB approved Supervisor Fill/signature evidence could not be persisted.')
         return
     }

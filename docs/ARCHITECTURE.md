@@ -404,3 +404,16 @@ copy it to the governed Authorization Form before employee signing. Native
 supervisor routing then uses the form snapshot rather than recalculating a live
 manager. Reuse uses the current resolved Supervisor solely for the frozen
 case-level attestation contract and does not alter the reused form.
+
+## C1 governed signature-evidence persistence boundary
+
+The Document Templates Business Rule validates the committed native task,
+participant, signer, execution, PDF, and completion timestamp, but it does not
+write protected Authorization fields through generic GlideRecord APIs. It calls
+the existing `ROB Persist Authorization Lifecycle Native` subflow synchronously.
+That subflow keeps the target table fixed to ROB Authorization Form and exposes
+only explicit Employee/Supervisor evidence inputs. Native Update Record actions
+persist each stage atomically; the caller then rereads and validates the
+committed values before allowing the existing approval or finalization handoff.
+No dynamic table, generic field map, new persistence engine, or broad privilege
+is introduced.

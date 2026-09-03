@@ -3160,3 +3160,22 @@ Not exposed by session/tool — no estimate recorded.
 - Sync, install, PDI cutover, and runtime tests: `NOT RUN`. C2 remains COMPLETE;
   C3 remains NOT COMPLETE; release remains NOT READY pending explicit deployment
   authorization and the fixed Staffing/replay/Analytics/TM-258 matrix.
+
+## 2026-09-03 C1 signature-evidence persistence — source/configuration review
+
+- The native Employee signing task `DOCT0001036` closed with committed native
+  signature evidence; the first application failure was the handler's generic
+  Authorization `setValue()`/`update()` persistence attempt.
+- Corrected production persistence paths: Employee `1`, Supervisor `1`; both use
+  the existing synchronous governed persistence subflow. Direct Authorization
+  signature-evidence `setValue()`/`update()`/`insert()` paths: `0`.
+- New native persistence engines, subflows, Flows, Business Rules, events,
+  custom tables, roles, broad privileges, and Scope-to-Scope grants: `0`.
+- Focused regression: `13/13`; R4: `81/81`; M2: `19/19`; Security: `22/22`;
+  Deployment: `16/16`; R3 adapter: `13/13`; C1 split-template readiness: `7/7`.
+- SDK 4.11.0 normal build: PASS. Frozen-key build: PASS. Generated-key content
+  drift: `0`. Canonical generated-key SHA-256:
+  `ffd21d9c575b0db723128d032329481ab25939f2e848da68f4986aa2c42a6b88`.
+- Install attempts and live PDI mutations in this correction task: `0`.
+  Runtime recovery and downstream C1 acceptance remain pending explicit owner
+  approval after diff review.

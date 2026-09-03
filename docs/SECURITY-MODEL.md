@@ -481,3 +481,20 @@ no create, write, delete, generic GlideRecord, native-case, or native-task
 operation. The existing table-level Read privilege remains the separate
 cross-scope declaration; this caller-specific RCA is the expected caller
 control required by the target table's `caller_access=2` policy.
+
+## 17. C1 native signature-evidence persistence
+
+The `sn_doc_task` after-update handler is an evidence validator, not a generic
+record writer. Australia runtime proved that direct
+`GlideRecord.setValue/update` from the V2 scope is fenced, and the corresponding
+generic privileges remain intentionally denied. Employee and Supervisor
+signature evidence is therefore committed only through the existing
+system-run `ROB Persist Authorization Lifecycle Native` subflow and its fixed
+ROB Authorization Form Update Record actions.
+
+The subflow accepts no table name, field name, encoded query, or arbitrary field
+map. It exposes only the exact signer, signed-at, Document Task, Document Task
+Execution, and `employee`/`supervisor` stage inputs. Approval fields remain
+owned by `ROB Authorization Supervisor Approval`. Generic Insert,
+`GlideRecord.setValue/update/insert`, Scope-to-Scope, broad custom-table Write,
+and broad native task/case Write grants are not required or permitted.

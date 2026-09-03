@@ -271,3 +271,17 @@ two case subclasses, four task types, assignments, deterministic business
 keys, terminal evidence, waiver authority, and eligible case closure. Focused
 source tests are 31/31 PASS. PDI classification remains pending Install #1 and
 the fixed 13-gate acceptance matrix.
+
+## C1 signature-evidence native persistence reuse — 2026-09-03
+
+| Requirement | Australia capability | Classification |
+|---|---|---|
+| Update protected governed fields without generic GlideRecord privilege | Workflow Studio ServiceNow Core Update Record action on the fixed V2 Authorization table | DOCUMENTED-SUPPORTED |
+| Invoke the existing subflow and wait for committed state | Generated server snippet uses `sn_fd.FlowAPI.getRunner().subflow(...).inForeground().withInputs(...).run()` | PDI-PROVEN |
+| Preserve exact stage evidence | Explicit Reference/DateTime/String inputs and direct/static Update Record values | SUPPORTED-WITH-CONSTRAINT |
+
+Constraint: the current Published subflow must be extended through its native
+editor after owner approval. Status must remain a direct/static internal choice;
+scripted template handling is prohibited because it previously persisted
+`fd-scripted`. No required capability is UNKNOWN and the certified split-stage
+architecture is unchanged.

@@ -564,3 +564,14 @@ requirement or M4 architecture was changed.
 | HRC0001094 first failed boundary | Processed create events reach `RobAuthorizationLifecycleEntry.executePayroll`; platform error stops at `isApprovedRobService` with `ScopeAccessNotGrantedException: read access to sn_hr_core_service not granted` | PROVEN |
 | Minimal caller control | One exact Script Include-to-HR Service table Read RCA; no generic API, create/write/delete, new engine, or topology change | SOURCE CORRECTION |
 | Governed creation | Native Authorization, Detail, and lifecycle persistence subflows remain unchanged; runtime acceptance pending deployment | PENDING |
+
+## C1 native signature-evidence persistence correction — 2026-09-03
+
+| Requirement | Correction/evidence | Status |
+|---|---|---|
+| Native Employee completion | Existing handler retains exact state, signer, participant, execution, PDF, and timestamp validation | SOURCE PASS |
+| Governed Employee persistence | Synchronous call to the existing fixed-table native persistence subflow replaces direct Authorization `setValue/update` | SOURCE PASS / NATIVE EXTENSION PENDING OWNER APPROVAL |
+| Governed Supervisor persistence | The same bounded subflow persists only Supervisor signer/time/task/execution/complete fields; approval fields remain Flow-owned | SOURCE PASS / NATIVE EXTENSION PENDING OWNER APPROVAL |
+| Idempotency | Existing task binding rejects a different task and returns on the already-recorded task; committed reread validates exact values | SOURCE PASS |
+| Least privilege | Generic GlideRecord setValue/update/insert and Generic Insert remain denied; no new privilege, Flow, subflow, BR, event, table, or engine | PASS |
+| Runtime recovery | Closed `DOCT0001036` evidence is to be applied once through the approved subflow Test surface after install; no task reopen or direct Authorization edit | DOCUMENTED / NOT RUN |

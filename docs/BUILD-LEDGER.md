@@ -1307,3 +1307,29 @@ documentation-only correction.
   event-pipeline identities exactly once in both update entries and package
   inventory. Package SHA-256 is unchanged by inspection. Deployment and
   runtime acceptance remain pending.
+
+## 2026-09-03 C1 signature-evidence persistence correction — diff review
+
+- Root cause: `ROB Capture Native Authorization Signature Evidence` validated
+  committed native Document Task evidence correctly, then attempted protected
+  ROB Authorization Form persistence through generic
+  `GlideRecord.setValue()`/`update()`. Those generic APIs remain intentionally
+  denied. Employee and Supervisor signature-evidence writes now invoke the
+  existing `ROB Persist Authorization Lifecycle Native` subflow synchronously
+  and verify the committed governed record by reread.
+- Deferred native configuration is bounded to the existing subflow
+  `dbfbb5fc8347c3504f5193a6feaad335`: five explicit typed signature inputs and
+  stage-specific direct Update Record mappings. It introduces no dynamic table,
+  arbitrary field map, scripted Status binding, new Flow/subflow, persistence
+  engine, event, role, or privilege.
+- Focused signature-persistence regression `13/13`, R4 `81/81`, M2 `19/19`,
+  Security `22/22`, Deployment `16/16`, R3 adapter `13/13`, and C1 split-template
+  readiness `7/7` PASS.
+- SDK 4.11.0 normal build and frozen-key build PASS. Frozen build preserves the
+  canonical generated-key SHA-256
+  `ffd21d9c575b0db723128d032329481ab25939f2e848da68f4986aa2c42a6b88`;
+  generated-key content diff and unexpected key additions are `0`.
+- Installation, live subflow edits, runtime recovery, approval launch, and PDI
+  record changes: `0`. The exact post-install recovery inputs for closed native
+  task `DOCT0001036` are recorded in `MANUAL-CONFIGURATION.md` for later owner
+  authorization.

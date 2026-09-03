@@ -479,3 +479,13 @@ The regression rejects generic GlideRecord access and create, write, delete, or
 execute operations. This directly covers the proven event-runtime failure at
 `isApprovedRobService`; fresh Staffing, replay, Analytics, TM-01, TM-02, and
 TM-258 remain runtime acceptance gates.
+
+### C1 signature-evidence persistence correction
+
+| ID | Test | Method | Status |
+|---|---|---|---|
+| TM-259 | Employee evidence uses governed persistence | Source regression requires synchronous existing-subflow invocation and exact signer/time/task/execution inputs | SOURCE PASS |
+| TM-260 | No direct governed signature write | Employee and Supervisor active signature branches contain no Authorization `setValue`, `update`, or `insert` | SOURCE PASS |
+| TM-261 | Native subflow extension remains bounded | Machine-readable contract permits five typed signature inputs, fixed Authorization table, exact two stage mappings, no dynamic table/field map/scripted Status | SOURCE PASS / NATIVE CONFIG NOT APPLIED |
+| TM-262 | Signature idempotency and fail-closed gates | Existing same-task return, different-task rejection, state/participant/signer/execution/PDF validation, and committed reread remain required | SOURCE PASS |
+| TM-263 | Closed-task recovery | One post-install subflow Test uses committed `DOCT0001036` evidence and must advance `ROBA0001053` without reopening/recreating records | NOT RUN — INSTALLATION PROHIBITED IN THIS PACKAGE |
