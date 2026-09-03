@@ -56,6 +56,13 @@ const lifecycleEventActionsMetadata = fs.readFileSync(
     ),
     'utf8'
 )
+const lifecycleServiceCallerAccessMetadata = fs.readFileSync(
+    path.join(
+        root,
+        'src/fluent/security/rob-lifecycle-service-read-caller-access.now.ts'
+    ),
+    'utf8'
+)
 const lifecycleEventEnqueueSource = fs.readFileSync(
     path.join(
         root,
@@ -868,6 +875,28 @@ test('post-commit events are registered with exact cross-scope caller restrictio
     ]) {
         assert.ok(eventName.length <= 40)
     }
+})
+
+test('lifecycle entry has exact caller-specific HR Service read access', () => {
+    assert.match(
+        lifecycleServiceCallerAccessMetadata,
+        /table:\s*'sys_restricted_caller_access'/
+    )
+    assert.match(
+        lifecycleServiceCallerAccessMetadata,
+        /source:\s*robAuthorizationLifecycleEntry/
+    )
+    assert.match(lifecycleServiceCallerAccessMetadata, /source_type:\s*'2'/)
+    assert.match(
+        lifecycleServiceCallerAccessMetadata,
+        /Now\.ref\('sys_db_object',\s*\{\s*name:\s*'sn_hr_core_service'/s
+    )
+    assert.match(lifecycleServiceCallerAccessMetadata, /operation:\s*'read'/)
+    assert.match(lifecycleServiceCallerAccessMetadata, /status:\s*'2'/)
+    assert.doesNotMatch(
+        lifecycleServiceCallerAccessMetadata,
+        /GlideRecord|create|write|delete|execute/
+    )
 })
 
 test('event Script Actions are two fixed active V2 handlers with no false access claim', () => {

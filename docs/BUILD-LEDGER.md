@@ -1283,3 +1283,27 @@ key, built update XML, and package inventory. The transposed conversational
 value is not retained in repository evidence. Application source and package
 content were not changed and no rebuild was performed for this
 documentation-only correction.
+
+## 2026-09-03 C3 HRC0001094 root-cause correction
+
+- Three processed `lifecycle.create` events for `HRC0001094` all stopped in
+  `RobAuthorizationLifecycleEntry.isApprovedRobService` before native
+  Authorization creation. The platform logged
+  `ScopeAccessNotGrantedException: read access to sn_hr_core_service not
+  granted` from Script Include `d78da619355a45e5baa2957b025a4ea4`.
+- The existing table-level Read cross-scope privilege does not satisfy the HR
+  Service table's separate Caller Restriction policy for this newly reachable
+  Script Include caller. One exact Allowed caller-access relationship is added
+  for that Script Include and table Read only.
+- Lifecycle logic, native persistence subflows, event/BR topology, signing,
+  generic Insert denial, and all broad privilege counts remain unchanged.
+- Corrected-boundary regression and established gates: R4 `81/81`, M2
+  `19/19`, Security `22/22`, Deployment `16/16`, and R3 adapter `13/13`.
+- SDK `4.11.0` normal build and frozen-key build pass. The sole generated-key
+  addition is RCA `40bd7443c29d4ac78926c97ce22fe64e`; subsequent normal and
+  frozen builds preserve key hash
+  `FFD21D9C575B0DB723128D032329481AB25939F2E848DA68F4986AA2C42A6B88`.
+- Read-only package inspection finds the new RCA and each of the four existing
+  event-pipeline identities exactly once in both update entries and package
+  inventory. Package SHA-256 is unchanged by inspection. Deployment and
+  runtime acceptance remain pending.

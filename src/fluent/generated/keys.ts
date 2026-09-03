@@ -497,6 +497,10 @@ declare global {
                         table: 'sysevent_email_action'
                         id: 'cfd7a3e0acb74bc69a61a886acaf432a'
                     }
+                    'rob-lifecycle-entry-read-hr-service-caller-access': {
+                        table: 'sys_restricted_caller_access'
+                        id: '40bd7443c29d4ac78926c97ce22fe64e'
+                    }
                     'rob-profile-authorization-context': {
                         table: 'sys_script_include'
                         id: 'adb660f45ca4495eba511efe70c9487e'

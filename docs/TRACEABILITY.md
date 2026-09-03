@@ -553,6 +553,14 @@ requirement or M4 architecture was changed.
 | Preserved governed creation | `RobAuthorizationLifecycleEntry` and the three existing native persistence subflows are unchanged; no second lifecycle engine or persistence service is introduced | PASS |
 | Retry/idempotency | Existing exact case-to-Authorization, Form-plus-item Detail, and signing-task suppression remain the sole lifecycle implementation | PASS (SOURCE) |
 | Trigger security | Both registered events use cross-scope `caller_access = 2`; Script Actions are V2-owned, event-bound, fixed-parameter, and fail closed. No unsupported package-private claim is made for Script Actions | PASS |
-| Least privilege | Generic Insert remains denied; new tables, roles, bridges, broad privileges, and expected RCA additions are zero | PASS |
+| Least privilege | Generic Insert remains denied; new tables, roles, bridges, and broad privileges are zero. The later HRC0001094 correction adds the one exact lifecycle-entry-to-HR-Service Read RCA documented below; unexpected RCA remains zero. | PASS |
 | Cutover | All lifecycle-entry Flows must be inactive before the two existing enqueue Business Rules are activated | MANUAL / DEPLOYMENT PENDING |
 | TM-01 / TM-02 / TM-258 | Fresh Staffing, create-event replay, fresh Analytics, and release smoke occur only after explicit deployment authorization | PENDING |
+
+## C3 governed-creation runtime correction — 2026-09-03
+
+| Requirement | Evidence | Status |
+|---|---|---|
+| HRC0001094 first failed boundary | Processed create events reach `RobAuthorizationLifecycleEntry.executePayroll`; platform error stops at `isApprovedRobService` with `ScopeAccessNotGrantedException: read access to sn_hr_core_service not granted` | PROVEN |
+| Minimal caller control | One exact Script Include-to-HR Service table Read RCA; no generic API, create/write/delete, new engine, or topology change | SOURCE CORRECTION |
+| Governed creation | Native Authorization, Detail, and lifecycle persistence subflows remain unchanged; runtime acceptance pending deployment | PENDING |

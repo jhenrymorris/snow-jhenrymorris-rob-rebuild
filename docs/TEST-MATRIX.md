@@ -470,3 +470,12 @@ required Flow deactivation and explicitly authorized installation/cutover.
 TM-01, TM-02, and TM-258 remain `PENDING — DEPLOYMENT/RUNTIME PREREQUISITE`.
 Historical Flow/Action failures remain superseded investigation evidence and
 are not represented as event-pipeline runtime results.
+
+## C3 HRC0001094 caller-restriction regression — 2026-09-03
+
+R4 requires one exact Allowed Restricted Caller Access record from
+`RobAuthorizationLifecycleEntry` to the `sn_hr_core_service` table for Read.
+The regression rejects generic GlideRecord access and create, write, delete, or
+execute operations. This directly covers the proven event-runtime failure at
+`isApprovedRobService`; fresh Staffing, replay, Analytics, TM-01, TM-02, and
+TM-258 remain runtime acceptance gates.

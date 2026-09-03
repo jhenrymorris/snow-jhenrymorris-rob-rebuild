@@ -468,3 +468,16 @@ default platform event queue is used. No generic GlideRecord Insert/Update/
 setValue privilege, broad native-case/native-task Write, role, bridge method, or
 CrossScopePrivilege is added. Any unexpected RCA generated at deployment or
 runtime is a stop condition, not an approval target.
+
+## 2026-09-03 C3 lifecycle-entry HR Service caller access
+
+`HRC0001094` proved that the create-event Script Action reaches the
+package-private `RobAuthorizationLifecycleEntry`, but Australia Caller
+Restriction blocks that Script Include's committed `sn_hr_core_service` Read
+before governed creation. The correction declares one exact Allowed
+Restricted Caller Access relationship: source `RobAuthorizationLifecycleEntry`
+(Script Include), target `sn_hr_core_service` (table), operation Read. It grants
+no create, write, delete, generic GlideRecord, native-case, or native-task
+operation. The existing table-level Read privilege remains the separate
+cross-scope declaration; this caller-specific RCA is the expected caller
+control required by the target table's `caller_access=2` policy.
