@@ -1,6 +1,35 @@
 (function executeRule(current) {
+    var persistenceSubflow =
+        'x_2166123_rob_auth.rob_persist_authorization_lifecycle_native'
+
     function isTrue(value) {
         return value === '1' || value === 'true'
+    }
+
+    function runFinalization(authorization, finalDate) {
+        try {
+            sn_fd.FlowAPI.getRunner()
+                .subflow(persistenceSubflow)
+                .inForeground()
+                .withInputs({
+                    authorization_sys_id: authorization.getUniqueValue(),
+                    finalization_stage: 'complete',
+                    final_pdf_attachment: current,
+                    final_pdf_generated_date_time: new GlideDateTime(
+                        current.getValue('sys_created_on')
+                    ),
+                    final_authorization_date: finalDate,
+                })
+                .run()
+            return true
+        } catch (error) {
+            var message =
+                error && typeof error.getMessage === 'function'
+                    ? error.getMessage()
+                    : String(error)
+            gs.error('ROB governed finalization persistence failed: ' + message)
+            return false
+        }
     }
 
     var authorization = new GlideRecord('x_2166123_rob_auth_rob_auth')
@@ -35,68 +64,120 @@
     var finalDate = supervisorDateTime
         .getLocalDate()
         .getByFormat('yyyy-MM-dd')
-    var previousStatus = authorization.getValue('status')
-
-    authorization.setValue('final_pdf_attachment', current.getUniqueValue())
-    authorization.setValue('signed_pdf_generated', '1')
-    authorization.setValue(
-        'signed_pdf_generated_date_time',
-        current.getValue('sys_created_on')
+    var authorizationId = authorization.getUniqueValue()
+    var sourceCase = authorization.source_hrsd_case.getRefRecord()
+    var sourceCaseId = sourceCase.isValidRecord()
+        ? sourceCase.getUniqueValue()
+        : ''
+    var sourceCaseTable = sourceCase.isValidRecord()
+        ? sourceCase.getTableName()
+        : ''
+    var pendingDetails = new GlideRecord(
+        'x_2166123_rob_auth_auth_detail'
     )
-    authorization.setValue('final_authorization_date', finalDate)
-    authorization.setValue('effective_date', finalDate)
-    authorization.setValue('status', 'active')
+    pendingDetails.addQuery('rob_authorization_form', authorizationId)
+    pendingDetails.query()
+    var pendingDetailCount = 0
+    while (pendingDetails.next()) {
+        pendingDetailCount += 1
+        if (pendingDetails.getValue('status') !== 'pending_authorization') {
+            gs.error('ROB governed finalization rejected a non-pending current Detail.')
+            return
+        }
+    }
+    if (!pendingDetailCount) {
+        gs.error('ROB governed finalization found no governed Access Details.')
+        return
+    }
+    var predecessorId = authorization.getValue('supersedes_authorization_form')
+    if (predecessorId) {
+        var pendingPredecessor = new GlideRecord(
+            'x_2166123_rob_auth_rob_auth'
+        )
+        if (!pendingPredecessor.get(predecessorId)) {
+            gs.error('ROB governed finalization could not resolve its predecessor.')
+            return
+        }
+    }
 
-    if (!authorization.update()) {
+    if (!sourceCaseId || !runFinalization(authorization, finalDate)) {
         gs.error('ROB authorization activation failed after final PDF association.')
         return
     }
 
+    if (
+        !authorization.get(authorizationId) ||
+        authorization.getValue('final_pdf_attachment') !==
+            current.getUniqueValue() ||
+        !isTrue(authorization.getValue('signed_pdf_generated')) ||
+        authorization.getValue('signed_pdf_generated_date_time') !==
+            current.getValue('sys_created_on') ||
+        authorization.getValue('final_authorization_date') !== finalDate ||
+        authorization.getValue('effective_date') !== finalDate ||
+        authorization.getValue('status') !== 'active'
+    ) {
+        gs.error('ROB governed finalization failed Authorization committed reread validation.')
+        return
+    }
+
     var details = new GlideRecord('x_2166123_rob_auth_auth_detail')
-    details.addQuery(
-        'rob_authorization_form',
-        authorization.getUniqueValue()
-    )
-    details.addQuery('status', 'pending_authorization')
+    details.addQuery('rob_authorization_form', authorizationId)
     details.query()
+    var detailCount = 0
     while (details.next()) {
-        details.setValue('status', 'pending_fulfillment')
-        details.setValue('authorized_start_date', finalDate)
-        details.update()
+        detailCount += 1
+        if (
+            details.getValue('status') !== 'pending_fulfillment' ||
+            details.getValue('authorized_start_date') !== finalDate
+        ) {
+            gs.error('ROB governed finalization failed current Detail committed reread validation.')
+            return
+        }
     }
-
-    var predecessorId = authorization.getValue(
-        'supersedes_authorization_form'
-    )
-    if (!predecessorId) {
+    if (!detailCount) {
+        gs.error('ROB governed finalization found no governed Access Details.')
         return
     }
 
-    var predecessor = new GlideRecord('x_2166123_rob_auth_rob_auth')
-    if (!predecessor.get(predecessorId)) {
-        authorization.setValue('status', previousStatus)
-        authorization.update()
-        gs.error('ROB predecessor authorization was not found; activation was rolled back.')
-        return
+    if (predecessorId) {
+        var predecessor = new GlideRecord('x_2166123_rob_auth_rob_auth')
+        if (
+            !predecessor.get(predecessorId) ||
+            predecessor.getValue('superseded_by_authorization_form') !==
+                authorizationId ||
+            predecessor.getValue('status') !== 'superseded'
+        ) {
+            gs.error('ROB governed finalization failed predecessor committed reread validation.')
+            return
+        }
+        var predecessorDetails = new GlideRecord(
+            'x_2166123_rob_auth_auth_detail'
+        )
+        predecessorDetails.addQuery('rob_authorization_form', predecessorId)
+        predecessorDetails.addQuery('status', 'NOT IN', 'denied,revoked')
+        predecessorDetails.query()
+        while (predecessorDetails.next()) {
+            if (predecessorDetails.getValue('status') !== 'superseded') {
+                gs.error('ROB governed finalization failed predecessor Detail committed reread validation.')
+                return
+            }
+        }
     }
 
-    predecessor.setValue('superseded_by_authorization_form', authorization.getUniqueValue())
-    predecessor.setValue('status', 'superseded')
-    if (!predecessor.update()) {
-        authorization.setValue('status', previousStatus)
-        authorization.update()
-        gs.error('ROB predecessor supersession failed; activation was rolled back.')
+    var bridge = new sn_hr_core.RobHrCasePersistenceBridge()
+    if (!bridge.openRobFulfillmentGate(sourceCase, authorizationId)) {
+        gs.error('ROB governed finalization could not open the HR Case fulfillment gate.')
         return
     }
-
-    var predecessorDetails = new GlideRecord(
-        'x_2166123_rob_auth_auth_detail'
-    )
-    predecessorDetails.addQuery('rob_authorization_form', predecessorId)
-    predecessorDetails.addQuery('status', 'NOT IN', 'denied,revoked')
-    predecessorDetails.query()
-    while (predecessorDetails.next()) {
-        predecessorDetails.setValue('status', 'superseded')
-        predecessorDetails.update()
+    var committedCase = new GlideRecord(sourceCaseTable)
+    if (
+        !committedCase.get(sourceCaseId) ||
+        !isTrue(
+            committedCase.getValue(
+                'x_2166123_rob_auth_fulfillment_gate_complete'
+            )
+        )
+    ) {
+        gs.error('ROB governed finalization failed HR Case gate committed reread validation.')
     }
 })(current)

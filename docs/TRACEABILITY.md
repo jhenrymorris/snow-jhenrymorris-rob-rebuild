@@ -575,3 +575,21 @@ requirement or M4 architecture was changed.
 | Idempotency | Existing task binding rejects a different task and returns on the already-recorded task; committed reread validates exact values | SOURCE PASS |
 | Least privilege | Generic GlideRecord setValue/update/insert and Generic Insert remain denied; no new privilege, Flow, subflow, BR, event, table, or engine | PASS |
 | Runtime recovery | Closed `DOCT0001036` evidence is to be applied once through the approved subflow Test surface after install; no task reopen or direct Authorization edit | DOCUMENTED / NOT RUN |
+
+## C3 exhaustive finalization closure — 2026-09-04
+
+The preceding recovery procedure is historical and is not release evidence.
+Fresh `HRC0001097` proved ordinary intake, governed creation, both native
+signature stages, and committed evidence persistence. It then exposed the
+remaining direct generic final-PDF claim. The complete correction removes the
+claim/reset and all attachment-finalizer generic writes together.
+
+| Requirement | Active owner after correction | Verification |
+|---|---|---|
+| Finalization claim/reset | Existing Authorization persistence subflow, explicit fixed modes | C3 closure regression |
+| Final PDF evidence/date/Active | Same fixed Authorization subflow complete branch | C3 closure regression + committed reread source |
+| Current Detail transition | Same complete branch, fixed relationship/table | C3 closure regression |
+| Amendment/Renewal predecessor supersession | Same complete branch, fixed relationships/tables | C3 closure regression |
+| Fulfillment gate | `RobHrCasePersistenceBridge.openRobFulfillmentGate` | exact finalizer caller + reread validation |
+| M4 task/detail/case lifecycle | Existing fulfillment bridge and Detail activation subflow | M4 suite + exact caller inventory |
+| Full dependency closure | `docs/RELEASE-DEPENDENCY-MATRIX.md` | A–V IMPLEMENTED/TESTED/SECURITY READY |

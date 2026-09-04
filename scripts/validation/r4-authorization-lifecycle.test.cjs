@@ -1309,11 +1309,10 @@ test('accepted native Supervisor terminal replays cannot regenerate the final PD
         /recordedSupervisorTaskId === current\.getUniqueValue\(\)[\s\S]{0,400}generateFinalPdf\(authorization\)/
     )
     assert.match(source, /signed_pdf_generated/)
-    assert.match(
-        source,
-        /setValue\('signed_pdf_generated', '1'\)[\s\S]*authorization\.update\(\)[\s\S]*fillDocumentFieldsAndFlatten/
-    )
-    assert.match(source, /setValue\('signed_pdf_generated', '0'\)/)
+    assert.match(source, /persistFinalizationState\(authorization, 'claim'\)/)
+    assert.match(source, /persistFinalizationState\(authorization, 'reset'\)/)
+    assert.doesNotMatch(source, /authorization\.setValue\(/)
+    assert.doesNotMatch(source, /authorization\.update\(/)
     assert.match(source, /already bound to another task/)
 })
 

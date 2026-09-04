@@ -40,11 +40,29 @@
       "name": "signature_document_task_execution",
       "type": "Reference",
       "referenceTable": "sn_doc_task_execution"
+    },
+    {
+      "name": "finalization_stage",
+      "type": "String",
+      "allowedValues": ["claim", "reset", "complete"]
+    },
+    {
+      "name": "final_pdf_attachment",
+      "type": "Reference",
+      "referenceTable": "sys_attachment"
+    },
+    {
+      "name": "final_pdf_generated_date_time",
+      "type": "DateTime"
+    },
+    {
+      "name": "final_authorization_date",
+      "type": "Date"
     }
   ],
   "branches": {
     "employee": {
-      "condition": "signature_stage is employee",
+      "condition": "signature_stage is employee and finalization_stage is empty",
       "fieldMappings": {
         "employee_signature_complete": { "kind": "literal", "value": true },
         "employee_signer": { "kind": "pill", "input": "signature_signer" },
@@ -55,7 +73,7 @@
       }
     },
     "supervisor": {
-      "condition": "signature_stage is supervisor",
+      "condition": "signature_stage is supervisor and finalization_stage is empty",
       "fieldMappings": {
         "supervisor_signature_complete": { "kind": "literal", "value": true },
         "supervisor_signer": { "kind": "pill", "input": "signature_signer" },
@@ -64,8 +82,42 @@
         "document_task_execution": { "kind": "pill", "input": "signature_document_task_execution" }
       }
     },
+    "finalizationClaim": {
+      "condition": "finalization_stage is claim, status is pending_supervisor_approval_signature, Supervisor evidence is complete, and final_pdf_attachment is empty",
+      "fieldMappings": {
+        "signed_pdf_generated": { "kind": "literal", "value": true }
+      }
+    },
+    "finalizationReset": {
+      "condition": "finalization_stage is reset and final_pdf_attachment is empty and status is not active",
+      "fieldMappings": {
+        "signed_pdf_generated": { "kind": "literal", "value": false }
+      }
+    },
+    "finalizationComplete": {
+      "condition": "finalization_stage is complete, all Employee/approval/Supervisor evidence is committed, claim is true, and the exact final PDF input is present",
+      "fieldMappings": {
+        "final_pdf_attachment": { "kind": "pill", "input": "final_pdf_attachment" },
+        "signed_pdf_generated": { "kind": "literal", "value": true },
+        "signed_pdf_generated_date_time": { "kind": "pill", "input": "final_pdf_generated_date_time" },
+        "final_authorization_date": { "kind": "pill", "input": "final_authorization_date" },
+        "effective_date": { "kind": "pill", "input": "final_authorization_date" },
+        "status": { "kind": "literal", "value": "active" }
+      },
+      "currentDetailMappings": {
+        "status": { "kind": "literal", "value": "pending_fulfillment" },
+        "authorized_start_date": { "kind": "pill", "input": "final_authorization_date" }
+      },
+      "predecessorMappings": {
+        "superseded_by_authorization_form": { "kind": "pill", "value": "current authorization" },
+        "status": { "kind": "literal", "value": "superseded" }
+      },
+      "predecessorDetailMappings": {
+        "status": { "kind": "literal", "value": "superseded" }
+      }
+    },
     "existingLifecycle": {
-      "condition": "signature_stage is empty",
+      "condition": "signature_stage is empty and finalization_stage is empty",
       "behavior": "Preserve the current status/reminder/lapse Update Record mappings without change"
     }
   },
@@ -74,6 +126,8 @@
     "dynamicTableInput": false,
     "genericFieldMapInput": false,
     "scriptedStatusBinding": false,
+    "fixedAuthorizationAndDetailTables": true,
+    "genericFinalizationFieldMapInput": false,
     "approvalFieldsOwnedByNativeApprovalFlow": true
   }
 }

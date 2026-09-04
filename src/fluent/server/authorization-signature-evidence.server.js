@@ -138,6 +138,52 @@
         return template
     }
 
+    function persistFinalizationState(authorization, finalizationStage) {
+        var authorizationId = authorization.getUniqueValue()
+        try {
+            sn_fd.FlowAPI.getRunner()
+                .subflow(signaturePersistenceSubflow)
+                .inForeground()
+                .withInputs({
+                    authorization_sys_id: authorizationId,
+                    finalization_stage: finalizationStage,
+                })
+                .run()
+        } catch (error) {
+            var message =
+                error && typeof error.getMessage === 'function'
+                    ? error.getMessage()
+                    : String(error)
+            gs.error(
+                'ROB final Form 1768 ' +
+                    finalizationStage +
+                    ' persistence failed: ' +
+                    message
+            )
+            return false
+        }
+
+        if (!authorization.get(authorizationId)) {
+            gs.error(
+                'ROB final Form 1768 ' +
+                    finalizationStage +
+                    ' persistence could not reread the Authorization Form.'
+            )
+            return false
+        }
+
+        var expected = finalizationStage === 'claim'
+        if (isTrue(authorization.getValue('signed_pdf_generated')) !== expected) {
+            gs.error(
+                'ROB final Form 1768 ' +
+                    finalizationStage +
+                    ' failed committed reread validation.'
+            )
+            return false
+        }
+        return true
+    }
+
     function generateFinalPdf(authorization) {
         if (authorization.getValue('final_pdf_attachment')) return true
         if (isTrue(authorization.getValue('signed_pdf_generated'))) return true
@@ -147,8 +193,7 @@
         // Document Task; without this persisted claim each update can enter
         // PDF generation before the attachment-association callback records
         // final_pdf_attachment.
-        authorization.setValue('signed_pdf_generated', '1')
-        if (!authorization.update()) {
+        if (!persistFinalizationState(authorization, 'claim')) {
             gs.error('ROB final Form 1768 generation claim could not be persisted.')
             return false
         }
@@ -156,15 +201,13 @@
         var template = finalPdfTemplate()
         if (!template) {
             gs.error('ROB exact published final Form 1768 template is missing.')
-            authorization.setValue('signed_pdf_generated', '0')
-            authorization.update()
+            persistFinalizationState(authorization, 'reset')
             return false
         }
         var documentId = template.getValue('document')
         if (!documentId) {
             gs.error('ROB production template has no fillable source PDF.')
-            authorization.setValue('signed_pdf_generated', '0')
-            authorization.update()
+            persistFinalizationState(authorization, 'reset')
             return false
         }
 
@@ -184,8 +227,7 @@
                 'ROB final Form 1768 generation failed: ' +
                     (result ? result.message : 'no response')
             )
-            authorization.setValue('signed_pdf_generated', '0')
-            authorization.update()
+            persistFinalizationState(authorization, 'reset')
             return false
         }
         return true

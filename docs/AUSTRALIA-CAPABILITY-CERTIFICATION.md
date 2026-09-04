@@ -285,3 +285,22 @@ editor after owner approval. Status must remain a direct/static internal choice;
 scripted template handling is prohibited because it previously persisted
 `fd-scripted`. No required capability is UNKNOWN and the certified split-stage
 architecture is unchanged.
+
+## C3 finalization and M4 handoff closure — 2026-09-04
+
+No new native capability is introduced. The closure reuses four already
+certified mechanisms: fixed-table Workflow Studio Update Record, synchronous
+foreground subflow execution, allowlisted HR Core-owned persistence bridges,
+and exact caller-specific Restricted Caller Access. Final PDF creation remains
+the certified `PDFGenerationAPI.fillDocumentFieldsAndFlatten` path.
+
+| Requirement | Certified Australia mechanism | Classification |
+|---|---|---|
+| Retry-safe final-PDF claim/reset | Existing V2 fixed Authorization Update Record subflow | DOCUMENTED-SUPPORTED |
+| Final PDF evidence, dates, Active, Detail transition and supersession | Fixed relationships and native Update Record actions in the same existing subflow | DOCUMENTED-SUPPORTED |
+| Open the HR Case fulfillment gate | Allowlisted HR Core-owned bridge, exact finalization-BR caller | PDI-PROVEN |
+| M4 evidence/closure bridge invocation | Existing allowlisted HR Core fulfillment bridge, exact active reconciliation-BR caller | PDI-PROVEN |
+
+Required capabilities remain `38/38` classified, UNKNOWN `0`, selected
+UNSUPPORTED `0`. See `RELEASE-DEPENDENCY-MATRIX.md` for the complete A–V call
+graph and finite security whitelist.

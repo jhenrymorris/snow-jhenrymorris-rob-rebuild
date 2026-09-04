@@ -427,5 +427,54 @@ RobHrCasePersistenceBridge.prototype = {
         return Boolean(caseRecord.update())
     },
 
+    openRobFulfillmentGate: function (caseRecord, authorizationId) {
+        var allowedTables = {
+            sn_hr_core_case_payroll: true,
+            sn_hr_core_case_workforce_admin: true,
+        }
+        var allowedPaths = {
+            new: true,
+            amendment: true,
+            renewal: true,
+        }
+        if (
+            !caseRecord ||
+            !allowedTables[String(caseRecord.getTableName() || '')] ||
+            !/^[0-9a-f]{32}$/.test(String(caseRecord.getUniqueValue() || '')) ||
+            !/^[0-9a-f]{32}$/.test(String(authorizationId || '')) ||
+            !allowedPaths[
+                String(
+                    caseRecord.getValue(
+                        'x_2166123_rob_auth_authorization_path'
+                    ) || ''
+                )
+            ] ||
+            !caseRecord.getValue(
+                'x_2166123_rob_auth_decision_evaluated_at'
+            ) ||
+            caseRecord.getValue(
+                'x_2166123_rob_auth_authorization_processing_blocked'
+            ) === '1' ||
+            caseRecord.getValue(
+                'x_2166123_rob_auth_exception_review_required'
+            ) === '1'
+        ) {
+            return false
+        }
+
+        var gate = 'x_2166123_rob_auth_fulfillment_gate_complete'
+        if (caseRecord.getValue(gate) === '1') {
+            return true
+        }
+        caseRecord[gate] = '1'
+        if (!caseRecord.update()) {
+            return false
+        }
+        return (
+            caseRecord.get(caseRecord.getUniqueValue()) &&
+            caseRecord.getValue(gate) === '1'
+        )
+    },
+
     type: 'RobHrCasePersistenceBridge',
 }

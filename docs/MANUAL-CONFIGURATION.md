@@ -1591,3 +1591,46 @@ reopen the task or directly edit the Authorization. Use committed evidence:
 Require committed reread of all five evidence fields plus Status
 `pending_supervisor_approval_signature` before allowing the existing native
 approval Flow to continue. A second test invocation is not permitted.
+
+## Superseding final development closure configuration
+
+The closed-task recovery above is historical and must not be used for final
+acceptance. For the next authorized installation, extend only Published subflow
+`ROB Persist Authorization Lifecycle Native`
+(`dbfbb5fc8347c3504f5193a6feaad335`) as specified by
+`scripts/validation/c1-signature-persistence-contract.json`:
+
+- preserve all seven lifecycle and five signature inputs and all existing field
+  mappings;
+- add only `finalization_stage` (String), `final_pdf_attachment` (Reference
+  `sys_attachment`), `final_pdf_generated_date_time` (Date/Time), and
+  `final_authorization_date` (Date);
+- add fixed `claim`, `reset`, and `complete` branches;
+- in `complete`, update the fixed current Authorization, its fixed related
+  pending Details, and any fixed referenced predecessor/Details exactly as the
+  machine-readable contract states;
+- use direct data pills/static choice values only; never use a script,
+  `fd_data`, dynamic table, field-name, or arbitrary field-map input;
+- retain synchronous foreground invocation and no outputs.
+
+Update the existing HR Core Script Include
+`sn_hr_core.RobHrCasePersistenceBridge` in place with the reviewed
+`openRobFulfillmentGate` method from
+`manual/hr-core/RobHrCasePersistenceBridge.server.js`. Preserve its sys_id,
+scope, Caller Restriction, protection, and all existing methods.
+
+After normal install and Upgrade Summary completion, use target application RCA
+administration to verify exactly one target-scope Allowed record for each
+machine-reviewed contract in
+`scripts/validation/release-security-dependencies.json`:
+
+1. `ROB Finalize Authorization After PDF Association` →
+   `sn_hr_core.RobHrCasePersistenceBridge` → Execute.
+2. `ROB Reconcile Fulfillment Task Completion` →
+   `sn_hr_core.RobHrFulfillmentBridgeV2` → Execute. Reconcile existing exact
+   target record `e2ddf8a0834bcf104f5193a6feaad3dd` from Denied to Allowed;
+   do not create a duplicate.
+
+Do not approve a scope caller, another source, another operation, or another
+target. Then perform the already-documented enqueue-BR post-install cutover and
+verify topology `1 / 1 / 0 / 0 / 1` before fresh acceptance.

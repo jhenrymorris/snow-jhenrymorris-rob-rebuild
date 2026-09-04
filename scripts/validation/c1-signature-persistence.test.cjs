@@ -207,11 +207,17 @@ test('deferred native extension is exact, typed, and not a generic update API', 
             'signature_date_time',
             'signature_document_task',
             'signature_document_task_execution',
+            'finalization_stage',
+            'final_pdf_attachment',
+            'final_pdf_generated_date_time',
+            'final_authorization_date',
         ]
     )
     assert.equal(nativeContract.constraints.dynamicTableInput, false)
     assert.equal(nativeContract.constraints.genericFieldMapInput, false)
     assert.equal(nativeContract.constraints.scriptedStatusBinding, false)
+    assert.equal(nativeContract.constraints.fixedAuthorizationAndDetailTables, true)
+    assert.equal(nativeContract.constraints.genericFinalizationFieldMapInput, false)
     assert.equal(nativeContract.constraints.approvalFieldsOwnedByNativeApprovalFlow, true)
 })
 

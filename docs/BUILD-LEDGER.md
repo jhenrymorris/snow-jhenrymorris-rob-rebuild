@@ -1333,3 +1333,35 @@ documentation-only correction.
   record changes: `0`. The exact post-install recovery inputs for closed native
   task `DOCT0001036` are recorded in `MANUAL-CONFIGURATION.md` for later owner
   authorization.
+
+## C3 exhaustive final development closure — 2026-09-04
+
+- Parent candidate: `07d2622d03adb01326499771d2072f2f8d6bec85`.
+- Fresh boundary evidence: `HRC0001097` reached committed employee and
+  supervisor evidence, then the active final-PDF claim requested prohibited
+  generic `GlideRecord.setValue/update`. No PDI mutation occurred in this
+  source-only closure.
+- Audit: all A–V stages and 29 required security resource-operation pairs are
+  recorded in `RELEASE-DEPENDENCY-MATRIX.md`; unknown dependencies/owners are
+  zero.
+- Correction: active claim/reset/finalization governed writes now use the
+  existing native persistence subflow; the HR Case gate uses one new allowlisted
+  method on the existing HR Core bridge; a machine-readable target-owned
+  caller-control contract covers the finalization and M4 reconciliation bridge
+  invocations.
+- SDK 4.11.0 emitted non-deterministic external Script Include reference ids
+  when these target-owned RCAs were represented as packaged Requested records.
+  Those unstable artifacts were excluded. The exact native RCA delta is instead
+  recorded in `release-security-dependencies.json` and manual configuration.
+- Installation/native configuration/runtime acceptance: NOT PERFORMED in this
+  execution. Final test/build totals and candidate SHA are recorded at commit.
+- Final source gates: focused C3 closure `17/17`, signature persistence `13/13`,
+  R4 `81/81`, M2 `19/19`, Security `22/22`, Deployment `16/16`, R3 adapter
+  `13/13`, C1 split-template `7/7`, M4 `34/34`; all PASS.
+- SDK 4.11.0 normal build PASS; frozen-key build PASS; package retains the
+  unchanged application identity `4aba8657837a43104f5193a6feaad3c5`
+  at version `0.0.4`.
+- Generated-key review: additions/mutations/deletions `0`; canonical SHA-256
+  `579b0d1c9fbf2c83a80e33470509e2746998313b5310329550bc49b97c001ac6`.
+- `git diff --check`: PASS. One corrective commit is created after this ledger
+  entry; its SHA is authoritative in Git history.

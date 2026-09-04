@@ -498,3 +498,24 @@ Execution, and `employee`/`supervisor` stage inputs. Approval fields remain
 owned by `ROB Authorization Supervisor Approval`. Generic Insert,
 `GlideRecord.setValue/update/insert`, Scope-to-Scope, broad custom-table Write,
 and broad native task/case Write grants are not required or permitted.
+
+## C3 finalization security closure — 2026-09-04
+
+The final-PDF claim, reset, evidence association, dates, activation, current
+Detail transition, and predecessor supersession use the existing fixed-purpose
+native Authorization persistence subflow. Active finalization source contains
+no governed-record `setValue`, `update`, `insert`, or `deleteRecord` call.
+
+The only HR Core mutation added is
+`RobHrCasePersistenceBridge.openRobFulfillmentGate`. It accepts only a valid
+Payroll/Workforce case, a valid Authorization sys_id, a committed eligible
+New/Amendment/Renewal decision, and an unblocked/non-exception case. It changes
+only `x_2166123_rob_auth_fulfillment_gate_complete` from false to true and is
+idempotent. Its caller is the exact final-PDF association Business Rule.
+
+The existing active M4 reconciliation Business Rule also requires an exact
+Allowed caller record for `RobHrFulfillmentBridgeV2`; its currently Denied
+target record is not release-ready and is reconciled through the exact
+target-owned native caller contract in this candidate. These two exact Execute callers do not grant
+scope-wide access. The 29-pair release whitelist and all existing RCA evidence
+are enumerated in `RELEASE-DEPENDENCY-MATRIX.md`.

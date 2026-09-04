@@ -488,4 +488,20 @@ TM-258 remain runtime acceptance gates.
 | TM-260 | No direct governed signature write | Employee and Supervisor active signature branches contain no Authorization `setValue`, `update`, or `insert` | SOURCE PASS |
 | TM-261 | Native subflow extension remains bounded | Machine-readable contract permits five typed signature inputs, fixed Authorization table, exact two stage mappings, no dynamic table/field map/scripted Status | SOURCE PASS / NATIVE CONFIG NOT APPLIED |
 | TM-262 | Signature idempotency and fail-closed gates | Existing same-task return, different-task rejection, state/participant/signer/execution/PDF validation, and committed reread remain required | SOURCE PASS |
-| TM-263 | Closed-task recovery | One post-install subflow Test uses committed `DOCT0001036` evidence and must advance `ROBA0001053` without reopening/recreating records | NOT RUN — INSTALLATION PROHIBITED IN THIS PACKAGE |
+| TM-263 | Closed-task recovery | Historical development-only procedure; excluded from final release evidence | SUPERSEDED |
+
+### C3 exhaustive development closure
+
+| ID | Test | Method | Status |
+|---|---|---|---|
+| TM-264 | Governed final-PDF claim/reset | Active signature handler must use only the existing synchronous persistence subflow and committed reread | SOURCE PASS |
+| TM-265 | Complete finalization persistence | Final attachment, generated time, exact final date/effective date, static Active, Detail transition and supersession are explicit fixed native mappings | SOURCE PASS |
+| TM-266 | Zero reachable generic writes | Active signature/finalization source is inspected for governed `setValue/update/insert/deleteRecord` | SOURCE PASS |
+| TM-267 | Retry/idempotency contract | Claim, failure reset, duplicate final PDF guard and terminal-task replay gates remain deterministic | SOURCE PASS |
+| TM-268 | Fulfillment gate ownership | Gate opens only after every finalization committed reread through the exact HR Core bridge method | SOURCE PASS |
+| TM-269 | Complete security whitelist | All 29 release dependencies are named; UNKNOWN dependencies and owners are zero; exact finalizer/reconciler callers are required | SOURCE PASS |
+| TM-270 | A–V static walkthrough | Every intake-through-M4 stage identifies its artifact, owner, mechanism, security, proof, and correction state | PASS |
+
+The superseding focused closure suite is
+`scripts/validation/c3-development-closure.test.cjs`. Runtime remains pending
+one separately authorized install/acceptance execution.
