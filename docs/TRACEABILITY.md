@@ -593,3 +593,14 @@ claim/reset and all attachment-finalizer generic writes together.
 | Fulfillment gate | `RobHrCasePersistenceBridge.openRobFulfillmentGate` | exact finalizer caller + reread validation |
 | M4 task/detail/case lifecycle | Existing fulfillment bridge and Detail activation subflow | M4 suite + exact caller inventory |
 | Full dependency closure | `docs/RELEASE-DEPENDENCY-MATRIX.md` | A–V IMPLEMENTED/TESTED/SECURITY READY |
+
+## Stage-V completion ownership correction — 2026-09-04
+
+| Requirement | Implementation owner | Evidence |
+|---|---|---|
+| Actual HR Case subtype | Existing HR Core bridge using `getRecordClassName()` allowlist | M4 base-reference regression |
+| Abort invalid native HR Task completion | One HR Core-owned before-update adapter | Reviewed manual source + M4 ownership regression |
+| Reconcile committed completion | Existing active V2 reconciliation rule | Stable sys_id `31b6f6fe7198436d8d6600355948fe70`; unchanged |
+| Retire cross-scope abort | Existing V2 validation rule retained inactive | Stable sys_id `ac053c7003d6498ab045cc1cc7ffa7ec` |
+| Least privilege | Same-scope validation/abort; existing whitelist unchanged | New RCA `0`; new CrossScopePrivilege `0` |
+| Runtime proof | Same `HRT0001010` replay plus one invalid/valid Analytics transition | Pending one install and runtime continuation |

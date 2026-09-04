@@ -1634,3 +1634,28 @@ machine-reviewed contract in
 Do not approve a scope caller, another source, another operation, or another
 target. Then perform the already-documented enqueue-BR post-install cutover and
 verify topology `1 / 1 / 0 / 0 / 1` before fresh acceptance.
+
+## Stage-V same-scope completion-validation cutover
+
+Before installing the Stage-V V2 package, update the existing Human Resources:
+Core Script Include `sn_hr_core.RobHrFulfillmentBridgeV2`
+(`e434069c838b4f104f5193a6feaad3e1`) from
+`manual/hr-core/RobHrFulfillmentBridgeV2.server.js`. The sole bridge logic
+change is that `_validCase` derives the actual Payroll/Workforce subclass with
+`getRecordClassName()`; it must not use the base reference's `getTableName()`.
+
+Create one Human Resources: Core-owned Business Rule using
+`manual/hr-core/RobValidateFulfillmentTaskCompletion.server.js`: table
+`sn_hr_core_task`; Before Update; order `250`; Active. Its filter is ROB Task
+Type in `staffing_fulfillment`, `analytics_fulfillment`,
+`operations_manager_arm_assignment`, or `exception_review`, and State changes
+to Closed Complete (`3`). It calls only the local existing bridge validator and
+on rejection shows the controlled message and calls
+`current.setAbortAction(true)` from Human Resources: Core.
+
+Retain V2 rule `ROB Validate Fulfillment Task Completion`
+(`ac053c7003d6498ab045cc1cc7ffa7ec`) inactive after install. Keep
+`ROB Reconcile Fulfillment Task Completion`
+(`31b6f6fe7198436d8d6600355948fe70`) active. This adds no RCA or
+CrossScopePrivilege. Reread both rules and the bridge before the single replay
+of `HRT0001010`.

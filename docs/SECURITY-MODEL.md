@@ -519,3 +519,18 @@ target record is not release-ready and is reconciled through the exact
 target-owned native caller contract in this candidate. These two exact Execute callers do not grant
 scope-wide access. The 29-pair release whitelist and all existing RCA evidence
 are enumerated in `RELEASE-DEPENDENCY-MATRIX.md`.
+
+## Stage-V transaction-abort ownership correction
+
+`setAbortAction` for `sn_hr_core_task` completion is owned by one Human
+Resources: Core before-update Business Rule. The V2 predecessor is retained
+inactive, so no active V2 source calls `setAbortAction`. The same-scope rule
+delegates only to the existing allowlisted `RobHrFulfillmentBridgeV2` validator
+and performs no persistence or routing.
+
+The bridge validates a parent obtained through the base `sn_hr_core_case`
+reference by its actual `getRecordClassName()` and accepts only Payroll or
+Workforce Administration cases. It rejects the base class, other subclasses,
+and missing/invalid parents. Security delta: RCA `0`, CrossScopePrivilege `0`,
+Scope-to-Scope `0`, broad native-task Write `0`; the 29-pair whitelist is
+unchanged.

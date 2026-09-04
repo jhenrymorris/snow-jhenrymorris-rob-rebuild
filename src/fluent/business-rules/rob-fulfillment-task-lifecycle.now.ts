@@ -9,14 +9,14 @@ const closedRobTask =
 export const validateRobFulfillmentTaskCompletion = BusinessRule({
     $id: Now.ID['validate-rob-fulfillment-task-completion'],
     name: 'ROB Validate Fulfillment Task Completion',
-    active: true,
+    active: false,
     table: 'sn_hr_core_task',
     when: 'before',
     action: ['update'],
     order: 250,
     filterCondition: terminalRobTask,
     description:
-        'Delegates allowlisted terminal evidence and waiver validation to the HR Core-owned fulfillment bridge before a governed ROB HR Task can close.',
+        'Historical V2 cross-scope validation adapter retained inactive; Human Resources: Core owns the same-scope completion validation and transaction abort boundary.',
     script: Now.include('../server/validate-fulfillment-task-completion.server.js'),
 })
 

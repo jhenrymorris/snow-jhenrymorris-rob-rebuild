@@ -505,3 +505,16 @@ TM-258 remain runtime acceptance gates.
 The superseding focused closure suite is
 `scripts/validation/c3-development-closure.test.cjs`. Runtime remains pending
 one separately authorized install/acceptance execution.
+
+### Stage-V completion ownership correction
+
+| ID | Test | Method | Status |
+|---|---|---|---|
+| TM-271 | Parent subtype through base reference | Execute `_validCase` with Payroll, Workforce, base, unapproved, invalid, and missing parent fixtures; require `getRecordClassName()` | SOURCE PASS |
+| TM-272 | Same-scope abort ownership | Require the V2 before rule inactive and one reviewed HR Core before-update adapter that calls the existing bridge and aborts rejected completion | SOURCE PASS / RUNTIME PENDING |
+| TM-273 | Stage-V positive replay | Complete the same `HRT0001010` once; require Payroll accepted, committed evidence, Detail Active, and parent closure | PENDING INSTALL/RUNTIME |
+| TM-274 | Same-scope negative abort | On the fresh Analytics task, attempt one incomplete close; require same-scope abort, open task, pending Detail, and no cross-scope exception | PENDING RUNTIME |
+
+Focused M4 regression is `36/36` PASS; existing routing, idempotency, waiver,
+Detail activation, parent closure, WPC, missing-OM, and zero external
+provisioning assertions remain intact.

@@ -242,3 +242,17 @@ post-C0 threshold.
 ## C2-S authorized install preflight stop
 
 The reviewed supported-pattern correction is published at `47dc053`, and all local pre-install gates passed. The recovered IDE workspace identity also passed. The supported IDE Git Pull failed twice with HTTP 500 (the initial operation and the UI-offered retry), leaving the IDE checkout without `display_read_only`. In accordance with the mandatory source gate, no IDE Build or Install was attempted and gates 9–11 were not replayed. C2 remains `10/13 PASS`.
+
+## HRT0001010 Stage-V ownership boundary — 2026-09-04
+
+Fresh finalization created exactly one Staffing task, `HRT0001010`, for
+`HRC0001098` / `ROBA0001056` / `ROBD0001054`. Its first completion transaction
+did not commit. The bridge rejected the parent as
+`UNAUTHORIZED_OR_INVALID_PARENT` because the base reference was classified by
+`getTableName()` rather than its actual record class. The V2 before rule then
+attempted cross-scope `current.setAbortAction(true)`, which Australia refused.
+
+The bounded correction uses `getRecordClassName()`, moves the abort adapter to
+Human Resources: Core, and retains the V2 predecessor inactive. Reconciliation
+is unchanged. Focused M4 source tests pass `36/36`; native configuration, one
+normal install, and the single `HRT0001010` replay remain pending.

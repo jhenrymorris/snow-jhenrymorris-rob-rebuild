@@ -2,6 +2,7 @@ const assert = require('node:assert/strict')
 const fs = require('node:fs')
 const path = require('node:path')
 const { test } = require('node:test')
+const vm = require('node:vm')
 
 const { TASK_TYPES } = require('../../src/server/fulfillment/FulfillmentRoutingService')
 const {
@@ -429,6 +430,50 @@ test('HR Core fulfillment bridge is allowlisted and performs the final insert id
     assert.doesNotMatch(bridge, /RESTMessageV2|IntegrationHub/)
 })
 
+test('HR Core bridge derives the actual parent record class through the base reference', () => {
+    const bridgeSource = fs.readFileSync(
+        path.join(root, 'manual/hr-core/RobHrFulfillmentBridgeV2.server.js'),
+        'utf8'
+    )
+    const context = {
+        Class: { create: () => function RobHrFulfillmentBridgeV2() {} },
+        GlideDateTime: function GlideDateTime() {},
+        GlideRecord: function GlideRecord() {},
+        gs: { error: () => {}, getUserID: () => '' },
+    }
+    vm.createContext(context)
+    vm.runInContext(bridgeSource, context)
+    const bridge = new context.RobHrFulfillmentBridgeV2()
+    const record = (recordClass, valid = true) => ({
+        getRecordClassName: () => recordClass,
+        getUniqueValue: () => '0123456789abcdef0123456789abcdef',
+        isValidRecord: () => valid,
+    })
+
+    assert.equal(bridge._validCase(record('sn_hr_core_case_payroll')), true)
+    assert.equal(bridge._validCase(record('sn_hr_core_case_workforce_admin')), true)
+    assert.equal(bridge._validCase(record('sn_hr_core_case')), false)
+    assert.equal(bridge._validCase(record('sn_hr_core_case_employee_relations')), false)
+    assert.equal(bridge._validCase(record('sn_hr_core_case_payroll', false)), false)
+    assert.equal(bridge._validCase(null), false)
+
+    const validCaseBody = bridgeSource.match(/_validCase:\s*function[\s\S]*?\n\s*},/)[0]
+    assert.match(validCaseBody, /getRecordClassName\(\)/)
+    assert.doesNotMatch(validCaseBody, /getTableName\(\)/)
+})
+
+test('HR Core owns the completion-validation abort adapter and keeps it narrow', () => {
+    const adapter = fs.readFileSync(
+        path.join(root, 'manual/hr-core/RobValidateFulfillmentTaskCompletion.server.js'),
+        'utf8'
+    )
+    assert.match(adapter, /new RobHrFulfillmentBridgeV2\(\)\.validateTaskCompletion\(current\)/)
+    assert.match(adapter, /ROB fulfillment completion requires an authorized fulfiller and complete governed evidence/)
+    assert.match(adapter, /current\.setAbortAction\(true\)/)
+    assert.doesNotMatch(adapter, /sn_hr_core\.RobHrFulfillmentBridgeV2/)
+    assert.doesNotMatch(adapter, /GlideRecord|\.insert\(|createTasks|Access Detail|Authorization/)
+})
+
 test('task lifecycle delegates protected validation and closure to the narrow HR Core bridge', () => {
     const rules = fs.readFileSync(
         path.join(root, 'src/fluent/business-rules/rob-fulfillment-task-lifecycle.now.ts'),
@@ -453,7 +498,16 @@ test('task lifecycle delegates protected validation and closure to the narrow HR
     const statusColumn = detailTable.match(
         /status:\s*ChoiceColumn\(\{([\s\S]*?)choices:/
     )[1]
-    assert.equal((rules.match(/active:\s*true/g) || []).length, 2)
+    assert.equal((rules.match(/active:\s*true/g) || []).length, 1)
+    assert.equal((rules.match(/active:\s*false/g) || []).length, 1)
+    assert.match(
+        rules,
+        /name:\s*'ROB Validate Fulfillment Task Completion'[\s\S]*?active:\s*false/
+    )
+    assert.match(
+        rules,
+        /name:\s*'ROB Reconcile Fulfillment Task Completion'[\s\S]*?active:\s*true/
+    )
     assert.match(rules, /stateCHANGESTO3/)
     assert.match(validation, /RobHrFulfillmentBridgeV2\(\)\.validateTaskCompletion/)
     assert.match(validation, /setAbortAction\(true\)/)

@@ -1365,3 +1365,17 @@ documentation-only correction.
   `579b0d1c9fbf2c83a80e33470509e2746998313b5310329550bc49b97c001ac6`.
 - `git diff --check`: PASS. One corrective commit is created after this ledger
   entry; its SHA is authoritative in Git history.
+
+## 2026-09-04 Stage-V ownership correction — pre-install
+
+- Parent candidate: `7f00d20dca88a1df17f5b959450ee1ee24000c55`.
+- Runtime boundary: `HRT0001010` remained open after a valid Payroll parent was
+  rejected as `UNAUTHORIZED_OR_INVALID_PARENT`; V2's cross-scope
+  `setAbortAction(true)` was also refused.
+- Product delta: retain only the V2 before validation rule inactive and extend
+  focused assertions/documentation. The active reconciliation rule is unchanged.
+- Target-owner delta: the existing HR Core bridge uses
+  `getRecordClassName()`; one HR Core before-update adapter owns the abort.
+  New privileges and RCA records: `0`.
+- Focused M4 regression: `36/36` PASS. Remaining build/key results and the
+  superseding SHA are recorded after all pre-install gates complete.

@@ -3200,3 +3200,15 @@ Not exposed by session/tool — no estimate recorded.
 - SDK 4.11.0 normal and frozen-key builds: PASS. Generated-key content change:
   `0`; canonical SHA-256 remains
   `579b0d1c9fbf2c83a80e33470509e2746998313b5310329550bc49b97c001ac6`.
+
+## Stage-V ownership correction — 2026-09-04 pre-install
+
+- Replay fixture retained: `HRT0001010`; failed completion commits `0`;
+  replacement Staffing fixtures `0`.
+- Proven corrections: base-reference subtype discriminator `1`; wrong-scope
+  abort owner `1`.
+- V2 before-validation rule active `true → false`; reconciliation remains active.
+- HR Core target-owner delta: existing bridge correction `1`; new same-scope
+  enforcement adapter `1`.
+- Security delta: RCA `0`; CrossScopePrivilege `0`; whitelist remains `29`.
+- Focused M4 regression: `36/36` PASS. Installation and replay remain pending.

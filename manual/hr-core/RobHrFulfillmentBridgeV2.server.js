@@ -27,8 +27,8 @@ RobHrFulfillmentBridgeV2.prototype = {
     _validCase: function (caseRecord) {
         return Boolean(
             caseRecord &&
-                typeof caseRecord.getTableName === 'function' &&
-                this._caseTables[String(caseRecord.getTableName() || '')] &&
+                typeof caseRecord.getRecordClassName === 'function' &&
+                this._caseTables[String(caseRecord.getRecordClassName() || '')] &&
                 this._sysId(caseRecord.getUniqueValue()) &&
                 caseRecord.isValidRecord()
         )
