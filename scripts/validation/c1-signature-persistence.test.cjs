@@ -162,7 +162,38 @@ test('generic GlideRecord persistence privileges are not declared by the correct
         securitySource,
         /GlideRecord\.(?:setValue|update|insert)/
     )
-    assert.doesNotMatch(securitySource, /targetType:\s*['"]Scope['"]/)
+    assert.doesNotMatch(
+        securitySource,
+        /targetType:\s*['"]Scope['"]/
+    )
+
+    const taskExecutionRead = fs.readFileSync(
+        path.join(
+            securityDir,
+            'document-task-execution-read-privilege.now.ts'
+        ),
+        'utf8'
+    )
+    assert.match(
+        taskExecutionRead,
+        /targetName:\s*['"]sn_doc_task_execution['"]/
+    )
+    assert.match(
+        taskExecutionRead,
+        /operation:\s*['"]read['"]/
+    )
+    assert.match(
+        taskExecutionRead,
+        /status:\s*['"]allowed['"]/
+    )
+    assert.match(
+        taskExecutionRead,
+        /targetType:\s*['"]sys_db_object['"]/
+    )
+    assert.doesNotMatch(
+        taskExecutionRead,
+        /operation:\s*['"](?:create|write|update|delete|execute)['"]/
+    )
 })
 
 test('deferred native extension is exact, typed, and not a generic update API', () => {

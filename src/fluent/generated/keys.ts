@@ -289,6 +289,10 @@ declare global {
                         table: 'sys_scope_privilege'
                         id: 'a08489b89c9b4c36918e742dd29d41e2'
                     }
+                    'read-document-task-execution': {
+                        table: 'sys_scope_privilege'
+                        id: '7fa39d91f2dc4849b65c173ca05152cb'
+                    }
                     'read-hr-position': {
                         table: 'sys_scope_privilege'
                         id: '4e15d0bacb5b4d328cc6a16ffd6ab4f8'
