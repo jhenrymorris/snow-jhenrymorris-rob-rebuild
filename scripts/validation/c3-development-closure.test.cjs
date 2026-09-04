@@ -61,6 +61,9 @@ test('finalization readiness still requires the complete C1 evidence gate', () =
 
 test('complete finalization uses one fixed-purpose native subflow invocation', () => {
     assert.match(finalization, /finalization_stage:\s*'complete'/)
+    assert.match(finalization, /status_value:\s*'active'/)
+    assert.match(finalization, /finalization_detail_status_value:\s*'pending_fulfillment'/)
+    assert.match(finalization, /finalization_superseded_status_value:\s*'superseded'/)
     assert.match(finalization, /final_pdf_attachment:\s*current/)
     assert.match(finalization, /final_pdf_generated_date_time/)
     assert.match(finalization, /final_authorization_date:\s*finalDate/)
@@ -98,19 +101,43 @@ test('native complete mode persists the exact Authorization final state', () => 
         'signed_pdf_generated_date_time',
         'status',
     ])
-    assert.equal(mappings.status.value, 'active')
-    assert.equal(mappings.status.kind, 'literal')
+    assert.equal(mappings.status.input, 'status_value')
+    assert.equal(mappings.status.expectedCallerValue, 'active')
+    assert.equal(mappings.status.kind, 'pill')
     assert.equal(mappings.effective_date.input, 'final_authorization_date')
 })
 
 test('native complete mode transitions current Details and predecessor history', () => {
     const complete = contract.branches.finalizationComplete
-    assert.equal(complete.currentDetailMappings.status.value, 'pending_fulfillment')
+    assert.equal(complete.currentDetailMappings.status.input, 'finalization_detail_status_value')
+    assert.equal(complete.currentDetailMappings.status.expectedCallerValue, 'pending_fulfillment')
     assert.equal(complete.currentDetailMappings.authorized_start_date.input, 'final_authorization_date')
-    assert.equal(complete.predecessorMappings.status.value, 'superseded')
-    assert.equal(complete.predecessorDetailMappings.status.value, 'superseded')
+    assert.equal(complete.predecessorMappings.status.input, 'finalization_superseded_status_value')
+    assert.equal(complete.predecessorMappings.status.expectedCallerValue, 'superseded')
+    assert.equal(complete.predecessorDetailMappings.status.input, 'finalization_superseded_status_value')
+    assert.equal(complete.predecessorDetailMappings.status.expectedCallerValue, 'superseded')
     assert.equal(contract.constraints.fixedAuthorizationAndDetailTables, true)
     assert.equal(contract.constraints.genericFinalizationFieldMapInput, false)
+    assert.equal(contract.constraints.staticChoiceSelectorDependency, false)
+    assert.equal(contract.constraints.fdDataChoiceBinding, false)
+})
+
+test('all four logical finalization Choice transitions use direct input pills', () => {
+    const complete = contract.branches.finalizationComplete
+    const choices = [
+        complete.fieldMappings.status,
+        complete.currentDetailMappings.status,
+        complete.predecessorMappings.status,
+        complete.predecessorDetailMappings.status,
+    ]
+    assert.equal(choices.length, 4)
+    for (const mapping of choices) {
+        assert.equal(mapping.kind, 'pill')
+        assert.ok(mapping.input)
+        assert.ok(mapping.expectedCallerValue)
+        assert.doesNotMatch(JSON.stringify(mapping), /fd_data|script|literal/)
+    }
+    assert.equal(new Set(choices.map((mapping) => mapping.input)).size, 3)
 })
 
 test('finalization validates every committed state before opening fulfillment', () => {

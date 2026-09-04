@@ -13,7 +13,10 @@
                 .inForeground()
                 .withInputs({
                     authorization_sys_id: authorization.getUniqueValue(),
+                    status_value: 'active',
                     finalization_stage: 'complete',
+                    finalization_detail_status_value: 'pending_fulfillment',
+                    finalization_superseded_status_value: 'superseded',
                     final_pdf_attachment: current,
                     final_pdf_generated_date_time: new GlideDateTime(
                         current.getValue('sys_created_on')

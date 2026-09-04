@@ -58,6 +58,16 @@
     {
       "name": "final_authorization_date",
       "type": "Date"
+    },
+    {
+      "name": "finalization_detail_status_value",
+      "type": "String",
+      "allowedValues": ["pending_fulfillment"]
+    },
+    {
+      "name": "finalization_superseded_status_value",
+      "type": "String",
+      "allowedValues": ["superseded"]
     }
   ],
   "branches": {
@@ -102,18 +112,18 @@
         "signed_pdf_generated_date_time": { "kind": "pill", "input": "final_pdf_generated_date_time" },
         "final_authorization_date": { "kind": "pill", "input": "final_authorization_date" },
         "effective_date": { "kind": "pill", "input": "final_authorization_date" },
-        "status": { "kind": "literal", "value": "active" }
+        "status": { "kind": "pill", "input": "status_value", "expectedCallerValue": "active" }
       },
       "currentDetailMappings": {
-        "status": { "kind": "literal", "value": "pending_fulfillment" },
+        "status": { "kind": "pill", "input": "finalization_detail_status_value", "expectedCallerValue": "pending_fulfillment" },
         "authorized_start_date": { "kind": "pill", "input": "final_authorization_date" }
       },
       "predecessorMappings": {
         "superseded_by_authorization_form": { "kind": "pill", "value": "current authorization" },
-        "status": { "kind": "literal", "value": "superseded" }
+        "status": { "kind": "pill", "input": "finalization_superseded_status_value", "expectedCallerValue": "superseded" }
       },
       "predecessorDetailMappings": {
-        "status": { "kind": "literal", "value": "superseded" }
+        "status": { "kind": "pill", "input": "finalization_superseded_status_value", "expectedCallerValue": "superseded" }
       }
     },
     "existingLifecycle": {
@@ -128,6 +138,8 @@
     "scriptedStatusBinding": false,
     "fixedAuthorizationAndDetailTables": true,
     "genericFinalizationFieldMapInput": false,
+    "staticChoiceSelectorDependency": false,
+    "fdDataChoiceBinding": false,
     "approvalFieldsOwnedByNativeApprovalFlow": true
   }
 }
